@@ -1,13 +1,10 @@
 import { createApp } from 'vue'
-import './style.css'
+
 import App from './App.vue'
 import { createRouter } from './router'
 
-// interface QiscusAppConfig {
-//   appId?: string | number;
-//   basePath?: string;
-//   // Add other configuration options as needed
-// }
+import './assets/css/tailwind.css'
+import './assets/css/style.css'
 
 export function createQiscusApp(container: string | Element, appId?: string | number) {
   const app = createApp(App)
@@ -23,11 +20,6 @@ export function createQiscusApp(container: string | Element, appId?: string | nu
   
   return app
 }
-
-// Alternative function that accepts a config object
-// export function createQiscusAppWithConfig(container: string | Element, config: QiscusAppConfig = {}) {
-//   return createQiscusApp(container, config.appId)
-// }
 
 // Auto-mount if #app exists (for development)
 if (document.querySelector('#app')) {
