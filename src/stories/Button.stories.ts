@@ -8,7 +8,7 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A versatile button component with multiple intents, sizes, and shapes. Supports both button and router-link functionality.',
+        component: 'A versatile button component with multiple intents, sizes, and shapes. Features smooth animations, hover effects, and supports both button and router-link functionality. Includes options to disable animations for better performance or accessibility.',
       },
     },
   },
@@ -16,7 +16,7 @@ const meta: Meta<typeof Button> = {
     intent: {
       control: { type: 'select' },
       options: ['primary', 'secondary', 'danger', 'flat'],
-      description: 'The visual style of the button',
+      description: 'The visual style of the button. Flat buttons have a simple underline hover effect.',
     },
     size: {
       control: { type: 'select' },
@@ -30,7 +30,11 @@ const meta: Meta<typeof Button> = {
     },
     disabled: {
       control: { type: 'boolean' },
-      description: 'Whether the button is disabled',
+      description: 'Whether the button is disabled. Disabled buttons have no animations.',
+    },
+    disableAnimation: {
+      control: { type: 'boolean' },
+      description: 'Disable all animations and hover effects for better performance or accessibility',
     },
     to: {
       control: { type: 'text' },
@@ -132,12 +136,50 @@ export const Disabled: Story = {
   },
 };
 
+// Animation disabled
+export const NoAnimation: Story = {
+  args: {
+    disableAnimation: true,
+    default: 'No Animation Button',
+  },
+};
+
 // Router link
 export const RouterLink: Story = {
   args: {
     to: '/example',
     default: 'Router Link Button',
   },
+};
+
+// Animation comparison
+export const AnimationComparison: Story = {
+  render: () => ({
+    components: { Button },
+    template: `
+      <div class="space-y-6">
+        <div>
+          <h3 class="text-lg font-semibold mb-4">With Animations (Default)</h3>
+          <div class="flex gap-4 flex-wrap">
+            <Button intent="primary">Primary</Button>
+            <Button intent="secondary">Secondary</Button>
+            <Button intent="danger">Danger</Button>
+            <Button intent="flat">Flat</Button>
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Without Animations</h3>
+          <div class="flex gap-4 flex-wrap">
+            <Button intent="primary" :disable-animation="true">Primary</Button>
+            <Button intent="secondary" :disable-animation="true">Secondary</Button>
+            <Button intent="danger" :disable-animation="true">Danger</Button>
+            <Button intent="flat" :disable-animation="true">Flat</Button>
+          </div>
+        </div>
+      </div>
+    `,
+  }),
 };
 
 // All variants showcase
@@ -178,6 +220,7 @@ export const AllVariants: Story = {
           <div class="flex gap-4 flex-wrap">
             <Button>Normal</Button>
             <Button disabled>Disabled</Button>
+            <Button :disable-animation="true">No Animation</Button>
           </div>
         </div>
       </div>
@@ -192,6 +235,7 @@ export const Playground: Story = {
     size: 'medium',
     shape: 'rounded',
     disabled: false,
+    disableAnimation: false,
     default: 'Playground Button',
   },
 }; 
