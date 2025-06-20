@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import Button from '../components/common/Button.vue';
+import Switch from '../components/common/Switch.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
 };
+
+const isChecked = ref(false);
 </script>
 
 <template>
@@ -34,6 +38,13 @@ const handleClick = () => {
       <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
       <Button intent="flat" size="medium" shape="rounded" to="/about" disabled>Click me</Button>
       <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
+    </div>
+
+    <div class="mt-4 flex gap-4 justify-center">
+      <Switch v-model="isChecked" size="medium" variant="success" aria-label="Success switch" />
+      <Switch v-model="isChecked" size="medium" variant="warning" aria-label="Warning switch" />
+      <Switch v-model="isChecked" size="medium" variant="danger" aria-label="Danger switch" />
+      <Switch v-model="isChecked" size="medium" variant="default" aria-label="Default switch" />
     </div>
   </div>
 </template>
