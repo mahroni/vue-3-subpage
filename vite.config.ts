@@ -22,9 +22,6 @@ export default defineConfig({
   },
   define: {
     'process.env': {},
-    'process.platform': JSON.stringify('browser'),
-    'process.version': JSON.stringify(''),
-    'process.versions': JSON.stringify({}),
     'process.browser': true,
     'process.node': false
   }
