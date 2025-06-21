@@ -1,16 +1,34 @@
 import { createApp } from 'vue'
-import './style.css'
+import { createPinia } from 'pinia'
+
 import App from './App.vue'
 import { createRouter } from './router'
+import { useAppConfigStore } from './stores/app-config'
 
-// interface QiscusAppConfig {
-//   appId?: string | number;
-//   basePath?: string;
-//   // Add other configuration options as needed
-// }
+import './assets/css/tailwind.css'
+import './assets/css/style.css'
 
-export function createQiscusApp(container: string | Element, appId?: string | number) {
+export interface QiscusAppConfig {
+  userToken: string
+  appId: string
+  appVersion: string
+}
+
+export function createQiscusApp(
+  container: string | Element, 
+  appId?: string | number,
+  config?: QiscusAppConfig
+) {
   const app = createApp(App)
+  const pinia = createPinia()
+  
+  app.use(pinia)
+  
+  // Initialize app configuration if provided
+  if (config) {
+    const appConfigStore = useAppConfigStore()
+    appConfigStore.setConfig(config)
+  }
   
   // Create router with the provided appId
   const router = createRouter(appId)
@@ -23,11 +41,6 @@ export function createQiscusApp(container: string | Element, appId?: string | nu
   
   return app
 }
-
-// Alternative function that accepts a config object
-// export function createQiscusAppWithConfig(container: string | Element, config: QiscusAppConfig = {}) {
-//   return createQiscusApp(container, config.appId)
-// }
 
 // Auto-mount if #app exists (for development)
 if (document.querySelector('#app')) {

@@ -16,8 +16,12 @@
       </div>
     </nav> -->
 
-    <main>
-      <router-view />
+    <main class="container mx-auto py-8">
+      <transition enter-active-class="transition-all duration-300 ease-out" enter-from-class="opacity-0 translate-x-5"
+        enter-to-class="opacity-100 translate-x-0" leave-active-class="transition-all duration-300 ease-in"
+        leave-from-class="opacity-100 translate-x-0" leave-to-class="opacity-0 -translate-x-5" mode="out-in">
+        <router-view />
+      </transition>
     </main>
   </div>
 </template>
