@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import Button from '../components/common/Button.vue';
 import Switch from '../components/common/Switch.vue';
 import { apiV2 } from '../utils/axios';
+import Badge from '../components/common/Badge.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -65,17 +66,18 @@ onMounted(() => {
       <Switch v-model="isChecked" size="medium" variant="default" aria-label="Default switch" />
     </div>
 
-    <div>
+    <div class="mt-4">
       <ul class="flex flex-wrap gap-4">
         <li v-for="p in pokemon" :key="p.name">
-          <div @click="getPokemonDetail(p.url)" class="cursor-pointer">
-            <p>{{ p.name }}</p>
-          </div>
+          <Badge @click="getPokemonDetail(p.url)" intent="danger" size="medium" :disabled="true">
+            {{ p.name }}
+          </Badge>
 
         </li>
       </ul>
       <div v-if="pokemonDetail && Object.keys(pokemonDetail).length > 0" class="mt-4 p-4 bg-white rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold capitalize mb-4">{{ pokemonDetail.name }}</h2>
+        <h1 class="text-2xl font-bold capitalize mb-4">{{ pokemonDetail.name }}
+        </h1>
 
         <img :src="pokemonDetail?.sprites?.back_default" :alt="pokemonDetail.name" class="mx-auto rounded-lg shadow-sm"
           width="150" height="150">

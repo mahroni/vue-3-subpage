@@ -1,10 +1,3 @@
-<template>
-  <component :is="componentType" :to="to" :type="isButton ? type : undefined"
-    :disabled="isButton ? disabled : undefined" :class="buttonClass" @click="handleClick">
-    <slot />
-  </component>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
@@ -165,3 +158,10 @@ const buttonClass = computed(() =>
   })
 );
 </script>
+
+<template>
+  <component :is="componentType" :to="to" :type="isButton ? type : undefined"
+    :disabled="isButton ? disabled : undefined" :class="buttonClass" @click="handleClick">
+    <slot />
+  </component>
+</template>
