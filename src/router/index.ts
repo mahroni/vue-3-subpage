@@ -1,6 +1,6 @@
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router'
 import type { Router } from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../views/ChannelPage.vue'
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
