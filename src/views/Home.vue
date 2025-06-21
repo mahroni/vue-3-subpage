@@ -7,6 +7,7 @@ import { apiV2 } from '../utils/axios';
 import Badge from '../components/common/Badge.vue';
 import MainTab from '../components/common/Tabs/MainTab.vue';
 import Banner from '../components/common/Banner.vue';
+import Input from '../components/form/Input.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -30,6 +31,8 @@ async function getPokemonDetail(url: string) {
 const handleTabChange = (tab: string) => {
   activeTab.value = tab
 }
+
+const inputValue = ref('')
 
 onMounted(() => {
   getPokemon()
@@ -77,7 +80,7 @@ onMounted(() => {
       <MainTab :tabs="['Tab 1', 'Tab 2', 'Tab 3']" v-model="activeTab" />
     </div>
 
-    <div class="flex flex-col gap-4 text-sm font-medium text-left">
+    <div class="flex flex-col gap-4 text-sm font-medium text-left mt-4">
       <Banner intent="positive" closeable>
         <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
       </Banner>
@@ -101,6 +104,12 @@ onMounted(() => {
       <Banner intent="warning" type="outline" closeable>
         <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
       </Banner>
+    </div>
+
+    <div class="text-left mt-4">
+      <Input v-model="inputValue" placeholder="Enter your name" />
+      <Input v-model="inputValue" placeholder="Enter your name" disabled />
+      <Input v-model="inputValue" placeholder="Enter your name" error errorMessage="This is an error message" />
     </div>
 
     <div class="mt-4">
