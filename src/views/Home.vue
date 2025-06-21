@@ -1,9 +1,12 @@
+tabs
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import Button from '../components/common/Button.vue';
 import Switch from '../components/common/Switch.vue';
 import { apiV2 } from '../utils/axios';
 import Badge from '../components/common/Badge.vue';
+import MainTab from '../components/common/Tabs/MainTab.vue';
+import Banner from '../components/common/Banner.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -11,7 +14,7 @@ const handleClick = () => {
 
 const isChecked = ref(false);
 
-
+const activeTab = ref('Tab 1')
 const pokemonDetail = ref<any>({})
 const pokemon = ref<any[]>([])
 async function getPokemon() {
@@ -22,6 +25,10 @@ async function getPokemon() {
 async function getPokemonDetail(url: string) {
   const data = await apiV2.get<any>(url)
   pokemonDetail.value = data.data || {}
+}
+
+const handleTabChange = (tab: string) => {
+  activeTab.value = tab
 }
 
 onMounted(() => {
@@ -64,6 +71,36 @@ onMounted(() => {
       <Switch v-model="isChecked" size="medium" variant="warning" aria-label="Warning switch" />
       <Switch v-model="isChecked" size="medium" variant="danger" aria-label="Danger switch" />
       <Switch v-model="isChecked" size="medium" variant="default" aria-label="Default switch" />
+    </div>
+
+    <div>
+      <MainTab :tabs="['Tab 1', 'Tab 2', 'Tab 3']" v-model="activeTab" />
+    </div>
+
+    <div class="flex flex-col gap-4 text-sm font-medium text-left">
+      <Banner intent="positive" closeable>
+        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+      </Banner>
+
+      <Banner intent="negative" closeable>
+        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+      </Banner>
+
+      <Banner intent="warning" closeable>
+        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+      </Banner>
+
+      <Banner intent="positive" type="outline" closeable>
+        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+      </Banner>
+
+      <Banner intent="negative" type="outline" closeable>
+        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+      </Banner>
+
+      <Banner intent="warning" type="outline" closeable>
+        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+      </Banner>
     </div>
 
     <div class="mt-4">
