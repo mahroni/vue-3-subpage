@@ -1,7 +1,6 @@
 <template>
   <div
-    class="min-h-screen flex flex-col px-12 py-8 text-text-title text-sm gap-8"
-  >
+    class="min-h-screen flex flex-col px-12 py-8 text-text-title text-sm gap-8">
     <div>
       <div class="flex gap-3 mb-4">
         <img src="../assets/icon-integration.svg" alt="Qiscus Logo" />
@@ -28,14 +27,12 @@
         <li
           v-for="tab in dataTabs"
           :key="tab.id"
-          :class="{ 'active': activeTab.id === tab.id }"
-          class="tab"
-        >
+          :class="{ active: activeTab.id === tab.id }"
+          class="tab">
           <button
             class="cursor-pointer px-5 py-2"
             :class="{ 'font-semibold': activeTab.id === tab.id }"
-            @click="onSelectTab(tab)"
-          >
+            @click="onSelectTab(tab)">
             {{ tab.name }}
           </button>
         </li>
@@ -47,13 +44,15 @@
         <div
           class="card cursor-pointer border border-gray-300 flex flex-col p-6 gap-3 rounded-2xl bg-white-100 max-w-md"
           @click.prevent="onSelectChannel(channel)"
-          :style="{backgroundImage: `url(${channel.icon}) no-repeat`}"
-        >
-          <div class="flex items-center gap-3 text-sm font-semibold">
-            <img class="w-10 h-10" :src="channel.icon" loading="lazy" />
-            {{ channel.name }}
+          :class="channel.id">
+          <div class="flex items-center justify-between text-sm font-semibold z-10">
+            <div class="flex items-center gap-3">
+              <img class="w-10 h-10" :src="channel.icon" loading="lazy" />
+              {{ channel.name }}
+            </div>
+            <badge intent="progress">Popular</badge>
           </div>
-          <div class="text-text-subtitle text-sm font-normal">
+          <div class="text-text-subtitle text-sm font-normal z-10">
             {{ channel.description }}
           </div>
         </div>
@@ -64,6 +63,10 @@
 
 <script setup>
 import { computed, ref } from "vue";
+import Badge from "../components/common/Badge.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const dataTabs = [
   {
@@ -168,13 +171,22 @@ const filteredChannels = computed(() => {
   if (activeTab.value.id === "all") {
     return channels;
   }
-  return channels.filter(channel => channel.group === activeTab.value.id);
+  return channels.filter((channel) => channel.group === activeTab.value.id);
 });
+const onSelectChannel = (channel) => {
+  // Emit an event or handle the channel selection logic here
+  console.log("Selected channel:", channel);
+    // Redirect to the Qiscus Widget setup page
+    router.push({
+      name: channel.id,
+    });
+};
 </script>
 <style scoped>
 .tab {
   position: relative;
 }
+
 .tab::before {
   background-color: transparent;
   content: "";
@@ -185,10 +197,65 @@ const filteredChannels = computed(() => {
   height: 4px;
   border-radius: 10px 10px 0px 0px;
 }
+
 .active::before {
-  background-color: #27B199;
+  background-color: #27b199;
 }
+
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
 .card:hover {
-  border-color: #27B199;
+  border-color: #27b199;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  left: -162px;
+  bottom: -54px;
+  width: 260px;
+  height: 260px;
+  filter: blur(115px);
+  opacity: 0.2;
+}
+
+.card.whatsapp::after {
+  background-image: url("https://omnichannel.qiscus.com/img/whatsapp_badge.svg");
+  background-size: cover;
+}
+.card.instagram::after {
+  background-image: url("https://omnichannel.qiscus.com/img/instagram_badge.svg");
+  background-size: cover;
+}
+.card.tiktok::after {
+  background-image: url("https://omnichannel.qiscus.com/img/tiktok_badge.svg");
+  background-size: cover;
+}
+.card.facebook::after {
+  background-image: url("https://omnichannel.qiscus.com/img/messenger_badge.svg");
+  background-size: cover;
+}
+.card.line::after {
+  background-image: url("https://omnichannel.qiscus.com/img/line_badge.svg");
+  background-size: cover;
+}
+.card.telegram::after {
+  background-image: url("https://omnichannel.qiscus.com/img/telegram_badge.svg");
+  background-size: cover;
+}
+.card.qiscus::after {
+  background-image: url("https://omnichannel.qiscus.com/img/qiscus_badge.svg");
+  background-size: cover;
+}
+.card.custom_channel::after {
+  background-image: url("https://omnichannel.qiscus.com/img/custom.svg");
+  background-size: cover;
+}
+.card.bot_integration::after {
+  background-image: url("https://omnichannel.qiscus.com/img/bot_badge.svg");
+  background-size: cover;
 }
 </style>
