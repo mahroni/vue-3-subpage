@@ -8,6 +8,7 @@ import Badge from '../components/common/Badge.vue';
 import MainTab from '../components/common/Tabs/MainTab.vue';
 import Banner from '../components/common/Banner.vue';
 import Input from '../components/form/Input.vue';
+import Checkbox from '../components/common/Checkbox.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -33,6 +34,7 @@ const handleTabChange = (tab: string) => {
 }
 
 const inputValue = ref('')
+const isChecked2 = ref(false)
 
 onMounted(() => {
   getPokemon()
@@ -110,6 +112,11 @@ onMounted(() => {
       <Input v-model="inputValue" placeholder="Enter your name" />
       <Input v-model="inputValue" placeholder="Enter your name" disabled />
       <Input v-model="inputValue" placeholder="Enter your name" error errorMessage="This is an error message" />
+    </div>
+
+    <div class="text-left mt-4 flex flex-col gap-2">
+      <Checkbox v-model="isChecked2" label="Checkbox" />
+      <Checkbox v-model="isChecked2" label="Checkbox" disabled />
     </div>
 
     <div class="mt-4">
