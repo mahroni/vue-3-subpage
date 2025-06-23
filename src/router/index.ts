@@ -1,6 +1,6 @@
-import { createRouter as createVueRouter, createWebHistory } from 'vue-router'
-import type { Router, RouteRecordRaw } from 'vue-router'
-import Home from '../views/ChannelPage.vue'
+import { createRouter as createVueRouter, createWebHistory } from "vue-router";
+import type { Router, RouteRecordRaw } from "vue-router";
+import Home from "../views/ChannelPage.vue";
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -84,6 +84,11 @@ export function createRouter(appId?: string | number): Router {
       component: () => import("../views/AutoResponder.vue"),
     },
     {
+      path: "/widget",
+      name: "widget",
+      component: () => import("../pages/integration/widget/WidgetLayout.vue"),
+    },
+    {
       path: "/about",
       name: "About",
       component: () => import("../views/About.vue"),
@@ -97,24 +102,35 @@ export function createRouter(appId?: string | number): Router {
 
   // Use the provided appId or fall back to window.vueAppBaseId
   let dynamicAppId = "";
-  
+
   if (appId) {
     dynamicAppId = String(appId);
-  } else if (typeof window !== 'undefined' && 'vueAppBaseId' in window && window.vueAppBaseId) {
+  } else if (
+    typeof window !== "undefined" &&
+    "vueAppBaseId" in window &&
+    window.vueAppBaseId
+  ) {
     dynamicAppId = String(window.vueAppBaseId);
   }
 
   console.log("ROUTER DEBUG: Using appId:", dynamicAppId);
 
-  const VUE_ROUTER_BASE_PATH = dynamicAppId ? `/web/${dynamicAppId}/new-integration/` : "/";
-  
+  const VUE_ROUTER_BASE_PATH = dynamicAppId
+    ? `/web/${dynamicAppId}/new-integration/`
+    : "/";
+
   const router = createVueRouter({
     history: createWebHistory(VUE_ROUTER_BASE_PATH),
     routes: routes as RouteRecordRaw[],
   });
 
   router.beforeEach((to, from, next) => {
-    console.log("ROUTER DEBUG (4): Navigating from:", from.fullPath, "to:", to.fullPath);
+    console.log(
+      "ROUTER DEBUG (4): Navigating from:",
+      from.fullPath,
+      "to:",
+      to.fullPath
+    );
     next();
   });
 
