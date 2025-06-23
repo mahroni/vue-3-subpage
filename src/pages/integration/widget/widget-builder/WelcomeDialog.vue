@@ -1,20 +1,41 @@
 <template>
-    <div class="flex gap-4 w-full p-4">
-        <div class="flex flex-col gap-4 bg-gray-200 w-1/2 p-6 border-[1px] border-gray-300 rounded-2xl">
-            <ToggleLable label="Welcome Dialog" v-model="welcomeDialog" />
-            <Divider />
-            <TextArea label="First Description" />
-            <Input label="Description" />
-        </div>
-    </div>
+    <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
+        <TextArea label="First Description" />
+        <Input label="Description" />
+    </WidgetFormLayout>
+    <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
+        <OptionalInput label="Image" v-model="attentionGrabberImage">
+            <DragDropInput label="Upload Image" accept="image/png,image/jpg" acceptText="PNG or JPG" maxSize="31457280" maxFiles="5"/> 
+        </OptionalInput>
+        <OptionalInput label="Text" v-model="attentionGrabberText">
+            <TextArea label="Text Description" />
+        </OptionalInput>
+    </WidgetFormLayout>
 </template>
 
 <script lang="ts" setup>
 import Input from '@/components/form/Input.vue';
 import TextArea from '@/components/form/TextArea.vue';
-import ToggleLable from '@/components/form/ToggleLable.vue';
-import Divider from '@/components/ui/Divider.vue';
-import { ref } from 'vue';
+import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
+import { ref, computed } from 'vue';
+import DragDropInput from '@/components/form/DragDropInput.vue';
+import OptionalInput from '../form/OptionalInput.vue';
 
-const welcomeDialog = ref(true)
+const welcomeDialogState = ref(true)
+const attentionGrabberImage = ref(true)
+const attentionGrabberText = ref(true)
+
+const welcomeDialog = computed({
+    get: () => welcomeDialogState.value,
+    set: (value: boolean) => {
+        welcomeDialogState.value = value;
+    }
+});
+
+const attentionGrabber = computed({
+    get: () => !welcomeDialogState.value,
+    set: (value: boolean) => {
+        welcomeDialogState.value = !value;
+    }
+});
 </script>
