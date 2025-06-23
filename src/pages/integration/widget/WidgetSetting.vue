@@ -16,9 +16,9 @@
   </CollapsibleGroup>
 </template>
 <script setup lang="ts">
-import CollapsibleGroup from "../../../components/common/CollapsibleGroup.vue";
-import Button from "../../../components/common/Button.vue";
-import Switch from "../../../components/common/Switch.vue";
+import CollapsibleGroup from "@/components/common/CollapsibleGroup.vue";
+import Button from "@/components/common/Button.vue";
+import Switch from "@/components/common/Switch.vue";
 const items = [
   {
     id: "1",

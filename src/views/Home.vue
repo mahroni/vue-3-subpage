@@ -59,32 +59,39 @@ const faqItems = ref([
 
 const tabs = [
   {
+    id: 'tab-1',
     label: 'Tab 1',
     icon: 'broadcast',
     children: [
       {
+        id: 'tab-1-1',
         label: 'Tab 1 Apa Yaa',
         icon: 'close',
       },
       {
+        id: 'tab-1-2',
         label: 'Tab 2',
         icon: 'close',
       },
     ],
   },
   {
+    id: 'tab-2',
     label: 'Tab 2',
     icon: 'broadcast',
   },
   {
+    id: 'tab-3',
     label: 'Tab 3',
     icon: 'broadcast',
     children: [
       {
+        id: 'tab-3-1',
         label: 'Tab 1',
         icon: 'close',
       },
       {
+        id: 'tab-3-2',
         label: 'Tab 2',
         icon: 'close',
       },
@@ -186,12 +193,7 @@ onMounted(() => {
     <div class="mt-4 text-left">
       <Input v-model="inputValue" placeholder="Enter your name" />
       <Input v-model="inputValue" placeholder="Enter your name" disabled />
-      <Input
-        v-model="inputValue"
-        placeholder="Enter your name"
-        error
-        errorMessage="This is an error message"
-      />
+      <Input v-model="inputValue" placeholder="Enter your name" error errorMessage="This is an error message" />
     </div>
 
     <div class="mt-4 flex flex-col gap-2 text-left">
@@ -222,28 +224,17 @@ onMounted(() => {
           </Badge>
         </li>
       </ul>
-      <div
-        v-if="pokemonDetail && Object.keys(pokemonDetail).length > 0"
-        class="mt-4 rounded-lg bg-white p-4 shadow-md"
-      >
+      <div v-if="pokemonDetail && Object.keys(pokemonDetail).length > 0" class="mt-4 rounded-lg bg-white p-4 shadow-md">
         <h1 class="mb-4 text-2xl font-bold capitalize">{{ pokemonDetail.name }}</h1>
 
-        <img
-          :src="pokemonDetail?.sprites?.back_default"
-          :alt="pokemonDetail.name"
-          class="mx-auto rounded-lg shadow-sm"
-          width="150"
-          height="150"
-        />
+        <img :src="pokemonDetail?.sprites?.back_default" :alt="pokemonDetail.name" class="mx-auto rounded-lg shadow-sm"
+          width="150" height="150" />
 
         <div v-if="pokemonDetail?.abilities" class="mt-6">
           <h3 class="mb-2 text-xl font-semibold">Abilities</h3>
           <ul class="flex flex-wrap justify-center gap-2">
-            <li
-              v-for="a in pokemonDetail?.abilities"
-              :key="a?.ability?.name"
-              class="rounded-full bg-gray-100 px-3 py-1 text-gray-700 capitalize"
-            >
+            <li v-for="a in pokemonDetail?.abilities" :key="a?.ability?.name"
+              class="rounded-full bg-gray-100 px-3 py-1 text-gray-700 capitalize">
               {{ a?.ability?.name }}
             </li>
           </ul>
