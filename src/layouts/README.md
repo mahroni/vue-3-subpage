@@ -68,20 +68,20 @@ layouts/
 </template>
 
 <script setup lang="ts">
-import LayoutHeader from "./components/Header.vue";
-import LayoutFooter from "./components/Footer.vue";
+import LayoutHeader from './components/Header.vue';
+import LayoutFooter from './components/Footer.vue';
 
 // Layout props
 interface Props {
   showSidebar?: boolean;
   showFooter?: boolean;
-  sidebarPosition?: "left" | "right";
+  sidebarPosition?: 'left' | 'right';
 }
 
 const props = withDefaults(defineProps<Props>(), {
   showSidebar: true,
   showFooter: true,
-  sidebarPosition: "left",
+  sidebarPosition: 'left',
 });
 </script>
 
@@ -90,9 +90,9 @@ const props = withDefaults(defineProps<Props>(), {
   display: grid;
   min-height: 100vh;
   grid-template-areas:
-    "header header"
-    "sidebar main"
-    "footer footer";
+    'header header'
+    'sidebar main'
+    'footer footer';
   grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr auto;
 }
@@ -122,9 +122,9 @@ const props = withDefaults(defineProps<Props>(), {
 @media (max-width: 768px) {
   .layout {
     grid-template-areas:
-      "header"
-      "main"
-      "footer";
+      'header'
+      'main'
+      'footer';
     grid-template-columns: 1fr;
   }
 
@@ -230,10 +230,7 @@ defineProps<Props>();
 <template>
   <div class="layout layout--dashboard">
     <!-- Sidebar -->
-    <aside
-      class="layout__sidebar"
-      :class="{ 'layout__sidebar--collapsed': isSidebarCollapsed }"
-    >
+    <aside class="layout__sidebar" :class="{ 'layout__sidebar--collapsed': isSidebarCollapsed }">
       <slot name="sidebar">
         <DashboardSidebar :collapsed="isSidebarCollapsed" />
       </slot>
@@ -262,9 +259,9 @@ defineProps<Props>();
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import DashboardSidebar from "./components/DashboardSidebar.vue";
-import DashboardTopNav from "./components/DashboardTopNav.vue";
+import { ref } from 'vue';
+import DashboardSidebar from './components/DashboardSidebar.vue';
+import DashboardTopNav from './components/DashboardTopNav.vue';
 
 interface Props {
   initialSidebarCollapsed?: boolean;
@@ -417,9 +414,9 @@ Use CSS Grid for complex layout arrangements.
 .layout {
   display: grid;
   grid-template-areas:
-    "header header header"
-    "sidebar main aside"
-    "footer footer footer";
+    'header header header'
+    'sidebar main aside'
+    'footer footer footer';
   grid-template-columns: 280px 1fr 320px;
   grid-template-rows: auto 1fr auto;
   min-height: 100vh;
@@ -461,8 +458,8 @@ const props = withDefaults(defineProps<Props>(), {
   showSidebar: true,
   showHeader: true,
   showFooter: true,
-  sidebarWidth: "280px",
-  headerHeight: "64px",
+  sidebarWidth: '280px',
+  headerHeight: '64px',
 });
 </script>
 ```
@@ -555,10 +552,7 @@ Compose layouts from smaller, reusable components.
 ```vue
 <template>
   <div class="layout layout--sidebar-overlay">
-    <aside
-      class="layout__sidebar"
-      :class="{ 'layout__sidebar--open': isSidebarOpen }"
-    >
+    <aside class="layout__sidebar" :class="{ 'layout__sidebar--open': isSidebarOpen }">
       <slot name="sidebar" />
     </aside>
 
@@ -571,7 +565,7 @@ Compose layouts from smaller, reusable components.
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref } from 'vue';
 
 const isSidebarOpen = ref(false);
 
@@ -679,9 +673,9 @@ const closeSidebar = () => {
 </template>
 
 <script setup lang="ts">
-import DefaultLayout from "@/layouts/DefaultLayout.vue";
-import DashboardSidebar from "@/components/DashboardSidebar.vue";
-import DashboardFooter from "@/components/DashboardFooter.vue";
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
+import DashboardSidebar from '@/components/DashboardSidebar.vue';
+import DashboardFooter from '@/components/DashboardFooter.vue';
 </script>
 ```
 
@@ -698,16 +692,14 @@ import DashboardFooter from "@/components/DashboardFooter.vue";
     <LoginForm />
 
     <template #footer>
-      <p>
-        Don't have an account? <router-link to="/register">Sign up</router-link>
-      </p>
+      <p>Don't have an account? <router-link to="/register">Sign up</router-link></p>
     </template>
   </AuthLayout>
 </template>
 
 <script setup lang="ts">
-import AuthLayout from "@/layouts/AuthLayout.vue";
-import LoginForm from "@/components/LoginForm.vue";
+import AuthLayout from '@/layouts/AuthLayout.vue';
+import LoginForm from '@/components/LoginForm.vue';
 </script>
 ```
 
@@ -715,13 +707,12 @@ import LoginForm from "@/components/LoginForm.vue";
 
 ```vue
 <!-- layouts/__tests__/DefaultLayout.test.ts -->
-import { describe, it, expect } from 'vitest' import { mount } from
-'@vue/test-utils' import DefaultLayout from '../DefaultLayout.vue'
-describe('DefaultLayout', () => { it('renders header slot', () => { const
-wrapper = mount(DefaultLayout, { slots: { header: '
+import { describe, it, expect } from 'vitest' import { mount } from '@vue/test-utils' import
+DefaultLayout from '../DefaultLayout.vue' describe('DefaultLayout', () => { it('renders header
+slot', () => { const wrapper = mount(DefaultLayout, { slots: { header: '
 <div>Header Content</div>
-' } }) expect(wrapper.text()).toContain('Header Content') }) it('renders default
-content', () => { const wrapper = mount(DefaultLayout, { slots: { default: '
+' } }) expect(wrapper.text()).toContain('Header Content') }) it('renders default content', () => {
+const wrapper = mount(DefaultLayout, { slots: { default: '
 <div>Main Content</div>
 ' } }) expect(wrapper.text()).toContain('Main Content') }) })
 ```

@@ -82,11 +82,11 @@ pages/
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
-import { useUser } from "@/composables/useUser";
-import LoadingSpinner from "@/components/ui/LoadingSpinner.vue";
-import ErrorMessage from "@/components/ui/ErrorMessage.vue";
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import { useUser } from '@/composables/useUser';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import ErrorMessage from '@/components/ui/ErrorMessage.vue';
 
 // Route
 const route = useRoute();
@@ -105,7 +105,7 @@ const fetchData = async () => {
     error.value = null;
     // Fetch page data
   } catch (err) {
-    error.value = err instanceof Error ? err.message : "Failed to load data";
+    error.value = err instanceof Error ? err.message : 'Failed to load data';
   } finally {
     isLoading.value = false;
   }
@@ -173,20 +173,18 @@ onMounted(() => {
           Don't have an account?
           <router-link to="/register" class="auth-link">Sign up</router-link>
         </p>
-        <router-link to="/forgot-password" class="auth-link">
-          Forgot your password?
-        </router-link>
+        <router-link to="/forgot-password" class="auth-link"> Forgot your password? </router-link>
       </div>
     </template>
   </AuthLayout>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useAuth } from "@/composables/useAuth";
-import AuthLayout from "@/layouts/AuthLayout.vue";
-import LoginForm from "@/components/auth/LoginForm.vue";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useAuth } from '@/composables/useAuth';
+import AuthLayout from '@/layouts/AuthLayout.vue';
+import LoginForm from '@/components/auth/LoginForm.vue';
 
 // Router
 const router = useRouter();
@@ -205,9 +203,9 @@ const handleLogin = async (credentials: LoginCredentials) => {
     error.value = null;
 
     await login(credentials);
-    router.push("/dashboard");
+    router.push('/dashboard');
   } catch (err) {
-    error.value = err instanceof Error ? err.message : "Login failed";
+    error.value = err instanceof Error ? err.message : 'Login failed';
   } finally {
     isLoading.value = false;
   }
@@ -246,11 +244,7 @@ const handleLogin = async (credentials: LoginCredentials) => {
 <template>
   <ChatLayout>
     <template #sidebar>
-      <ChatSidebar
-        :rooms="rooms"
-        :current-room-id="roomId"
-        @select-room="handleRoomSelect"
-      />
+      <ChatSidebar :rooms="rooms" :current-room-id="roomId" @select-room="handleRoomSelect" />
     </template>
 
     <template #main>
@@ -263,11 +257,7 @@ const handleLogin = async (credentials: LoginCredentials) => {
         />
 
         <!-- Messages -->
-        <ChatMessages
-          :messages="messages"
-          :loading="isLoading"
-          @load-more="loadMoreMessages"
-        />
+        <ChatMessages :messages="messages" :loading="isLoading" @load-more="loadMoreMessages" />
 
         <!-- Message Input -->
         <ChatInput :disabled="!currentRoom" @send-message="sendMessage" />
@@ -285,15 +275,15 @@ const handleLogin = async (credentials: LoginCredentials) => {
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useChat } from "@/composables/useChat";
-import ChatLayout from "@/layouts/ChatLayout.vue";
-import ChatSidebar from "@/components/chat/ChatSidebar.vue";
-import ChatHeader from "@/components/chat/ChatHeader.vue";
-import ChatMessages from "@/components/chat/ChatMessages.vue";
-import ChatInput from "@/components/chat/ChatInput.vue";
-import ChatSettingsModal from "@/components/chat/ChatSettingsModal.vue";
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useChat } from '@/composables/useChat';
+import ChatLayout from '@/layouts/ChatLayout.vue';
+import ChatSidebar from '@/components/chat/ChatSidebar.vue';
+import ChatHeader from '@/components/chat/ChatHeader.vue';
+import ChatMessages from '@/components/chat/ChatMessages.vue';
+import ChatInput from '@/components/chat/ChatInput.vue';
+import ChatSettingsModal from '@/components/chat/ChatSettingsModal.vue';
 
 // Route
 const route = useRoute();
@@ -342,7 +332,7 @@ const sendMessage = async (content: string) => {
   try {
     await sendChatMessage(currentRoom.value.id, content);
   } catch (error) {
-    console.error("Failed to send message:", error);
+    console.error('Failed to send message:', error);
   }
 };
 
@@ -352,7 +342,7 @@ const loadMoreMessages = async () => {
   try {
     await loadMessages(currentRoom.value.id);
   } catch (error) {
-    console.error("Failed to load messages:", error);
+    console.error('Failed to load messages:', error);
   }
 };
 
@@ -412,8 +402,8 @@ Wrap page content in appropriate layouts.
 </template>
 
 <script setup lang="ts">
-import DashboardLayout from "@/layouts/DashboardLayout.vue";
-import UserProfileForm from "@/components/user/UserProfileForm.vue";
+import DashboardLayout from '@/layouts/DashboardLayout.vue';
+import UserProfileForm from '@/components/user/UserProfileForm.vue';
 </script>
 ```
 
@@ -445,8 +435,8 @@ Extract business logic into composables.
 
 ```vue
 <script setup lang="ts">
-import { useUser } from "@/composables/useUser";
-import { useChat } from "@/composables/useChat";
+import { useUser } from '@/composables/useUser';
+import { useChat } from '@/composables/useChat';
 
 const { user, updateProfile } = useUser();
 const { rooms, joinRoom } = useChat();
@@ -459,8 +449,8 @@ Properly handle route parameters and navigation.
 
 ```vue
 <script setup lang="ts">
-import { computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
@@ -479,7 +469,7 @@ Clean up subscriptions and listeners on unmount.
 
 ```vue
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted } from 'vue';
 
 let subscription: Subscription;
 
@@ -503,9 +493,7 @@ onUnmounted(() => {
   <div class="page">
     <header class="page__header">
       <h1>Users</h1>
-      <button @click="openCreateModal" class="btn btn--primary">
-        Add User
-      </button>
+      <button @click="openCreateModal" class="btn btn--primary">Add User</button>
     </header>
 
     <div class="page__filters">
@@ -528,34 +516,26 @@ onUnmounted(() => {
       />
     </div>
 
-    <UserModal
-      v-if="showModal"
-      :user="selectedUser"
-      @close="closeModal"
-      @save="saveUser"
-    />
+    <UserModal v-if="showModal" :user="selectedUser" @close="closeModal" @save="saveUser" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useUsers } from "@/composables/useUsers";
+import { ref, computed } from 'vue';
+import { useUsers } from '@/composables/useUsers';
 
 const { users, isLoading, createUser, updateUser, deleteUser } = useUsers();
 
-const searchQuery = ref("");
-const statusFilter = ref("all");
+const searchQuery = ref('');
+const statusFilter = ref('all');
 const currentPage = ref(1);
 const showModal = ref(false);
 const selectedUser = ref<User | null>(null);
 
 const filteredUsers = computed(() => {
   return users.value.filter((user) => {
-    const matchesSearch = user.name
-      .toLowerCase()
-      .includes(searchQuery.value.toLowerCase());
-    const matchesStatus =
-      statusFilter.value === "all" || user.status === statusFilter.value;
+    const matchesSearch = user.name.toLowerCase().includes(searchQuery.value.toLowerCase());
+    const matchesStatus = statusFilter.value === 'all' || user.status === statusFilter.value;
     return matchesSearch && matchesStatus;
   });
 });
@@ -584,7 +564,7 @@ const saveUser = async (userData: Partial<User>) => {
     }
     closeModal();
   } catch (error) {
-    console.error("Failed to save user:", error);
+    console.error('Failed to save user:', error);
   }
 };
 </script>
@@ -600,7 +580,7 @@ const saveUser = async (userData: Partial<User>) => {
       <div class="page__breadcrumb">
         <router-link to="/users">Users</router-link>
         <span>/</span>
-        <span>{{ user?.name || "Loading..." }}</span>
+        <span>{{ user?.name || 'Loading...' }}</span>
       </div>
 
       <div class="page__actions">
@@ -622,19 +602,14 @@ const saveUser = async (userData: Partial<User>) => {
       <UserActivity :user-id="user.id" />
     </div>
 
-    <UserModal
-      v-if="showEditModal"
-      :user="user"
-      @close="closeEditModal"
-      @save="saveUser"
-    />
+    <UserModal v-if="showEditModal" :user="user" @close="closeEditModal" @save="saveUser" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useUsers } from "@/composables/useUsers";
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useUsers } from '@/composables/useUsers';
 
 const route = useRoute();
 const router = useRouter();
@@ -651,7 +626,7 @@ const fetchUser = async () => {
     error.value = null;
     user.value = await getUser(route.params.userId as string);
   } catch (err) {
-    error.value = err instanceof Error ? err.message : "Failed to load user";
+    error.value = err instanceof Error ? err.message : 'Failed to load user';
   } finally {
     isLoading.value = false;
   }
@@ -671,18 +646,18 @@ const saveUser = async (userData: Partial<User>) => {
     user.value = { ...user.value!, ...userData };
     closeEditModal();
   } catch (error) {
-    console.error("Failed to update user:", error);
+    console.error('Failed to update user:', error);
   }
 };
 
 const deleteUser = async () => {
-  if (!confirm("Are you sure you want to delete this user?")) return;
+  if (!confirm('Are you sure you want to delete this user?')) return;
 
   try {
     await deleteUser(user.value!.id);
-    router.push("/users");
+    router.push('/users');
   } catch (error) {
-    console.error("Failed to delete user:", error);
+    console.error('Failed to delete user:', error);
   }
 };
 
@@ -699,7 +674,7 @@ onMounted(() => {
 <template>
   <div class="page">
     <header class="page__header">
-      <h1>{{ isEditing ? "Edit User" : "Create User" }}</h1>
+      <h1>{{ isEditing ? 'Edit User' : 'Create User' }}</h1>
     </header>
 
     <div class="page__content">
@@ -715,9 +690,9 @@ onMounted(() => {
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useUsers } from "@/composables/useUsers";
+import { ref, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useUsers } from '@/composables/useUsers';
 
 const route = useRoute();
 const router = useRouter();
@@ -740,7 +715,7 @@ const handleSubmit = async (userData: Partial<User>) => {
       await createUser(userData);
     }
 
-    router.push("/users");
+    router.push('/users');
   } catch (err) {
     if (err instanceof Error) {
       errors.value = { general: err.message };
@@ -779,7 +754,7 @@ const handleCancel = () => {
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
@@ -828,13 +803,12 @@ const goBack = () => {
 
 ```vue
 <!-- pages/__tests__/Dashboard.test.ts -->
-import { describe, it, expect, vi } from 'vitest' import { mount } from
-'@vue/test-utils' import { createRouter, createWebHistory } from 'vue-router'
-import Dashboard from '../Dashboard.vue' const router = createRouter({ history:
-createWebHistory(), routes: [ { path: '/dashboard', component: Dashboard } ] })
-describe('Dashboard', () => { it('renders dashboard content', async () => {
-const wrapper = mount(Dashboard, { global: { plugins: [router] } })
-expect(wrapper.find('.page__title').text()).toBe('Dashboard') }) it('shows
-loading state initially', () => { const wrapper = mount(Dashboard)
-expect(wrapper.find('.page__loading').exists()).toBe(true) }) })
+import { describe, it, expect, vi } from 'vitest' import { mount } from '@vue/test-utils' import {
+createRouter, createWebHistory } from 'vue-router' import Dashboard from '../Dashboard.vue' const
+router = createRouter({ history: createWebHistory(), routes: [ { path: '/dashboard', component:
+Dashboard } ] }) describe('Dashboard', () => { it('renders dashboard content', async () => { const
+wrapper = mount(Dashboard, { global: { plugins: [router] } })
+expect(wrapper.find('.page__title').text()).toBe('Dashboard') }) it('shows loading state initially',
+() => { const wrapper = mount(Dashboard) expect(wrapper.find('.page__loading').exists()).toBe(true)
+}) })
 ```

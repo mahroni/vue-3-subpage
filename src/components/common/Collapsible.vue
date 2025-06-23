@@ -1,23 +1,26 @@
 <template>
-  <div class="bg-white overflow-hidden py-[18px] px-6">
+  <div class="overflow-hidden bg-white px-6 py-[18px]">
     <!-- Collapsible Header -->
     <div
-      class="flex items-center justify-between cursor-pointer select-none"
-      @click="toggleCollapse">
+      class="flex cursor-pointer items-center justify-between select-none"
+      @click="toggleCollapse"
+    >
       <!-- Slot for the title/header content -->
-      <div class="font-semibold text-text-title text-sm">
+      <div class="text-text-title text-sm font-semibold">
         <slot name="title">{{ title }}</slot>
       </div>
       <!-- Arrow icon, rotates based on collapse state -->
       <ArrowIcon
         :class="{ 'rotate-180': !isCollapsed }"
-        class="w-5 h-5 text-gray-600 transition-transform duration-300 ease-in-out" />
+        class="h-5 w-5 text-gray-600 transition-transform duration-300 ease-in-out"
+      />
     </div>
 
     <div
       ref="contentWrapper"
       :style="{ maxHeight: contentMaxHeight }"
-      class="transition-all duration-300 ease-in-out">
+      class="transition-all duration-300 ease-in-out"
+    >
       <!-- Slot for the collapsible content -->
       <div class="py-4">
         <slot></slot>
@@ -27,8 +30,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
-import ArrowIcon from "../icons/ArrowIcon.vue";
+import { ref, computed, onMounted } from 'vue';
+import ArrowIcon from '../icons/ArrowIcon.vue';
 
 // Define component props using defineProps
 interface Props {
@@ -37,7 +40,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: "Collapsible Section",
+  title: 'Collapsible Section',
   initiallyCollapsed: true,
 });
 
@@ -54,13 +57,13 @@ const contentMaxHeight = computed(() => {
   // For precise animation, one might calculate the actual scrollHeight
   // when expanding, but 'max-h-screen' generally works well with Tailwind.
   if (isCollapsed.value) {
-    return "0";
+    return '0';
   } else {
     // A large enough value to ensure content is visible.
     // In a real application with extremely long content, you might
     // compute `contentWrapper.value?.scrollHeight + 'px'` here
     // after content is rendered, but it can be tricky with transitions.
-    return "1000px"; // Using a fixed large value for simplicity and typical use cases.
+    return '1000px'; // Using a fixed large value for simplicity and typical use cases.
   }
 });
 

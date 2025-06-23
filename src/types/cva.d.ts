@@ -10,4 +10,4 @@ declare module 'class-variance-authority' {
       defaultVariants?: Record<string, string | boolean>;
     }
   ): (props?: Record<string, string | boolean>) => string;
-} 
+}

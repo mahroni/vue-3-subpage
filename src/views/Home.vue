@@ -19,88 +19,92 @@ const handleClick = () => {
 
 const isChecked = ref(false);
 
-const activeTab = ref('Tab 1')
-const pokemonDetail = ref<any>({})
-const pokemon = ref<any[]>([])
+const activeTab = ref('Tab 1');
+const pokemonDetail = ref<any>({});
+const pokemon = ref<any[]>([]);
 async function getPokemon() {
-  const data = await apiV2.get<any>('/pokemon?limit=10&offset=0')
-  pokemon.value = data.data?.results || []
+  const data = await apiV2.get<any>('/pokemon?limit=10&offset=0');
+  pokemon.value = data.data?.results || [];
 }
 
 async function getPokemonDetail(url: string) {
-  const data = await apiV2.get<any>(url)
-  pokemonDetail.value = data.data || {}
+  const data = await apiV2.get<any>(url);
+  pokemonDetail.value = data.data || {};
 }
 
-const inputValue = ref('')
-const isChecked2 = ref(false)
+const inputValue = ref('');
+const isChecked2 = ref(false);
 
 const faqItems = ref([
   {
     id: 'faq-1',
     title: 'What is your refund policy?',
-    content: '<p class="text-gray-700">Our refund policy allows returns within 30 days of purchase. Please see our full terms for more details.</p>',
+    content:
+      '<p class="text-gray-700">Our refund policy allows returns within 30 days of purchase. Please see our full terms for more details.</p>',
     initiallyOpen: true,
   },
   {
     id: 'faq-2',
     title: 'How do I contact support?',
-    content: '<p class="text-gray-700">You can contact our support team via email at support@example.com or by calling 1-800-555-1234.</p>',
+    content:
+      '<p class="text-gray-700">You can contact our support team via email at support@example.com or by calling 1-800-555-1234.</p>',
   },
   {
     id: 'faq-3',
     title: 'Can I change my password?',
-    content: '<p class="text-gray-700">Yes, you can change your password from your account settings page.</p>',
+    content:
+      '<p class="text-gray-700">Yes, you can change your password from your account settings page.</p>',
   },
 ]);
 
-
-const tabs = [{
-  label: 'Tab 1',
-  icon: 'broadcast',
-  children: [
-    {
-      label: 'Tab 1 Apa Yaa',
-      icon: 'close',
-    },
-    {
-      label: 'Tab 2',
-      icon: 'close',
-    }
-  ],
-},
-{
-  label: 'Tab 2',
-  icon: 'broadcast',
-
-},
-{
-  label: 'Tab 3',
-  icon: 'broadcast',
-  children: [
-    {
-      label: 'Tab 1',
-      icon: 'close',
-    },
-    {
-      label: 'Tab 2',
-      icon: 'close',
-    }
-  ],
-},
-]
+const tabs = [
+  {
+    label: 'Tab 1',
+    icon: 'broadcast',
+    children: [
+      {
+        label: 'Tab 1 Apa Yaa',
+        icon: 'close',
+      },
+      {
+        label: 'Tab 2',
+        icon: 'close',
+      },
+    ],
+  },
+  {
+    label: 'Tab 2',
+    icon: 'broadcast',
+  },
+  {
+    label: 'Tab 3',
+    icon: 'broadcast',
+    children: [
+      {
+        label: 'Tab 1',
+        icon: 'close',
+      },
+      {
+        label: 'Tab 2',
+        icon: 'close',
+      },
+    ],
+  },
+];
 const subTabsActive = ref<any>(tabs[0]);
 
 onMounted(() => {
-  getPokemon()
-})
+  getPokemon();
+});
 </script>
 
 <template>
   <div class="home">
     <h1 class="text-3xl font-bold underline">Home Page</h1>
-    <p class="mt-4 text-gray-600">Welcome to the home page of your Vue 3 + TypeScript + Vue Router application!</p>
-    <div class="mt-4 flex gap-4 justify-center">
+    <p class="mt-4 text-gray-600">
+      Welcome to the home page of your Vue 3 + TypeScript + Vue Router application!
+    </p>
+    <div class="mt-4 flex justify-center gap-4">
       <Button @click="handleClick" intent="primary" size="medium">Click me</Button>
       <Button intent="primary" size="medium" disabled>Click me</Button>
       <Button intent="secondary" size="medium">Click me</Button>
@@ -109,7 +113,7 @@ onMounted(() => {
       <Button intent="danger" size="medium" disabled>Click me</Button>
     </div>
 
-    <div class="mt-4 flex gap-4 justify-center">
+    <div class="mt-4 flex justify-center gap-4">
       <Button intent="primary" size="medium" shape="rectangular">Click me</Button>
       <Button intent="primary" size="medium" shape="rectangular" disabled>Click me</Button>
       <Button intent="secondary" size="medium" shape="rectangular">Click me</Button>
@@ -118,7 +122,7 @@ onMounted(() => {
       <Button intent="danger" size="medium" shape="rectangular" disabled>Click me</Button>
     </div>
 
-    <div class="mt-4 flex gap-4 justify-center">
+    <div class="mt-4 flex justify-center gap-4">
       <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
       <Button intent="flat" size="medium" shape="rounded" to="/about" disabled>Click me</Button>
       <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
@@ -126,7 +130,7 @@ onMounted(() => {
       <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
     </div>
 
-    <div class="mt-4 flex gap-4 justify-center">
+    <div class="mt-4 flex justify-center gap-4">
       <Switch v-model="isChecked" size="medium" variant="success" aria-label="Success switch" />
       <Switch v-model="isChecked" size="medium" variant="warning" aria-label="Warning switch" />
       <Switch v-model="isChecked" size="medium" variant="danger" aria-label="Danger switch" />
@@ -141,53 +145,67 @@ onMounted(() => {
       <SubTab :tabs="tabs" v-model="subTabsActive" />
     </div>
 
-    <div class="flex flex-col gap-4 text-sm font-medium text-left mt-4">
+    <div class="mt-4 flex flex-col gap-4 text-left text-sm font-medium">
       <Banner intent="positive" closeable>
-        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+        <div>
+          To learn more regarding Line Messenger Integration, you can check this Documentation.
+        </div>
       </Banner>
 
       <Banner intent="negative" closeable>
-        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+        <div>
+          To learn more regarding Line Messenger Integration, you can check this Documentation.
+        </div>
       </Banner>
 
       <Banner intent="warning" closeable>
-        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+        <div>
+          To learn more regarding Line Messenger Integration, you can check this Documentation.
+        </div>
       </Banner>
 
       <Banner intent="positive" type="outline" closeable>
-        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+        <div>
+          To learn more regarding Line Messenger Integration, you can check this Documentation.
+        </div>
       </Banner>
 
       <Banner intent="negative" type="outline" closeable>
-        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+        <div>
+          To learn more regarding Line Messenger Integration, you can check this Documentation.
+        </div>
       </Banner>
 
       <Banner intent="warning" type="outline" closeable>
-        <div>To learn more regarding Line Messenger Integration, you can check this Documentation.</div>
+        <div>
+          To learn more regarding Line Messenger Integration, you can check this Documentation.
+        </div>
       </Banner>
     </div>
 
-    <div class="text-left mt-4">
+    <div class="mt-4 text-left">
       <Input v-model="inputValue" placeholder="Enter your name" />
       <Input v-model="inputValue" placeholder="Enter your name" disabled />
-      <Input v-model="inputValue" placeholder="Enter your name" error errorMessage="This is an error message" />
+      <Input
+        v-model="inputValue"
+        placeholder="Enter your name"
+        error
+        errorMessage="This is an error message"
+      />
     </div>
 
-    <div class="text-left mt-4 flex flex-col gap-2">
+    <div class="mt-4 flex flex-col gap-2 text-left">
       <Checkbox v-model="isChecked2" label="Checkbox" />
       <Checkbox v-model="isChecked2" label="Checkbox" disabled />
     </div>
 
     <div class="mt-4">
       <Collapsible>
-        <template #title>
-          Auto Responder
-        </template>
+        <template #title> Auto Responder </template>
         <p class="text-gray-700">
           This is the content for the auto-responder settings. You can put any HTML elements here.
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
-          magna
-          aliqua.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua.
         </p>
       </Collapsible>
     </div>
@@ -202,21 +220,30 @@ onMounted(() => {
           <Badge @click="getPokemonDetail(p.url)" intent="danger" size="medium" :disabled="true">
             {{ p.name }}
           </Badge>
-
         </li>
       </ul>
-      <div v-if="pokemonDetail && Object.keys(pokemonDetail).length > 0" class="mt-4 p-4 bg-white rounded-lg shadow-md">
-        <h1 class="text-2xl font-bold capitalize mb-4">{{ pokemonDetail.name }}
-        </h1>
+      <div
+        v-if="pokemonDetail && Object.keys(pokemonDetail).length > 0"
+        class="mt-4 rounded-lg bg-white p-4 shadow-md"
+      >
+        <h1 class="mb-4 text-2xl font-bold capitalize">{{ pokemonDetail.name }}</h1>
 
-        <img :src="pokemonDetail?.sprites?.back_default" :alt="pokemonDetail.name" class="mx-auto rounded-lg shadow-sm"
-          width="150" height="150">
+        <img
+          :src="pokemonDetail?.sprites?.back_default"
+          :alt="pokemonDetail.name"
+          class="mx-auto rounded-lg shadow-sm"
+          width="150"
+          height="150"
+        />
 
         <div v-if="pokemonDetail?.abilities" class="mt-6">
-          <h3 class="text-xl font-semibold mb-2">Abilities</h3>
-          <ul class="flex flex-wrap gap-2 justify-center">
-            <li v-for="a in pokemonDetail?.abilities" :key="a?.ability?.name"
-              class="px-3 py-1 bg-gray-100 rounded-full text-gray-700 capitalize">
+          <h3 class="mb-2 text-xl font-semibold">Abilities</h3>
+          <ul class="flex flex-wrap justify-center gap-2">
+            <li
+              v-for="a in pokemonDetail?.abilities"
+              :key="a?.ability?.name"
+              class="rounded-full bg-gray-100 px-3 py-1 text-gray-700 capitalize"
+            >
               {{ a?.ability?.name }}
             </li>
           </ul>

@@ -32,21 +32,21 @@ VITE_API_BASE_URL_V3=https://your-api-v3.com
 The project now uses Pinia to manage app configuration including custom headers:
 
 ```typescript
-import { useAppConfigStore } from "@/stores/app-config";
+import { useAppConfigStore } from '@/stores/app-config';
 
 const appConfigStore = useAppConfigStore();
 
 // Set complete configuration
 appConfigStore.setConfig({
-  userToken: "your-user-token",
-  appId: "your-app-id",
-  appVersion: "1.0.0",
+  userToken: 'your-user-token',
+  appId: 'your-app-id',
+  appVersion: '1.0.0',
 });
 
 // Or set individual values
-appConfigStore.setUserToken("token");
-appConfigStore.setAppId("app-id");
-appConfigStore.setAppVersion("1.0.0");
+appConfigStore.setUserToken('token');
+appConfigStore.setAppId('app-id');
+appConfigStore.setAppVersion('1.0.0');
 
 // Get headers for API calls
 const headers = appConfigStore.getHeaders();
@@ -63,38 +63,38 @@ const headers = appConfigStore.getHeaders();
 ### Method 1: Initialize with configuration during app creation
 
 ```typescript
-import { createQiscusApp } from "@/main";
+import { createQiscusApp } from '@/main';
 
-const app = createQiscusApp("#app", "your-app-id", {
-  userToken: "your-user-token",
-  appId: "your-app-id",
-  appVersion: "1.0.0",
+const app = createQiscusApp('#app', 'your-app-id', {
+  userToken: 'your-user-token',
+  appId: 'your-app-id',
+  appVersion: '1.0.0',
 });
 ```
 
 ### Method 2: Initialize without configuration (fallback to localStorage)
 
 ```typescript
-import { createQiscusApp } from "@/main";
+import { createQiscusApp } from '@/main';
 
-const app = createQiscusApp("#app", "your-app-id");
+const app = createQiscusApp('#app', 'your-app-id');
 // Will use localStorage.getItem('auth_token') for Authorization header
 ```
 
 ### Method 3: Set configuration after app creation
 
 ```typescript
-import { createQiscusApp } from "@/main";
-import { useAppConfigStore } from "@/stores/app-config";
+import { createQiscusApp } from '@/main';
+import { useAppConfigStore } from '@/stores/app-config';
 
-const app = createQiscusApp("#app", "your-app-id");
+const app = createQiscusApp('#app', 'your-app-id');
 
 // Set configuration after app is created
 const appConfigStore = useAppConfigStore();
 appConfigStore.setConfig({
-  userToken: "your-user-token",
-  appId: "your-app-id",
-  appVersion: "1.0.0",
+  userToken: 'your-user-token',
+  appId: 'your-app-id',
+  appVersion: '1.0.0',
 });
 ```
 
@@ -119,14 +119,14 @@ import {
   apiV3, // API v3 instance
   apiCall, // Typed helper function
   createAxiosInstance, // Factory function for custom instances
-} from "@/utils/axios";
+} from '@/utils/axios';
 ```
 
 ```typescript
 import {
   useAppConfigStore, // Pinia store for app configuration
   type AppConfig, // TypeScript interface for app config
-} from "@/stores/app-config";
+} from '@/stores/app-config';
 ```
 
 ## Usage Examples
@@ -134,31 +134,31 @@ import {
 ### Basic Usage with Custom Headers
 
 ```typescript
-import { apiV1, apiV2, apiV3 } from "@/utils/axios";
+import { apiV1, apiV2, apiV3 } from '@/utils/axios';
 
 // API v1 calls (will include custom headers from Pinia store)
-const users = await apiV1.get("/users");
+const users = await apiV1.get('/users');
 const user = await apiV1.get(`/users/${id}`);
 
 // API v2 calls
-const posts = await apiV2.get("/posts");
-const post = await apiV2.post("/posts", postData);
+const posts = await apiV2.get('/posts');
+const post = await apiV2.post('/posts', postData);
 
 // API v3 calls
-const products = await apiV3.get("/products");
+const products = await apiV3.get('/products');
 const product = await apiV3.put(`/products/${id}`, productData);
 ```
 
 ### Using Service Functions
 
 ```typescript
-import { userApi, postApi, productApi } from "@/utils/api-examples";
+import { userApi, postApi, productApi } from '@/utils/api-examples';
 
 // User operations (API v1)
 const users = await userApi.getUsers();
 const newUser = await userApi.createUser({
-  name: "John",
-  email: "john@example.com",
+  name: 'John',
+  email: 'john@example.com',
 });
 
 // Post operations (API v2)
@@ -167,19 +167,19 @@ const userPosts = await postApi.getPostsByUser(userId);
 
 // Product operations (API v3)
 const products = await productApi.getProducts();
-const electronics = await productApi.getProductsByCategory("electronics");
+const electronics = await productApi.getProductsByCategory('electronics');
 ```
 
 ### Using Typed Helper Function
 
 ```typescript
-import { typedApiExamples } from "@/utils/api-examples";
+import { typedApiExamples } from '@/utils/api-examples';
 
 const result = await typedApiExamples.getUsersTyped();
 if (result.success) {
-  console.log("Users:", result.data);
+  console.log('Users:', result.data);
 } else {
-  console.error("Error:", result.error);
+  console.error('Error:', result.error);
 }
 ```
 
@@ -187,10 +187,10 @@ if (result.success) {
 
 ```vue
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { userApi } from "@/utils/api-examples";
-import { useAppConfigStore } from "@/stores/app-config";
-import type { User } from "@/utils/api-examples";
+import { ref, onMounted } from 'vue';
+import { userApi } from '@/utils/api-examples';
+import { useAppConfigStore } from '@/stores/app-config';
+import type { User } from '@/utils/api-examples';
 
 const users = ref<User[]>([]);
 const loading = ref(false);
@@ -216,7 +216,7 @@ onMounted(() => {
   if (isConfigured) {
     fetchUsers();
   } else {
-    error.value = "App not configured";
+    error.value = 'App not configured';
   }
 });
 </script>
@@ -229,9 +229,7 @@ onMounted(() => {
     <div v-else-if="loading">Loading...</div>
     <div v-else-if="error">Error: {{ error }}</div>
     <ul v-else>
-      <li v-for="user in users" :key="user.id">
-        {{ user.name }} ({{ user.email }})
-      </li>
+      <li v-for="user in users" :key="user.id">{{ user.name }} ({{ user.email }})</li>
     </ul>
   </div>
 </template>
@@ -255,15 +253,15 @@ The axios configuration automatically handles authentication and custom headers:
 ### Header Management
 
 ```typescript
-import { useAppConfigStore } from "@/stores/app-config";
+import { useAppConfigStore } from '@/stores/app-config';
 
 const appConfigStore = useAppConfigStore();
 
 // Set headers
 appConfigStore.setConfig({
-  userToken: "your-token",
-  appId: "your-app-id",
-  appVersion: "1.0.0",
+  userToken: 'your-token',
+  appId: 'your-app-id',
+  appVersion: '1.0.0',
 });
 
 // Get current headers
@@ -292,15 +290,15 @@ The configuration includes comprehensive error handling:
 ### Creating Custom Instances
 
 ```typescript
-import { createAxiosInstance } from "@/utils/axios";
+import { createAxiosInstance } from '@/utils/axios';
 
-const customApi = createAxiosInstance("https://custom-api.com", 15000);
+const customApi = createAxiosInstance('https://custom-api.com', 15000);
 ```
 
 ### Adding Custom Interceptors
 
 ```typescript
-import { apiV1 } from "@/utils/axios";
+import { apiV1 } from '@/utils/axios';
 
 // Add custom request interceptor
 apiV1.interceptors.request.use((config) => {
@@ -348,15 +346,15 @@ In development mode, all API requests and responses are logged to the console wi
 ### Configuration Check
 
 ```typescript
-import { useAppConfigStore } from "@/stores/app-config";
+import { useAppConfigStore } from '@/stores/app-config';
 
 const appConfigStore = useAppConfigStore();
 
 if (!appConfigStore.isConfigured()) {
-  console.error("App configuration is missing!");
-  console.log("Required: userToken, appId, appVersion");
+  console.error('App configuration is missing!');
+  console.log('Required: userToken, appId, appVersion');
 } else {
-  console.log("App is properly configured");
-  console.log("Headers:", appConfigStore.getHeaders());
+  console.log('App is properly configured');
+  console.log('Headers:', appConfigStore.getHeaders());
 }
 ```

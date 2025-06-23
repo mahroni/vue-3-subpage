@@ -9,7 +9,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
-    
+
     /* Type Resolution */
     "typeRoots": ["./node_modules/@types", "./src/types"]
   },

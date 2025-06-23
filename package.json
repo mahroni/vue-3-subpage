@@ -11,7 +11,10 @@
     "build-storybook": "storybook build",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "format:vue": "prettier --write \"src/**/*.{vue,ts,js}\""
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
@@ -35,6 +38,8 @@
     "@vitest/coverage-v8": "^3.2.4",
     "@vue/tsconfig": "^0.7.0",
     "playwright": "^1.53.1",
+    "prettier": "^3.6.0",
+    "prettier-plugin-tailwindcss": "^0.6.13",
     "storybook": "^9.0.12",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",

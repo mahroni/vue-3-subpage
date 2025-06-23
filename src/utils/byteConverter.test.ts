@@ -15,31 +15,31 @@ describe('Byte Converter Utils', () => {
       expect(convertBytes(0)).toEqual({
         value: 0,
         unit: 'B',
-        formatted: '0 B'
+        formatted: '0 B',
       });
 
       expect(convertBytes(500)).toEqual({
         value: 500,
         unit: 'B',
-        formatted: '500 B'
+        formatted: '500 B',
       });
 
       expect(convertBytes(1024)).toEqual({
         value: 1.02,
         unit: 'KB',
-        formatted: '1.02 KB'
+        formatted: '1.02 KB',
       });
 
       expect(convertBytes(1500000)).toEqual({
         value: 1.5,
         unit: 'MB',
-        formatted: '1.5 MB'
+        formatted: '1.5 MB',
       });
 
       expect(convertBytes(2147483648)).toEqual({
         value: 2.15,
         unit: 'GB',
-        formatted: '2.15 GB'
+        formatted: '2.15 GB',
       });
     });
 
@@ -47,19 +47,19 @@ describe('Byte Converter Utils', () => {
       expect(convertBytes(1024, { binary: true })).toEqual({
         value: 1,
         unit: 'KB',
-        formatted: '1 KB'
+        formatted: '1 KB',
       });
 
       expect(convertBytes(1048576, { binary: true })).toEqual({
         value: 1,
         unit: 'MB',
-        formatted: '1 MB'
+        formatted: '1 MB',
       });
 
       expect(convertBytes(1073741824, { binary: true })).toEqual({
         value: 1,
         unit: 'GB',
-        formatted: '1 GB'
+        formatted: '1 GB',
       });
     });
 
@@ -67,13 +67,13 @@ describe('Byte Converter Utils', () => {
       expect(convertBytes(1234, { precision: 0 })).toEqual({
         value: 1,
         unit: 'KB',
-        formatted: '1 KB'
+        formatted: '1 KB',
       });
 
       expect(convertBytes(1234, { precision: 4 })).toEqual({
         value: 1.234,
         unit: 'KB',
-        formatted: '1.234 KB'
+        formatted: '1.234 KB',
       });
     });
 
@@ -87,19 +87,19 @@ describe('Byte Converter Utils', () => {
       expect(convertByteUnit(1, 'KB', 'B')).toEqual({
         value: 1000,
         unit: 'B',
-        formatted: '1000 B'
+        formatted: '1000 B',
       });
 
       expect(convertByteUnit(1, 'MB', 'KB')).toEqual({
         value: 1000,
         unit: 'KB',
-        formatted: '1000 KB'
+        formatted: '1000 KB',
       });
 
       expect(convertByteUnit(2.5, 'GB', 'MB')).toEqual({
         value: 2500,
         unit: 'MB',
-        formatted: '2500 MB'
+        formatted: '2500 MB',
       });
     });
 
@@ -107,13 +107,13 @@ describe('Byte Converter Utils', () => {
       expect(convertByteUnit(1, 'KB', 'B', { binary: true })).toEqual({
         value: 1024,
         unit: 'B',
-        formatted: '1024 B'
+        formatted: '1024 B',
       });
 
       expect(convertByteUnit(1, 'MB', 'KB', { binary: true })).toEqual({
         value: 1024,
         unit: 'KB',
-        formatted: '1024 KB'
+        formatted: '1024 KB',
       });
     });
 
@@ -121,7 +121,7 @@ describe('Byte Converter Utils', () => {
       expect(convertByteUnit(5, 'MB', 'MB')).toEqual({
         value: 5,
         unit: 'MB',
-        formatted: '5 MB'
+        formatted: '5 MB',
       });
     });
 
@@ -129,7 +129,7 @@ describe('Byte Converter Utils', () => {
       expect(convertByteUnit(1.234567, 'MB', 'KB', { precision: 3 })).toEqual({
         value: 1234.567,
         unit: 'KB',
-        formatted: '1234.567 KB'
+        formatted: '1234.567 KB',
       });
     });
 
@@ -138,8 +138,12 @@ describe('Byte Converter Utils', () => {
     });
 
     it('should throw error for invalid units', () => {
-      expect(() => convertByteUnit(1, 'INVALID' as ByteUnit, 'MB')).toThrow('Invalid source unit: INVALID');
-      expect(() => convertByteUnit(1, 'KB', 'INVALID' as ByteUnit)).toThrow('Invalid target unit: INVALID');
+      expect(() => convertByteUnit(1, 'INVALID' as ByteUnit, 'MB')).toThrow(
+        'Invalid source unit: INVALID'
+      );
+      expect(() => convertByteUnit(1, 'KB', 'INVALID' as ByteUnit)).toThrow(
+        'Invalid target unit: INVALID'
+      );
     });
   });
 
@@ -181,19 +185,19 @@ describe('Byte Converter Utils', () => {
       expect(fromBytes(1000, 'B')).toEqual({
         value: 1000,
         unit: 'B',
-        formatted: '1000 B'
+        formatted: '1000 B',
       });
 
       expect(fromBytes(1000, 'KB')).toEqual({
         value: 1,
         unit: 'KB',
-        formatted: '1 KB'
+        formatted: '1 KB',
       });
 
       expect(fromBytes(1500000, 'MB')).toEqual({
         value: 1.5,
         unit: 'MB',
-        formatted: '1.5 MB'
+        formatted: '1.5 MB',
       });
     });
 
@@ -201,13 +205,13 @@ describe('Byte Converter Utils', () => {
       expect(fromBytes(1024, 'KB', { binary: true })).toEqual({
         value: 1,
         unit: 'KB',
-        formatted: '1 KB'
+        formatted: '1 KB',
       });
 
       expect(fromBytes(1048576, 'MB', { binary: true })).toEqual({
         value: 1,
         unit: 'MB',
-        formatted: '1 MB'
+        formatted: '1 MB',
       });
     });
 
@@ -215,7 +219,7 @@ describe('Byte Converter Utils', () => {
       expect(fromBytes(1234, 'KB', { precision: 4 })).toEqual({
         value: 1.234,
         unit: 'KB',
-        formatted: '1.234 KB'
+        formatted: '1.234 KB',
       });
     });
 
@@ -301,14 +305,14 @@ describe('Byte Converter Utils', () => {
       expect(convertBytes(999, { precision: 0 })).toEqual({
         value: 999,
         unit: 'B',
-        formatted: '999 B'
+        formatted: '999 B',
       });
 
       expect(convertBytes(1000, { precision: 0 })).toEqual({
         value: 1,
         unit: 'KB',
-        formatted: '1 KB'
+        formatted: '1 KB',
       });
     });
   });
-}); 
+});

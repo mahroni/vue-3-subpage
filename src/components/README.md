@@ -55,8 +55,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Emits
 interface Emits {
-  (e: "update", value: string): void;
-  (e: "close"): void;
+  (e: 'update', value: string): void;
+  (e: 'close'): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -70,7 +70,7 @@ const displayTitle = computed(() => `${props.title} (${count.value})`);
 
 // Methods
 const handleClick = () => {
-  emit("update", "new value");
+  emit('update', 'new value');
 };
 </script>
 ```
@@ -127,11 +127,11 @@ const handleClick = () => {
 
 ```typescript
 // index.ts in component directory
-export { default as UserProfile } from "./UserProfile.vue";
-export { default as ChatMessage } from "./ChatMessage.vue";
+export { default as UserProfile } from './UserProfile.vue';
+export { default as ChatMessage } from './ChatMessage.vue';
 
 // Usage in other components
-import { UserProfile, ChatMessage } from "@/components";
+import { UserProfile, ChatMessage } from '@/components';
 ```
 
 ## Common Patterns
@@ -168,8 +168,8 @@ import { UserProfile, ChatMessage } from "@/components";
 
 ```vue
 <script setup lang="ts">
-import { useUser } from "@/composables/useUser";
-import { useChat } from "@/composables/useChat";
+import { useUser } from '@/composables/useUser';
+import { useChat } from '@/composables/useChat';
 
 const { user } = useUser();
 const { messages, sendMessage } = useChat();
