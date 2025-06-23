@@ -60,7 +60,7 @@ const tabs = [{
   icon: 'broadcast',
   children: [
     {
-      label: 'Tab 1 Apa Yaa Ngebarkee',
+      label: 'Tab 1 Apa Yaa',
       icon: 'close',
     },
     {
