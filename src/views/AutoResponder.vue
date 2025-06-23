@@ -9,7 +9,7 @@
         New Integration - Qiscus Live Chat
       </h2>
     </div>
-    <Banner intent="negative" type="outline" closeable>
+    <Banner intent="negative" type="outline">
       <div class="flex gap-3 items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@
         </div>
       </div>
     </Banner>
-    <Banner intent="positive" closeable>
+    <Banner intent="positive">
       <div class="flex flex-col gap-[20px]">
         <div>
           <strong>Channel Auto Responder</strong> allows system to reply
@@ -62,7 +62,7 @@
         Channel Auto Responder 
         <span class="text-text-placeholder font-normal">(Optional)</span>
       </div>
-      <Banner intent="positive" closeable>
+      <Banner intent="positive">
         <div class="flex flex-col gap-[20px]">
           Note: If you activate this autoresponder then the autoresponder
           setting on the Settings - General page will not be active
