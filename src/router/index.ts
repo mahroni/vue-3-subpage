@@ -88,6 +88,11 @@ export function createRouter(appId?: string | number): Router {
       name: "About",
       component: () => import("../views/About.vue"),
     },
+    {
+      path: "/result",
+      name: "Result",
+      component: () => import("../views/QiscusLiveChatResult.vue"),
+    }
   ];
 
   // Use the provided appId or fall back to window.vueAppBaseId
