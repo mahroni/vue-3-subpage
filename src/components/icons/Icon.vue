@@ -3,16 +3,11 @@ import { computed } from 'vue';
 
 // Import icon components
 import CloseIcon from './CloseIcon.vue';
-import ArrowLeftIcon from './ArrowLeftIcon.vue';
-import ChatIcon from './ChatIcon.vue';
-import SearchIcon from './SearchIcon.vue';
-import CopyIcon from './CopyIcon.vue';
-import PlusIcon from './PlusIcon.vue';
-import ChevronRightIcon from './ChevronRightIcon.vue';
-import DoubleChevronRightIcon from './DoubleChevronRightIcon.vue';
-import ChevronLeftIcon from './ChevronLeftIcon.vue';
-import DoubleChevronLeftIcon from './DoubleChevronLeftIcon.vue';
-
+import BroadcastIcon from './BroadcastIcon.vue';
+import ArrowIcon from './ArrowIcon.vue';
+import UserIcon from './UserIcon.vue';
+import SettingIcon from './SettingIcon.vue';
+import HomeIcon from './HomeIcon.vue';
 interface IconProps {
   name: string;
   size?: number;
@@ -27,15 +22,11 @@ const props = withDefaults(defineProps<IconProps>(), {
 // Icon registry - maps icon names to components
 const iconRegistry = {
   close: CloseIcon,
-  'arrow-left': ArrowLeftIcon,
-  chat: ChatIcon,
-  search: SearchIcon,
-  copy: CopyIcon,
-  plus: PlusIcon,
-  'chevron-right': ChevronRightIcon,
-  'double-chevron-right': DoubleChevronRightIcon,
-  'chevron-left': ChevronLeftIcon,
-  'double-chevron-left': DoubleChevronLeftIcon,
+  broadcast: BroadcastIcon,
+  'arrow-down': ArrowIcon,
+  user: UserIcon,
+  setting: SettingIcon,
+  home: HomeIcon,
 };
 
 const iconComponent = computed(() => {

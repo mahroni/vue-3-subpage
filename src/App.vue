@@ -15,7 +15,7 @@
       </div>
     </nav> -->
 
-    <main class="container mx-auto py-8">
+    <main class="container py-8">
       <transition
         enter-active-class="transition-all duration-300 ease-out"
         enter-from-class="opacity-0 translate-x-5"
@@ -34,7 +34,7 @@
 <style scoped>
 #app {
   min-height: 100vh;
-  background-color: #f9fafb;
+  background-color: #ffffff;
 }
 
 .logo {

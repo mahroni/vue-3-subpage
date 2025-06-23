@@ -84,6 +84,16 @@ export function createRouter(appId?: string | number): Router {
       component: () => import('../views/AutoResponder.vue'),
     },
     {
+      path: '/widget',
+      name: 'widget',
+      component: () => import('../pages/integration/widget/WidgetLayout.vue'),
+    },
+    {
+      path: '/widget',
+      name: 'widget',
+      component: () => import('../pages/integration/widget/WidgetLayout.vue'),
+    },
+    {
       path: '/list-account',
       name: 'ListAccount',
       component: () => import('@/pages/ListAccount.vue'),
@@ -92,6 +102,16 @@ export function createRouter(appId?: string | number): Router {
       path: '/about',
       name: 'About',
       component: () => import('../views/About.vue'),
+    },
+    {
+      path: '/home',
+      name: 'HomeView',
+      component: () => import('../views/Home.vue'),
+    },
+    {
+      path: '/home',
+      name: 'HomeView',
+      component: () => import('../views/Home.vue'),
     },
   ];
 

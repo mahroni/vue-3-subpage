@@ -11,6 +11,7 @@ import Input from '../components/form/Input.vue';
 import Checkbox from '../components/common/Checkbox.vue';
 import Collapsible from '../components/common/Collapsible.vue';
 import CollapsibleGroup from '../components/common/CollapsibleGroup.vue';
+import SubTab from '../components/common/Tabs/SubTab.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -55,6 +56,42 @@ const faqItems = ref([
       '<p class="text-gray-700">Yes, you can change your password from your account settings page.</p>',
   },
 ]);
+
+const tabs = [
+  {
+    label: 'Tab 1',
+    icon: 'broadcast',
+    children: [
+      {
+        label: 'Tab 1 Apa Yaa',
+        icon: 'close',
+      },
+      {
+        label: 'Tab 2',
+        icon: 'close',
+      },
+    ],
+  },
+  {
+    label: 'Tab 2',
+    icon: 'broadcast',
+  },
+  {
+    label: 'Tab 3',
+    icon: 'broadcast',
+    children: [
+      {
+        label: 'Tab 1',
+        icon: 'close',
+      },
+      {
+        label: 'Tab 2',
+        icon: 'close',
+      },
+    ],
+  },
+];
+const subTabsActive = ref<any>(tabs[0]);
 
 onMounted(() => {
   getPokemon();
@@ -102,6 +139,10 @@ onMounted(() => {
 
     <div>
       <MainTab :tabs="['Tab 1', 'Tab 2', 'Tab 3']" v-model="activeTab" />
+    </div>
+
+    <div class="mt-4">
+      <SubTab :tabs="tabs" v-model="subTabsActive" />
     </div>
 
     <div class="mt-4 flex flex-col gap-4 text-left text-sm font-medium">
