@@ -1,7 +1,8 @@
 import { apiV2 } from './../utils/axios';
 
 // API v1 examples
-export const channelApi = {
-  // Get all users
-  getUsers: () => apiV2.get<any[]>('/channels'),
+export const whatsappChannelApi = {
+  // Get all channels
+  getChannels: () => apiV2.get<any[]>('/channels'),
+  updateChannelStatus: (id: number, isActive: boolean) => apiV2.post(`/qiscus/connect/${id}/update`, { is_active: isActive }),
 };

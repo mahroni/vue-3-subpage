@@ -87,7 +87,7 @@ const labelClasses = cva('text-sm font-normal text-text-subtitle', {
 });
 
 const wrapperClasses = cva(
-  'relative flex flex-row overflow-hidden rounded-lg border border-gray-300 shadow-sm',
+  'relative flex flex-row overflow-hidden rounded-lg border border-gray-300 shadow-sm ',
   {
     variants: {
       isFocused: {
@@ -111,15 +111,6 @@ const wrapperClasses = cva(
 );
 
 const contentWrapperClasses = cva('flex w-full flex-row items-center gap-3 px-3 py-3');
-
-const iconClasses = cva('h-5 w-5 min-h-5 min-w-5', {
-  variants: {
-    disabled: {
-      true: 'text-[#A0A0A0]',
-      false: 'text-[#0A0A0A]',
-    },
-  },
-});
 
 const inputClasses = cva('w-full bg-transparent outline-none', {
   variants: {

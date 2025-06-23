@@ -1,10 +1,43 @@
 <template>
-  <h1>Halo</h1>
+  <div class="flex flex-col gap-8 px-12 py-8">
+    <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
+      <Icon name="arrow-left" :size="20" />
+      Integration
+    </router-link>
+
+    <!-- Header -->
+    <div class="flex items-center gap-2">
+      <Icon name="chat" :size="20" />
+      <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
+    </div>
+
+    <Banner>
+      <p>
+        To learn more about Qiscus Live Chat Integration, you can refer to this
+        <a class="text-notification-link font-semibold underline"
+          href="https://docs.qiscus.com/docs/live-chat-integration" target="_blank">Documentation</a>.
+      </p>
+    </Banner>
+
+    <!-- Table section -->
+    <div class="shadow-large rounded-2xl bg-white p-4">
+      <div class="flex items-center justify-between">
+        <!-- Search Input with Icon -->
+        <TableListAccount :channels="wa_channels" @updateChannelStatus="updateChannelStatus" @search="search" />
+      </div>
+    </div>
+  </div>
 </template>
-<script lang="ts" setup>
-import { onMounted } from 'vue';
+
+<script setup lang="ts">
+import { onMounted, computed } from 'vue';
 import { useAppConfigStore } from '../stores/app-config';
 import { useChannelsStore } from '../stores/channels';
+import Icon from '@/components/icons/Icon.vue';
+import TableListAccount from '@/pages/integration/list-account/TableListAccount.vue';
+import Banner from '../components/common/Banner.vue';
+import type { IWhatsappChannel } from '../types/channels';
+import { CHANNEL_BADGE_URL } from '../utils/constant/channels';
 
 const appConfigStore = useAppConfigStore();
 
@@ -16,15 +49,28 @@ appConfigStore.setConfig({
 
 const channelsStore = useChannelsStore();
 
-async function a() {
-  await channelsStore.getChannels();
-  const w = await channelsStore.getWhatsappChannels();
-  console.log(w);
+const wa_channels = computed(() =>
+  channelsStore.wa_channels.map((channel: IWhatsappChannel) => ({
+    id: channel.id,
+    name: channel.name,
+    channelId: channel.id.toString(),
+    isActive: channel.is_active,
+    badgeUrl: channel.badge_url ? channel.badge_url : CHANNEL_BADGE_URL.whatsapp,
+  })),
+) as unknown as IWhatsappChannel[];
+
+function updateChannelStatus(data: { id: number; isActive: boolean }) {
+  channelsStore.updateChannelStatus(data.id, data.isActive);
+
+  // alert success
 }
 
-a();
+function search(query: string) {
+  console.log('search', query);
+}
 
 onMounted(async () => {
-  await a();
+  // await channelsStore.getChannels();
+  await channelsStore.getWhatsappChannels();
 });
 </script>
