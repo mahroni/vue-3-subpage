@@ -1,15 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import SubTab from '../components/common/Tabs/SubTab.vue';
 
-// Define your TabItem interface if it's not globally available
-interface TabItem {
-  id: string;
-  label: string;
-  icon?: string;
-  children?: TabItem[];
-}
-
-// More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta: Meta<typeof SubTab> = {
   title: 'Components/SubTab',
   component: SubTab,
@@ -22,26 +13,14 @@ const meta: Meta<typeof SubTab> = {
     modelValue: {
       control: 'object',
       description: 'The currently active tab item.',
-    },
-    'update:modelValue': {
-      action: 'update:modelValue',
-      description: 'Event emitted when the selected tab changes.',
-    },
+    }
   },
-  // This is where we can define global decorators or parameters for all stories
-  // For example, if you need to wrap your component with a specific provider
-  // decorators: [
-  //   () => ({ template: '<div style="margin: 3em;"><story/></div>' })
-  // ],
 };
 
 export default meta;
 
 type Story = StoryObj<typeof SubTab>;
 
-// --- Stories ---
-
-// Story 1: Default Tabs
 export const Default: Story = {
   args: {
     tabs: [
@@ -51,17 +30,8 @@ export const Default: Story = {
     ],
     modelValue: { id: 'home', label: 'Home', icon: 'home' },
   },
-  // Play function to simulate user interaction (e.g., clicking tabs)
-  // See https://storybook.js.org/docs/essentials/actions#writing-play-functions
-  // play: async ({ args, canvasElement }) => {
-  //   const canvas = within(canvasElement);
-  //   // Example: Click on the 'Profile' tab
-  //   await userEvent.click(canvas.getByText('Profile'));
-  //   await expect(args['update:modelValue']).toHaveBeenCalledWith(expect.objectContaining({ id: 'profile' }));
-  // },
 };
 
-// Story 2: Tabs with Children (Nested Tabs)
 export const WithChildren: Story = {
   args: {
     tabs: [
@@ -80,7 +50,6 @@ export const WithChildren: Story = {
   },
 };
 
-// Story 3: Active Tab (Profile)
 export const ActiveTabProfile: Story = {
   args: {
     tabs: [
@@ -92,7 +61,6 @@ export const ActiveTabProfile: Story = {
   },
 };
 
-// Story 4: No Icons
 export const NoIcons: Story = {
   args: {
     tabs: [
@@ -104,7 +72,6 @@ export const NoIcons: Story = {
   },
 };
 
-// Story 5: Long Tab Labels (to test `text-ellipsis`)
 export const LongLabels: Story = {
   args: {
     tabs: [

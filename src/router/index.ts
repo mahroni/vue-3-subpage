@@ -1,6 +1,9 @@
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 import type { Router, RouteRecordRaw } from 'vue-router';
-import Home from '../views/ChannelPage.vue';
+import Home from '@/views/ChannelPage.vue';
+import AutoResponder from '@/views/AutoResponder.vue';
+import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
+import ListAccount from '@/pages/integration/list-account/ListAccount.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -60,7 +63,7 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/qiscus',
       name: 'qiscus',
-      component: () => import('../views/QiscusChannelView.vue'),
+      component: () => import('@/views/QiscusChannelView.vue'),
     },
     {
       path: '/custom',
@@ -81,32 +84,17 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/auto-responder',
       name: 'auto-responder',
-      component: () => import('../views/AutoResponder.vue'),
+      component: AutoResponder,
     },
     {
       path: '/widget',
       name: 'widget',
-      component: () => import('../pages/integration/widget/WidgetLayout.vue'),
-    },
-    {
-      path: '/widget',
-      name: 'widget',
-      component: () => import('../pages/integration/widget/WidgetLayout.vue'),
+      component: WidgetLayout,
     },
     {
       path: '/list-account',
       name: 'ListAccount',
-      component: () => import('@/pages/integration/list-account/ListAccount.vue'),
-    },
-    {
-      path: '/about',
-      name: 'About',
-      component: () => import('../views/About.vue'),
-    },
-    {
-      path: '/home',
-      name: 'HomeView',
-      component: () => import('../views/Home.vue'),
+      component: ListAccount
     },
     {
       path: '/home',
