@@ -13,7 +13,7 @@ export function createRouter(appId?: string | number): Router {
       path: "/whatsapp",
       name: "whatsapp",
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=whatsapp`;
+        window.location.href = `/integration?channel=whatsapp`;
         return false;
       },
     },
@@ -21,7 +21,7 @@ export function createRouter(appId?: string | number): Router {
       path: "/instagram",
       name: "instagram",
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=instagram`;
+        window.location.href = `/integration?channel=instagram`;
         return false;
       },
     },
@@ -29,7 +29,7 @@ export function createRouter(appId?: string | number): Router {
       path: "/tiktok",
       name: "tiktok",
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=tiktok`;
+        window.location.href = `/integration?channel=tiktok`;
         return false;
       },
     },
@@ -37,7 +37,7 @@ export function createRouter(appId?: string | number): Router {
       path: "/facebook",
       name: "facebook",
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=facebook",`;
+        window.location.href = `/integration?channel=facebook",`;
         return false;
       },
     },
@@ -45,7 +45,7 @@ export function createRouter(appId?: string | number): Router {
       path: "/line",
       name: "line",
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=line",`;
+        window.location.href = `/integration?channel=line",`;
         return false;
       },
     },
@@ -53,7 +53,7 @@ export function createRouter(appId?: string | number): Router {
       path: "/telegram",
       name: "telegram",
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=telegram",`;
+        window.location.href = `/integration?channel=telegram",`;
         return false;
       },
     },
@@ -63,18 +63,18 @@ export function createRouter(appId?: string | number): Router {
       component: () => import("../views/QiscusChannelView.vue"),
     },
     {
-      path: "/custom",
-      name: "custom",
+      path: "/custom_channel",
+      name: "custom_channel",
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=custom_channel",`;
+        window.location.href = `/integration?channel=custom_channel`;
         return false;
       },
     },
     {
-      path: "/bot",
-      name: "bot",
+      path: "/bot_integration",
+      name: "bot_integration",
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=bot_integration",`;
+        window.location.href = `/integration?channel=bot_integration`;
         return false;
       },
     },
