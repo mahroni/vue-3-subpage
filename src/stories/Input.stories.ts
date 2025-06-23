@@ -34,13 +34,6 @@ const meta: Meta<typeof Input> = {
       control: 'text',
       description: 'The error message to display when `error` is true.',
     },
-    'update:modelValue': {
-      action: 'update:modelValue',
-      description: 'Event emitted when the input value changes.',
-      table: {
-        disable: true, // Hide this from the controls table as it's an internal event
-      },
-    },
   },
   args: {
     modelValue: '',

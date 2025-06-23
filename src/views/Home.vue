@@ -31,10 +31,6 @@ async function getPokemonDetail(url: string) {
   pokemonDetail.value = data.data || {}
 }
 
-const handleTabChange = (tab: string) => {
-  activeTab.value = tab
-}
-
 const inputValue = ref('')
 const isChecked2 = ref(false)
 

@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import Banner from '../components/common/Banner.vue';
-import Icon from '../components/icons/Icon.vue';
 
 const meta: Meta<typeof Banner> = {
   title: 'Components/Banner',
@@ -26,13 +25,6 @@ const meta: Meta<typeof Banner> = {
       description: 'The content to display inside the banner.',
       table: {
         type: { summary: 'slot' },
-      },
-    },
-    close: {
-      action: 'closed',
-      description: 'Event emitted when the close button is clicked.',
-      table: {
-        type: { summary: 'event' },
       },
     },
   },

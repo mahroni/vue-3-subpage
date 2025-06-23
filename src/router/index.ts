@@ -1,5 +1,5 @@
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router'
-import type { Router } from 'vue-router'
+import type { Router, RouteRecordRaw } from 'vue-router'
 import Home from '../views/ChannelPage.vue'
 
 export function createRouter(appId?: string | number): Router {
@@ -105,7 +105,7 @@ export function createRouter(appId?: string | number): Router {
   
   const router = createVueRouter({
     history: createWebHistory(VUE_ROUTER_BASE_PATH),
-    routes,
+    routes: routes as RouteRecordRaw[],
   });
 
   router.beforeEach((to, from, next) => {
