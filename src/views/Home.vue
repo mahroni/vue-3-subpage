@@ -67,7 +67,7 @@ onMounted(() => {
     <p class="mt-4 text-gray-600">
       Welcome to the home page of your Vue 3 + TypeScript + Vue Router application!
     </p>
-    <div class="mt-4 flex gap-4 justify-center">
+    <div class="mt-4 flex justify-center gap-4">
       <Button @click="handleClick" intent="primary" size="medium">Click me</Button>
       <Button intent="primary" size="medium" disabled>Click me</Button>
       <Button intent="secondary" size="medium">Click me</Button>
@@ -76,7 +76,7 @@ onMounted(() => {
       <Button intent="danger" size="medium" disabled>Click me</Button>
     </div>
 
-    <div class="mt-4 flex gap-4 justify-center">
+    <div class="mt-4 flex justify-center gap-4">
       <Button intent="primary" size="medium" shape="rectangular">Click me</Button>
       <Button intent="primary" size="medium" shape="rectangular" disabled>Click me</Button>
       <Button intent="secondary" size="medium" shape="rectangular">Click me</Button>
@@ -85,7 +85,7 @@ onMounted(() => {
       <Button intent="danger" size="medium" shape="rectangular" disabled>Click me</Button>
     </div>
 
-    <div class="mt-4 flex gap-4 justify-center">
+    <div class="mt-4 flex justify-center gap-4">
       <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
       <Button intent="flat" size="medium" shape="rounded" to="/about" disabled>Click me</Button>
       <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
@@ -93,7 +93,7 @@ onMounted(() => {
       <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
     </div>
 
-    <div class="mt-4 flex gap-4 justify-center">
+    <div class="mt-4 flex justify-center gap-4">
       <Switch v-model="isChecked" size="medium" variant="success" aria-label="Success switch" />
       <Switch v-model="isChecked" size="medium" variant="warning" aria-label="Warning switch" />
       <Switch v-model="isChecked" size="medium" variant="danger" aria-label="Danger switch" />
@@ -104,7 +104,7 @@ onMounted(() => {
       <MainTab :tabs="['Tab 1', 'Tab 2', 'Tab 3']" v-model="activeTab" />
     </div>
 
-    <div class="flex flex-col gap-4 text-sm font-medium text-left mt-4">
+    <div class="mt-4 flex flex-col gap-4 text-left text-sm font-medium">
       <Banner intent="positive" closeable>
         <div>
           To learn more regarding Line Messenger Integration, you can check this Documentation.
@@ -142,7 +142,7 @@ onMounted(() => {
       </Banner>
     </div>
 
-    <div class="text-left mt-4">
+    <div class="mt-4 text-left">
       <Input v-model="inputValue" placeholder="Enter your name" />
       <Input v-model="inputValue" placeholder="Enter your name" disabled />
       <Input
@@ -153,7 +153,7 @@ onMounted(() => {
       />
     </div>
 
-    <div class="text-left mt-4 flex flex-col gap-2">
+    <div class="mt-4 flex flex-col gap-2 text-left">
       <Checkbox v-model="isChecked2" label="Checkbox" />
       <Checkbox v-model="isChecked2" label="Checkbox" disabled />
     </div>
@@ -183,9 +183,9 @@ onMounted(() => {
       </ul>
       <div
         v-if="pokemonDetail && Object.keys(pokemonDetail).length > 0"
-        class="mt-4 p-4 bg-white rounded-lg shadow-md"
+        class="mt-4 rounded-lg bg-white p-4 shadow-md"
       >
-        <h1 class="text-2xl font-bold capitalize mb-4">{{ pokemonDetail.name }}</h1>
+        <h1 class="mb-4 text-2xl font-bold capitalize">{{ pokemonDetail.name }}</h1>
 
         <img
           :src="pokemonDetail?.sprites?.back_default"
@@ -196,12 +196,12 @@ onMounted(() => {
         />
 
         <div v-if="pokemonDetail?.abilities" class="mt-6">
-          <h3 class="text-xl font-semibold mb-2">Abilities</h3>
-          <ul class="flex flex-wrap gap-2 justify-center">
+          <h3 class="mb-2 text-xl font-semibold">Abilities</h3>
+          <ul class="flex flex-wrap justify-center gap-2">
             <li
               v-for="a in pokemonDetail?.abilities"
               :key="a?.ability?.name"
-              class="px-3 py-1 bg-gray-100 rounded-full text-gray-700 capitalize"
+              class="rounded-full bg-gray-100 px-3 py-1 text-gray-700 capitalize"
             >
               {{ a?.ability?.name }}
             </li>

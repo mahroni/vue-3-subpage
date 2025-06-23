@@ -1,11 +1,11 @@
 <template>
-  <div class="min-h-screen flex flex-col px-12 py-8 text-text-title text-sm gap-8">
+  <div class="text-text-title flex min-h-screen flex-col gap-8 px-12 py-8 text-sm">
     <div class="flex gap-3">
       <img src="https://omnichannel.qiscus.com/img/qiscus_badge.svg" alt="Qiscus Logo" />
-      <h2 class="text-text-title font-semibold text-xl">New Integration - Qiscus Live Chat</h2>
+      <h2 class="text-text-title text-xl font-semibold">New Integration - Qiscus Live Chat</h2>
     </div>
     <Banner intent="negative" type="outline">
-      <div class="flex gap-3 items-center">
+      <div class="flex items-center gap-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="22"
@@ -52,7 +52,7 @@
       </div>
     </Banner>
     <div
-      class="flex flex-col p-6 gap-6 rounded-lg bg-white-100 w-full"
+      class="bg-white-100 flex w-full flex-col gap-6 rounded-lg p-6"
       style="box-shadow: 0px 4px 12px 0px rgba(10, 10, 10, 0.1)"
     >
       <div class="text-text-title font-semibold">
@@ -73,7 +73,7 @@
           room on office hour.
         </div>
         <textarea
-          class="p-4 rounded-lg outline-0 resize-none"
+          class="resize-none rounded-lg p-4 outline-0"
           rows="3"
           placeholder="Text input"
           style="box-shadow: 0px 2px 8px 0px rgba(10, 10, 10, 0.1)"
@@ -93,7 +93,7 @@
           conversation outside office hour.
         </div>
         <textarea
-          class="p-4 rounded-lg outline-0 resize-none"
+          class="resize-none rounded-lg p-4 outline-0"
           rows="3"
           placeholder="Text input"
           style="box-shadow: 0px 2px 8px 0px rgba(10, 10, 10, 0.1)"

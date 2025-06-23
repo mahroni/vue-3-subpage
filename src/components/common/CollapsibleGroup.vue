@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-lg shadow-base overflow-hidden">
+  <div class="shadow-base overflow-hidden rounded-lg">
     <Collapsible
       v-for="(item, index) in items"
       :key="item.id"

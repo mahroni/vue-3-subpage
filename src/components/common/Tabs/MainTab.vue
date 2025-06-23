@@ -14,7 +14,7 @@ const handleTabClick = (tab: string) => {
 </script>
 
 <template>
-  <ul class="flex bg-gray-300 rounded-lg p-1 w-fit select-none gap-0.5">
+  <ul class="flex w-fit gap-0.5 rounded-lg bg-gray-300 p-1 select-none">
     <li
       v-for="tab in tabs"
       :key="tab"
@@ -25,9 +25,9 @@ const handleTabClick = (tab: string) => {
       role="tab"
       :aria-selected="props.modelValue === tab"
       :aria-controls="`tab-panel-${tab}`"
-      class="cursor-pointer text-text-title px-6 py-2 rounded-lg transition-all duration-200 ease-out focus:outline-none focus:ring focus:ring-gray-400 hover:bg-white/50"
+      class="text-text-title cursor-pointer rounded-lg px-6 py-2 transition-all duration-200 ease-out hover:bg-white/50 focus:ring focus:ring-gray-400 focus:outline-none"
       :class="[
-        props.modelValue === tab ? 'bg-white font-bold text-sm shadow-sm' : 'text-sm shadow-none',
+        props.modelValue === tab ? 'bg-white text-sm font-bold shadow-sm' : 'text-sm shadow-none',
       ]"
     >
       {{ tab }}

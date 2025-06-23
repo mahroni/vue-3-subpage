@@ -13,7 +13,7 @@
     >
       <span
         :class="[
-          'absolute top-0.5 left-0.5 rounded-full bg-white transition-transform duration-300 shadow-sm',
+          'absolute top-0.5 left-0.5 rounded-full bg-white shadow-sm transition-transform duration-300',
           thumbSizeClass,
           {
             'translate-x-6': modelValue && size === 'medium',

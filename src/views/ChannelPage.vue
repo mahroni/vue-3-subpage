@@ -1,9 +1,9 @@
 <template>
-  <div class="min-h-screen flex flex-col px-12 py-8 text-text-title text-sm gap-8">
+  <div class="text-text-title flex min-h-screen flex-col gap-8 px-12 py-8 text-sm">
     <div>
-      <div class="flex gap-3 mb-4">
+      <div class="mb-4 flex gap-3">
         <img src="../assets/icon-integration.svg" alt="Qiscus Logo" />
-        <h2 class="text-text-title font-semibold text-xl">Integration Channel</h2>
+        <h2 class="text-text-title text-xl font-semibold">Integration Channel</h2>
       </div>
       <p class="text-text-subtitle">
         Choose your first channel to connect with by click a channel icon below to start connecting
@@ -40,18 +40,18 @@
     <div class="grid grid-cols-3 gap-8">
       <template v-for="channel in filteredChannels" :key="channel.id">
         <div
-          class="card cursor-pointer border border-gray-300 flex flex-col p-6 gap-3 rounded-2xl bg-white-100 max-w-md"
+          class="card bg-white-100 flex max-w-md cursor-pointer flex-col gap-3 rounded-2xl border border-gray-300 p-6"
           @click.prevent="onSelectChannel(channel)"
           :class="channel.id"
         >
-          <div class="flex items-center justify-between text-sm font-semibold z-10">
+          <div class="z-10 flex items-center justify-between text-sm font-semibold">
             <div class="flex items-center gap-3">
-              <img class="w-10 h-10" :src="channel.icon" loading="lazy" />
+              <img class="h-10 w-10" :src="channel.icon" loading="lazy" />
               {{ channel.name }}
             </div>
             <badge intent="progress">Popular</badge>
           </div>
-          <div class="text-text-subtitle text-sm font-normal z-10">
+          <div class="text-text-subtitle z-10 text-sm font-normal">
             {{ channel.description }}
           </div>
         </div>

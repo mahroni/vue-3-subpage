@@ -2,7 +2,7 @@
 
 <template>
   <div class="about">
-    <h1 class="text-3xl font-bold underline text-blue-500">About Page</h1>
+    <h1 class="text-3xl font-bold text-blue-500 underline">About Page</h1>
     <p class="mt-4 text-gray-600">
       This is the about page of your Vue 3 + TypeScript + Vue Router application.
     </p>

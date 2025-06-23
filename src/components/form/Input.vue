@@ -12,7 +12,7 @@
         :disabled="disabled"
       />
     </div>
-    <p v-if="error" class="text-danger text-sm font-normal mt-2">{{ errorMessage }}</p>
+    <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
 </template>
 

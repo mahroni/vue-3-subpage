@@ -11,5 +11,7 @@
   "quoteProps": "as-needed",
   "vueIndentScriptAndStyle": false,
   "htmlWhitespaceSensitivity": "css",
-  "singleAttributePerLine": false
+  "singleAttributePerLine": false,
+
+  "plugins": ["prettier-plugin-tailwindcss"]
 }
