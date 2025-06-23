@@ -9,6 +9,8 @@ import MainTab from '../components/common/Tabs/MainTab.vue';
 import Banner from '../components/common/Banner.vue';
 import Input from '../components/form/Input.vue';
 import Checkbox from '../components/common/Checkbox.vue';
+import Collapsible from '../components/common/Collapsible.vue';
+import CollapsibleGroup from '../components/common/CollapsibleGroup.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -35,6 +37,25 @@ const handleTabChange = (tab: string) => {
 
 const inputValue = ref('')
 const isChecked2 = ref(false)
+
+const faqItems = ref([
+  {
+    id: 'faq-1',
+    title: 'What is your refund policy?',
+    content: '<p class="text-gray-700">Our refund policy allows returns within 30 days of purchase. Please see our full terms for more details.</p>',
+    initiallyOpen: true,
+  },
+  {
+    id: 'faq-2',
+    title: 'How do I contact support?',
+    content: '<p class="text-gray-700">You can contact our support team via email at support@example.com or by calling 1-800-555-1234.</p>',
+  },
+  {
+    id: 'faq-3',
+    title: 'Can I change my password?',
+    content: '<p class="text-gray-700">Yes, you can change your password from your account settings page.</p>',
+  },
+]);
 
 onMounted(() => {
   getPokemon()
@@ -117,6 +138,24 @@ onMounted(() => {
     <div class="text-left mt-4 flex flex-col gap-2">
       <Checkbox v-model="isChecked2" label="Checkbox" />
       <Checkbox v-model="isChecked2" label="Checkbox" disabled />
+    </div>
+
+    <div class="mt-4">
+      <Collapsible>
+        <template #title>
+          Auto Responder
+        </template>
+        <p class="text-gray-700">
+          This is the content for the auto-responder settings. You can put any HTML elements here.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
+          magna
+          aliqua.
+        </p>
+      </Collapsible>
+    </div>
+
+    <div class="mt-4">
+      <CollapsibleGroup :items="faqItems" />
     </div>
 
     <div class="mt-4">
