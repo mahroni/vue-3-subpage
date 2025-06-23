@@ -2,10 +2,17 @@
   <div :class="containerClasses()">
     <label :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
-      <input :id="id" type="text" :value="modelValue" @input="onInput" :placeholder="placeholder"
-        :class="computedInputClasses" :disabled="disabled" />
+      <input
+        :id="id"
+        type="text"
+        :value="modelValue"
+        @input="onInput"
+        :placeholder="placeholder"
+        :class="computedInputClasses"
+        :disabled="disabled"
+      />
     </div>
-    <p v-if="error" class="text-danger text-sm font-normal mt-2">{{ errorMessage }}</p>
+    <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -49,31 +56,28 @@ const labelClasses = cva('text-sm font-normal text-text-subtitle', {
   },
 });
 
-const inputWrapperClasses = cva(
-  'mt-2 flex rounded-lg shadow-sm',
-  {
-    variants: {
-      disabled: {
-        true: 'bg-gray-50 ring-gray-200',
-      },
-      error: {
-        true: 'ring-red-500 focus-within:ring-red-500', // Error ring color
-      },
+const inputWrapperClasses = cva('mt-2 flex rounded-lg shadow-sm', {
+  variants: {
+    disabled: {
+      true: 'bg-gray-50 ring-gray-200',
     },
-    // Default ring color when not disabled and not in error
-    defaultVariants: {
+    error: {
+      true: 'ring-red-500 focus-within:ring-red-500', // Error ring color
+    },
+  },
+  // Default ring color when not disabled and not in error
+  defaultVariants: {
+    disabled: false,
+    error: false,
+  },
+  compoundVariants: [
+    {
       disabled: false,
       error: false,
+      class: 'focus-within:ring-primary', // Default focus ring color
     },
-    compoundVariants: [
-      {
-        disabled: false,
-        error: false,
-        class: 'focus-within:ring-primary', // Default focus ring color
-      },
-    ],
-  }
-);
+  ],
+});
 
 const inputClasses = cva(
   'block w-full border-0 bg-white py-3 px-4 text-text-title placeholder:text-text-placeholder focus:ring-1 ring-primary sm:text-sm sm:leading-6 outline-none rounded-lg placeholder:',
@@ -91,6 +95,10 @@ const inputClasses = cva(
 
 // Computed properties to apply disabled and error states to CVA classes
 const computedLabelClasses = computed(() => labelClasses({ disabled: props.disabled }));
-const computedInputWrapperClasses = computed(() => inputWrapperClasses({ disabled: props.disabled, error: props.error }));
-const computedInputClasses = computed(() => inputClasses({ disabled: props.disabled, error: props.error }));
+const computedInputWrapperClasses = computed(() =>
+  inputWrapperClasses({ disabled: props.disabled, error: props.error })
+);
+const computedInputClasses = computed(() =>
+  inputClasses({ disabled: props.disabled, error: props.error })
+);
 </script>

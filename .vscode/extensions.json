@@ -4,5 +4,13 @@
     "bradlc.vscode-tailwindcss",
     "ms-vscode.vscode-typescript-next",
     "esbenp.prettier-vscode"
-  ]
+  ],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "prettier.requireConfig": true,
+  "prettier.configPath": ".prettierrc",
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 }

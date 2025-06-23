@@ -2,19 +2,16 @@
 import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
 
-const checkboxWrapperVariants = cva(
-  'flex items-center space-x-2 cursor-pointer select-none',
-  {
-    variants: {
-      disabled: {
-        true: 'opacity-50 cursor-not-allowed',
-      },
+const checkboxWrapperVariants = cva('flex items-center space-x-2 cursor-pointer select-none', {
+  variants: {
+    disabled: {
+      true: 'opacity-50 cursor-not-allowed',
     },
-    defaultVariants: {
-      disabled: false,
-    },
-  }
-);
+  },
+  defaultVariants: {
+    disabled: false,
+  },
+});
 
 const checkboxInputVariants = cva(
   'appearance-none h-6 w-6 border-2 rounded-md focus:outline-none ',
@@ -64,7 +61,6 @@ const labelVariants = cva('text-text-title text-sm font-medium', {
   },
 });
 
-
 interface FormCheckboxProps {
   modelValue: boolean;
   label: string;
@@ -79,17 +75,15 @@ const props = withDefaults(defineProps<FormCheckboxProps>(), {
 
 const emit = defineEmits(['update:modelValue']);
 
-const uniqueId = computed(() => props.id || `checkbox-${Math.random().toString(36).substring(2, 9)}`);
-
-const wrapperClasses = computed(() =>
-  checkboxWrapperVariants({ disabled: props.disabled })
+const uniqueId = computed(
+  () => props.id || `checkbox-${Math.random().toString(36).substring(2, 9)}`
 );
+
+const wrapperClasses = computed(() => checkboxWrapperVariants({ disabled: props.disabled }));
 const inputClasses = computed(() =>
   checkboxInputVariants({ checked: props.modelValue, disabled: props.disabled })
 );
-const labelClasses = computed(() =>
-  labelVariants({ disabled: props.disabled })
-);
+const labelClasses = computed(() => labelVariants({ disabled: props.disabled }));
 
 const toggleCheckbox = () => {
   if (!props.disabled) {
@@ -100,15 +94,37 @@ const toggleCheckbox = () => {
 
 <template>
   <label :for="uniqueId" :class="wrapperClasses" @click="toggleCheckbox">
-    <div :class="[
-      inputClasses,
-      'relative flex items-center justify-center transition-all duration-200 ease-in-out',
-    ]" :tabindex="disabled ? -1 : 0" @keydown.space.prevent="toggleCheckbox" @keydown.enter.prevent="toggleCheckbox">
-      <input type="checkbox" :id="uniqueId" :checked="modelValue" :disabled="disabled" class="sr-only"
-        @change="toggleCheckbox" />
-      <svg v-if="modelValue" :class="checkboxIconVariants({ checked: modelValue, disabled: disabled })" fill="none"
-        stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+    <div
+      :class="[
+        inputClasses,
+        'relative flex items-center justify-center transition-all duration-200 ease-in-out',
+      ]"
+      :tabindex="disabled ? -1 : 0"
+      @keydown.space.prevent="toggleCheckbox"
+      @keydown.enter.prevent="toggleCheckbox"
+    >
+      <input
+        type="checkbox"
+        :id="uniqueId"
+        :checked="modelValue"
+        :disabled="disabled"
+        class="sr-only"
+        @change="toggleCheckbox"
+      />
+      <svg
+        v-if="modelValue"
+        :class="checkboxIconVariants({ checked: modelValue, disabled: disabled })"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 13l4 4L19 7"
+        ></path>
       </svg>
     </div>
     <span :class="labelClasses">{{ label }}</span>

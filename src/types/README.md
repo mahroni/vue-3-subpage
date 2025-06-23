@@ -78,7 +78,7 @@ export interface ChatMessage {
   senderId: string;
   roomId: string;
   timestamp: Date;
-  type: "text" | "image" | "file";
+  type: 'text' | 'image' | 'file';
   metadata?: Record<string, unknown>;
 }
 ```
@@ -175,7 +175,7 @@ export interface ProfileForm {
 ```typescript
 // events/chat.ts
 export interface ChatEvent {
-  type: "message" | "typing" | "read" | "join" | "leave";
+  type: 'message' | 'typing' | 'read' | 'join' | 'leave';
   roomId: string;
   userId: string;
   timestamp: Date;
@@ -183,16 +183,16 @@ export interface ChatEvent {
 }
 
 export interface MessageEvent extends ChatEvent {
-  type: "message";
+  type: 'message';
   data: {
     messageId: string;
     content: string;
-    messageType: "text" | "image" | "file";
+    messageType: 'text' | 'image' | 'file';
   };
 }
 
 export interface TypingEvent extends ChatEvent {
-  type: "typing";
+  type: 'typing';
   data: {
     isTyping: boolean;
   };
@@ -200,11 +200,11 @@ export interface TypingEvent extends ChatEvent {
 
 // events/user.ts
 export interface UserEvent {
-  type: "online" | "offline" | "status_change";
+  type: 'online' | 'offline' | 'status_change';
   userId: string;
   timestamp: Date;
   data?: {
-    status?: "online" | "offline" | "away" | "busy";
+    status?: 'online' | 'offline' | 'away' | 'busy';
     lastSeen?: Date;
   };
 }
@@ -238,7 +238,7 @@ Use type aliases for union types, primitive types, and complex type operations.
 
 ```typescript
 // ✅ Good - Type alias for union
-export type UserStatus = "active" | "inactive" | "suspended";
+export type UserStatus = 'active' | 'inactive' | 'suspended';
 
 // ✅ Good - Type alias for primitive
 export type UserId = string;
@@ -290,7 +290,7 @@ export interface PaginatedResult<T> {
   totalPages: number;
 }
 
-export type LoadingState = "idle" | "loading" | "success" | "error";
+export type LoadingState = 'idle' | 'loading' | 'success' | 'error';
 
 export interface AsyncState<T> {
   data: T | null;
@@ -305,11 +305,11 @@ Use const assertions for better type inference.
 
 ```typescript
 // ✅ Good - Const assertion
-export const USER_STATUSES = ["active", "inactive", "suspended"] as const;
+export const USER_STATUSES = ['active', 'inactive', 'suspended'] as const;
 export type UserStatus = (typeof USER_STATUSES)[number];
 
 // ❌ Bad - Manual union
-export type UserStatus = "active" | "inactive" | "suspended";
+export type UserStatus = 'active' | 'inactive' | 'suspended';
 ```
 
 ### 6. **Use Utility Types**
@@ -322,8 +322,7 @@ export type PartialUser = Partial<User>;
 export type RequiredUser = Required<User>;
 export type UserKeys = keyof User;
 export type UserValues = User[UserKeys];
-export type OptionalUser = Pick<User, "id" | "email"> &
-  Partial<Omit<User, "id" | "email">>;
+export type OptionalUser = Pick<User, 'id' | 'email'> & Partial<Omit<User, 'id' | 'email'>>;
 ```
 
 ## Common Type Patterns
@@ -401,7 +400,7 @@ export interface BaseEvent {
 }
 
 export interface UserEvent extends BaseEvent {
-  type: "user.created" | "user.updated" | "user.deleted";
+  type: 'user.created' | 'user.updated' | 'user.deleted';
   data: {
     userId: string;
     changes?: Record<string, unknown>;
@@ -409,7 +408,7 @@ export interface UserEvent extends BaseEvent {
 }
 
 export interface ChatEvent extends BaseEvent {
-  type: "chat.message" | "chat.typing" | "chat.read";
+  type: 'chat.message' | 'chat.typing' | 'chat.read';
   data: {
     roomId: string;
     userId: string;
@@ -445,7 +444,7 @@ export interface ChatState {
 }
 
 export interface UIState {
-  theme: "light" | "dark";
+  theme: 'light' | 'dark';
   sidebarOpen: boolean;
   modals: Record<string, boolean>;
 }
@@ -459,20 +458,20 @@ export interface UIState {
 // utils/guards.ts
 export function isUser(value: unknown): value is User {
   return (
-    typeof value === "object" &&
+    typeof value === 'object' &&
     value !== null &&
-    "id" in value &&
-    "email" in value &&
-    "name" in value
+    'id' in value &&
+    'email' in value &&
+    'name' in value
   );
 }
 
 export function isApiResponse<T>(value: unknown): value is ApiResponse<T> {
   return (
-    typeof value === "object" &&
+    typeof value === 'object' &&
     value !== null &&
-    "success" in value &&
-    typeof (value as ApiResponse<T>).success === "boolean"
+    'success' in value &&
+    typeof (value as ApiResponse<T>).success === 'boolean'
   );
 }
 
@@ -513,21 +512,21 @@ export type NonStringFields = OmitByType<User, string>;
 
 ```typescript
 // types/index.ts
-export * from "./api";
-export * from "./entities";
-export * from "./forms";
-export * from "./events";
-export * from "./utils";
+export * from './api';
+export * from './entities';
+export * from './forms';
+export * from './events';
+export * from './utils';
 
 // types/api/index.ts
-export * from "./requests";
-export * from "./responses";
-export * from "./types";
+export * from './requests';
+export * from './responses';
+export * from './types';
 
 // types/entities/index.ts
-export * from "./user";
-export * from "./chat";
-export * from "./common";
+export * from './user';
+export * from './chat';
+export * from './common';
 ```
 
 ### Named Exports
@@ -540,26 +539,26 @@ export interface User {
   email: string;
 }
 
-export type UserStatus = "active" | "inactive" | "suspended";
-export type UserRole = "admin" | "user" | "moderator";
+export type UserStatus = 'active' | 'inactive' | 'suspended';
+export type UserRole = 'admin' | 'user' | 'moderator';
 
 // Usage
-import type { User, UserStatus, UserRole } from "@/types/user";
+import type { User, UserStatus, UserRole } from '@/types/user';
 ```
 
 ## Testing Types
 
 ```typescript
 // types/__tests__/user.test.ts
-import { describe, it, expect } from "vitest";
-import type { User } from "../user";
+import { describe, it, expect } from 'vitest';
+import type { User } from '../user';
 
-describe("User type", () => {
-  it("should have required properties", () => {
+describe('User type', () => {
+  it('should have required properties', () => {
     const user: User = {
-      id: "1",
-      name: "John Doe",
-      email: "john@example.com",
+      id: '1',
+      name: 'John Doe',
+      email: 'john@example.com',
       createdAt: new Date(),
       updatedAt: new Date(),
     };
@@ -604,5 +603,5 @@ export interface User {
  * User status enumeration
  * @typedef {string} UserStatus
  */
-export type UserStatus = "active" | "inactive" | "suspended";
+export type UserStatus = 'active' | 'inactive' | 'suspended';
 ```

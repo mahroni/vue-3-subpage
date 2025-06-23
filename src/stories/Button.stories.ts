@@ -8,7 +8,8 @@ const meta: Meta<typeof Button> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A versatile button component with multiple intents, sizes, and shapes. Features smooth animations, hover effects, and supports both button and router-link functionality. Includes options to disable animations for better performance or accessibility.',
+        component:
+          'A versatile button component with multiple intents, sizes, and shapes. Features smooth animations, hover effects, and supports both button and router-link functionality. Includes options to disable animations for better performance or accessibility.',
       },
     },
   },
@@ -16,7 +17,8 @@ const meta: Meta<typeof Button> = {
     intent: {
       control: { type: 'select' },
       options: ['primary', 'secondary', 'danger', 'flat'],
-      description: 'The visual style of the button. Flat buttons have a simple underline hover effect.',
+      description:
+        'The visual style of the button. Flat buttons have a simple underline hover effect.',
     },
     size: {
       control: { type: 'select' },
@@ -34,7 +36,8 @@ const meta: Meta<typeof Button> = {
     },
     disableAnimation: {
       control: { type: 'boolean' },
-      description: 'Disable all animations and hover effects for better performance or accessibility',
+      description:
+        'Disable all animations and hover effects for better performance or accessibility',
     },
     to: {
       control: { type: 'text' },
@@ -238,4 +241,4 @@ export const Playground: Story = {
     disableAnimation: false,
     default: 'Playground Button',
   },
-}; 
+};

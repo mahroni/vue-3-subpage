@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded-lg shadow-base overflow-hidden">
+  <div class="shadow-base overflow-hidden rounded-lg">
     <Collapsible
       v-for="(item, index) in items"
       :key="item.id"
@@ -9,7 +9,8 @@
       :class="{
         'border-t border-gray-300': index !== 0,
       }"
-      :initiallyCollapsed="!item.initiallyOpen">
+      :initiallyCollapsed="!item.initiallyOpen"
+    >
       <!-- Pass the content from the item data to the default slot of Collapsible -->
       <template #default>
         <!-- <div v-html="item.content"></div> -->
@@ -26,8 +27,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import Collapsible from "./Collapsible.vue"; // Adjust path if necessary
+import { ref, onMounted } from 'vue';
+import Collapsible from './Collapsible.vue'; // Adjust path if necessary
 
 // Define the interface for an item in the collapsible group
 interface CollapsibleGroupItem {

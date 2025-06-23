@@ -27,12 +27,12 @@ export function convertBytes(
   options: ByteConverterOptions = {}
 ): ByteConversionResult {
   const { precision = 2, binary = false } = options;
-  
+
   if (bytes === 0) {
     return {
       value: 0,
       unit: 'B',
-      formatted: '0 B'
+      formatted: '0 B',
     };
   }
 
@@ -49,7 +49,7 @@ export function convertBytes(
   return {
     value: Number(value.toFixed(precision)),
     unit,
-    formatted: `${trimTrailingZeros(value.toFixed(precision))} ${unit}`
+    formatted: `${trimTrailingZeros(value.toFixed(precision))} ${unit}`,
   };
 }
 
@@ -68,7 +68,7 @@ export function convertByteUnit(
   options: ByteConverterOptions = {}
 ): ByteConversionResult {
   const { precision = 2, binary = false } = options;
-  
+
   if (value < 0) {
     throw new Error('Value cannot be negative');
   }
@@ -82,11 +82,11 @@ export function convertByteUnit(
   }
 
   const base = binary ? BINARY_BASE : DECIMAL_BASE;
-  
+
   // Convert to bytes first
   const fromIndex = BYTE_UNITS.indexOf(fromUnit);
   const bytes = value * Math.pow(base, fromIndex);
-  
+
   // Convert from bytes to target unit
   const toIndex = BYTE_UNITS.indexOf(toUnit);
   const resultValue = bytes / Math.pow(base, toIndex);
@@ -94,7 +94,7 @@ export function convertByteUnit(
   return {
     value: Number(resultValue.toFixed(precision)),
     unit: toUnit,
-    formatted: `${trimTrailingZeros(resultValue.toFixed(precision))} ${toUnit}`
+    formatted: `${trimTrailingZeros(resultValue.toFixed(precision))} ${toUnit}`,
   };
 }
 
@@ -105,13 +105,9 @@ export function convertByteUnit(
  * @param options - Conversion options
  * @returns Number of bytes
  */
-export function toBytes(
-  value: number,
-  unit: ByteUnit,
-  options: ByteConverterOptions = {}
-): number {
+export function toBytes(value: number, unit: ByteUnit, options: ByteConverterOptions = {}): number {
   const { binary = false } = options;
-  
+
   if (value < 0) {
     throw new Error('Value cannot be negative');
   }
@@ -122,7 +118,7 @@ export function toBytes(
 
   const base = binary ? BINARY_BASE : DECIMAL_BASE;
   const unitIndex = BYTE_UNITS.indexOf(unit);
-  
+
   return value * Math.pow(base, unitIndex);
 }
 
@@ -139,7 +135,7 @@ export function fromBytes(
   options: ByteConverterOptions = {}
 ): ByteConversionResult {
   const { precision = 2, binary = false } = options;
-  
+
   if (bytes < 0) {
     throw new Error('Bytes cannot be negative');
   }
@@ -155,7 +151,7 @@ export function fromBytes(
   return {
     value: Number(value.toFixed(precision)),
     unit,
-    formatted: `${trimTrailingZeros(value.toFixed(precision))} ${unit}`
+    formatted: `${trimTrailingZeros(value.toFixed(precision))} ${unit}`,
   };
 }
 
@@ -165,10 +161,7 @@ export function fromBytes(
  * @param options - Conversion options
  * @returns Formatted string
  */
-export function formatBytes(
-  bytes: number,
-  options: ByteConverterOptions = {}
-): string {
+export function formatBytes(bytes: number, options: ByteConverterOptions = {}): string {
   return convertBytes(bytes, options).formatted;
 }
 
@@ -178,33 +171,30 @@ export function formatBytes(
  * @param options - Conversion options
  * @returns Number of bytes
  */
-export function parseBytes(
-  input: string,
-  options: ByteConverterOptions = {}
-): number {
+export function parseBytes(input: string, options: ByteConverterOptions = {}): number {
   const trimmed = input.trim();
   const match = trimmed.match(/^([\d.]+)\s*([KMGT]?B|[KMGT]?iB)$/i);
-  
+
   if (!match || !match[1] || !match[2]) {
     throw new Error(`Invalid byte format: ${input}`);
   }
 
   const value = parseFloat(match[1]);
   const unitStr = match[2].toUpperCase();
-  
+
   // Map common unit variations
   const unitMap: Record<string, ByteUnit> = {
-    'B': 'B',
-    'KB': 'KB',
-    'KIB': 'KB',
-    'MB': 'MB',
-    'MIB': 'MB',
-    'GB': 'GB',
-    'GIB': 'GB',
-    'TB': 'TB',
-    'TIB': 'TB',
-    'PB': 'PB',
-    'PIB': 'PB'
+    B: 'B',
+    KB: 'KB',
+    KIB: 'KB',
+    MB: 'MB',
+    MIB: 'MB',
+    GB: 'GB',
+    GIB: 'GB',
+    TB: 'TB',
+    TIB: 'TB',
+    PB: 'PB',
+    PIB: 'PB',
   };
 
   const unit = unitMap[unitStr];
@@ -214,10 +204,10 @@ export function parseBytes(
 
   // Use binary base for units ending with 'IB'
   const binary = unitStr.endsWith('IB');
-  
+
   return toBytes(value, unit, { ...options, binary });
 }
 
 function trimTrailingZeros(numStr: string): string {
   return numStr.replace(/\.0+$|\.(\d*?[1-9])0+$/, '.$1').replace(/\.$/, '');
-} 
+}

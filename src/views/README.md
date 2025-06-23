@@ -67,11 +67,7 @@ views/
 
       <!-- Error State -->
       <div v-else-if="error" class="view__error">
-        <ErrorMessage
-          :title="error.title"
-          :message="error.message"
-          @retry="fetchData"
-        />
+        <ErrorMessage :title="error.title" :message="error.message" @retry="fetchData" />
       </div>
 
       <!-- Success State -->
@@ -79,10 +75,7 @@ views/
         <!-- Dashboard Widgets -->
         <div class="view__widgets">
           <StatsWidget :stats="stats" :loading="statsLoading" />
-          <ActivityWidget
-            :activities="recentActivities"
-            :loading="activitiesLoading"
-          />
+          <ActivityWidget :activities="recentActivities" :loading="activitiesLoading" />
           <ChartWidget :data="chartData" :loading="chartLoading" />
         </div>
 
@@ -101,17 +94,17 @@ views/
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
-import { useDashboard } from "@/composables/useDashboard";
-import { useNotifications } from "@/composables/useNotifications";
-import LoadingSpinner from "@/components/ui/LoadingSpinner.vue";
-import ErrorMessage from "@/components/ui/ErrorMessage.vue";
-import StatsWidget from "./components/DashboardWidgets/StatsWidget.vue";
-import ActivityWidget from "./components/DashboardWidgets/ActivityWidget.vue";
-import ChartWidget from "./components/DashboardWidgets/ChartWidget.vue";
-import QuickActionCard from "./components/DashboardWidgets/QuickActionCard.vue";
-import RefreshIcon from "@/components/icons/RefreshIcon.vue";
-import DownloadIcon from "@/components/icons/DownloadIcon.vue";
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useDashboard } from '@/composables/useDashboard';
+import { useNotifications } from '@/composables/useNotifications';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import ErrorMessage from '@/components/ui/ErrorMessage.vue';
+import StatsWidget from './components/DashboardWidgets/StatsWidget.vue';
+import ActivityWidget from './components/DashboardWidgets/ActivityWidget.vue';
+import ChartWidget from './components/DashboardWidgets/ChartWidget.vue';
+import QuickActionCard from './components/DashboardWidgets/QuickActionCard.vue';
+import RefreshIcon from '@/components/icons/RefreshIcon.vue';
+import DownloadIcon from '@/components/icons/DownloadIcon.vue';
 
 // Composables
 const {
@@ -136,24 +129,24 @@ const error = ref<{ title: string; message: string } | null>(null);
 const refreshData = async () => {
   try {
     await fetchData();
-    showNotification("Dashboard refreshed successfully", "success");
+    showNotification('Dashboard refreshed successfully', 'success');
   } catch (err) {
-    showNotification("Failed to refresh dashboard", "error");
+    showNotification('Failed to refresh dashboard', 'error');
   }
 };
 
 const exportData = async () => {
   try {
     await exportDashboardData();
-    showNotification("Data exported successfully", "success");
+    showNotification('Data exported successfully', 'success');
   } catch (err) {
-    showNotification("Failed to export data", "error");
+    showNotification('Failed to export data', 'error');
   }
 };
 
 const handleQuickAction = (action: QuickAction) => {
   // Handle quick action
-  console.log("Quick action:", action);
+  console.log('Quick action:', action);
 };
 
 // Lifecycle
@@ -254,10 +247,7 @@ onUnmounted(() => {
 <template>
   <div class="view view--chat">
     <!-- Chat Sidebar -->
-    <aside
-      class="view__sidebar"
-      :class="{ 'view__sidebar--collapsed': isSidebarCollapsed }"
-    >
+    <aside class="view__sidebar" :class="{ 'view__sidebar--collapsed': isSidebarCollapsed }">
       <ChatSidebar
         :rooms="chatRooms"
         :current-room="currentRoom"
@@ -314,25 +304,21 @@ onUnmounted(() => {
     </aside>
 
     <!-- Modals -->
-    <CreateRoomModal
-      v-if="showCreateModal"
-      @close="closeCreateModal"
-      @create="handleCreateRoom"
-    />
+    <CreateRoomModal v-if="showCreateModal" @close="closeCreateModal" @create="handleCreateRoom" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useChat } from "@/composables/useChat";
-import { useWebSocket } from "@/composables/useWebSocket";
-import ChatSidebar from "./components/ChatComponents/ChatSidebar.vue";
-import ChatHeader from "./components/ChatComponents/ChatHeader.vue";
-import ChatMessages from "./components/ChatComponents/ChatMessages.vue";
-import ChatInput from "./components/ChatComponents/ChatInput.vue";
-import ChatSettings from "./components/ChatComponents/ChatSettings.vue";
-import CreateRoomModal from "./components/ChatComponents/CreateRoomModal.vue";
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useChat } from '@/composables/useChat';
+import { useWebSocket } from '@/composables/useWebSocket';
+import ChatSidebar from './components/ChatComponents/ChatSidebar.vue';
+import ChatHeader from './components/ChatComponents/ChatHeader.vue';
+import ChatMessages from './components/ChatComponents/ChatMessages.vue';
+import ChatInput from './components/ChatComponents/ChatInput.vue';
+import ChatSettings from './components/ChatComponents/ChatSettings.vue';
+import CreateRoomModal from './components/ChatComponents/CreateRoomModal.vue';
 
 // Route and Router
 const route = useRoute();
@@ -375,7 +361,7 @@ const handleRoomSelect = async (roomId: string) => {
     await joinRoom(roomId);
     router.push(`/chat/${roomId}`);
   } catch (error) {
-    console.error("Failed to join room:", error);
+    console.error('Failed to join room:', error);
   }
 };
 
@@ -385,7 +371,7 @@ const handleCreateRoom = async (roomData: CreateRoomData) => {
     await handleRoomSelect(newRoom.id);
     closeCreateModal();
   } catch (error) {
-    console.error("Failed to create room:", error);
+    console.error('Failed to create room:', error);
   }
 };
 
@@ -395,7 +381,7 @@ const sendMessage = async (content: string) => {
   try {
     await sendChatMessage(currentRoom.value.id, content);
   } catch (error) {
-    console.error("Failed to send message:", error);
+    console.error('Failed to send message:', error);
   }
 };
 
@@ -404,9 +390,9 @@ const sendAttachment = async (file: File) => {
 
   try {
     // Handle file upload and message sending
-    console.log("Sending attachment:", file);
+    console.log('Sending attachment:', file);
   } catch (error) {
-    console.error("Failed to send attachment:", error);
+    console.error('Failed to send attachment:', error);
   }
 };
 
@@ -416,14 +402,14 @@ const loadMoreMessages = async () => {
   try {
     await loadMessages(currentRoom.value.id);
   } catch (error) {
-    console.error("Failed to load messages:", error);
+    console.error('Failed to load messages:', error);
   }
 };
 
 const handleTyping = (isTyping: boolean) => {
   if (!currentRoom.value) return;
 
-  send("typing", {
+  send('typing', {
     roomId: currentRoom.value.id,
     isTyping,
   });
@@ -447,10 +433,10 @@ const handleLeaveRoom = async () => {
 
   try {
     await leaveRoom(currentRoom.value.id);
-    router.push("/chat");
+    router.push('/chat');
     closeSettings();
   } catch (error) {
-    console.error("Failed to leave room:", error);
+    console.error('Failed to leave room:', error);
   }
 };
 
@@ -460,7 +446,7 @@ const closeCreateModal = () => {
 
 const handleSearch = (query: string) => {
   // Handle search functionality
-  console.log("Searching:", query);
+  console.log('Searching:', query);
 };
 
 const scrollToBottom = () => {
@@ -596,8 +582,8 @@ Extract complex logic into composables.
 
 ```vue
 <script setup lang="ts">
-import { useDashboard } from "@/composables/useDashboard";
-import { useNotifications } from "@/composables/useNotifications";
+import { useDashboard } from '@/composables/useDashboard';
+import { useNotifications } from '@/composables/useNotifications';
 
 const { data, isLoading, error, fetchData } = useDashboard();
 const { showNotification } = useNotifications();
@@ -652,7 +638,7 @@ Properly clean up subscriptions and listeners.
 
 ```vue
 <script setup lang="ts">
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted } from 'vue';
 
 let subscription: Subscription;
 
@@ -724,12 +710,7 @@ onUnmounted(() => {
       />
     </ViewContent>
 
-    <UserModal
-      v-if="showModal"
-      :user="selectedUser"
-      @close="closeModal"
-      @save="saveUser"
-    />
+    <UserModal v-if="showModal" :user="selectedUser" @close="closeModal" @save="saveUser" />
   </div>
 </template>
 ```
@@ -759,12 +740,7 @@ onUnmounted(() => {
       </div>
     </ViewContent>
 
-    <UserModal
-      v-if="showModal"
-      :user="user"
-      @close="closeModal"
-      @save="saveUser"
-    />
+    <UserModal v-if="showModal" :user="user" @close="closeModal" @save="saveUser" />
   </div>
 </template>
 ```
@@ -773,16 +749,14 @@ onUnmounted(() => {
 
 ```vue
 <!-- views/__tests__/DashboardView.test.ts -->
-import { describe, it, expect, vi } from 'vitest' import { mount } from
-'@vue/test-utils' import DashboardView from '../DashboardView.vue' // Mock
-composables vi.mock('@/composables/useDashboard', () => ({ useDashboard: () =>
-({ stats: ref([]), recentActivities: ref([]), chartData: ref([]), isLoading:
-ref(false), fetchData: vi.fn() }) })) describe('DashboardView', () => {
-it('renders dashboard title', () => { const wrapper = mount(DashboardView)
-expect(wrapper.find('.view__title').text()).toBe('Dashboard') }) it('shows
-loading state', () => { const wrapper = mount(DashboardView, { global: {
-provide: { dashboardLoading: true } } })
-expect(wrapper.find('.view__loading').exists()).toBe(true) }) it('calls
-fetchData on mount', () => { const fetchData = vi.fn() mount(DashboardView, {
-global: { provide: { fetchData } } }) expect(fetchData).toHaveBeenCalled() }) })
+import { describe, it, expect, vi } from 'vitest' import { mount } from '@vue/test-utils' import
+DashboardView from '../DashboardView.vue' // Mock composables vi.mock('@/composables/useDashboard',
+() => ({ useDashboard: () => ({ stats: ref([]), recentActivities: ref([]), chartData: ref([]),
+isLoading: ref(false), fetchData: vi.fn() }) })) describe('DashboardView', () => { it('renders
+dashboard title', () => { const wrapper = mount(DashboardView)
+expect(wrapper.find('.view__title').text()).toBe('Dashboard') }) it('shows loading state', () => {
+const wrapper = mount(DashboardView, { global: { provide: { dashboardLoading: true } } })
+expect(wrapper.find('.view__loading').exists()).toBe(true) }) it('calls fetchData on mount', () => {
+const fetchData = vi.fn() mount(DashboardView, { global: { provide: { fetchData } } })
+expect(fetchData).toHaveBeenCalled() }) })
 ```

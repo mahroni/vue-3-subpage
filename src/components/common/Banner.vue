@@ -3,20 +3,20 @@ import { cva } from 'class-variance-authority';
 import Icon from '../icons/Icon.vue';
 
 interface BannerProps {
-  intent?: "positive" | "negative" | "warning";
-  type?: "solid" | "outline";
+  intent?: 'positive' | 'negative' | 'warning';
+  type?: 'solid' | 'outline';
   closeable?: boolean;
 }
 
 const emit = defineEmits<{
-  (e: 'close'): void
-}>()
+  (e: 'close'): void;
+}>();
 
 const props = withDefaults(defineProps<BannerProps>(), {
-  intent: "positive",
-  type: "solid",
+  intent: 'positive',
+  type: 'solid',
   closeable: false,
-})
+});
 
 const bannerClasses = cva('rounded-lg p-4', {
   variants: {
@@ -54,12 +54,11 @@ const bannerClasses = cva('rounded-lg p-4', {
 })({
   intent: props.intent,
   type: props.type,
-})
+});
 
 const handleClose = () => {
-  emit('close')
-}
-
+  emit('close');
+};
 </script>
 
 <template>

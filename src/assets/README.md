@@ -75,19 +75,19 @@ assets/
 ```css
 /* Usage in CSS */
 .logo {
-  background-image: url("@/assets/images/logo/qiscus-logo.svg");
+  background-image: url('@/assets/images/logo/qiscus-logo.svg');
   background-size: contain;
   background-repeat: no-repeat;
 }
 
 .avatar {
-  background-image: url("@/assets/images/avatars/default-avatar.png");
+  background-image: url('@/assets/images/avatars/default-avatar.png');
   background-size: cover;
   border-radius: 50%;
 }
 
 .hero-section {
-  background-image: url("@/assets/images/backgrounds/hero-bg.jpg");
+  background-image: url('@/assets/images/backgrounds/hero-bg.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -98,17 +98,14 @@ assets/
 <template>
   <div class="brand-section">
     <img src="@/assets/images/logo/qiscus-logo.svg" alt="Qiscus Logo" />
-    <img
-      src="@/assets/images/illustrations/empty-state.svg"
-      alt="Empty State"
-    />
+    <img src="@/assets/images/illustrations/empty-state.svg" alt="Empty State" />
   </div>
 </template>
 
 <script setup lang="ts">
 // Import assets for dynamic usage
-import logoUrl from "@/assets/images/logo/qiscus-logo.svg";
-import defaultAvatar from "@/assets/images/avatars/default-avatar.png";
+import logoUrl from '@/assets/images/logo/qiscus-logo.svg';
+import defaultAvatar from '@/assets/images/avatars/default-avatar.png';
 
 const assets = {
   logo: logoUrl,
@@ -149,24 +146,24 @@ const assets = {
 ```css
 /* Font declarations in CSS */
 @font-face {
-  font-family: "Inter";
-  src: url("@/assets/fonts/inter/Inter-Regular.woff2") format("woff2");
+  font-family: 'Inter';
+  src: url('@/assets/fonts/inter/Inter-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("@/assets/fonts/inter/Inter-Medium.woff2") format("woff2");
+  font-family: 'Inter';
+  src: url('@/assets/fonts/inter/Inter-Medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("@/assets/fonts/inter/Inter-Bold.woff2") format("woff2");
+  font-family: 'Inter';
+  src: url('@/assets/fonts/inter/Inter-Bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -174,7 +171,11 @@ const assets = {
 
 /* Usage */
 body {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
 }
 ```
 
@@ -200,19 +201,9 @@ Provide multiple sizes for different screen resolutions.
 ```vue
 <template>
   <picture>
-    <source
-      srcset="@/assets/images/hero-bg-large.jpg"
-      media="(min-width: 1024px)"
-    />
-    <source
-      srcset="@/assets/images/hero-bg-medium.jpg"
-      media="(min-width: 768px)"
-    />
-    <img
-      src="@/assets/images/hero-bg-small.jpg"
-      alt="Hero Background"
-      class="hero-bg"
-    />
+    <source srcset="@/assets/images/hero-bg-large.jpg" media="(min-width: 1024px)" />
+    <source srcset="@/assets/images/hero-bg-medium.jpg" media="(min-width: 768px)" />
+    <img src="@/assets/images/hero-bg-small.jpg" alt="Hero Background" class="hero-bg" />
   </picture>
 </template>
 ```
@@ -223,12 +214,7 @@ Implement lazy loading for images to improve performance.
 
 ```vue
 <template>
-  <img
-    src="@/assets/images/avatar.jpg"
-    alt="User Avatar"
-    loading="lazy"
-    class="avatar"
-  />
+  <img src="@/assets/images/avatar.jpg" alt="User Avatar" loading="lazy" class="avatar" />
 </template>
 ```
 
@@ -251,13 +237,13 @@ Create a consistent icon system using SVG sprites or icon components.
 <script setup lang="ts">
 interface Props {
   name: string;
-  size?: "sm" | "md" | "lg" | "xl";
-  color?: "primary" | "secondary" | "success" | "error";
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  color?: 'primary' | 'secondary' | 'success' | 'error';
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  size: "md",
-  color: "primary",
+  size: 'md',
+  color: 'primary',
 });
 
 const sizeMap = {
@@ -313,18 +299,18 @@ Preload critical assets for better performance.
 // assets/brand/index.ts
 export const brandAssets = {
   logo: {
-    primary: "/src/assets/images/logo/qiscus-logo.svg",
-    white: "/src/assets/images/logo/qiscus-logo-white.svg",
-    favicon: "/src/assets/images/logo/qiscus-favicon.ico",
+    primary: '/src/assets/images/logo/qiscus-logo.svg',
+    white: '/src/assets/images/logo/qiscus-logo-white.svg',
+    favicon: '/src/assets/images/logo/qiscus-favicon.ico',
   },
   colors: {
-    primary: "#667eea",
-    secondary: "#764ba2",
-    accent: "#f093fb",
+    primary: '#667eea',
+    secondary: '#764ba2',
+    accent: '#f093fb',
   },
   fonts: {
-    primary: "Inter",
-    secondary: "Roboto",
+    primary: 'Inter',
+    secondary: 'Roboto',
   },
 };
 ```
@@ -335,20 +321,20 @@ export const brandAssets = {
 // assets/ui/index.ts
 export const uiAssets = {
   icons: {
-    home: "/src/assets/icons/ui/home.svg",
-    user: "/src/assets/icons/ui/user.svg",
-    settings: "/src/assets/icons/ui/settings.svg",
-    logout: "/src/assets/icons/ui/logout.svg",
+    home: '/src/assets/icons/ui/home.svg',
+    user: '/src/assets/icons/ui/user.svg',
+    settings: '/src/assets/icons/ui/settings.svg',
+    logout: '/src/assets/icons/ui/logout.svg',
   },
   avatars: {
-    default: "/src/assets/images/avatars/default-avatar.png",
-    admin: "/src/assets/images/avatars/admin-avatar.png",
-    guest: "/src/assets/images/avatars/guest-avatar.png",
+    default: '/src/assets/images/avatars/default-avatar.png',
+    admin: '/src/assets/images/avatars/admin-avatar.png',
+    guest: '/src/assets/images/avatars/guest-avatar.png',
   },
   backgrounds: {
-    hero: "/src/assets/images/backgrounds/hero-bg.jpg",
-    pattern: "/src/assets/images/backgrounds/pattern-bg.svg",
-    gradient: "/src/assets/images/backgrounds/gradient-bg.png",
+    hero: '/src/assets/images/backgrounds/hero-bg.jpg',
+    pattern: '/src/assets/images/backgrounds/pattern-bg.svg',
+    gradient: '/src/assets/images/backgrounds/gradient-bg.png',
   },
 };
 ```
@@ -359,15 +345,15 @@ export const uiAssets = {
 // assets/illustrations/index.ts
 export const illustrationAssets = {
   states: {
-    empty: "/src/assets/images/illustrations/empty-state.svg",
-    error: "/src/assets/images/illustrations/error-404.svg",
-    success: "/src/assets/images/illustrations/success-state.svg",
-    loading: "/src/assets/images/illustrations/loading-state.svg",
+    empty: '/src/assets/images/illustrations/empty-state.svg',
+    error: '/src/assets/images/illustrations/error-404.svg',
+    success: '/src/assets/images/illustrations/success-state.svg',
+    loading: '/src/assets/images/illustrations/loading-state.svg',
   },
   features: {
-    chat: "/src/assets/images/illustrations/chat-feature.svg",
-    analytics: "/src/assets/images/illustrations/analytics-feature.svg",
-    security: "/src/assets/images/illustrations/security-feature.svg",
+    chat: '/src/assets/images/illustrations/chat-feature.svg',
+    analytics: '/src/assets/images/illustrations/analytics-feature.svg',
+    security: '/src/assets/images/illustrations/security-feature.svg',
   },
 };
 ```
@@ -399,14 +385,14 @@ svgo src/assets/icons/ -o src/assets/icons/optimized/
 ```css
 /* Font loading optimization */
 @font-face {
-  font-family: "Inter";
-  src: url("@/assets/fonts/inter/Inter-Regular.woff2") format("woff2");
+  font-family: 'Inter';
+  src: url('@/assets/fonts/inter/Inter-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap; /* Prevents FOIT */
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
-    U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074,
+    U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 ```
 
@@ -419,7 +405,7 @@ svgo src/assets/icons/ -o src/assets/icons/optimized/
 export interface Asset {
   id: string;
   path: string;
-  type: "image" | "icon" | "font" | "video";
+  type: 'image' | 'icon' | 'font' | 'video';
   category: string;
   tags: string[];
   metadata?: Record<string, any>;
@@ -427,25 +413,25 @@ export interface Asset {
 
 export const assetRegistry: Asset[] = [
   {
-    id: "qiscus-logo",
-    path: "/src/assets/images/logo/qiscus-logo.svg",
-    type: "image",
-    category: "brand",
-    tags: ["logo", "brand", "primary"],
+    id: 'qiscus-logo',
+    path: '/src/assets/images/logo/qiscus-logo.svg',
+    type: 'image',
+    category: 'brand',
+    tags: ['logo', 'brand', 'primary'],
   },
   {
-    id: "home-icon",
-    path: "/src/assets/icons/ui/home.svg",
-    type: "icon",
-    category: "ui",
-    tags: ["navigation", "home", "menu"],
+    id: 'home-icon',
+    path: '/src/assets/icons/ui/home.svg',
+    type: 'icon',
+    category: 'ui',
+    tags: ['navigation', 'home', 'menu'],
   },
   {
-    id: "inter-font",
-    path: "/src/assets/fonts/inter/Inter-Regular.woff2",
-    type: "font",
-    category: "typography",
-    tags: ["font", "primary", "sans-serif"],
+    id: 'inter-font',
+    path: '/src/assets/fonts/inter/Inter-Regular.woff2',
+    type: 'font',
+    category: 'typography',
+    tags: ['font', 'primary', 'sans-serif'],
   },
 ];
 
@@ -490,12 +476,8 @@ export const preloadFont = (family: string, src: string): Promise<void> => {
 
 export const preloadAssets = async (assets: string[]): Promise<void> => {
   const promises = assets.map((asset) => {
-    if (
-      asset.endsWith(".woff2") ||
-      asset.endsWith(".woff") ||
-      asset.endsWith(".ttf")
-    ) {
-      return preloadFont("Inter", asset);
+    if (asset.endsWith('.woff2') || asset.endsWith('.woff') || asset.endsWith('.ttf')) {
+      return preloadFont('Inter', asset);
     } else {
       return preloadImage(asset);
     }
@@ -509,11 +491,11 @@ export const preloadAssets = async (assets: string[]): Promise<void> => {
 
 ```typescript
 // assets/__tests__/assets.test.ts
-import { describe, it, expect } from "vitest";
-import { assetRegistry, getAsset, getAssetsByCategory } from "../registry";
+import { describe, it, expect } from 'vitest';
+import { assetRegistry, getAsset, getAssetsByCategory } from '../registry';
 
-describe("Asset Registry", () => {
-  it("should have valid asset entries", () => {
+describe('Asset Registry', () => {
+  it('should have valid asset entries', () => {
     assetRegistry.forEach((asset) => {
       expect(asset.id).toBeDefined();
       expect(asset.path).toBeDefined();
@@ -523,17 +505,17 @@ describe("Asset Registry", () => {
     });
   });
 
-  it("should find asset by id", () => {
-    const logo = getAsset("qiscus-logo");
+  it('should find asset by id', () => {
+    const logo = getAsset('qiscus-logo');
     expect(logo).toBeDefined();
-    expect(logo?.type).toBe("image");
+    expect(logo?.type).toBe('image');
   });
 
-  it("should filter assets by category", () => {
-    const brandAssets = getAssetsByCategory("brand");
+  it('should filter assets by category', () => {
+    const brandAssets = getAssetsByCategory('brand');
     expect(brandAssets.length).toBeGreaterThan(0);
     brandAssets.forEach((asset) => {
-      expect(asset.category).toBe("brand");
+      expect(asset.category).toBe('brand');
     });
   });
 });
@@ -545,17 +527,17 @@ describe("Asset Registry", () => {
 
 ```typescript
 // vite.config.ts
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
   plugins: [vue()],
-  assetsInclude: ["**/*.woff2", "**/*.woff", "**/*.ttf"],
+  assetsInclude: ['**/*.woff2', '**/*.woff', '**/*.ttf'],
   build: {
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
-          const info = assetInfo.name.split(".");
+          const info = assetInfo.name.split('.');
           const ext = info[info.length - 1];
 
           if (/\.(woff2?|ttf|eot)$/.test(assetInfo.name)) {
