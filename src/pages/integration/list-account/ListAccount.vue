@@ -36,5 +36,5 @@
 <script setup lang="ts">
 import Icon from '@/components/icons/Icon.vue';
 
-import TableListAccount from '@/pages/TableListAccount.vue';
+import TableListAccount from '@/pages/integration/list-account/TableListAccount.vue';
 </script>

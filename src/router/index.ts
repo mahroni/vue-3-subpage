@@ -96,7 +96,7 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/list-account',
       name: 'ListAccount',
-      component: () => import('@/pages/ListAccount.vue'),
+      component: () => import('@/pages/integration/list-account/ListAccount.vue'),
     },
     {
       path: '/about',

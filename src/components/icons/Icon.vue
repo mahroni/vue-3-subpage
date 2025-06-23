@@ -8,6 +8,15 @@ import ArrowIcon from './ArrowIcon.vue';
 import UserIcon from './UserIcon.vue';
 import SettingIcon from './SettingIcon.vue';
 import HomeIcon from './HomeIcon.vue';
+import ArrowLeftIcon from './ArrowLeftIcon.vue';
+import ChatIcon from './ChatIcon.vue';
+import SearchIcon from './SearchIcon.vue';
+import PlusIcon from './PlusIcon.vue';
+import CopyIcon from './CopyIcon.vue';
+import ChevronLeftIcon from './ChevronLeftIcon.vue';
+import ChevronRightIcon from './ChevronRightIcon.vue';
+import DoubleChevronLeftIcon from './DoubleChevronLeftIcon.vue';
+import DoubleChevronRightIcon from './DoubleChevronRightIcon.vue';
 interface IconProps {
   name: string;
   size?: number;
@@ -27,6 +36,15 @@ const iconRegistry = {
   user: UserIcon,
   setting: SettingIcon,
   home: HomeIcon,
+  'arrow-left': ArrowLeftIcon,
+  chat: ChatIcon,
+  search: SearchIcon,
+  plus: PlusIcon,
+  copy: CopyIcon,
+  'chevron-left': ChevronLeftIcon,
+  'chevron-right': ChevronRightIcon,
+  'double-chevron-left': DoubleChevronLeftIcon,
+  'double-chevron-right': DoubleChevronRightIcon,
 };
 
 const iconComponent = computed(() => {
