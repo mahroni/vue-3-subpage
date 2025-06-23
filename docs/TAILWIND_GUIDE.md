@@ -289,16 +289,12 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 </button>
 
 <!-- Success Button -->
-<button
-  class="bg-success hover:bg-positive-400 text-white px-4 py-2 rounded-lg transition-colors"
->
+<button class="bg-success hover:bg-positive-400 text-white px-4 py-2 rounded-lg transition-colors">
   Success Button
 </button>
 
 <!-- Danger Button -->
-<button
-  class="bg-danger hover:bg-negative-400 text-white px-4 py-2 rounded-lg transition-colors"
->
+<button class="bg-danger hover:bg-negative-400 text-white px-4 py-2 rounded-lg transition-colors">
   Danger Button
 </button>
 ```
@@ -323,26 +319,18 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 
 ```html
 <!-- Positive Status -->
-<div class="bg-positive-100 text-positive-400 px-3 py-1 rounded-full text-sm">
-  Success
-</div>
+<div class="bg-positive-100 text-positive-400 px-3 py-1 rounded-full text-sm">Success</div>
 
 <!-- Progressive Status -->
-<div
-  class="bg-progressive-100 text-progressive-400 px-3 py-1 rounded-full text-sm"
->
+<div class="bg-progressive-100 text-progressive-400 px-3 py-1 rounded-full text-sm">
   In Progress
 </div>
 
 <!-- Warning Status -->
-<div class="bg-cautions-100 text-cautions-400 px-3 py-1 rounded-full text-sm">
-  Warning
-</div>
+<div class="bg-cautions-100 text-cautions-400 px-3 py-1 rounded-full text-sm">Warning</div>
 
 <!-- Error Status -->
-<div class="bg-negative-100 text-negative-400 px-3 py-1 rounded-full text-sm">
-  Error
-</div>
+<div class="bg-negative-100 text-negative-400 px-3 py-1 rounded-full text-sm">Error</div>
 ```
 
 ### Form Elements
@@ -373,9 +361,7 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 
 ```html
 <!-- Success Alert -->
-<div
-  class="bg-success-light border border-success text-success px-4 py-3 rounded-lg"
->
+<div class="bg-success-light border border-success text-success px-4 py-3 rounded-lg">
   <p>Success! Your changes have been saved.</p>
 </div>
 
@@ -385,16 +371,12 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 </div>
 
 <!-- Warning Alert -->
-<div
-  class="bg-warning-light border border-warning text-warning px-4 py-3 rounded-lg"
->
+<div class="bg-warning-light border border-warning text-warning px-4 py-3 rounded-lg">
   <p>Warning: Please check your input before proceeding.</p>
 </div>
 
 <!-- Error Alert -->
-<div
-  class="bg-danger-light border border-danger text-danger px-4 py-3 rounded-lg"
->
+<div class="bg-danger-light border border-danger text-danger px-4 py-3 rounded-lg">
   <p>Error: Something went wrong. Please try again.</p>
 </div>
 ```
@@ -410,9 +392,7 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 </div>
 
 <!-- Responsive Text -->
-<h1 class="text-2xl md:text-3xl lg:text-4xl text-text-title">
-  Responsive Heading
-</h1>
+<h1 class="text-2xl md:text-3xl lg:text-4xl text-text-title">Responsive Heading</h1>
 ```
 
 ## 🌙 Dark Mode Support
@@ -439,7 +419,7 @@ src/
 The theme is configured using Tailwind CSS v4's new `@theme` directive in `src/tailwind.css`:
 
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-green-500: #27b199;

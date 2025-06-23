@@ -44,8 +44,8 @@ composables/
 
 ```typescript
 // useUser.ts
-import { ref, computed, onMounted } from "vue";
-import type { User } from "@/types";
+import { ref, computed, onMounted } from 'vue';
+import type { User } from '@/types';
 
 export function useUser() {
   // State
@@ -55,7 +55,7 @@ export function useUser() {
 
   // Computed
   const isAuthenticated = computed(() => !!user.value);
-  const displayName = computed(() => user.value?.name || "Guest");
+  const displayName = computed(() => user.value?.name || 'Guest');
 
   // Methods
   const fetchUser = async (id: string) => {
@@ -65,7 +65,7 @@ export function useUser() {
       const response = await fetch(`/api/users/${id}`);
       user.value = await response.json();
     } catch (err) {
-      error.value = err instanceof Error ? err.message : "Unknown error";
+      error.value = err instanceof Error ? err.message : 'Unknown error';
     } finally {
       isLoading.value = false;
     }
@@ -107,7 +107,7 @@ export function useUser() {
 
 ```typescript
 // useCounter.ts
-import { ref, computed } from "vue";
+import { ref, computed } from 'vue';
 
 interface CounterOptions {
   initialValue?: number;
@@ -159,7 +159,7 @@ export function useCounter(options: CounterOptions = {}): CounterReturn {
 
 ```typescript
 // useAsyncData.ts
-import { ref, computed } from "vue";
+import { ref, computed } from 'vue';
 
 interface AsyncState<T> {
   data: T | null;
@@ -181,7 +181,7 @@ export function useAsyncData<T>() {
     try {
       state.value.data = await asyncFn();
     } catch (err) {
-      state.value.error = err instanceof Error ? err.message : "Unknown error";
+      state.value.error = err instanceof Error ? err.message : 'Unknown error';
     } finally {
       state.value.isLoading = false;
     }
@@ -266,7 +266,7 @@ export function useApiCall<T>() {
       error.value = null;
       data.value = await apiCall();
     } catch (err) {
-      error.value = err instanceof Error ? err.message : "Unknown error";
+      error.value = err instanceof Error ? err.message : 'Unknown error';
     } finally {
       isLoading.value = false;
     }
@@ -286,7 +286,7 @@ export function useApiCall<T>() {
 Clean up subscriptions, timers, and event listeners.
 
 ```typescript
-import { onUnmounted } from "vue";
+import { onUnmounted } from 'vue';
 
 export function useInterval(callback: () => void, delay: number) {
   const intervalId = ref<number | null>(null);
@@ -316,12 +316,12 @@ export function useInterval(callback: () => void, delay: number) {
 
 ```typescript
 // useStore.ts
-import { reactive, readonly } from "vue";
+import { reactive, readonly } from 'vue';
 
 const state = reactive({
   user: null,
-  theme: "light",
-  language: "en",
+  theme: 'light',
+  language: 'en',
 });
 
 export function useStore() {
@@ -345,7 +345,7 @@ export function useStore() {
 
 ```typescript
 // useEventBus.ts
-import { ref } from "vue";
+import { ref } from 'vue';
 
 const events = ref<Map<string, Function[]>>(new Map());
 
@@ -382,7 +382,7 @@ export function useEventBus() {
 
 ```typescript
 // useForm.ts
-import { reactive, computed } from "vue";
+import { reactive, computed } from 'vue';
 
 export function useForm<T extends Record<string, any>>(initialData: T) {
   const form = reactive({ ...initialData });
@@ -423,16 +423,16 @@ export function useForm<T extends Record<string, any>>(initialData: T) {
 
 ```typescript
 // useCounter.test.ts
-import { describe, it, expect } from "vitest";
-import { useCounter } from "./useCounter";
+import { describe, it, expect } from 'vitest';
+import { useCounter } from './useCounter';
 
-describe("useCounter", () => {
-  it("should initialize with default value", () => {
+describe('useCounter', () => {
+  it('should initialize with default value', () => {
     const { count } = useCounter();
     expect(count.value).toBe(0);
   });
 
-  it("should increment correctly", () => {
+  it('should increment correctly', () => {
     const { count, increment } = useCounter();
     increment();
     expect(count.value).toBe(1);

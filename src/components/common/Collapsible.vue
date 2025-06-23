@@ -1,19 +1,26 @@
 <template>
   <div class="bg-white overflow-hidden">
     <!-- Collapsible Header -->
-    <div class="flex items-center justify-between p-4 cursor-pointer select-none" @click="toggleCollapse">
+    <div
+      class="flex items-center justify-between p-4 cursor-pointer select-none"
+      @click="toggleCollapse"
+    >
       <!-- Slot for the title/header content -->
       <div class="font-semibold text-text-title text-sm">
         <slot name="title">{{ title }}</slot>
       </div>
       <!-- Arrow icon, rotates based on collapse state -->
-      <ArrowIcon :class="{ 'rotate-180': !isCollapsed }"
-        class="w-5 h-5 text-gray-600 transition-transform duration-300 ease-in-out" />
-
+      <ArrowIcon
+        :class="{ 'rotate-180': !isCollapsed }"
+        class="w-5 h-5 text-gray-600 transition-transform duration-300 ease-in-out"
+      />
     </div>
 
-    <div ref="contentWrapper" :style="{ maxHeight: contentMaxHeight }"
-      class="transition-all duration-300 ease-in-out overflow-hidden">
+    <div
+      ref="contentWrapper"
+      :style="{ maxHeight: contentMaxHeight }"
+      class="transition-all duration-300 ease-in-out overflow-hidden"
+    >
       <div class="p-4">
         <!-- Slot for the collapsible content -->
         <slot></slot>

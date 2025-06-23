@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production builds
+dist/
+build/
+.output/
+
+# Generated files
+*.min.js
+*.min.css
+
+# Package files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+
+# Coverage reports
+coverage/
+
+# Storybook build
+storybook-static/
+
+# Auto-generated files
+.nuxt/
+.next/
+.cache/
+
+# Config files that shouldn't be formatted
+*.config.js
+*.config.ts
+vite.config.ts
+vitest.config.ts
