@@ -79,6 +79,11 @@ export function createRouter(appId?: string | number): Router {
       },
     },
     {
+      path: "/auto-responder",
+      name: "auto-responder",
+      component: () => import("../views/AutoResponder.vue"),
+    },
+    {
       path: "/about",
       name: "About",
       component: () => import("../views/About.vue"),
