@@ -93,6 +93,11 @@ export function createRouter(appId?: string | number): Router {
       name: "About",
       component: () => import("../views/About.vue"),
     },
+    {
+      path: "/home",
+      name: "HomeView",
+      component: () => import("../views/Home.vue"),
+    },
   ];
 
   // Use the provided appId or fall back to window.vueAppBaseId
