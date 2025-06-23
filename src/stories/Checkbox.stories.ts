@@ -26,11 +26,6 @@ const meta: Meta<typeof Checkbox> = {
       control: 'boolean',
       description: 'Disables the checkbox, making it unclickable and visually distinct.',
     },
-    // Event handlers (optional, but good for demonstrating interactions)
-    'update:modelValue': {
-      action: 'updated', // Logs the event in Storybook's Actions tab
-      description: 'Event emitted when the checkbox state changes.',
-    },
   },
   args: {
     // Default values for controls in all stories
