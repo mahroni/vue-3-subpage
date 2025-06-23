@@ -84,9 +84,9 @@ export function createRouter(appId?: string | number): Router {
       component: () => import("../views/AutoResponder.vue"),
     },
     {
-      path: "/overview",
-      name: "overview",
-      component: () => import("../views/Overview.vue"),
+      path: "/widget",
+      name: "widget",
+      component: () => import("../pages/integration/widget/WidgetLayout.vue"),
     },
     {
       path: "/about",

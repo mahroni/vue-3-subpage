@@ -12,14 +12,27 @@
     <MainTab :tabs="tabs" v-model="activeTab" />
 
     <!-- ini pakai v-if -->
+    <div v-if="activeTab === 'Overview'">
+      <WidgetForm />
+    </div>
+    <div v-if="activeTab === 'Live Chat Builder'">
+      <WidgetLiveChat />
+    </div>
+    <div v-if="activeTab === 'Code Installation'">
+      <WidgetCode />
+    </div>
     <div v-if="activeTab === 'Settings'">
-      <p>Overview content goes here.</p>
+      <WidgetSettings />
     </div>
   </div>
 </template>
 <script setup lang="ts">
 import { ref } from "vue";
-import MainTab from "../components/common/Tabs/MainTab.vue";
+import MainTab from "../../../components/common/Tabs/MainTab.vue";
+import WidgetForm from "./WidgetForm.vue";
+import WidgetLiveChat from "./WidgetLiveChat.vue";
+import WidgetCode from "./WidgetCode.vue";
+import WidgetSettings from "./WidgetSetting.vue";
 
 const tabs = ["Overview", "Live Chat Builder", "Code Installation", "Settings"];
 const activeTab = ref(tabs[0] || "overview");
