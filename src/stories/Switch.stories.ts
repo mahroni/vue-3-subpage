@@ -8,7 +8,8 @@ const meta: Meta<typeof Switch> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'A toggle switch component with multiple variants, sizes, and accessibility features. Supports keyboard navigation and screen readers.',
+        component:
+          'A toggle switch component with multiple variants, sizes, and accessibility features. Supports keyboard navigation and screen readers.',
       },
     },
   },
@@ -288,4 +289,4 @@ export const Playground: Story = {
     disabled: false,
     ariaLabel: 'Toggle switch',
   },
-}; 
+};

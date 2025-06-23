@@ -276,29 +276,25 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 ```html
 <!-- Primary Button -->
 <button
-  class="bg-button-primary hover:bg-button-hover-primary text-white px-4 py-2 rounded-lg transition-colors"
+  class="bg-button-primary hover:bg-button-hover-primary rounded-lg px-4 py-2 text-white transition-colors"
 >
   Primary Button
 </button>
 
 <!-- Secondary Button -->
 <button
-  class="bg-surface-secondary text-text-title px-4 py-2 rounded-lg border border-stroke-regular hover:bg-gray-200 transition-colors"
+  class="bg-surface-secondary text-text-title border-stroke-regular rounded-lg border px-4 py-2 transition-colors hover:bg-gray-200"
 >
   Secondary Button
 </button>
 
 <!-- Success Button -->
-<button
-  class="bg-success hover:bg-positive-400 text-white px-4 py-2 rounded-lg transition-colors"
->
+<button class="bg-success hover:bg-positive-400 rounded-lg px-4 py-2 text-white transition-colors">
   Success Button
 </button>
 
 <!-- Danger Button -->
-<button
-  class="bg-danger hover:bg-negative-400 text-white px-4 py-2 rounded-lg transition-colors"
->
+<button class="bg-danger hover:bg-negative-400 rounded-lg px-4 py-2 text-white transition-colors">
   Danger Button
 </button>
 ```
@@ -307,14 +303,14 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 
 ```html
 <!-- Basic Card -->
-<div class="bg-white rounded-lg shadow-md p-6 border border-stroke-regular">
-  <h3 class="text-text-title text-lg font-semibold mb-2">Card Title</h3>
+<div class="border-stroke-regular rounded-lg border bg-white p-6 shadow-md">
+  <h3 class="text-text-title mb-2 text-lg font-semibold">Card Title</h3>
   <p class="text-text-subtitle">Card content goes here</p>
 </div>
 
 <!-- Surface Card -->
 <div class="bg-surface-secondary rounded-lg p-6">
-  <h3 class="text-text-title text-lg font-semibold mb-2">Surface Card</h3>
+  <h3 class="text-text-title mb-2 text-lg font-semibold">Surface Card</h3>
   <p class="text-text-subtitle">This card uses semantic surface colors</p>
 </div>
 ```
@@ -323,26 +319,18 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 
 ```html
 <!-- Positive Status -->
-<div class="bg-positive-100 text-positive-400 px-3 py-1 rounded-full text-sm">
-  Success
-</div>
+<div class="bg-positive-100 text-positive-400 rounded-full px-3 py-1 text-sm">Success</div>
 
 <!-- Progressive Status -->
-<div
-  class="bg-progressive-100 text-progressive-400 px-3 py-1 rounded-full text-sm"
->
+<div class="bg-progressive-100 text-progressive-400 rounded-full px-3 py-1 text-sm">
   In Progress
 </div>
 
 <!-- Warning Status -->
-<div class="bg-cautions-100 text-cautions-400 px-3 py-1 rounded-full text-sm">
-  Warning
-</div>
+<div class="bg-cautions-100 text-cautions-400 rounded-full px-3 py-1 text-sm">Warning</div>
 
 <!-- Error Status -->
-<div class="bg-negative-100 text-negative-400 px-3 py-1 rounded-full text-sm">
-  Error
-</div>
+<div class="bg-negative-100 text-negative-400 rounded-full px-3 py-1 text-sm">Error</div>
 ```
 
 ### Form Elements
@@ -353,7 +341,7 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
   <label class="text-text-title text-sm font-medium">Email</label>
   <input
     type="email"
-    class="w-full px-3 py-2 border border-stroke-regular rounded-lg focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+    class="border-stroke-regular w-full rounded-lg border px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
     placeholder="Enter your email"
   />
 </div>
@@ -362,7 +350,7 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 <div class="space-y-2">
   <label class="text-text-title text-sm font-medium">Message</label>
   <textarea
-    class="w-full px-3 py-2 border border-stroke-regular rounded-lg focus:border-green-500 focus:outline-none focus:ring-1 focus:ring-green-500"
+    class="border-stroke-regular w-full rounded-lg border px-3 py-2 focus:border-green-500 focus:ring-1 focus:ring-green-500 focus:outline-none"
     rows="4"
     placeholder="Enter your message"
   ></textarea>
@@ -373,28 +361,22 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 
 ```html
 <!-- Success Alert -->
-<div
-  class="bg-success-light border border-success text-success px-4 py-3 rounded-lg"
->
+<div class="bg-success-light border-success text-success rounded-lg border px-4 py-3">
   <p>Success! Your changes have been saved.</p>
 </div>
 
 <!-- Info Alert -->
-<div class="bg-info-light border border-info text-info px-4 py-3 rounded-lg">
+<div class="bg-info-light border-info text-info rounded-lg border px-4 py-3">
   <p>Information: Please review the details below.</p>
 </div>
 
 <!-- Warning Alert -->
-<div
-  class="bg-warning-light border border-warning text-warning px-4 py-3 rounded-lg"
->
+<div class="bg-warning-light border-warning text-warning rounded-lg border px-4 py-3">
   <p>Warning: Please check your input before proceeding.</p>
 </div>
 
 <!-- Error Alert -->
-<div
-  class="bg-danger-light border border-danger text-danger px-4 py-3 rounded-lg"
->
+<div class="bg-danger-light border-danger text-danger rounded-lg border px-4 py-3">
   <p>Error: Something went wrong. Please try again.</p>
 </div>
 ```
@@ -403,16 +385,14 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 
 ```html
 <!-- Responsive Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  <div class="bg-surface-secondary p-4 rounded-lg">Card 1</div>
-  <div class="bg-surface-secondary p-4 rounded-lg">Card 2</div>
-  <div class="bg-surface-secondary p-4 rounded-lg">Card 3</div>
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+  <div class="bg-surface-secondary rounded-lg p-4">Card 1</div>
+  <div class="bg-surface-secondary rounded-lg p-4">Card 2</div>
+  <div class="bg-surface-secondary rounded-lg p-4">Card 3</div>
 </div>
 
 <!-- Responsive Text -->
-<h1 class="text-2xl md:text-3xl lg:text-4xl text-text-title">
-  Responsive Heading
-</h1>
+<h1 class="text-text-title text-2xl md:text-3xl lg:text-4xl">Responsive Heading</h1>
 ```
 
 ## 🌙 Dark Mode Support
@@ -420,7 +400,7 @@ Tailwind CSS v4 includes a comprehensive spacing scale from `0` to `96` with add
 Tailwind CSS v4 includes automatic dark mode support. You can use the `dark:` prefix for dark mode variants:
 
 ```html
-<div class="bg-white dark:bg-gray-900 text-text-title dark:text-white">
+<div class="text-text-title bg-white dark:bg-gray-900 dark:text-white">
   <p>This content adapts to dark mode automatically</p>
 </div>
 ```
@@ -439,7 +419,7 @@ src/
 The theme is configured using Tailwind CSS v4's new `@theme` directive in `src/tailwind.css`:
 
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-green-500: #27b199;
