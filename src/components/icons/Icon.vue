@@ -3,7 +3,11 @@ import { computed } from 'vue'
 
 // Import icon components
 import CloseIcon from './CloseIcon.vue'
-
+import BroadcastIcon from './BroadcastIcon.vue'
+import ArrowIcon from './ArrowIcon.vue'
+import UserIcon from './UserIcon.vue'
+import SettingIcon from './SettingIcon.vue'
+import HomeIcon from './HomeIcon.vue'
 interface IconProps {
   name: string
   size?: number
@@ -18,6 +22,11 @@ const props = withDefaults(defineProps<IconProps>(), {
 // Icon registry - maps icon names to components
 const iconRegistry = {
   close: CloseIcon,
+  broadcast: BroadcastIcon,
+  'arrow-down': ArrowIcon,
+  user: UserIcon,
+  setting: SettingIcon,
+  home: HomeIcon,
 }
 
 const iconComponent = computed(() => {

@@ -1,12 +1,21 @@
 <template>
   <div class="rounded-lg shadow-base overflow-hidden">
-    <Collapsible v-for="(item, index) in items" :key="item.id" :title="item.title" :collapsed="activeItemId !== item.id"
-      @update:collapsed="handleCollapseToggle(item.id, $event)" :class="{
-        'border-t border-gray-300': index !== 0
-      }" :initiallyCollapsed="!item.initiallyOpen">
+    <Collapsible
+      v-for="(item, index) in items"
+      :key="item.id"
+      :title="item.title"
+      :collapsed="activeItemId !== item.id"
+      @update:collapsed="handleCollapseToggle(item.id, $event)"
+      :class="{
+        'border-t border-gray-300': index !== 0,
+      }"
+      :initiallyCollapsed="!item.initiallyOpen">
       <!-- Pass the content from the item data to the default slot of Collapsible -->
       <template #default>
-        <div v-html="item.content"></div>
+        <!-- <div v-html="item.content"></div> -->
+        <slot :name="`item-id-${item.id}`" :item="item">
+          <div v-html="item.content"></div>
+        </slot>
       </template>
       <!-- Pass the title from the item data to the title slot -->
       <template #title>
@@ -17,8 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import Collapsible from './Collapsible.vue'; // Adjust path if necessary
+import { ref, onMounted } from "vue";
+import Collapsible from "./Collapsible.vue"; // Adjust path if necessary
 
 // Define the interface for an item in the collapsible group
 interface CollapsibleGroupItem {
@@ -57,7 +66,7 @@ const handleCollapseToggle = (id: string, isNowCollapsed: boolean) => {
 
 onMounted(() => {
   // Check if any item is marked as initially open and set it as active
-  const initialOpenItem = props.items.find(item => item.initiallyOpen);
+  const initialOpenItem = props.items.find((item) => item.initiallyOpen);
   console.log(initialOpenItem?.id);
   if (initialOpenItem) {
     activeItemId.value = initialOpenItem?.id;
