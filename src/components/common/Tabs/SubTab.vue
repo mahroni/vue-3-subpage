@@ -5,6 +5,7 @@ import Icon from '../../icons/Icon.vue';
 import { ref } from 'vue';
 
 interface TabItem {
+  id: string;
   label: string;
   icon?: string;
   children?: TabItem[];
@@ -58,7 +59,7 @@ function selectTab(tab: TabItem, child: TabItem | null) {
 
 <template>
   <ul class="flex bg-transparent rounded-lg p-1 w-fit select-none gap-0.5 text-sm">
-    <li v-for="tab in currentTabs" :key="tab.label" :class="TabItemClass({ isActive: modelValue.label === tab.label })"
+    <li v-for="tab in currentTabs" :key="tab.id" :class="TabItemClass({ isActive: modelValue.id === tab.id })"
       @click="selectParentTab(tab)">
       <Icon :name="tab.icon" v-if="tab.icon" width="16" height="16" class="text-primary-500" />
       {{ tab.label }}
@@ -67,8 +68,8 @@ function selectTab(tab: TabItem, child: TabItem | null) {
 
       <ul
         class="absolute top-full left-0  bg-white rounded-lg p-2 shadow-lg text-left divide-y divide-gray-300 w-auto min-w-full"
-        v-if="showChildren?.label === tab.label && tab.children && tab.children.length > 0">
-        <li v-for="child in tab.children" :key="child.label"
+        v-if="showChildren?.id === tab.id && tab.children && tab.children.length > 0">
+        <li v-for="child in tab.children" :key="child.id"
           class="p-2 hover:font-medium cursor-pointer text-ellipsis overflow-hidden whitespace-nowrap max-w-[300px] text-sm"
           :title="child.label" @click.stop="selectTab(tab, child)">
           {{ child.label }}
