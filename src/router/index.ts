@@ -1,20 +1,94 @@
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router'
 import type { Router } from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '../views/ChannelPage.vue'
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
     {
-      path: '/',
-      name: 'Home',
-      component: Home
+      path: "/",
+      name: "Home",
+      component: Home,
     },
     {
-      path: '/about',
-      name: 'About',
-      component: () => import('../views/About.vue')
-    }
-  ]
+      path: "/whatsapp",
+      name: "whatsapp",
+      beforeEnter: () => {
+        window.location.href = `https://omnichannel.qiscus.com/integration?channel=whatsapp`;
+        return false;
+      },
+    },
+    {
+      path: "/instagram",
+      name: "instagram",
+      beforeEnter: () => {
+        window.location.href = `https://omnichannel.qiscus.com/integration?channel=instagram`;
+        return false;
+      },
+    },
+    {
+      path: "/tiktok",
+      name: "tiktok",
+      beforeEnter: () => {
+        window.location.href = `https://omnichannel.qiscus.com/integration?channel=tiktok`;
+        return false;
+      },
+    },
+    {
+      path: "/facebook",
+      name: "facebook",
+      beforeEnter: () => {
+        window.location.href = `https://omnichannel.qiscus.com/integration?channel=facebook",`;
+        return false;
+      },
+    },
+    {
+      path: "/line",
+      name: "line",
+      beforeEnter: () => {
+        window.location.href = `https://omnichannel.qiscus.com/integration?channel=line",`;
+        return false;
+      },
+    },
+    {
+      path: "/telegram",
+      name: "telegram",
+      beforeEnter: () => {
+        window.location.href = `https://omnichannel.qiscus.com/integration?channel=telegram",`;
+        return false;
+      },
+    },
+    {
+      path: "/qiscus",
+      name: "qiscus",
+      component: () => import("../views/QiscusChannelView.vue"),
+    },
+    {
+      path: "/custom",
+      name: "custom",
+      beforeEnter: () => {
+        window.location.href = `https://omnichannel.qiscus.com/integration?channel=custom_channel",`;
+        return false;
+      },
+    },
+    {
+      path: "/bot",
+      name: "bot",
+      beforeEnter: () => {
+        window.location.href = `https://omnichannel.qiscus.com/integration?channel=bot_integration",`;
+        return false;
+      },
+    },
+    {
+      path: "/auto-responder",
+      name: "auto-responder",
+      component: () => import("../views/AutoResponder.vue"),
+    },
+    {
+      path: "/about",
+      name: "About",
+      component: () => import("../views/About.vue"),
+    },
+  ];
 
   // Use the provided appId or fall back to window.vueAppBaseId
   let dynamicAppId = "";

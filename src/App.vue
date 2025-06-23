@@ -3,7 +3,7 @@
 
 <template>
   <div id="app">
-    <nav class="bg-gray-800 p-4">
+    <!-- <nav class="bg-gray-800 p-4">
       <div class="container mx-auto flex space-x-4">
         <router-link to="/" class="text-white hover:text-gray-300 px-3 py-2 rounded-md text-sm font-medium"
           active-class="bg-gray-900 text-white">
@@ -14,7 +14,7 @@
           About
         </router-link>
       </div>
-    </nav>
+    </nav> -->
 
     <main class="container mx-auto py-8">
       <transition enter-active-class="transition-all duration-300 ease-out" enter-from-class="opacity-0 translate-x-5"
