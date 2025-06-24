@@ -30,3 +30,20 @@ export interface IWhatsappChannel {
   primary_business_location: string | null;
   read_enabled: boolean;
 }
+
+export interface IQiscusChannel {
+  id: number;
+  is_active: boolean;
+  app_code: string;
+  name: string;
+  badge_url: string | null;
+  app_id: number;
+  use_channel_responder: boolean;
+  is_secure: boolean;
+  is_secure_toc: boolean;
+  created_at: Date;
+  updated_at: Date;
+  secret_key: string;
+  forward_url: null;
+  forward_enabled: boolean;
+}

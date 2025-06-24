@@ -1,9 +1,8 @@
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 import type { Router, RouteRecordRaw } from 'vue-router';
-import Home from '@/views/ChannelPage.vue';
+import Home from '@/views/integration/ChannelPage.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
-import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
-import ListAccount from '@/pages/integration/list-account/ListAccount.vue';
+import QiscusCreateChannelView from '@/views/integration/QiscusCreateChannelView.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -16,7 +15,7 @@ export function createRouter(appId?: string | number): Router {
       path: '/whatsapp',
       name: 'whatsapp',
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=whatsapp`;
+        window.location.href = `/integration?channel=whatsapp`;
         return false;
       },
     },
@@ -24,7 +23,7 @@ export function createRouter(appId?: string | number): Router {
       path: '/instagram',
       name: 'instagram',
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=instagram`;
+        window.location.href = `/integration?channel=instagram`;
         return false;
       },
     },
@@ -32,7 +31,7 @@ export function createRouter(appId?: string | number): Router {
       path: '/tiktok',
       name: 'tiktok',
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=tiktok`;
+        window.location.href = `/integration?channel=tiktok`;
         return false;
       },
     },
@@ -40,7 +39,7 @@ export function createRouter(appId?: string | number): Router {
       path: '/facebook',
       name: 'facebook',
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=facebook",`;
+        window.location.href = `/integration?channel=facebook",`;
         return false;
       },
     },
@@ -48,7 +47,7 @@ export function createRouter(appId?: string | number): Router {
       path: '/line',
       name: 'line',
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=line",`;
+        window.location.href = `/integration?channel=line",`;
         return false;
       },
     },
@@ -56,28 +55,38 @@ export function createRouter(appId?: string | number): Router {
       path: '/telegram',
       name: 'telegram',
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=telegram",`;
+        window.location.href = `/integration?channel=telegram",`;
         return false;
       },
     },
     {
       path: '/qiscus',
       name: 'qiscus',
-      component: () => import('@/views/QiscusChannelView.vue'),
+      component: () => import('@/views/integration/QiscusListChannelView.vue'),
     },
     {
-      path: '/custom',
-      name: 'custom',
+      path: '/qiscus/:channelId',
+      name: 'QiscusChannelDetail',
+      component: () => import('@/pages/integration/widget/WidgetLayout.vue'),
+    },
+    {
+      path: '/qiscus/create',
+      name: 'qiscusCreate',
+      component: QiscusCreateChannelView,
+    },
+    {
+      path: '/custom_channel',
+      name: 'custom_channel',
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=custom_channel",`;
+        window.location.href = `/integration?channel=custom_channel`;
         return false;
       },
     },
     {
-      path: '/bot',
-      name: 'bot',
+      path: '/bot_integration',
+      name: 'bot_integration',
       beforeEnter: () => {
-        window.location.href = `https://omnichannel.qiscus.com/integration?channel=bot_integration",`;
+        window.location.href = `/integration?channel=bot_integration`;
         return false;
       },
     },
@@ -85,16 +94,6 @@ export function createRouter(appId?: string | number): Router {
       path: '/auto-responder',
       name: 'auto-responder',
       component: AutoResponder,
-    },
-    {
-      path: '/widget',
-      name: 'widget',
-      component: WidgetLayout,
-    },
-    {
-      path: '/list-account',
-      name: 'ListAccount',
-      component: ListAccount
     },
     {
       path: '/home',
