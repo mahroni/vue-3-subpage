@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col gap-8 px-12 py-8">
     <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
-      <Icon name="arrow-left" :size="20" />
       Integration
+      <ArrowLeftIcon :size="20" />
     </router-link>
 
     <!-- Header -->
     <div class="flex items-center gap-2">
-      <Icon name="chat" :size="20" />
+      <ChatIcon :size="20" />
       <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>
 
@@ -33,12 +33,11 @@
 import { onMounted, computed } from 'vue';
 import { useAppConfigStore } from '../stores/app-config';
 import { useChannelsStore } from '../stores/channels';
-import Icon from '@/components/icons/Icon.vue';
 import TableListAccount from '@/pages/integration/list-account/TableListAccount.vue';
 import Banner from '../components/common/Banner.vue';
 import type { IWhatsappChannel } from '../types/channels';
 import { CHANNEL_BADGE_URL } from '../utils/constant/channels';
-
+import { ArrowLeftIcon, ChatIcon } from '../components/icons';
 const appConfigStore = useAppConfigStore();
 
 appConfigStore.setConfig({
