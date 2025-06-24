@@ -1,16 +1,14 @@
 <script setup lang="ts">
 import type { Component } from 'vue'
 
-interface Tab {
-    label: string;
-    icon?: Component;
-}
+
 
 const props = withDefaults(defineProps<{
-    tabs: Tab[];
+    tabs: {label: string, icon?: Component}[];
     modelValue: string;
 }>(), {
-    modelValue: ''
+    modelValue: '',
+    tabs: () => []
 })
 
 const emit = defineEmits<{
