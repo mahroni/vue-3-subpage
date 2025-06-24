@@ -17,6 +17,8 @@ import ChevronLeftIcon from './ChevronLeftIcon.vue';
 import ChevronRightIcon from './ChevronRightIcon.vue';
 import DoubleChevronLeftIcon from './DoubleChevronLeftIcon.vue';
 import DoubleChevronRightIcon from './DoubleChevronRightIcon.vue';
+import EyeIcon from './EyeIcon.vue';
+
 interface IconProps {
   name: string;
   size?: number;
@@ -45,6 +47,7 @@ const iconRegistry = {
   'chevron-right': ChevronRightIcon,
   'double-chevron-left': DoubleChevronLeftIcon,
   'double-chevron-right': DoubleChevronRightIcon,
+  eye: EyeIcon,
 };
 
 const iconComponent = computed(() => {
