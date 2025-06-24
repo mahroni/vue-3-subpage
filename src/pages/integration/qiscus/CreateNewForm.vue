@@ -19,6 +19,7 @@
 
     <div class="w-[552px]">
       <Input
+        v-model="channelName"
         :disabled="false"
         :error="false"
         errorMessage="This field has an error"
@@ -62,4 +63,5 @@ import Checkbox from '@/components/common/Checkbox.vue';
 import { ref } from 'vue';
 
 const modelValue = ref(false);
+const channelName = ref('');
 </script>

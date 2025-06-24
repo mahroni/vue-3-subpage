@@ -11,17 +11,8 @@
       <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>
 
-    <Banner>
-      <p>
-        To learn more about Qiscus Live Chat Integration, you can refer to this
-        <a
-          class="text-notification-link font-semibold underline"
-          href="https://docs.qiscus.com/docs/live-chat-integration"
-          target="_blank"
-          >Documentation</a
-        >.
-      </p>
-    </Banner>
+    <!-- Banner documentation -->
+    <QiscusBannerDoc />
 
     <!-- Table section -->
     <div class="shadow-large rounded-2xl bg-white p-4">
@@ -46,6 +37,7 @@ import Banner from '@/components/common/Banner.vue';
 import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { ArrowLeftIcon, ChatIcon } from '@/components/icons';
+import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 
 // props
 const channelType = 'qiscus';
@@ -67,7 +59,7 @@ const qiscus_channels = computed(() =>
     isActive: channel.is_active,
     badgeUrl: channel.badge_url ? channel.badge_url : CHANNEL_BADGE_URL.qiscus,
   }))
-) as unknown as IQiscusChannel[];
+);
 
 function updateChannelStatus(data: { id: number; isActive: boolean }) {
   channelsStore.updateChannelStatus(data.id, data.isActive, channelType);
