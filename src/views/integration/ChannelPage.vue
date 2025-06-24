@@ -2,7 +2,7 @@
   <div class="text-text-title flex min-h-screen flex-col gap-8 px-12 py-8 text-sm">
     <div>
       <div class="mb-4 flex gap-3">
-        <img src="../assets/icon-integration.svg" alt="Qiscus Logo" />
+        <img src="@/assets/icon-integration.svg" alt="Icon Integration" />
         <h2 class="text-text-title text-xl font-semibold">Integration Channel</h2>
       </div>
       <p class="text-text-subtitle">
@@ -45,9 +45,9 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import Badge from '../components/common/Badge.vue';
+import Badge from '@/components/common/Badge.vue';
 import { useRouter } from 'vue-router';
-import SubTab from '../components/common/Tabs/SubTab.vue';
+import SubTab from '@/components/common/Tabs/SubTab.vue';
 
 const router = useRouter();
 

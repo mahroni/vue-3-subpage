@@ -8,7 +8,7 @@
     <!-- Header -->
     <div class="flex items-center gap-2">
       <Icon name="chat" :size="20" />
-      <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
+      <h2 class="text-text-title text-xl font-semibold">New Integration - Qiscus Live Chat</h2>
     </div>
 
     <div class="bg-surface-highlight rounded-lg p-4 text-sm font-medium">
@@ -30,5 +30,5 @@
 
 <script setup lang="ts">
 import Icon from '@/components/icons/Icon.vue';
-import CreateNewForm from '@/pages/integration/list-account/CreateNewForm.vue';
+import CreateNewForm from '@/pages/integration/qiscus/CreateNewForm.vue';
 </script>
