@@ -42,7 +42,8 @@ const props = withDefaults(defineProps<Props>(), {
     error: false,
     errorMessage: 'This field has an error',
     minHeight: '92px',
-    maxHeight: '200px'
+    maxHeight: '200px',
+    modelValue: ''
 });
 
 const emit = defineEmits(['update:modelValue']);

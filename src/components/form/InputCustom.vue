@@ -110,9 +110,9 @@ const wrapperClasses = cva(
   }
 );
 
-const contentWrapperClasses = cva('flex w-full flex-row items-center gap-3 px-3 py-3');
+const contentWrapperClasses = cva('flex w-full flex-row items-center gap-3 px-3 py-3 bg-white');
 
-const inputClasses = cva('w-full bg-transparent outline-none', {
+const inputClasses = cva('w-full bg-white outline-none', {
   variants: {
     disabled: {
       true: 'cursor-not-allowed',
