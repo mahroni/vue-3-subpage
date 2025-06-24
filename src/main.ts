@@ -14,10 +14,9 @@ export interface QiscusAppConfig {
   appVersion: string;
 }
 
-export function createQiscusApp(
+export function createOmnichannelApp(
   container: string | Element,
-  appId?: string | number,
-  config?: QiscusAppConfig
+  config: QiscusAppConfig
 ) {
   const app = createApp(App);
   const pinia = createPinia();
@@ -31,7 +30,7 @@ export function createQiscusApp(
   }
 
   // Create router with the provided appId
-  const router = createRouter(appId);
+  const router = createRouter(config.appId);
   app.use(router);
 
   const mountElement =
@@ -45,5 +44,9 @@ export function createQiscusApp(
 
 // Auto-mount if #app exists (for development)
 if (document.querySelector('#app')) {
-  createQiscusApp('#app');
+  createOmnichannelApp('#app', {
+    userToken: import.meta.env.VITE_QISCUS_USER_TOKEN,
+    appId: import.meta.env.VITE_QISCUS_APP_ID,
+    appVersion: import.meta.env.VITE_QISCUS_APP_VERSION,
+  });
 }

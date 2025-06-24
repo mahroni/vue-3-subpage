@@ -1,4 +1,4 @@
-import { createQiscusApp, type QiscusAppConfig } from '../main';
+import { createOmnichannelApp, type QiscusAppConfig } from '../main';
 import { useAppConfigStore } from '../stores/app-config';
 
 // Example 1: Initialize with configuration
@@ -9,12 +9,7 @@ const appConfig: QiscusAppConfig = {
 };
 
 // Create app with configuration
-createQiscusApp('#app', 'your-app-id', appConfig);
-
-// Example 2: Initialize without configuration (will use fallback)
-createQiscusApp('#app', 'your-app-id');
-
-// Example 3: Initialize with configuration after app creation
+createOmnichannelApp('#app', appConfig);
 
 // You can also set configuration after app creation
 const appConfigStore = useAppConfigStore();
@@ -44,10 +39,10 @@ appConfigStore.clearConfig();
 Usage in HTML/JavaScript:
 
 <script type="module">
-  import { createQiscusApp } from './dist/qiscus-vue-app.es.js'
+  import { createOmnichannelApp } from './dist/qiscus-vue-app.es.js'
   
   // Initialize with configuration
-  const app = createQiscusApp('#app', 'your-app-id', {
+  const app = createOmnichannelApp('#app', 'your-app-id', {
     userToken: 'your-user-token',
     appId: 'your-app-id', 
     appVersion: '1.0.0'
@@ -56,8 +51,8 @@ Usage in HTML/JavaScript:
 
 Or without configuration (will use fallback to localStorage):
 <script type="module">
-  import { createQiscusApp } from './dist/qiscus-vue-app.es.js'
+  import { createOmnichannelApp } from './dist/qiscus-vue-app.es.js'
   
-  const app = createQiscusApp('#app', 'your-app-id')
+  const app = createOmnichannelApp('#app', 'your-app-id')
 </script>
 */

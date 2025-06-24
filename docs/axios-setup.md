@@ -63,9 +63,9 @@ const headers = appConfigStore.getHeaders();
 ### Method 1: Initialize with configuration during app creation
 
 ```typescript
-import { createQiscusApp } from '@/main';
+import { createOmnichannelApp } from '@/main';
 
-const app = createQiscusApp('#app', 'your-app-id', {
+const app = createOmnichannelApp('#app', {
   userToken: 'your-user-token',
   appId: 'your-app-id',
   appVersion: '1.0.0',
@@ -75,19 +75,19 @@ const app = createQiscusApp('#app', 'your-app-id', {
 ### Method 2: Initialize without configuration (fallback to localStorage)
 
 ```typescript
-import { createQiscusApp } from '@/main';
+import { createOmnichannelApp } from '@/main';
 
-const app = createQiscusApp('#app', 'your-app-id');
+const app = createOmnichannelApp('#app', 'your-app-id');
 // Will use localStorage.getItem('auth_token') for Authorization header
 ```
 
 ### Method 3: Set configuration after app creation
 
 ```typescript
-import { createQiscusApp } from '@/main';
+import { createOmnichannelApp } from '@/main';
 import { useAppConfigStore } from '@/stores/app-config';
 
-const app = createQiscusApp('#app', 'your-app-id');
+const app = createOmnichannelApp('#app', 'your-app-id');
 
 // Set configuration after app is created
 const appConfigStore = useAppConfigStore();
