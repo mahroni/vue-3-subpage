@@ -5,6 +5,9 @@ import App from './App.vue';
 import { createRouter } from './router';
 import { useAppConfigStore } from './stores/app-config';
 
+import 'sweetalert2/dist/sweetalert2.min.css';
+import '@/assets/css/sweet-alert-custom.css';
+
 import './assets/css/tailwind.css';
 import './assets/css/style.css';
 
@@ -23,7 +26,6 @@ export function createOmnichannelApp(
 
   app.use(pinia);
 
-  // Initialize app configuration if provided
   if (config) {
     const appConfigStore = useAppConfigStore();
     appConfigStore.setConfig(config);

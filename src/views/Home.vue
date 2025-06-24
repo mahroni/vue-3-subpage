@@ -15,6 +15,7 @@ import SubTab from '../components/common/Tabs/SubTab.vue';
 import InputCustom from '../components/form/InputCustom.vue';
 import Icon from '../components/icons/Icon.vue';
 import Drawer from '@/components/common/Drawer.vue';
+import { useSweetAlert } from '@/composables/useSweetAlert';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -107,6 +108,19 @@ const isDrawerOpen = ref<boolean>(false); // Explicitly type ref
 
 const toggleDrawer = (): void => {
   isDrawerOpen.value = !isDrawerOpen.value;
+};
+
+const showAlert = () => {
+  const { showAlert } = useSweetAlert();
+  showAlert.warning({
+    title: 'Lorem ipsum dolor',
+    text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
+    confirmButtonText: 'Update Live Chat',
+    cancelButtonText: 'Cancel',
+    showCancelButton: true,
+  }).then((result) => {
+    console.log(result);
+  });
 };
 
 onMounted(() => {
@@ -276,6 +290,10 @@ onMounted(() => {
     </div>
 
     <Drawer :isOpen="isDrawerOpen" @close="toggleDrawer" />
+
+    <div class="mt-4">
+      <Button intent="primary" size="medium" @click="showAlert">Show Alert</Button>
+    </div>
   </div>
 </template>
 
