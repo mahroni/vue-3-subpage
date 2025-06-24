@@ -1,5 +1,6 @@
 <template>
     <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
+        <ImageInput label="Image" id="welcome-dialog-image" tipsText="We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB." showTips="true" />
         <TextArea label="First Description" />
         <Input label="Description" />
     </WidgetFormLayout>
@@ -20,7 +21,7 @@ import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
 import { ref, computed } from 'vue';
 import DragDropInput from '@/components/form/DragDropInput.vue';
 import OptionalInput from '../form/OptionalInput.vue';
-
+import ImageInput from '@/components/form/ImageInput.vue';
 const welcomeDialogState = ref(true)
 const attentionGrabberImage = ref(true)
 const attentionGrabberText = ref(true)
