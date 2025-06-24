@@ -47,17 +47,26 @@ import FilterIcon from './FilterIcon.vue';
 import EditIcon from './EditIcon.vue';
 import RefreshIcon from './RefreshIcon.vue';
 import PuzzleIcon from './PuzzleIcon.vue';
+import SuccessIcon from './SuccessIcon.vue';
+import ErrorIcon from './ErrorIcon.vue';
+import AttentionIcon from './AttentionIcon.vue';
+import WarningIcon from './WarningIcon.vue';
+import ChevronRightIcon from './ChevronRightIcon.vue';
+import ChevronLeftIcon from './ChevronLeftIcon.vue';
+import ChevronUpIcon from './ChevronUpIcon.vue';
+import ChevronDownIcon from './ChevronDownIcon.vue';
+import NextPaginationIcon from './NextPaginationIcon.vue';
+import BackPaginationIcon from './BackPaginationIcon.vue';
+import CloseIcon from './CloseIcon.vue';
+import BackIcon from './BackIcon.vue';
+import NextIcon from './NextIcon.vue';
+import ShopIcon from './ShopIcon.vue';
 
 // Common icons
-import CloseIcon from './CloseIcon.vue';
 import HomeIcon from './HomeIcon.vue';
-import ArrowLeftIcon from './ArrowLeftIcon.vue';
 import ChatIcon from './channel-icons/WidgetIcon.vue';
-import ChevronLeftIcon from './ChevronLeftIcon.vue';
-import ChevronRightIcon from './ChevronRightIcon.vue';
 import DoubleChevronLeftIcon from './DoubleChevronLeftIcon.vue';
 import DoubleChevronRightIcon from './DoubleChevronRightIcon.vue';
-import ChevronDownIcon from './ChevronDownIcon.vue';
 
 interface IconProps {
   name: string;
@@ -117,14 +126,23 @@ const iconRegistry = {
   edit: EditIcon,
   refresh: RefreshIcon,
   puzzle: PuzzleIcon,
-  // Common icons
-  close: CloseIcon,
-  home: HomeIcon,
-  'arrow-left': ArrowLeftIcon,
-  chat: ChatIcon,
-  'chevron-down': ChevronDownIcon,
-  'chevron-left': ChevronLeftIcon,
+  success: SuccessIcon,
+  error: ErrorIcon,
+  attention: AttentionIcon,
+  warning: WarningIcon,
   'chevron-right': ChevronRightIcon,
+  'chevron-left': ChevronLeftIcon,
+  'chevron-up': ChevronUpIcon,
+  'chevron-down': ChevronDownIcon,
+  'next-pagination': NextPaginationIcon,
+  'back-pagination': BackPaginationIcon,
+  close: CloseIcon,
+  back: BackIcon,
+  next: NextIcon,
+  shop: ShopIcon,
+  // Common icons
+  home: HomeIcon,
+  chat: ChatIcon,
   'double-chevron-left': DoubleChevronLeftIcon,
   'double-chevron-right': DoubleChevronRightIcon,
 };

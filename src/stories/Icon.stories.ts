@@ -321,30 +321,67 @@ export const AllIcons: Story = {
           <Icon name="puzzle" :size="24" />
           <p class="text-xs mt-2">puzzle</p>
         </div>
-        <!-- Common icons -->
         <div class="text-center">
-          <Icon name="home" :size="24" />
-          <p class="text-xs mt-2">home</p>
+          <Icon name="success" :size="24" />
+          <p class="text-xs mt-2">success</p>
         </div>
         <div class="text-center">
-          <Icon name="close" :size="24" />
-          <p class="text-xs mt-2">close</p>
+          <Icon name="error" :size="24" />
+          <p class="text-xs mt-2">error</p>
         </div>
         <div class="text-center">
-          <Icon name="chevron-down" :size="24" />
-          <p class="text-xs mt-2">chevron-down</p>
+          <Icon name="attention" :size="24" />
+          <p class="text-xs mt-2">attention</p>
         </div>
         <div class="text-center">
-          <Icon name="arrow-left" :size="24" />
-          <p class="text-xs mt-2">arrow-left</p>
+          <Icon name="warning" :size="24" />
+          <p class="text-xs mt-2">warning</p>
+        </div>
+        <div class="text-center">
+          <Icon name="chevron-right" :size="24" />
+          <p class="text-xs mt-2">chevron-right</p>
         </div>
         <div class="text-center">
           <Icon name="chevron-left" :size="24" />
           <p class="text-xs mt-2">chevron-left</p>
         </div>
         <div class="text-center">
-          <Icon name="chevron-right" :size="24" />
-          <p class="text-xs mt-2">chevron-right</p>
+          <Icon name="chevron-up" :size="24" />
+          <p class="text-xs mt-2">chevron-up</p>
+        </div>
+        <div class="text-center">
+          <Icon name="chevron-down" :size="24" />
+          <p class="text-xs mt-2">chevron-down</p>
+        </div>
+        <div class="text-center">
+          <Icon name="next-pagination" :size="24" />
+          <p class="text-xs mt-2">next-pagination</p>
+        </div>
+        <div class="text-center">
+          <Icon name="back-pagination" :size="24" />
+          <p class="text-xs mt-2">back-pagination</p>
+        </div>
+        <div class="text-center">
+          <Icon name="close" :size="24" />
+          <p class="text-xs mt-2">close</p>
+        </div>
+        <div class="text-center">
+          <Icon name="back" :size="24" />
+          <p class="text-xs mt-2">back</p>
+        </div>
+        <div class="text-center">
+          <Icon name="next" :size="24" />
+          <p class="text-xs mt-2">next</p>
+        </div>
+        <div class="text-center">
+          <Icon name="shop" :size="24" />
+          <p class="text-xs mt-2">shop</p>
+        </div>
+
+        <!-- Common icons -->
+        <div class="text-center">
+          <Icon name="home" :size="24" />
+          <p class="text-xs mt-2">home</p>
         </div>
         <div class="text-center">
           <Icon name="double-chevron-left" :size="24" />
