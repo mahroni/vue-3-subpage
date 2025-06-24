@@ -36,6 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   error: false, // Default to no error
   errorMessage: 'This field has an error', // Default error message
+  modelValue: ''
 });
 
 const emit = defineEmits(['update:modelValue']);

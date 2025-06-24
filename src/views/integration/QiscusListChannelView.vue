@@ -33,7 +33,7 @@ import { onMounted, computed } from 'vue';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useChannelsStore } from '@/stores/channels';
 import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
-import Banner from '@/components/common/Banner.vue';
+// import Banner from '@/components/common/Banner.vue';
 import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { ArrowLeftIcon, ChatIcon } from '@/components/icons';
