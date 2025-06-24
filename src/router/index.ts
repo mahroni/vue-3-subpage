@@ -1,6 +1,6 @@
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 import type { Router, RouteRecordRaw } from 'vue-router';
-import Home from '@/views/ChannelPage.vue';
+import Home from '@/views/integration/ChannelPage.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
 import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
 import ListAccount from '@/pages/integration/list-account/ListAccount.vue';
@@ -63,19 +63,19 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/qiscus',
       name: 'qiscus',
-      component: () => import('@/views/QiscusChannelView.vue'),
+      component: () => import('@/views/integration/QiscusChannelView.vue'),
     },
     {
-      path: "/custom_channel",
-      name: "custom_channel",
+      path: '/custom_channel',
+      name: 'custom_channel',
       beforeEnter: () => {
         window.location.href = `/integration?channel=custom_channel`;
         return false;
       },
     },
     {
-      path: "/bot_integration",
-      name: "bot_integration",
+      path: '/bot_integration',
+      name: 'bot_integration',
       beforeEnter: () => {
         window.location.href = `/integration?channel=bot_integration`;
         return false;
@@ -94,7 +94,7 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/list-account',
       name: 'ListAccount',
-      component: ListAccount
+      component: ListAccount,
     },
     {
       path: '/home',
