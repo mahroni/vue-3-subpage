@@ -4,7 +4,7 @@ import Home from '@/views/ChannelPage.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
 import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
 import ListAccount from '@/pages/integration/list-account/ListAccount.vue';
-import ListAccountCreateNew from '@/pages/integration/list-account/ListAccountCreateForm.vue';
+import CreateNew from '@/views/CreateNew.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -98,9 +98,9 @@ export function createRouter(appId?: string | number): Router {
       component: ListAccount,
     },
     {
-      path: '/list-account-create-new',
-      name: 'ListAccountCreateNew',
-      component: ListAccountCreateNew,
+      path: '/create-new',
+      name: 'CreateNew',
+      component: CreateNew,
     },
     {
       path: '/home',
