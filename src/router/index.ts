@@ -3,6 +3,7 @@ import type { Router, RouteRecordRaw } from 'vue-router';
 import Home from '@/views/integration/ChannelPage.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
 import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
+import CreateNew from '@/views/CreateNew.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -94,6 +95,11 @@ export function createRouter(appId?: string | number): Router {
       path: '/widget',
       name: 'widget',
       component: WidgetLayout,
+    },
+    {
+      path: '/create-new',
+      name: 'CreateNew',
+      component: CreateNew,
     },
     {
       path: '/home',
