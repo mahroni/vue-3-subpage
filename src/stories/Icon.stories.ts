@@ -517,9 +517,37 @@ export const HomeIcon: Story = {
   },
 };
 
-export const UserIcon: Story = {
+export const InboxIcon: Story = {
   args: {
-    name: 'user',
+    name: 'inbox',
+    size: 32,
+  },
+};
+
+export const BroadcastIcon: Story = {
+  args: {
+    name: 'broadcast',
+    size: 32,
+  },
+};
+
+export const CustomerIcon: Story = {
+  args: {
+    name: 'customer',
+    size: 32,
+  },
+};
+
+export const AnalyticsIcon: Story = {
+  args: {
+    name: 'analytics',
+    size: 32,
+  },
+};
+
+export const IntegrationIcon: Story = {
+  args: {
+    name: 'integration',
     size: 32,
   },
 };
@@ -527,6 +555,13 @@ export const UserIcon: Story = {
 export const SettingIcon: Story = {
   args: {
     name: 'setting',
+    size: 32,
+  },
+};
+
+export const UserIcon: Story = {
+  args: {
+    name: 'user',
     size: 32,
   },
 };
@@ -552,6 +587,20 @@ export const CopyIcon: Story = {
   },
 };
 
+export const EditIcon: Story = {
+  args: {
+    name: 'edit',
+    size: 32,
+  },
+};
+
+export const DeleteIcon: Story = {
+  args: {
+    name: 'delete',
+    size: 32,
+  },
+};
+
 export const CloseIcon: Story = {
   args: {
     name: 'close',
@@ -559,23 +608,44 @@ export const CloseIcon: Story = {
   },
 };
 
-export const BroadcastIcon: Story = {
+export const FilterIcon: Story = {
   args: {
-    name: 'broadcast',
+    name: 'filter',
     size: 32,
   },
 };
 
-export const ArrowDownIcon: Story = {
+export const RefreshIcon: Story = {
   args: {
-    name: 'arrow-down',
+    name: 'refresh',
     size: 32,
   },
 };
 
-export const ArrowLeftIcon: Story = {
+export const SuccessIcon: Story = {
   args: {
-    name: 'arrow-left',
+    name: 'success',
+    size: 32,
+  },
+};
+
+export const ErrorIcon: Story = {
+  args: {
+    name: 'error',
+    size: 32,
+  },
+};
+
+export const WarningIcon: Story = {
+  args: {
+    name: 'warning',
+    size: 32,
+  },
+};
+
+export const AttentionIcon: Story = {
+  args: {
+    name: 'attention',
     size: 32,
   },
 };
@@ -594,6 +664,20 @@ export const ChevronRightIcon: Story = {
   },
 };
 
+export const ChevronUpIcon: Story = {
+  args: {
+    name: 'chevron-up',
+    size: 32,
+  },
+};
+
+export const ChevronDownIcon: Story = {
+  args: {
+    name: 'chevron-down',
+    size: 32,
+  },
+};
+
 export const DoubleChevronLeftIcon: Story = {
   args: {
     name: 'double-chevron-left',
@@ -608,9 +692,128 @@ export const DoubleChevronRightIcon: Story = {
   },
 };
 
+export const BackIcon: Story = {
+  args: {
+    name: 'back',
+    size: 32,
+  },
+};
+
+export const NextIcon: Story = {
+  args: {
+    name: 'next',
+    size: 32,
+  },
+};
+
+export const CheckIcon: Story = {
+  args: {
+    name: 'check',
+    size: 32,
+  },
+};
+
+export const MinusIcon: Story = {
+  args: {
+    name: 'minus',
+    size: 32,
+  },
+};
+
+export const MoreIcon: Story = {
+  args: {
+    name: 'more',
+    size: 32,
+  },
+};
+
+export const InformationIcon: Story = {
+  args: {
+    name: 'information',
+    size: 32,
+  },
+};
+
+export const HelpIcon: Story = {
+  args: {
+    name: 'help',
+    size: 32,
+  },
+};
+
+export const EyeIcon: Story = {
+  args: {
+    name: 'eye',
+    size: 32,
+  },
+};
+
+export const SendIcon: Story = {
+  args: {
+    name: 'send',
+    size: 32,
+  },
+};
+
 export const ChatIcon: Story = {
   args: {
     name: 'chat',
+    size: 32,
+  },
+};
+
+export const LogoutIcon: Story = {
+  args: {
+    name: 'logout',
+    size: 32,
+  },
+};
+
+export const NotificationIcon: Story = {
+  args: {
+    name: 'notification',
+    size: 32,
+  },
+};
+
+export const TagsIcon: Story = {
+  args: {
+    name: 'tags',
+    size: 32,
+  },
+};
+
+export const SquareIcon: Story = {
+  args: {
+    name: 'square',
+    size: 32,
+  },
+};
+
+export const UserCircleIcon: Story = {
+  args: {
+    name: 'user-circle',
+    size: 32,
+  },
+};
+
+export const ClipboardIcon: Story = {
+  args: {
+    name: 'clipboard',
+    size: 32,
+  },
+};
+
+export const TrendingIcon: Story = {
+  args: {
+    name: 'trending',
+    size: 32,
+  },
+};
+
+export const OmnichannelIcon: Story = {
+  args: {
+    name: 'omnichannel',
     size: 32,
   },
 };
