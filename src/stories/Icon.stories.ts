@@ -261,20 +261,70 @@ export const AllIcons: Story = {
           <Icon name="eye" :size="24" />
           <p class="text-xs mt-2">eye</p>
         </div>
-
-        
-        <!-- Common icons -->
         <div class="text-center">
-          <Icon name="home" :size="24" />
-          <p class="text-xs mt-2">home</p>
+          <Icon name="custom-agent-allocation" :size="24" />
+          <p class="text-xs mt-2">custom-agent-allocation</p>
+        </div>
+        <div class="text-center">
+          <Icon name="template-message" :size="24" />
+          <p class="text-xs mt-2">template-message</p>
+        </div>
+        <div class="text-center">
+          <Icon name="submit-ticket" :size="24" />
+          <p class="text-xs mt-2">submit-ticket</p>
+        </div>
+        <div class="text-center">
+          <Icon name="whatsapp-business" :size="24" />
+          <p class="text-xs mt-2">whatsapp-business</p>
+        </div>
+        <div class="text-center">
+          <Icon name="general" :size="24" />
+          <p class="text-xs mt-2">general</p>
+        </div>
+        <div class="text-center">
+          <Icon name="agent-management" :size="24" />
+          <p class="text-xs mt-2">agent-management</p>
+        </div>
+        <div class="text-center">
+          <Icon name="api" :size="24" />
+          <p class="text-xs mt-2">api</p>
+        </div>
+        <div class="text-center">
+          <Icon name="copy" :size="24" />
+          <p class="text-xs mt-2">copy</p>
+        </div>
+        <div class="text-center">
+          <Icon name="information" :size="24" />
+          <p class="text-xs mt-2">information</p>
+        </div>
+        <div class="text-center">
+          <Icon name="more" :size="24" />
+          <p class="text-xs mt-2">more</p>
         </div>
         <div class="text-center">
           <Icon name="plus" :size="24" />
           <p class="text-xs mt-2">plus</p>
         </div>
         <div class="text-center">
-          <Icon name="copy" :size="24" />
-          <p class="text-xs mt-2">copy</p>
+          <Icon name="filter" :size="24" />
+          <p class="text-xs mt-2">filter</p>
+        </div>
+        <div class="text-center">
+          <Icon name="edit" :size="24" />
+          <p class="text-xs mt-2">edit</p>
+        </div>
+        <div class="text-center">
+          <Icon name="refresh" :size="24" />
+          <p class="text-xs mt-2">refresh</p>
+        </div>
+        <div class="text-center">
+          <Icon name="puzzle" :size="24" />
+          <p class="text-xs mt-2">puzzle</p>
+        </div>
+        <!-- Common icons -->
+        <div class="text-center">
+          <Icon name="home" :size="24" />
+          <p class="text-xs mt-2">home</p>
         </div>
         <div class="text-center">
           <Icon name="close" :size="24" />

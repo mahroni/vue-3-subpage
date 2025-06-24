@@ -32,14 +32,27 @@ import SearchIcon from './SearchIcon.vue';
 import SubscriptionIcon from './SubscriptionIcon.vue';
 import MergeIcon from './MergeIcon.vue';
 import EyeIcon from './EyeIcon.vue';
+import CustomAgentAllocationIcon from './CustomAgentAllocationIcon.vue';
+import TemplateMessageIcon from './TemplateMessageIcon.vue';
+import SubmitTicketIcon from './SubmitTicketIcon.vue';
+import WhatsappBusinessIcon from './WhatsappBusinessIcon.vue';
+import GeneralIcon from './GeneralIcon.vue';
+import AgentManagementIcon from './AgentManagementIcon.vue';
+import APIIcon from './APIIcon.vue';
+import CopyIcon from './CopyIcon.vue';
+import InformationIcon from './InformationIcon.vue';
+import MoreIcon from './MoreIcon.vue';
+import PlusIcon from './PlusIcon.vue';
+import FilterIcon from './FilterIcon.vue';
+import EditIcon from './EditIcon.vue';
+import RefreshIcon from './RefreshIcon.vue';
+import PuzzleIcon from './PuzzleIcon.vue';
 
 // Common icons
 import CloseIcon from './CloseIcon.vue';
 import HomeIcon from './HomeIcon.vue';
 import ArrowLeftIcon from './ArrowLeftIcon.vue';
 import ChatIcon from './channel-icons/WidgetIcon.vue';
-import PlusIcon from './PlusIcon.vue';
-import CopyIcon from './CopyIcon.vue';
 import ChevronLeftIcon from './ChevronLeftIcon.vue';
 import ChevronRightIcon from './ChevronRightIcon.vue';
 import DoubleChevronLeftIcon from './DoubleChevronLeftIcon.vue';
@@ -89,13 +102,26 @@ const iconRegistry = {
   subscription: SubscriptionIcon,
   merge: MergeIcon,
   eye: EyeIcon,
+  'custom-agent-allocation': CustomAgentAllocationIcon,
+  'template-message': TemplateMessageIcon,
+  'submit-ticket': SubmitTicketIcon,
+  'whatsapp-business': WhatsappBusinessIcon,
+  general: GeneralIcon,
+  'agent-management': AgentManagementIcon,
+  api: APIIcon,
+  copy: CopyIcon,
+  information: InformationIcon,
+  more: MoreIcon,
+  plus: PlusIcon,
+  filter: FilterIcon,
+  edit: EditIcon,
+  refresh: RefreshIcon,
+  puzzle: PuzzleIcon,
   // Common icons
   close: CloseIcon,
   home: HomeIcon,
   'arrow-left': ArrowLeftIcon,
   chat: ChatIcon,
-  plus: PlusIcon,
-  copy: CopyIcon,
   'chevron-down': ChevronDownIcon,
   'chevron-left': ChevronLeftIcon,
   'chevron-right': ChevronRightIcon,
