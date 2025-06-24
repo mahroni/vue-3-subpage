@@ -12,6 +12,8 @@ import Checkbox from '../components/common/Checkbox.vue';
 import Collapsible from '../components/common/Collapsible.vue';
 import CollapsibleGroup from '../components/common/CollapsibleGroup.vue';
 import SubTab from '../components/common/Tabs/SubTab.vue';
+import InputCustom from '../components/form/InputCustom.vue';
+import Icon from '../components/icons/Icon.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -194,6 +196,26 @@ onMounted(() => {
       <Input v-model="inputValue" placeholder="Enter your name" />
       <Input v-model="inputValue" placeholder="Enter your name" disabled />
       <Input v-model="inputValue" placeholder="Enter your name" error errorMessage="This is an error message" />
+    </div>
+
+    <div class="mt-4 text-left flex flex-col gap-4 w-full">
+      <InputCustom v-model="inputValue" placeholder="Enter your name" clearable disabled>
+        <template #suffix-icon>
+          <Icon name="search" />
+        </template>
+      </InputCustom>
+      <InputCustom v-model="inputValue" placeholder="Enter your name" type="text" clearable>
+        <template #suffix-icon>
+          <Icon name="eye" />
+        </template>
+        <template #append-button>
+          <span>Copy</span>
+          <Icon name="copy" class="text-primary w-4 h-4" />
+        </template>
+      </InputCustom>
+      <InputCustom v-model="inputValue" placeholder="Enter your name" type="text" clearable />
+      <InputCustom v-model="inputValue" placeholder="Enter your name" type="text" clearable
+        errorMessage="This is an error message" error />
     </div>
 
     <div class="mt-4 flex flex-col gap-2 text-left">
