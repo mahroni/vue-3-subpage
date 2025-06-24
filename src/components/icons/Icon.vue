@@ -61,6 +61,19 @@ import CloseIcon from './CloseIcon.vue';
 import BackIcon from './BackIcon.vue';
 import NextIcon from './NextIcon.vue';
 import ShopIcon from './ShopIcon.vue';
+import Chat1Icon from './Chat1Icon.vue';
+import MinusIcon from './MinusIcon.vue';
+import CheckIcon from './CheckIcon.vue';
+import AdditionalInformation from './AdditionalInformation.vue';
+import DateIcon from './DateIcon.vue';
+import ReplyIcon from './ReplyIcon.vue';
+import CurrenciesIcon from './CurrenciesIcon.vue';
+import CoinStackIcon from './CoinStackIcon.vue';
+import FileSearchIcon from './FileSearchIcon.vue';
+import ClockFastForwardIcon from './ClockFastForwardIcon.vue';
+import LineChartIcon from './LineChartIcon.vue';
+import LoginIcon from './LoginIcon.vue';
+import IdentificationIcon from './IdentificationIcon.vue';
 
 // Common icons
 import HomeIcon from './HomeIcon.vue';
@@ -140,6 +153,19 @@ const iconRegistry = {
   back: BackIcon,
   next: NextIcon,
   shop: ShopIcon,
+  'chat-1': Chat1Icon,
+  minus: MinusIcon,
+  check: CheckIcon,
+  'additional-information': AdditionalInformation,
+  date: DateIcon,
+  reply: ReplyIcon,
+  currencies: CurrenciesIcon,
+  'coin-stack': CoinStackIcon,
+  'file-search': FileSearchIcon,
+  'clock-fast-forward': ClockFastForwardIcon,
+  'line-chart': LineChartIcon,
+  login: LoginIcon,
+  identification: IdentificationIcon,
   // Common icons
   home: HomeIcon,
   chat: ChatIcon,

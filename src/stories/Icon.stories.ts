@@ -377,6 +377,59 @@ export const AllIcons: Story = {
           <Icon name="shop" :size="24" />
           <p class="text-xs mt-2">shop</p>
         </div>
+        <div class="text-center">
+          <Icon name="chat-1" :size="24" />
+          <p class="text-xs mt-2">chat-1</p>
+        </div>
+        <div class="text-center">
+          <Icon name="minus" :size="24" />
+          <p class="text-xs mt-2">minus</p>
+        </div>
+        <div class="text-center">
+          <Icon name="check" :size="24" />
+          <p class="text-xs mt-2">check</p>
+        </div>
+        <div class="text-center">
+          <Icon name="additional-information" :size="24" />
+          <p class="text-xs mt-2">additional-information</p>
+        </div>
+        <div class="text-center">
+          <Icon name="date" :size="24" />
+          <p class="text-xs mt-2">date</p>
+        </div>
+        <div class="text-center">
+          <Icon name="reply" :size="24" />
+          <p class="text-xs mt-2">reply</p>
+        </div>
+        <div class="text-center">
+          <Icon name="currencies" :size="24" />
+          <p class="text-xs mt-2">currencies</p>
+        </div>
+        <div class="text-center">
+          <Icon name="coin-stack" :size="24" />
+          <p class="text-xs mt-2">coin-stack</p>
+        </div>
+        <div class="text-center">
+          <Icon name="file-search" :size="24" />
+          <p class="text-xs mt-2">file-search</p>
+        </div>
+        <div class="text-center">
+          <Icon name="clock-fast-forward" :size="24" />
+          <p class="text-xs mt-2">clock-fast-forward</p>
+        </div>
+        <div class="text-center">
+          <Icon name="line-chart" :size="24" />
+          <p class="text-xs mt-2">line-chart</p>
+        </div>
+        <div class="text-center">
+          <Icon name="login" :size="24" />
+          <p class="text-xs mt-2">login</p>
+        </div>
+        <div class="text-center">
+          <Icon name="identification" :size="24" />
+          <p class="text-xs mt-2">identification</p>
+        </div>
+
 
         <!-- Common icons -->
         <div class="text-center">
