@@ -429,6 +429,62 @@ export const AllIcons: Story = {
           <Icon name="identification" :size="24" />
           <p class="text-xs mt-2">identification</p>
         </div>
+        <div class="text-center">
+          <Icon name="window" :size="24" />
+          <p class="text-xs mt-2">window</p>
+        </div>
+        <div class="text-center">
+          <Icon name="package" :size="24" />
+          <p class="text-xs mt-2">package</p>
+        </div>
+        <div class="text-center">
+          <Icon name="newspaper" :size="24" />
+          <p class="text-xs mt-2">newspaper</p>
+        </div>
+        <div class="text-center">
+          <Icon name="megaphone" :size="24" />
+          <p class="text-xs mt-2">megaphone</p>
+        </div>
+        <div class="text-center">
+          <Icon name="edit-file" :size="24" />
+          <p class="text-xs mt-2">edit-file</p>
+        </div>
+        <div class="text-center">
+          <Icon name="presentation" :size="24" />
+          <p class="text-xs mt-2">presentation</p>
+        </div>
+        <div class="text-center">
+          <Icon name="user-3" :size="24" />
+          <p class="text-xs mt-2">user-3</p>
+        </div>
+        <div class="text-center">
+          <Icon name="clipboard" :size="24" />
+          <p class="text-xs mt-2">clipboard</p>
+        </div>
+        <div class="text-center">
+          <Icon name="delete" :size="24" />
+          <p class="text-xs mt-2">delete</p>
+        </div>
+        <div class="text-center">
+          <Icon name="open-tab" :size="24" />
+          <p class="text-xs mt-2">open-tab</p>
+        </div>
+        <div class="text-center">
+          <Icon name="trending" :size="24" />
+          <p class="text-xs mt-2">trending</p>
+        </div>
+        <div class="text-center">
+          <Icon name="square" :size="24" />
+          <p class="text-xs mt-2">square</p>
+        </div>
+        <div class="text-center">
+          <Icon name="user-circle" :size="24" />
+          <p class="text-xs mt-2">user-circle</p>
+        </div>
+        <div class="text-center">
+          <Icon name="omnichannel" :size="24" />
+          <p class="text-xs mt-2">omnichannel</p>
+        </div>
 
 
         <!-- Common icons -->

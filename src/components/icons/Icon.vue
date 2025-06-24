@@ -1,85 +1,101 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-// Import icon components
-import InboxIcon from './InboxIcon.vue';
-import BroadcastIcon from './BroadcastIcon.vue';
-import CustomerIcon from './CustomerIcon.vue';
-import AnalyticsIcon from './AnalyticsIcon.vue';
-import IntegrationIcon from './IntegrationIcon.vue';
-import AppCenterIcon from './AppCenterIcon.vue';
-import RobolabsIcon from './RobolabsIcon.vue';
-import QTicketingIcon from './QTicketingIcon.vue';
-import QCRMIcon from './QCRMIcon.vue';
-import WorkFlowIcon from './WorkFlowIcon.vue';
-import MobileIcon from './MobileIcon.vue';
-import SettingIcon from './SettingIcon.vue';
-import HelpIcon from './HelpIcon.vue';
-import LogoutIcon from './LogoutIcon.vue';
-import FilterOnIcon from './FilterOnIcon.vue';
-import ChatTemplateIcon from './ChatTemplateIcon.vue';
-import NotesIcon from './NotesIcon.vue';
-import CreditCardIcon from './CreditCardIcon.vue';
-import UserIcon from './UserIcon.vue';
-import PredifinedMessageIcon from './PredifinedMessageIcon.vue';
-import HoursIcon from './HoursIcon.vue';
-import TagsIcon from './TagsIcon.vue';
-import BulkResolvedIcon from './BulkResolvedIcon.vue';
-import SendIcon from './SendIcon.vue';
-import CustomerPropertiesIcon from './CustomerPropertiesIcon.vue';
-import NotificationIcon from './NotificationIcon.vue';
-import SearchIcon from './SearchIcon.vue';
-import SubscriptionIcon from './SubscriptionIcon.vue';
-import MergeIcon from './MergeIcon.vue';
-import EyeIcon from './EyeIcon.vue';
-import CustomAgentAllocationIcon from './CustomAgentAllocationIcon.vue';
-import TemplateMessageIcon from './TemplateMessageIcon.vue';
-import SubmitTicketIcon from './SubmitTicketIcon.vue';
-import WhatsappBusinessIcon from './WhatsappBusinessIcon.vue';
-import GeneralIcon from './GeneralIcon.vue';
-import AgentManagementIcon from './AgentManagementIcon.vue';
-import APIIcon from './APIIcon.vue';
-import CopyIcon from './CopyIcon.vue';
-import InformationIcon from './InformationIcon.vue';
-import MoreIcon from './MoreIcon.vue';
-import PlusIcon from './PlusIcon.vue';
-import FilterIcon from './FilterIcon.vue';
-import EditIcon from './EditIcon.vue';
-import RefreshIcon from './RefreshIcon.vue';
-import PuzzleIcon from './PuzzleIcon.vue';
-import SuccessIcon from './SuccessIcon.vue';
-import ErrorIcon from './ErrorIcon.vue';
-import AttentionIcon from './AttentionIcon.vue';
-import WarningIcon from './WarningIcon.vue';
-import ChevronRightIcon from './ChevronRightIcon.vue';
-import ChevronLeftIcon from './ChevronLeftIcon.vue';
-import ChevronUpIcon from './ChevronUpIcon.vue';
-import ChevronDownIcon from './ChevronDownIcon.vue';
-import NextPaginationIcon from './NextPaginationIcon.vue';
-import BackPaginationIcon from './BackPaginationIcon.vue';
-import CloseIcon from './CloseIcon.vue';
-import BackIcon from './BackIcon.vue';
-import NextIcon from './NextIcon.vue';
-import ShopIcon from './ShopIcon.vue';
-import Chat1Icon from './Chat1Icon.vue';
-import MinusIcon from './MinusIcon.vue';
-import CheckIcon from './CheckIcon.vue';
-import AdditionalInformation from './AdditionalInformation.vue';
-import DateIcon from './DateIcon.vue';
-import ReplyIcon from './ReplyIcon.vue';
-import CurrenciesIcon from './CurrenciesIcon.vue';
-import CoinStackIcon from './CoinStackIcon.vue';
-import FileSearchIcon from './FileSearchIcon.vue';
-import ClockFastForwardIcon from './ClockFastForwardIcon.vue';
-import LineChartIcon from './LineChartIcon.vue';
-import LoginIcon from './LoginIcon.vue';
-import IdentificationIcon from './IdentificationIcon.vue';
-
-// Common icons
-import HomeIcon from './HomeIcon.vue';
-import ChatIcon from './channel-icons/WidgetIcon.vue';
-import DoubleChevronLeftIcon from './DoubleChevronLeftIcon.vue';
-import DoubleChevronRightIcon from './DoubleChevronRightIcon.vue';
+// Import all icon components from barrel export
+import {
+  // Individual Icon components
+  AdditionalInformation,
+  AgentManagementIcon,
+  AnalyticsIcon,
+  APIIcon,
+  AppCenterIcon,
+  AttentionIcon,
+  BackIcon,
+  BackPaginationIcon,
+  BroadcastIcon,
+  BulkResolvedIcon,
+  Chat1Icon,
+  ChatTemplateIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronUpIcon,
+  ClipboardIcon,
+  ClockFastForwardIcon,
+  CloseIcon,
+  CoinStackIcon,
+  CopyIcon,
+  CreditCardIcon,
+  CurrenciesIcon,
+  CustomAgentAllocationIcon,
+  CustomerIcon,
+  CustomerPropertiesIcon,
+  DateIcon,
+  DeleteIcon,
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
+  EditFileIcon,
+  EditIcon,
+  ErrorIcon,
+  EyeIcon,
+  FileSearchIcon,
+  FilterIcon,
+  FilterOnIcon,
+  GeneralIcon,
+  HelpIcon,
+  HomeIcon,
+  HoursIcon,
+  IdentificationIcon,
+  InboxIcon,
+  InformationIcon,
+  IntegrationIcon,
+  LineChartIcon,
+  LoginIcon,
+  LogoutIcon,
+  MegaphoneIcon,
+  MergeIcon,
+  MinusIcon,
+  MobileIcon,
+  MoreIcon,
+  NewspaperIcon,
+  NextIcon,
+  NextPaginationIcon,
+  NotesIcon,
+  NotificationIcon,
+  OmnichannelIcon,
+  OpenTabIcon,
+  PackageIcon,
+  PlusIcon,
+  PredifinedMessageIcon,
+  PresentationIcon,
+  PuzzleIcon,
+  QCRMIcon,
+  QTicketingIcon,
+  RefreshIcon,
+  ReplyIcon,
+  RobolabsIcon,
+  SearchIcon,
+  SendIcon,
+  SettingIcon,
+  ShopIcon,
+  SquareIcon,
+  SubmitTicketIcon,
+  SubscriptionIcon,
+  SuccessIcon,
+  TagsIcon,
+  TemplateMessageIcon,
+  TrendingIcon,
+  User3Icon,
+  UserCircleIcon,
+  UserIcon,
+  WarningIcon,
+  WhatsappBusinessIcon,
+  WindowIcon,
+  WorkFlowIcon,
+  // Channel Icons
+  WidgetIcon,
+} from './index';
 
 interface IconProps {
   name: string;
@@ -166,9 +182,23 @@ const iconRegistry = {
   'line-chart': LineChartIcon,
   login: LoginIcon,
   identification: IdentificationIcon,
+  window: WindowIcon,
+  package: PackageIcon,
+  newspaper: NewspaperIcon,
+  megaphone: MegaphoneIcon,
+  'edit-file': EditFileIcon,
+  presentation: PresentationIcon,
+  'user-3': User3Icon,
+  clipboard: ClipboardIcon,
+  delete: DeleteIcon,
+  'open-tab': OpenTabIcon,
+  trending: TrendingIcon,
+  square: SquareIcon,
+  'user-circle': UserCircleIcon,
+  omnichannel: OmnichannelIcon,
   // Common icons
   home: HomeIcon,
-  chat: ChatIcon,
+  chat: WidgetIcon, // Using WidgetIcon for chat
   'double-chevron-left': DoubleChevronLeftIcon,
   'double-chevron-right': DoubleChevronRightIcon,
 };
