@@ -1,6 +1,6 @@
 <template>
   <div :class="containerClasses()">
-    <label :for="id" :class="computedLabelClasses">{{ label }}</label>
+    <label v-if="props.label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
       <input
         :id="id"
@@ -31,7 +31,6 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  label: 'Channel Name',
   placeholder: '',
   id: 'channel-name-input',
   disabled: false,

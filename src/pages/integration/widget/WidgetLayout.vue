@@ -28,7 +28,7 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import MainTab from '../../../components/common/Tabs/MainTab.vue';
+import MainTab from '@/components/common/Tabs/MainTab.vue';
 import WidgetForm from './WidgetForm.vue';
 import WidgetLiveChat from './WidgetLiveChat.vue';
 import WidgetCode from './WidgetCode.vue';
