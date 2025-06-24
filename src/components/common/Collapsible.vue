@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import ArrowIcon from '../icons/ArrowIcon.vue';
+import ArrowIcon from '@/components/icons2/ArrowIcon.vue';
 
 // Define component props using defineProps
 interface Props {
