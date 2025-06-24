@@ -11,7 +11,13 @@
       </div>
 
       <div>
-        <Button variant="primary" class="flex items-center gap-2" size="small" no-animation>
+        <Button
+          @click="router.push('/qiscus/create')"
+          variant="primary"
+          class="flex items-center gap-2"
+          size="small"
+          no-animation
+        >
           <Icon name="plus" :size="16" />
           New Integration
         </Button>

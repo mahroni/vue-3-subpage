@@ -81,6 +81,5 @@ function search(query: string) {
 
 onMounted(async () => {
   await channelsStore.getChannels();
-  await channelsStore.getQiscusChannels();
 });
 </script>

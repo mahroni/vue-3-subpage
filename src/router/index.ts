@@ -2,8 +2,7 @@ import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 import type { Router, RouteRecordRaw } from 'vue-router';
 import Home from '@/views/integration/ChannelPage.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
-import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
-import CreateNew from '@/views/CreateNew.vue';
+import QiscusCreateChannelView from '@/views/integration/QiscusCreateChannelView.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -63,12 +62,17 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/qiscus',
       name: 'qiscus',
-      component: () => import('@/views/integration/QiscusChannelView.vue'),
+      component: () => import('@/views/integration/QiscusListChannelView.vue'),
     },
     {
       path: '/qiscus/:channelId',
       name: 'QiscusChannelDetail',
       component: () => import('@/pages/integration/widget/WidgetLayout.vue'),
+    },
+    {
+      path: '/qiscus/create',
+      name: 'qiscusCreate',
+      component: QiscusCreateChannelView,
     },
     {
       path: '/custom_channel',
@@ -90,16 +94,6 @@ export function createRouter(appId?: string | number): Router {
       path: '/auto-responder',
       name: 'auto-responder',
       component: AutoResponder,
-    },
-    {
-      path: '/widget',
-      name: 'widget',
-      component: WidgetLayout,
-    },
-    {
-      path: '/create-new',
-      name: 'CreateNew',
-      component: CreateNew,
     },
     {
       path: '/home',
