@@ -12,7 +12,7 @@
 
       <div>
         <Button
-          @click="router.push('/qiscus/create')"
+          to="/qiscus/create"
           variant="primary"
           class="flex items-center gap-2"
           size="small"

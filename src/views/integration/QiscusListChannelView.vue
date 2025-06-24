@@ -43,7 +43,7 @@ import { useAppConfigStore } from '@/stores/app-config';
 import { useChannelsStore } from '@/stores/channels';
 import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
 import Banner from '@/components/common/Banner.vue';
-import type { IWhatsappChannel } from '@/types/channels';
+import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { ArrowLeftIcon, ChatIcon } from '@/components/icons';
 
@@ -60,14 +60,14 @@ appConfigStore.setConfig({
 const channelsStore = useChannelsStore();
 
 const qiscus_channels = computed(() =>
-  channelsStore.qiscus_channels.map((channel: IWhatsappChannel) => ({
+  channelsStore.qiscus_channels.map((channel: IQiscusChannel) => ({
     id: channel.id,
     name: channel.name,
     channelId: channel.id.toString(),
     isActive: channel.is_active,
     badgeUrl: channel.badge_url ? channel.badge_url : CHANNEL_BADGE_URL.qiscus,
   }))
-) as unknown as IWhatsappChannel[];
+) as unknown as IQiscusChannel[];
 
 function updateChannelStatus(data: { id: number; isActive: boolean }) {
   channelsStore.updateChannelStatus(data.id, data.isActive, channelType);

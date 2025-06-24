@@ -1,6 +1,10 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
+    "baseUrl": ".", // Important: This sets the base for resolving non-relative paths
+    "paths": {
+      "@/*": ["./src/*"] // This maps '@/anything' to 'your-project-root/src/anything'
+    },
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
     /* Linting */
