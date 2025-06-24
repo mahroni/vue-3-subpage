@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref } from 'vue'; // Needed for `faqItems`
-import CollapsibleGroup from '../components/common/CollapsibleGroup.vue'; // Adjust path if needed
+import CollapsibleGroup from '@/components/common/CollapsibleGroup.vue'; // Adjust path if needed
 
 // --- IMPORTANT PATHING NOTE ---
 // Ensure the path for CollapsibleGroup is correct relative to THIS .stories.ts file.
