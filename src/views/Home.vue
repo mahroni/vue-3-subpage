@@ -14,6 +14,7 @@ import CollapsibleGroup from '../components/common/CollapsibleGroup.vue';
 import SubTab from '../components/common/Tabs/SubTab.vue';
 import InputCustom from '../components/form/InputCustom.vue';
 import Icon from '../components/icons/Icon.vue';
+import Drawer from '@/components/common/Drawer.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -101,6 +102,12 @@ const tabs = [
   },
 ];
 const subTabsActive = ref<any>(tabs[0]);
+
+const isDrawerOpen = ref<boolean>(false); // Explicitly type ref
+
+const toggleDrawer = (): void => {
+  isDrawerOpen.value = !isDrawerOpen.value;
+};
 
 onMounted(() => {
   getPokemon();
@@ -263,6 +270,12 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <div class="mt-4">
+      <Button intent="primary" size="medium" @click="toggleDrawer">Open Drawer</Button>
+    </div>
+
+    <Drawer :isOpen="isDrawerOpen" @close="toggleDrawer" />
   </div>
 </template>
 
