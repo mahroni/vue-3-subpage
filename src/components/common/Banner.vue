@@ -63,7 +63,7 @@ const handleClose = () => {
 
 <template>
   <div :class="bannerClasses">
-    <div class="flex justify-between">
+    <div class="flex items-center justify-between">
       <slot>Banner Content</slot>
 
       <button v-if="props.closeable" class="text-text-title cursor-pointer" @click="handleClose">
