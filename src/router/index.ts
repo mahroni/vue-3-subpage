@@ -3,7 +3,6 @@ import type { Router, RouteRecordRaw } from 'vue-router';
 import Home from '@/views/integration/ChannelPage.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
 import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
-import ListAccount from '@/pages/integration/list-account/ListAccount.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -66,6 +65,11 @@ export function createRouter(appId?: string | number): Router {
       component: () => import('@/views/integration/QiscusChannelView.vue'),
     },
     {
+      path: '/qiscus/:channelId',
+      name: 'QiscusChannelDetail',
+      component: () => import('@/pages/integration/widget/WidgetLayout.vue'),
+    },
+    {
       path: '/custom_channel',
       name: 'custom_channel',
       beforeEnter: () => {
@@ -90,11 +94,6 @@ export function createRouter(appId?: string | number): Router {
       path: '/widget',
       name: 'widget',
       component: WidgetLayout,
-    },
-    {
-      path: '/list-account',
-      name: 'ListAccount',
-      component: ListAccount,
     },
     {
       path: '/home',

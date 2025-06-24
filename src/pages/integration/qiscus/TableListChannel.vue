@@ -34,7 +34,10 @@
         <tbody class="divide-y divide-gray-100">
           <tr v-for="channel in props.channels" :key="channel.id" class="hover:bg-gray-50">
             <!-- Channel Name -->
-            <td class="border-stroke-regular border-b px-2 py-4">
+            <td
+              @click.prevent="getDetailChannel(channel)"
+              class="border-stroke-regular cursor-pointer border-b px-2 py-4"
+            >
               <div class="flex items-center gap-2">
                 <img :src="channel.badgeUrl" alt="channel badge" class="h-6 w-6" />
                 <span class="text-text-title font-medium">{{ channel.name }}</span>
@@ -42,12 +45,17 @@
             </td>
 
             <!-- Channel ID -->
-            <td class="border-stroke-regular border-b px-6 py-4">
+            <td
+              @click.prevent="getDetailChannel(channel)"
+              class="border-stroke-regular cursor-pointer border-b px-6 py-4"
+            >
               <div class="flex items-center gap-2">
                 <span class="text-text-title font-semibold">{{ channel.channelId }}</span>
                 <button
-                  class="rounded-full w-8 h-8 flex items-center justify-center hover:bg-gray-300 cursor-pointer active:bg-gray-400"
-                  title="Copy Channel ID" @click="copyToClipboard(channel.channelId)">
+                  class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full hover:bg-gray-300 active:bg-gray-400"
+                  title="Copy Channel ID"
+                  @click="copyToClipboard(channel.channelId)"
+                >
                   <Icon name="copy" :size="12" class="text-primary" />
                 </button>
               </div>
@@ -55,8 +63,12 @@
 
             <!-- Action (Switch) -->
             <td class="border-stroke-regular border-b px-6 py-4 text-right">
-              <Switch v-model="channel.isActive" size="small" variant="success"
-                @update:model-value="updateChannelStatus(channel.id, $event)" />
+              <Switch
+                v-model="channel.isActive"
+                size="small"
+                variant="success"
+                @update:model-value="updateChannelStatus(channel.id, $event)"
+              />
             </td>
           </tr>
         </tbody>
@@ -70,7 +82,9 @@
         <div class="flex items-center gap-4">
           <Icon name="double-chevron-left" :size="12" />
           <Icon name="chevron-left" :size="12" />
-          <div class="shadow-small flex h-10 w-12 items-center justify-center rounded-lg text-base font-bold">
+          <div
+            class="shadow-small flex h-10 w-12 items-center justify-center rounded-lg text-base font-bold"
+          >
             1
           </div>
           <Icon name="chevron-right" :size="12" />
@@ -79,7 +93,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-if="props.channels.length === 0" class="px-6 py-12 text-center">
+      <div v-if="!props.channels" class="px-6 py-12 text-center">
         <p class="text-gray-500">No channels found</p>
       </div>
     </div>
@@ -89,6 +103,7 @@
 <script setup lang="ts">
 import { ref, type PropType, watch } from 'vue';
 import { type Ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Icon from '@/components/icons/Icon.vue';
 import Switch from '@/components/common/Switch.vue';
 import Button from '@/components/common/Button.vue';
@@ -110,6 +125,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+const router = useRouter();
 
 // emit
 const emit = defineEmits(['updateChannelStatus', 'search']);
@@ -133,6 +150,14 @@ function updateChannelStatus(id: number, isActive: boolean) {
   emit('updateChannelStatus', {
     id,
     isActive,
+  });
+}
+
+function getDetailChannel(channel: IChannel) {
+  // Emit an event to parent component to handle channel detail view
+  router.push({
+    name: 'QiscusChannelDetail',
+    params: { channelId: channel.id },
   });
 }
 </script>
