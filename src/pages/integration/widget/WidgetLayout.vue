@@ -28,12 +28,12 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import MainTab from '../../../components/common/Tabs/MainTab.vue';
+import MainTab from '@/components/common/Tabs/MainTab.vue';
 import WidgetForm from './WidgetForm.vue';
 import WidgetLiveChat from './WidgetLiveChat.vue';
 import WidgetCode from './WidgetCode.vue';
 import WidgetSettings from './WidgetSetting.vue';
-import { ArrowLeftIcon, ChatIcon } from '@/components/icons';
+import { ArrowLeftIcon } from '@/components/icons';
 
 const tabs = ['Overview', 'Live Chat Builder', 'Code Installation', 'Settings'];
 const activeTab = ref(tabs[0] || 'overview');

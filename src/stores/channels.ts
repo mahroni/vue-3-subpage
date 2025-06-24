@@ -1,13 +1,13 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { channelsApi } from '../api/channels';
-import type { IWhatsappChannel } from '../types/channels';
+import type { IWhatsappChannel, IQiscusChannel } from '../types/channels';
 
 export const useChannelsStore = defineStore('channels', () => {
   // State
   const channels = ref<any>({});
   const whatsapp_channels = ref<IWhatsappChannel[]>([]);
-  const qiscus_channels = ref<IWhatsappChannel[]>([]);
+  const qiscus_channels = ref<IQiscusChannel[]>([]);
 
   // getter
   const getWhatsappChannels = async () => {

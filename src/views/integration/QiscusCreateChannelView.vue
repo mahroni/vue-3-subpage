@@ -11,17 +11,8 @@
       <h2 class="text-text-title text-xl font-semibold">New Integration - Qiscus Live Chat</h2>
     </div>
 
-    <div class="bg-surface-highlight rounded-lg p-4 text-sm font-medium">
-      <p>
-        To learn more about Qiscus Live Chat Integration, you can refer to this
-        <a
-          class="text-notification-link font-semibold underline"
-          href="https://docs.qiscus.com/docs/live-chat-integration"
-          target="_blank"
-          >Documentation</a
-        >.
-      </p>
-    </div>
+    <!-- banner documentation -->
+    <QiscusBannerDoc />
 
     <!-- Form section -->
     <CreateNewForm />
@@ -31,4 +22,5 @@
 <script setup lang="ts">
 import Icon from '@/components/icons/Icon.vue';
 import CreateNewForm from '@/pages/integration/qiscus/CreateNewForm.vue';
+import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 </script>
