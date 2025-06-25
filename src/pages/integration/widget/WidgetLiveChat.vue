@@ -3,7 +3,9 @@
         <div class="flex justify-between items-center p-4 border-b-[1px] border-gray-300 w-full">
             <RoundedTab :tabs="tabs" v-model="activeTab" />
         </div>
-        <WelcomeDialog />
+        <template v-if="activeTab === 'Welcome Dialog'">
+            <WelcomeDialog />
+        </template>
     </div>
 </template>
 

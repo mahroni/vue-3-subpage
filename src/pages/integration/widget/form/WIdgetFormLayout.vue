@@ -5,9 +5,10 @@
                 <label class="text-base font-semibold text-text-subtitle">{{ label }}</label>
                 <Switch v-if="isSwitch" size="large" v-model="modelValue" variant="success" />
             </div>
-            <Divider v-if="modelValue || !isSwitch" />
+            <Divider v-if="modelValue || $slots['additional-info']" />
+            <slot name="additional-info" />
             <div class="flex flex-col gap-6" v-if="modelValue || !isSwitch">
-                <slot/>
+                <slot name="inputs" />
             </div>
         </div>
     </div>
