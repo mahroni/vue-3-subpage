@@ -1,7 +1,7 @@
 <template>
   <div class="text-text-title flex min-h-screen flex-col gap-8 px-12 py-8 text-sm">
     <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
-      <ArrowLeftIcon :size="20" />
+      <Icon name="chevron-left" :size="20" />
       Integration
     </router-link>
 
@@ -33,7 +33,7 @@ import WidgetForm from './WidgetForm.vue';
 import WidgetLiveChat from './WidgetLiveChat.vue';
 import WidgetCode from './WidgetCode.vue';
 import WidgetSettings from './WidgetSetting.vue';
-import { ArrowLeftIcon } from '@/components/icons';
+import { Icon } from '@/components/icons';
 
 const tabs = ['Overview', 'Live Chat Builder', 'Code Installation', 'Settings'];
 const activeTab = ref(tabs[0] || 'overview');

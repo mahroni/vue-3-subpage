@@ -16,6 +16,8 @@ import InputCustom from '../components/form/InputCustom.vue';
 import Icon from '../components/icons/Icon.vue';
 import Drawer from '@/components/common/Drawer.vue';
 import { useSweetAlert } from '@/composables/useSweetAlert';
+import Modal from '@/components/common/Modal.vue';
+import Select from '@/components/form/Select.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -105,12 +107,17 @@ const tabs = [
 const subTabsActive = ref<any>(tabs[0]);
 
 const isDrawerOpen = ref<boolean>(false); // Explicitly type ref
+const isModalOpen = ref<boolean>(false); // Explicitly type ref
 
 const toggleDrawer = (): void => {
   isDrawerOpen.value = !isDrawerOpen.value;
 };
 
-const showAlert = () => {
+const toggleModal = (): void => {
+  isModalOpen.value = !isModalOpen.value;
+};
+
+const showAlertWarning = () => {
   const { showAlert } = useSweetAlert();
   showAlert.warning({
     title: 'Lorem ipsum dolor',
@@ -122,6 +129,31 @@ const showAlert = () => {
     console.log(result);
   });
 };
+
+const showAlertError = () => {
+  const { showAlert } = useSweetAlert();
+  showAlert.error({
+    title: 'Lorem ipsum dolor',
+    text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
+    confirmButtonText: 'Update Live Chat',
+    showCancelButton: false,
+  }).then((result) => {
+    console.log(result);
+  });
+};
+
+const showAlertSuccess = () => {
+  const { showAlert } = useSweetAlert();
+  showAlert.success({
+    title: 'Lorem ipsum dolor',
+    text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
+    showCancelButton: false,
+  }).then((result) => {
+    console.log(result);
+  });
+};
+
+const selectedValue = ref('');
 
 onMounted(() => {
   getPokemon();
@@ -292,7 +324,33 @@ onMounted(() => {
     <Drawer :isOpen="isDrawerOpen" @close="toggleDrawer" />
 
     <div class="mt-4">
-      <Button intent="primary" size="medium" @click="showAlert">Show Alert</Button>
+      <Button intent="primary" size="medium" @click="showAlertWarning">Show Alert Warning</Button>
+      <Button intent="primary" size="medium" @click="showAlertError">Show Alert Error</Button>
+      <Button intent="primary" size="medium" @click="showAlertSuccess">Show Alert Success</Button>
+    </div>
+
+    <div class="mt-4">
+      <Button intent="primary" size="medium" @click="toggleModal">Open Modal</Button>
+      <Modal :isOpen="isModalOpen" @close="toggleModal" width="w-[900px]">
+        <template #title>
+          Preview Your Qiscus Live Chat
+        </template>
+        <template #content>
+          <p v-for="n in 100" :key="n"> asd </p>
+        </template>
+      </Modal>
+    </div>
+
+    <div class="mt-4 text-left">
+      <Select label="Select an option"
+        :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
+        v-model="selectedValue" />
+      <Select
+        :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
+        v-model="selectedValue" error errorMessage="This is an error message" />
+      <Select
+        :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
+        v-model="selectedValue" disabled />
     </div>
   </div>
 </template>

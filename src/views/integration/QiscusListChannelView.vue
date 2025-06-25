@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col gap-8 px-12 py-8">
     <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
-      <ArrowLeftIcon :size="20" />
+      <Icon name="chevron-left" :size="20" />
       Integration
     </router-link>
 
     <!-- Header -->
     <div class="flex items-center gap-2">
-      <ChatIcon :size="20" />
+      <Icon name="chat" :size="20" />
       <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>
 
@@ -34,7 +34,7 @@ import { useQiscusStore } from '@/stores/integration-qiscus';
 import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
 import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { ArrowLeftIcon, ChatIcon } from '@/components/icons';
+import { Icon } from '@/components/icons';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 
 // props
