@@ -1,13 +1,13 @@
 
 /* Global styles or scoped styles if you prefer */
-.warning-popup {
+.default-popup {
   background: white !important;
   border-radius: 16px !important;
   padding: 32px !important;
   max-width: 418px !important;
 }
 
-.warning-title {
+.default-title {
   color: #0A0A0A !important;
   font-weight: 600 !important;
   font-size: 20px !important;
@@ -15,9 +15,10 @@
   letter-spacing: 0% !important;
   text-align: center !important;
   vertical-align: middle !important;
+  padding-top: 24px !important;
 }
 
-.warning-html-container {
+.default-html-container {
   margin: 8px 0 0 0 !important;
   font-weight: 400 !important;
   font-size: 14px !important;
@@ -27,7 +28,7 @@
   vertical-align: middle !important;
 }
 
-.warning-confirm-button {
+.default-confirm-button {
   background-color: #27B199 !important;
   color: white !important;
   border: none !important;
@@ -40,11 +41,11 @@
   border-radius: 64px !important;
 }
 
-.warning-confirm-button:hover {
+.default-confirm-button:hover {
   background-color: #288372 !important;
 }
 
-.warning-cancel-button {
+.default-cancel-button {
   background: transparent !important;
   color: #27B199 !important;
   font-weight: 600 !important;
@@ -55,11 +56,11 @@
   border-radius: 64px !important;
 }
 
-.warning-cancel-button:hover {
+.default-cancel-button:hover {
   background: #f3f3f3 !important;
 }
 
-.warning-actions {
+.default-actions {
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
@@ -67,20 +68,19 @@
   width: 100% !important;
 }
 
-.warning-actions button {
+.default-actions button {
   width: 100%;
 }
 
-.warning-icon {
+.default-icon {
   width: 48px !important;
   height: 48px !important;
   margin: 0 auto !important;
-  color: #D78E08 !important;
-  border: 6px solid #D78E08 !important;
+  border: none !important;
 }
 
-.warning-icon .swal2-icon-content {
+.default-icon .swal2-icon-content {
   font-size: 36px !important;
   font-weight: 600 !important;
-  transform: rotate(180deg) !important;
+  /* transform: rotate(180deg) !important; */
 }

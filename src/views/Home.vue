@@ -110,7 +110,7 @@ const toggleDrawer = (): void => {
   isDrawerOpen.value = !isDrawerOpen.value;
 };
 
-const showAlert = () => {
+const showAlertWarning = () => {
   const { showAlert } = useSweetAlert();
   showAlert.warning({
     title: 'Lorem ipsum dolor',
@@ -118,6 +118,29 @@ const showAlert = () => {
     confirmButtonText: 'Update Live Chat',
     cancelButtonText: 'Cancel',
     showCancelButton: true,
+  }).then((result) => {
+    console.log(result);
+  });
+};
+
+const showAlertError = () => {
+  const { showAlert } = useSweetAlert();
+  showAlert.error({
+    title: 'Lorem ipsum dolor',
+    text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
+    confirmButtonText: 'Update Live Chat',
+    showCancelButton: false,
+  }).then((result) => {
+    console.log(result);
+  });
+};
+
+const showAlertSuccess = () => {
+  const { showAlert } = useSweetAlert();
+  showAlert.success({
+    title: 'Lorem ipsum dolor',
+    text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
+    showCancelButton: false,
   }).then((result) => {
     console.log(result);
   });
@@ -292,7 +315,9 @@ onMounted(() => {
     <Drawer :isOpen="isDrawerOpen" @close="toggleDrawer" />
 
     <div class="mt-4">
-      <Button intent="primary" size="medium" @click="showAlert">Show Alert</Button>
+      <Button intent="primary" size="medium" @click="showAlertWarning">Show Alert Warning</Button>
+      <Button intent="primary" size="medium" @click="showAlertError">Show Alert Error</Button>
+      <Button intent="primary" size="medium" @click="showAlertSuccess">Show Alert Success</Button>
     </div>
   </div>
 </template>
