@@ -1,0 +1,37 @@
+{
+  "cSpell.words": [
+    "autodocs",
+    "autoresponder",
+    "axios",
+    "Omnichannel",
+    "Qiscus",
+    "Swal",
+    "Sweetalert",
+    "tiktok",
+    "VITE"
+  ],
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.suggest.autoImports": true,
+  "tailwindCSS.includeLanguages": {
+    "vue": "html",
+    "vue-html": "html"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "files.associations": {
+    "*.vue": "vue"
+  },    
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+  "source.fixAll.eslint": "always"
+  },
+  "prettier.requireConfig": true,
+  "prettier.configPath": ".prettierrc",
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
+}
