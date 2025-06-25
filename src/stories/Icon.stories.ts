@@ -504,6 +504,10 @@ export const AllIcons: Story = {
           <Icon name="qiscus" :size="24" />
           <p class="text-xs mt-2">qiscus</p>
         </div>
+        <div class="text-center">
+          <Icon name="sign" :size="24" />
+          <p class="text-xs mt-2">sign</p>
+        </div>
       </div>
     `,
   }),

@@ -43,13 +43,6 @@ const meta: Meta<typeof Select> = {
       control: { type: 'text' },
       description: 'The placeholder text for the select input.',
     },
-    'update:modelValue': {
-      action: 'updated', // Log the update:modelValue event in the Actions panel
-      description: 'Event emitted when the selected value changes.',
-      table: {
-        category: 'Events',
-      },
-    },
   },
   args: {
     // Default args for all stories

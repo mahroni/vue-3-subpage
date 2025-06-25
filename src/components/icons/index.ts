@@ -92,6 +92,7 @@ export { default as WhatsappBusinessIcon } from './WhatsappBusinessIcon.vue';
 export { default as WindowIcon } from './WindowIcon.vue';
 export { default as WorkFlowIcon } from './WorkFlowIcon.vue';
 export { default as QiscusIcon } from './QiscusIcon.vue';
+export { default as SignIcon } from './SignIcon.vue';
 
 // Channel Icons (from subdirectory)
 export { default as WidgetIcon } from './channel-icons/WidgetIcon.vue';

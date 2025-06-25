@@ -94,6 +94,7 @@ import {
   WhatsappBusinessIcon,
   WindowIcon,
   WorkFlowIcon,
+  SignIcon,
   // Channel Icons
 } from './index';
 
@@ -201,6 +202,7 @@ const iconRegistry = {
   'double-chevron-left': DoubleChevronLeftIcon,
   'double-chevron-right': DoubleChevronRightIcon,
   qiscus: QiscusIcon,
+  sign: SignIcon,
 };
 
 const iconComponent = computed(() => {
