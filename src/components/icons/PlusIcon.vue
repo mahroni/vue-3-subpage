@@ -1,35 +1,30 @@
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    size?: number;
+    class?: string;
+  }>(),
+  {
+    size: 24,
+    class: '',
+  }
+);
+</script>
+
 <template>
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    :width="size"
-    :height="size"
-    viewBox="0 0 16 16"
+    :width="props.size"
+    :height="props.size"
+    :class="props.class"
+    viewBox="0 0 24 24"
     fill="none"
-    :class="className"
-    v-bind="$attrs"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"
-      d="M9 1C9 0.447715 8.55229 0 8 0C7.44772 0 7 0.447715 7 1V7H1C0.447715 7 0 7.44772 0 8C0 8.55229 0.447715 9 1 9H7V15C7 15.5523 7.44772 16 8 16C8.55229 16 9 15.5523 9 15V9H15C15.5523 9 16 8.55229 16 8C16 7.44772 15.5523 7 15 7H9V1Z"
-      :fill="color"
+      d="M13 5C13 4.44772 12.5523 4 12 4C11.4477 4 11 4.44772 11 5V11H5C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13H11V19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19V13H19C19.5523 13 20 12.5523 20 12C20 11.4477 19.5523 11 19 11H13V5Z"
+      fill="currentColor"
     />
   </svg>
 </template>
-
-<script setup>
-defineProps({
-  size: {
-    type: [String, Number],
-    default: 16,
-  },
-  color: {
-    type: String,
-    default: 'white',
-  },
-  className: {
-    type: String,
-    default: '',
-  },
-});
-</script>

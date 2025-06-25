@@ -1,49 +1,96 @@
-import ArrowIcon from './ArrowIcon.vue';
-import ArrowLeftIcon from './ArrowLeftIcon.vue';
-import BroadcastIcon from './BroadcastIcon.vue';
-import CameraIcon from './CameraIcon.vue';
-import ChatIcon from './ChatIcon.vue';
-import ChevronLeftIcon from './ChevronLeftIcon.vue';
-import ChevronRightIcon from './ChevronRightIcon.vue';
-import CloseIcon from './CloseIcon.vue';
-import CopyIcon from './CopyIcon.vue';
-import DoubleChevronLeftIcon from './DoubleChevronLeftIcon.vue';
-import DoubleChevronRightIcon from './DoubleChevronRightIcon.vue';
-import ErrorIcon from './ErrorIcon.vue';
-import EyeIcon from './EyeIcon.vue';
-import HomeIcon from './HomeIcon.vue';
-import Icon from './Icon.vue';
-import IntegrationIcon from './IntegrationIcon.vue';
-import PlusIcon from './PlusIcon.vue';
-import SearchIcon from './SearchIcon.vue';
-import ServerIcon from './ServerIcon.vue';
-import SettingIcon from './SettingIcon.vue';
-import ToggleLeftIcon from './ToggleLeftIcon.vue';
-import UploadIcon from './UploadIcon.vue';
-import UserIcon from './UserIcon.vue';
+// Main Icon component
+export { default as Icon } from './Icon.vue';
 
-export {
-  ArrowIcon,
-  ArrowLeftIcon,
-  BroadcastIcon,
-  CameraIcon,
-  ChatIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  CloseIcon,
-  CopyIcon,
-  DoubleChevronLeftIcon,
-  DoubleChevronRightIcon,
-  ErrorIcon,
-  EyeIcon,
-  HomeIcon,
-  Icon,
-  IntegrationIcon,
-  PlusIcon,
-  SearchIcon,
-  ServerIcon,
-  SettingIcon,
-  ToggleLeftIcon,
-  UploadIcon,
-  UserIcon,
-}
+// Individual Icon components (alphabetically sorted)
+export { default as AdditionalInformation } from './AdditionalInformation.vue';
+export { default as AgentManagementIcon } from './AgentManagementIcon.vue';
+export { default as AnalyticsIcon } from './AnalyticsIcon.vue';
+export { default as APIIcon } from './APIIcon.vue';
+export { default as AppCenterIcon } from './AppCenterIcon.vue';
+export { default as AttentionIcon } from './AttentionIcon.vue';
+export { default as BackIcon } from './BackIcon.vue';
+export { default as BackPaginationIcon } from './BackPaginationIcon.vue';
+export { default as BroadcastIcon } from './BroadcastIcon.vue';
+export { default as BulkResolvedIcon } from './BulkResolvedIcon.vue';
+export { default as Chat1Icon } from './Chat1Icon.vue';
+export { default as ChatTemplateIcon } from './ChatTemplateIcon.vue';
+export { default as CheckIcon } from './CheckIcon.vue';
+export { default as ChevronDownIcon } from './ChevronDownIcon.vue';
+export { default as ChevronLeftIcon } from './ChevronLeftIcon.vue';
+export { default as ChevronRightIcon } from './ChevronRightIcon.vue';
+export { default as ChevronUpIcon } from './ChevronUpIcon.vue';
+export { default as ClipboardIcon } from './ClipboardIcon.vue';
+export { default as ClockFastForwardIcon } from './ClockFastForwardIcon.vue';
+export { default as CloseIcon } from './CloseIcon.vue';
+export { default as CoinStackIcon } from './CoinStackIcon.vue';
+export { default as CopyIcon } from './CopyIcon.vue';
+export { default as CreditCardIcon } from './CreditCardIcon.vue';
+export { default as CurrenciesIcon } from './CurrenciesIcon.vue';
+export { default as CustomAgentAllocationIcon } from './CustomAgentAllocationIcon.vue';
+export { default as CustomerIcon } from './CustomerIcon.vue';
+export { default as CustomerPropertiesIcon } from './CustomerPropertiesIcon.vue';
+export { default as DateIcon } from './DateIcon.vue';
+export { default as DeleteIcon } from './DeleteIcon.vue';
+export { default as DoubleChevronLeftIcon } from './DoubleChevronLeftIcon.vue';
+export { default as DoubleChevronRightIcon } from './DoubleChevronRightIcon.vue';
+export { default as EditFileIcon } from './EditFileIcon.vue';
+export { default as EditIcon } from './EditIcon.vue';
+export { default as ErrorIcon } from './ErrorIcon.vue';
+export { default as EyeIcon } from './EyeIcon.vue';
+export { default as FileSearchIcon } from './FileSearchIcon.vue';
+export { default as FilterIcon } from './FilterIcon.vue';
+export { default as FilterOnIcon } from './FilterOnIcon.vue';
+export { default as GeneralIcon } from './GeneralIcon.vue';
+export { default as HelpIcon } from './HelpIcon.vue';
+export { default as HomeIcon } from './HomeIcon.vue';
+export { default as HoursIcon } from './HoursIcon.vue';
+export { default as IdentificationIcon } from './IdentificationIcon.vue';
+export { default as InboxIcon } from './InboxIcon.vue';
+export { default as InformationIcon } from './InformationIcon.vue';
+export { default as IntegrationIcon } from './IntegrationIcon.vue';
+export { default as LineChartIcon } from './LineChartIcon.vue';
+export { default as LoginIcon } from './LoginIcon.vue';
+export { default as LogoutIcon } from './LogoutIcon.vue';
+export { default as MegaphoneIcon } from './MegaphoneIcon.vue';
+export { default as MergeIcon } from './MergeIcon.vue';
+export { default as MinusIcon } from './MinusIcon.vue';
+export { default as MobileIcon } from './MobileIcon.vue';
+export { default as MoreIcon } from './MoreIcon.vue';
+export { default as NewspaperIcon } from './NewspaperIcon.vue';
+export { default as NextIcon } from './NextIcon.vue';
+export { default as NextPaginationIcon } from './NextPaginationIcon.vue';
+export { default as NotesIcon } from './NotesIcon.vue';
+export { default as NotificationIcon } from './NotificationIcon.vue';
+export { default as OmnichannelIcon } from './OmnichannelIcon.vue';
+export { default as OpenTabIcon } from './OpenTabIcon.vue';
+export { default as PackageIcon } from './PackageIcon.vue';
+export { default as PlusIcon } from './PlusIcon.vue';
+export { default as PredifinedMessageIcon } from './PredifinedMessageIcon.vue';
+export { default as PresentationIcon } from './PresentationIcon.vue';
+export { default as PuzzleIcon } from './PuzzleIcon.vue';
+export { default as QCRMIcon } from './QCRMIcon.vue';
+export { default as QTicketingIcon } from './QTicketingIcon.vue';
+export { default as RefreshIcon } from './RefreshIcon.vue';
+export { default as ReplyIcon } from './ReplyIcon.vue';
+export { default as RobolabsIcon } from './RobolabsIcon.vue';
+export { default as SearchIcon } from './SearchIcon.vue';
+export { default as SendIcon } from './SendIcon.vue';
+export { default as SettingIcon } from './SettingIcon.vue';
+export { default as ShopIcon } from './ShopIcon.vue';
+export { default as SquareIcon } from './SquareIcon.vue';
+export { default as SubmitTicketIcon } from './SubmitTicketIcon.vue';
+export { default as SubscriptionIcon } from './SubscriptionIcon.vue';
+export { default as SuccessIcon } from './SuccessIcon.vue';
+export { default as TagsIcon } from './TagsIcon.vue';
+export { default as TemplateMessageIcon } from './TemplateMessageIcon.vue';
+export { default as TrendingIcon } from './TrendingIcon.vue';
+export { default as User3Icon } from './User3Icon.vue';
+export { default as UserCircleIcon } from './UserCircleIcon.vue';
+export { default as UserIcon } from './UserIcon.vue';
+export { default as WarningIcon } from './WarningIcon.vue';
+export { default as WhatsappBusinessIcon } from './WhatsappBusinessIcon.vue';
+export { default as WindowIcon } from './WindowIcon.vue';
+export { default as WorkFlowIcon } from './WorkFlowIcon.vue';
+
+// Channel Icons (from subdirectory)
+export { default as WidgetIcon } from './channel-icons/WidgetIcon.vue';
