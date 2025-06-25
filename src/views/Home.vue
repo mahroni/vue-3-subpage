@@ -17,6 +17,7 @@ import Icon from '../components/icons/Icon.vue';
 import Drawer from '@/components/common/Drawer.vue';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import Modal from '@/components/common/Modal.vue';
+import Select from '@/components/form/Select.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -151,6 +152,8 @@ const showAlertSuccess = () => {
     console.log(result);
   });
 };
+
+const selectedValue = ref('');
 
 onMounted(() => {
   getPokemon();
@@ -326,7 +329,7 @@ onMounted(() => {
       <Button intent="primary" size="medium" @click="showAlertSuccess">Show Alert Success</Button>
     </div>
 
-    <div>
+    <div class="mt-4">
       <Button intent="primary" size="medium" @click="toggleModal">Open Modal</Button>
       <Modal :isOpen="isModalOpen" @close="toggleModal" width="w-[900px]">
         <template #title>
@@ -336,6 +339,18 @@ onMounted(() => {
           <p v-for="n in 100" :key="n"> asd </p>
         </template>
       </Modal>
+    </div>
+
+    <div class="mt-4 text-left">
+      <Select label="Select an option"
+        :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
+        v-model="selectedValue" />
+      <Select
+        :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
+        v-model="selectedValue" error errorMessage="This is an error message" />
+      <Select
+        :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
+        v-model="selectedValue" disabled />
     </div>
   </div>
 </template>
