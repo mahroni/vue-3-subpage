@@ -1,31 +1,27 @@
 <template>
   <div class="w-full">
-    <div class="flex items-center justify-between">
+    <div class="flex items-center justify-between p-4">
       <!-- Search Input -->
-      <div class="relative mb-6">
-        <InputCustom v-model="searchQuery" placeholder="Search channel name" clearable>
-          <template #suffix-icon>
-            <Icon name="search" />
-          </template>
-        </InputCustom>
-      </div>
+      <InputCustom v-model="searchQuery" placeholder="Search channel name" clearable>
+        <template #suffix-icon>
+          <Icon name="search" />
+        </template>
+      </InputCustom>
 
-      <div>
-        <Button
-          to="/qiscus/create"
-          variant="primary"
-          class="flex items-center gap-2"
-          size="small"
-          no-animation
-        >
-          <Icon name="plus" :size="16" />
-          New Integration
-        </Button>
-      </div>
+      <Button
+        to="/qiscus/create"
+        variant="primary"
+        class="flex items-center gap-2"
+        size="small"
+        no-animation
+      >
+        <Icon name="plus" :size="16" />
+        New Integration
+      </Button>
     </div>
 
     <!-- Table -->
-    <div class="overflow-hidden">
+    <div class="px-4 py-2">
       <table class="w-full">
         <!-- Table Header -->
         <thead>
@@ -38,12 +34,14 @@
 
         <!-- Table Body -->
         <tbody class="divide-y divide-gray-100">
-          <tr v-for="channel in props.channels" :key="channel.id" class="hover:bg-gray-50">
+          <tr
+            v-for="channel in props.channels"
+            :key="channel.id"
+            @click.prevent="getDetailChannel(channel)"
+            class="hover:bg-gray-50"
+          >
             <!-- Channel Name -->
-            <td
-              @click.prevent="getDetailChannel(channel)"
-              class="border-stroke-regular cursor-pointer border-b px-2 py-4"
-            >
+            <td class="border-stroke-regular cursor-pointer border-b px-2 py-4">
               <div class="flex items-center gap-2">
                 <img :src="channel.badgeUrl" alt="channel badge" class="h-6 w-6" />
                 <span class="text-text-title font-medium">{{ channel.name }}</span>
@@ -51,19 +49,15 @@
             </td>
 
             <!-- Channel ID -->
-            <td
-              @click.prevent="getDetailChannel(channel)"
-              class="border-stroke-regular cursor-pointer border-b px-6 py-4"
-            >
+            <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
               <div class="flex items-center gap-2">
                 <span class="text-text-title font-semibold">{{ channel.channelId }}</span>
-                <button
-                  class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full hover:bg-gray-300 active:bg-gray-400"
+                <ButtonIcon
                   title="Copy Channel ID"
-                  @click="copyToClipboard(channel.channelId)"
+                  @click.stop="copyToClipboard(channel.channelId)"
                 >
-                  <Icon name="copy" :size="12" class="text-primary" />
-                </button>
+                  <CopyIcon :size="12" />
+                </ButtonIcon>
               </div>
             </td>
 
@@ -73,46 +67,88 @@
                 v-model="channel.isActive"
                 size="small"
                 variant="success"
+                @click.stop="() => ''"
                 @update:model-value="updateChannelStatus(channel.id, $event)"
               />
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
 
-      <div class="flex items-center justify-between pt-4">
-        <div class="flex items-center gap-2">
-          <span class="text-text-subtitle text-sm">1-10 of 180 items</span>
-        </div>
-
-        <div class="flex items-center gap-4">
-          <Icon name="double-chevron-left" :size="12" />
-          <Icon name="chevron-left" :size="12" />
-          <div
-            class="shadow-small flex h-10 w-12 items-center justify-center rounded-lg text-base font-bold"
-          >
-            1
-          </div>
-          <Icon name="chevron-right" :size="12" />
-          <Icon name="double-chevron-right" :size="12" />
-        </div>
+    <div class="flex items-center justify-between px-6 py-4">
+      <div class="flex items-center gap-2">
+        <span class="text-text-subtitle text-sm">
+          {{ paginationInfo }}
+        </span>
       </div>
 
-      <!-- Empty State -->
-      <div v-if="!props.channels" class="px-6 py-12 text-center">
-        <p class="text-gray-500">No channels found</p>
+      <div class="flex items-center gap-4">
+        <ButtonIcon
+          @click="pagination('first')"
+          class="text-primary cursor-pointer"
+          :class="{ 'text-text-disable cursor-not-allowed': channelsStore.meta.page === 1 }"
+        >
+          <DoubleChevronLeftIcon :size="24" />
+        </ButtonIcon>
+        <ButtonIcon
+          @click="pagination('prev')"
+          class="text-primary cursor-pointer"
+          :class="{ 'text-text-disable cursor-not-allowed': channelsStore.meta.page === 1 }"
+        >
+          <ChevronLeftIcon :size="24" />
+        </ButtonIcon>
+        <div
+          class="flex h-10 w-12 items-center justify-center rounded-lg text-base font-bold shadow-[0px_7px_17px_0px_#33333312]"
+        >
+          {{ channelsStore.meta.page }}
+        </div>
+        <ButtonIcon
+          @click="pagination('next')"
+          class="text-primary cursor-pointer"
+          :class="{
+            'text-text-disable cursor-not-allowed':
+              channelsStore.meta.page === channelsStore.meta.total_page,
+          }"
+        >
+          <ChevronRightIcon :size="24" />
+        </ButtonIcon>
+        <ButtonIcon
+          @click="pagination('last')"
+          class="text-primary cursor-pointer"
+          :class="{
+            'text-text-disable cursor-not-allowed':
+              channelsStore.meta.page === channelsStore.meta.total_page,
+          }"
+        >
+          <DoubleChevronRightIcon :size="24" />
+        </ButtonIcon>
       </div>
+    </div>
+
+    <!-- Empty State -->
+    <div v-if="!props.channels" class="px-6 py-12 text-center">
+      <p class="text-gray-500">No channels found</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType, watch } from 'vue';
+import { ref, type PropType, watch, computed } from 'vue';
 import { type Ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useQiscusStore } from '@/stores/integration-qiscus';
 import Icon from '@/components/icons/Icon.vue';
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CopyIcon,
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
+} from '@/components/icons';
 import Switch from '@/components/common/Switch.vue';
 import Button from '@/components/common/Button.vue';
+import ButtonIcon from '@/components/common/ButtonIcon.vue';
 import InputCustom from '../../../components/form/InputCustom.vue';
 
 // interface
@@ -131,11 +167,12 @@ const props = defineProps({
     required: true,
   },
 });
+const channelsStore = useQiscusStore();
 
 const router = useRouter();
 
 // emit
-const emit = defineEmits(['updateChannelStatus', 'search']);
+const emit = defineEmits(['updateChannelStatus', 'search', 'pagination']);
 const searchQuery = ref('') as Ref<string>;
 const timeout = ref<NodeJS.Timeout | null>(null);
 
@@ -147,6 +184,16 @@ watch(searchQuery, (newVal) => {
     emit('search', newVal);
   }, 500);
 });
+
+const paginationInfo = computed(() => {
+  const start = (channelsStore.meta.page - 1) * channelsStore.meta.limit + 1;
+  const end = Math.min(
+    channelsStore.meta.page * channelsStore.meta.limit,
+    channelsStore.meta.total
+  );
+  return `${start}-${end} of ${channelsStore.meta.total} items`;
+});
+
 // function
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
@@ -157,6 +204,12 @@ function updateChannelStatus(id: number, isActive: boolean) {
     id,
     isActive,
   });
+}
+
+function pagination(type: string) {
+  if (type === 'next' && channelsStore.meta.page === channelsStore.meta.total_page) return;
+  if (type === 'prev' && channelsStore.meta.page === 1) return;
+  emit('pagination', type);
 }
 
 function getDetailChannel(channel: IChannel) {
