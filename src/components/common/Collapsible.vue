@@ -10,7 +10,8 @@
         <slot name="title">{{ title }}</slot>
       </div>
       <!-- Arrow icon, rotates based on collapse state -->
-      <ArrowIcon
+      <Icon
+        name="chevron-down"
         :class="{ 'rotate-180': !isCollapsed }"
         class="h-5 w-5 text-gray-600 transition-transform duration-300 ease-in-out"
       />
@@ -31,7 +32,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import ArrowIcon from '@/components/icons2/ArrowIcon.vue';
+import { Icon } from '@/components/icons';
 
 // Define component props using defineProps
 interface Props {
