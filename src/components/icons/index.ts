@@ -12,7 +12,7 @@ export { default as BackIcon } from './BackIcon.vue';
 export { default as BackPaginationIcon } from './BackPaginationIcon.vue';
 export { default as BroadcastIcon } from './BroadcastIcon.vue';
 export { default as BulkResolvedIcon } from './BulkResolvedIcon.vue';
-export { default as Chat1Icon } from './Chat1Icon.vue';
+export { default as ChatIcon } from './ChatIcon.vue';
 export { default as ChatTemplateIcon } from './ChatTemplateIcon.vue';
 export { default as CheckIcon } from './CheckIcon.vue';
 export { default as ChevronDownIcon } from './ChevronDownIcon.vue';
@@ -91,6 +91,7 @@ export { default as WarningIcon } from './WarningIcon.vue';
 export { default as WhatsappBusinessIcon } from './WhatsappBusinessIcon.vue';
 export { default as WindowIcon } from './WindowIcon.vue';
 export { default as WorkFlowIcon } from './WorkFlowIcon.vue';
+export { default as QiscusIcon } from './QiscusIcon.vue';
 
 // Channel Icons (from subdirectory)
 export { default as WidgetIcon } from './channel-icons/WidgetIcon.vue';

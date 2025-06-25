@@ -18,6 +18,7 @@ import Drawer from '@/components/common/Drawer.vue';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import Modal from '@/components/common/Modal.vue';
 import Select from '@/components/form/Select.vue';
+import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -351,6 +352,10 @@ onMounted(() => {
       <Select
         :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
         v-model="selectedValue" disabled />
+    </div>
+
+    <div class="mt-4 text-left">
+      <WelcomingPage />
     </div>
   </div>
 </template>
