@@ -15,15 +15,14 @@
     <QiscusBannerDoc />
 
     <!-- Table section -->
-    <div class="shadow-large rounded-2xl bg-white p-4">
-      <div class="flex items-center justify-between">
-        <!-- Search Input with Icon -->
-        <TableListChannel
-          :channels="qiscus_channels"
-          @updateChannelStatus="updateChannelStatus"
-          @search="search"
-        />
-      </div>
+    <div class="shadow-large flex items-center justify-between rounded-2xl bg-white">
+      <!-- Search Input with Icon -->
+      <TableListChannel
+        :channels="qiscus_channels"
+        @updateChannelStatus="updateChannelStatus"
+        @search="search"
+        @pagination="pagination"
+      />
     </div>
   </div>
 </template>
@@ -31,16 +30,14 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import { useAppConfigStore } from '@/stores/app-config';
-import { useChannelsStore } from '@/stores/channels';
+import { useQiscusStore } from '@/stores/integration-qiscus';
 import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
-// import Banner from '@/components/common/Banner.vue';
 import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { Icon } from '@/components/icons';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 
 // props
-const channelType = 'qiscus';
 const appConfigStore = useAppConfigStore();
 
 appConfigStore.setConfig({
@@ -49,10 +46,10 @@ appConfigStore.setConfig({
   appVersion: '1.0.0',
 });
 
-const channelsStore = useChannelsStore();
+const channelsStore = useQiscusStore();
 
 const qiscus_channels = computed(() =>
-  channelsStore.qiscus_channels.map((channel: IQiscusChannel) => ({
+  channelsStore.channels.map((channel: IQiscusChannel) => ({
     id: channel.id,
     name: channel.name,
     channelId: channel.id.toString(),
@@ -62,16 +59,37 @@ const qiscus_channels = computed(() =>
 );
 
 function updateChannelStatus(data: { id: number; isActive: boolean }) {
-  channelsStore.updateChannelStatus(data.id, data.isActive, channelType);
-
+  // channelsStore.updateChannelStatus(data.id, data.isActive, channelType);
   // alert success
 }
 
 function search(query: string) {
-  console.log('search', query);
+  channelsStore.meta.search = query;
+  channelsStore.meta.page = 1;
+  channelsStore.getQiscusChannels();
+}
+
+function pagination(type: string) {
+  switch (type) {
+    case 'next':
+      channelsStore.meta.page += 1;
+      break;
+    case 'prev':
+      if (channelsStore.meta.page > 1) {
+        channelsStore.meta.page -= 1;
+      }
+      break;
+    case 'first':
+      channelsStore.meta.page = 1;
+      break;
+    case 'last':
+      channelsStore.meta.page = channelsStore.meta.total_page;
+      break;
+  }
+  channelsStore.getQiscusChannels();
 }
 
 onMounted(async () => {
-  await channelsStore.getChannels();
+  await channelsStore.getQiscusChannels();
 });
 </script>

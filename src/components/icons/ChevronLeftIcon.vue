@@ -17,7 +17,7 @@ const props = withDefaults(
     :height="props.size"
     :class="props.class"
     viewBox="0 0 24 24"
-    fill="none"
+    fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -28,3 +28,16 @@ const props = withDefaults(
     />
   </svg>
 </template>
+
+<script setup lang="ts">
+const props = withDefaults(
+  defineProps<{
+    size?: number;
+    class?: string;
+  }>(),
+  {
+    size: 24,
+    class: '',
+  }
+);
+</script>
