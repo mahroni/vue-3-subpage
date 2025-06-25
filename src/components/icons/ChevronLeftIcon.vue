@@ -1,16 +1,3 @@
-<script setup lang="ts">
-const props = withDefaults(
-  defineProps<{
-    size?: number;
-    class?: string;
-  }>(),
-  {
-    size: 24,
-    class: '',
-  }
-);
-</script>
-
 <template>
   <svg
     :width="props.size"
