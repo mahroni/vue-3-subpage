@@ -16,6 +16,7 @@ import InputCustom from '../components/form/InputCustom.vue';
 import Icon from '../components/icons/Icon.vue';
 import Drawer from '@/components/common/Drawer.vue';
 import { useSweetAlert } from '@/composables/useSweetAlert';
+import Modal from '@/components/common/Modal.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -105,9 +106,14 @@ const tabs = [
 const subTabsActive = ref<any>(tabs[0]);
 
 const isDrawerOpen = ref<boolean>(false); // Explicitly type ref
+const isModalOpen = ref<boolean>(false); // Explicitly type ref
 
 const toggleDrawer = (): void => {
   isDrawerOpen.value = !isDrawerOpen.value;
+};
+
+const toggleModal = (): void => {
+  isModalOpen.value = !isModalOpen.value;
 };
 
 const showAlertWarning = () => {
@@ -318,6 +324,18 @@ onMounted(() => {
       <Button intent="primary" size="medium" @click="showAlertWarning">Show Alert Warning</Button>
       <Button intent="primary" size="medium" @click="showAlertError">Show Alert Error</Button>
       <Button intent="primary" size="medium" @click="showAlertSuccess">Show Alert Success</Button>
+    </div>
+
+    <div>
+      <Button intent="primary" size="medium" @click="toggleModal">Open Modal</Button>
+      <Modal :isOpen="isModalOpen" @close="toggleModal" width="w-[900px]">
+        <template #title>
+          Preview Your Qiscus Live Chat
+        </template>
+        <template #content>
+          <p v-for="n in 100" :key="n"> asd </p>
+        </template>
+      </Modal>
     </div>
   </div>
 </template>
