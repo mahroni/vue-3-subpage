@@ -56,7 +56,7 @@
         </InputCustom>
       </template>
     </WidgetFormLayout>
-    <CallToActionPreview />
+    <WelcomingPageLoading />
   </div>
 </template>
 
@@ -68,7 +68,7 @@ import Divider from '@/components/ui/Divider.vue';
 import Input from '@/components/form/Input.vue';
 import ImageInput from '@/components/form/ImageInput.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
-import CallToActionPreview from './CallToActionPreview.vue';
+import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 
 const text = ref('');
 

@@ -12,7 +12,7 @@
     </div>
 
     <!-- Banner documentation -->
-    <QiscusBannerDoc />
+    <WhatsappBannerDoc />
 
     <!-- Table section -->
     <div class="shadow-large flex items-center justify-between rounded-2xl bg-white">
@@ -34,7 +34,7 @@ import { useWhatsappStore } from '@/stores/integration-whatsapp';
 import type { IWhatsappChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { Icon } from '@/components/icons';
-import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
+import WhatsappBannerDoc from '@/pages/integration/whatsapp/WhatsappBannerDoc.vue';
 import TableListChannel from '@/pages/integration/whatsapp/TableListChannel.vue';
 
 // props
