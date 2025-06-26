@@ -10,7 +10,7 @@ const meta: Meta<typeof ImageInput> = {
     docs: {
       description: {
         component:
-          'A specialized image input component with preview functionality, file validation, and replace capability. Features click-to-upload, image preview with hover overlay, camera icon for replacement, and comprehensive error handling.',
+          'A specialized image input component with preview functionality, file validation, upload handling, and loading states. Features click-to-upload, image preview with hover overlay, circular loading animation, error handling, and preview reversion on upload failure.',
       },
     },
   },
@@ -23,14 +23,6 @@ const meta: Meta<typeof ImageInput> = {
       control: { type: 'text' },
       description: 'Unique identifier for the input',
     },
-    tipsText: {
-      control: { type: 'text' },
-      description: 'Help text describing file requirements',
-    },
-    showTips: {
-      control: { type: 'boolean' },
-      description: 'Whether to show the tips text',
-    },
     maxSizeInMB: {
       control: { type: 'number' },
       description: 'Maximum file size in megabytes',
@@ -38,6 +30,14 @@ const meta: Meta<typeof ImageInput> = {
     acceptedFormats: {
       control: { type: 'text' },
       description: 'Accepted MIME types (comma-separated)',
+    },
+    isUploading: {
+      control: { type: 'boolean' },
+      description: 'Whether the component is in uploading state (shows loading animation)',
+    },
+    modelValue: {
+      control: { type: 'text' },
+      description: 'Current image URL to display in preview',
     },
   },
   tags: ['autodocs'],
@@ -55,26 +55,52 @@ export const Default: Story = {
   render: (args) => ({
     components: { ImageInput },
     setup() {
-      const selectedImage = ref<File | null>(null);
-      const handleImageChange = (file: File | null) => {
-        console.log('Image changed:', file?.name || 'No file');
+      const imageUrl = ref<string>('');
+      const isUploading = ref(false);
+      const uploadedFileName = ref('');
+      
+      const handleImageUpload = async (file: File, revertPreview: () => void) => {
+        console.log('Uploading:', file.name);
+        uploadedFileName.value = file.name;
+        isUploading.value = true;
+        
+        // Simulate upload
+        try {
+          await new Promise(resolve => setTimeout(resolve, 2000));
+          // Simulate success - in real app, this would be the server response URL
+          imageUrl.value = URL.createObjectURL(file);
+          console.log('Upload successful');
+        } catch (error) {
+          console.log('Upload failed, reverting preview');
+          revertPreview();
+        } finally {
+          isUploading.value = false;
+        }
       };
+      
       const handleImageError = (error: string) => {
         console.log('Image error:', error);
       };
-      return { args, selectedImage, handleImageChange, handleImageError };
+      
+      return { args, imageUrl, isUploading, uploadedFileName, handleImageUpload, handleImageError };
     },
     template: `
-      <div class="w-96">
+      <div class="w-96 space-y-4">
         <ImageInput 
           v-bind="args" 
-          v-model="selectedImage"
-          @change="handleImageChange"
+          v-model="imageUrl"
+          :isUploading="isUploading"
+          @upload="handleImageUpload"
           @error="handleImageError"
         />
-        <div v-if="selectedImage" class="mt-4 text-sm text-gray-600">
-          <p><strong>Selected:</strong> {{ selectedImage.name }}</p>
-          <p><strong>Size:</strong> {{ (selectedImage.size / 1024).toFixed(1) }}KB</p>
+        <div v-if="uploadedFileName && !isUploading" class="text-sm text-gray-600">
+          <p><strong>Uploaded:</strong> {{ uploadedFileName }}</p>
+        </div>
+        <div v-if="isUploading" class="text-sm text-blue-600">
+          <p>Uploading {{ uploadedFileName }}...</p>
+        </div>
+        <div class="text-xs text-gray-500">
+          <p>Click to upload an image. Supports JPG, JPEG, PNG formats. Maximum 2MB.</p>
         </div>
       </div>
     `,
@@ -87,18 +113,28 @@ export const SmallImage: Story = {
     label: 'Avatar Image',
     id: 'avatar',
     maxSizeInMB: 1,
-    tipsText: 'Upload a square image at least 150x150 pixels. Maximum 1MB.',
-    showTips: true,
   },
   render: (args) => ({
     components: { ImageInput },
     setup() {
-      const selectedImage = ref<File | null>(null);
-      return { args, selectedImage };
+      const imageUrl = ref<string>('');
+      const isUploading = ref(false);
+      
+      const handleUpload = async (file: File, _revertPreview: () => void) => {
+        isUploading.value = true;
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        imageUrl.value = URL.createObjectURL(file);
+        isUploading.value = false;
+      };
+      
+      return { args, imageUrl, isUploading, handleUpload };
     },
     template: `
-      <div class="w-96">
-        <ImageInput v-bind="args" v-model="selectedImage" />
+      <div class="w-96 space-y-4">
+        <ImageInput v-bind="args" v-model="imageUrl" :isUploading="isUploading" @upload="handleUpload" />
+        <div class="text-xs text-gray-500">
+          <p>Upload a square image at least 150x150 pixels. Maximum 1MB.</p>
+        </div>
       </div>
     `,
   }),
@@ -110,18 +146,28 @@ export const LargeImage: Story = {
     label: 'Cover Photo',
     id: 'cover-photo',
     maxSizeInMB: 10,
-    tipsText: 'Upload a high-resolution image at least 1920x1080 pixels. Maximum 10MB.',
-    showTips: true,
   },
   render: (args) => ({
     components: { ImageInput },
     setup() {
-      const selectedImage = ref<File | null>(null);
-      return { args, selectedImage };
+      const imageUrl = ref<string>('');
+      const isUploading = ref(false);
+      
+      const handleUpload = async (file: File, _revertPreview: () => void) => {
+        isUploading.value = true;
+        await new Promise(resolve => setTimeout(resolve, 3000)); // Longer for large files
+        imageUrl.value = URL.createObjectURL(file);
+        isUploading.value = false;
+      };
+      
+      return { args, imageUrl, isUploading, handleUpload };
     },
     template: `
-      <div class="w-96">
-        <ImageInput v-bind="args" v-model="selectedImage" />
+      <div class="w-96 space-y-4">
+        <ImageInput v-bind="args" v-model="imageUrl" :isUploading="isUploading" @upload="handleUpload" />
+        <div class="text-xs text-gray-500">
+          <p>Upload a high-resolution image at least 1920x1080 pixels. Maximum 10MB.</p>
+        </div>
       </div>
     `,
   }),
@@ -133,40 +179,58 @@ export const WebPSupport: Story = {
     label: 'Modern Image Upload',
     id: 'webp-image',
     acceptedFormats: 'image/jpeg,image/png,image/webp',
-    tipsText: 'Supports JPEG, PNG, and WebP formats. Maximum 5MB.',
-    showTips: true,
     maxSizeInMB: 5,
   },
   render: (args) => ({
     components: { ImageInput },
     setup() {
-      const selectedImage = ref<File | null>(null);
-      return { args, selectedImage };
+      const imageUrl = ref<string>('');
+      const isUploading = ref(false);
+      
+      const handleUpload = async (file: File, _revertPreview: () => void) => {
+        isUploading.value = true;
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        imageUrl.value = URL.createObjectURL(file);
+        isUploading.value = false;
+      };
+      
+      return { args, imageUrl, isUploading, handleUpload };
     },
     template: `
-      <div class="w-96">
-        <ImageInput v-bind="args" v-model="selectedImage" />
+      <div class="w-96 space-y-4">
+        <ImageInput v-bind="args" v-model="imageUrl" :isUploading="isUploading" @upload="handleUpload" />
+        <div class="text-xs text-gray-500">
+          <p>Supports JPEG, PNG, and WebP formats. Maximum 5MB.</p>
+        </div>
       </div>
     `,
   }),
 };
 
-// Without tips
-export const NoTips: Story = {
+// Simple upload without tips
+export const SimpleUpload: Story = {
   args: {
     label: 'Simple Image Upload',
     id: 'simple-image',
-    showTips: false,
   },
   render: (args) => ({
     components: { ImageInput },
     setup() {
-      const selectedImage = ref<File | null>(null);
-      return { args, selectedImage };
+      const imageUrl = ref<string>('');
+      const isUploading = ref(false);
+      
+      const handleUpload = async (file: File, _revertPreview: () => void) => {
+        isUploading.value = true;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        imageUrl.value = URL.createObjectURL(file);
+        isUploading.value = false;
+      };
+      
+      return { args, imageUrl, isUploading, handleUpload };
     },
     template: `
       <div class="w-96">
-        <ImageInput v-bind="args" v-model="selectedImage" />
+        <ImageInput v-bind="args" v-model="imageUrl" :isUploading="isUploading" @upload="handleUpload" />
       </div>
     `,
   }),
@@ -178,19 +242,29 @@ export const PNGOnly: Story = {
     label: 'Logo Upload (PNG Only)',
     id: 'logo-png',
     acceptedFormats: 'image/png',
-    tipsText: 'PNG format only for transparent backgrounds. Maximum 2MB.',
-    showTips: true,
     maxSizeInMB: 2,
   },
   render: (args) => ({
     components: { ImageInput },
     setup() {
-      const selectedImage = ref<File | null>(null);
-      return { args, selectedImage };
+      const imageUrl = ref<string>('');
+      const isUploading = ref(false);
+      
+      const handleUpload = async (file: File, _revertPreview: () => void) => {
+        isUploading.value = true;
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        imageUrl.value = URL.createObjectURL(file);
+        isUploading.value = false;
+      };
+      
+      return { args, imageUrl, isUploading, handleUpload };
     },
     template: `
-      <div class="w-96">
-        <ImageInput v-bind="args" v-model="selectedImage" />
+      <div class="w-96 space-y-4">
+        <ImageInput v-bind="args" v-model="imageUrl" :isUploading="isUploading" @upload="handleUpload" />
+        <div class="text-xs text-gray-500">
+          <p>PNG format only for transparent backgrounds. Maximum 2MB.</p>
+        </div>
       </div>
     `,
   }),
@@ -202,44 +276,58 @@ export const Interactive: Story = {
     label: 'Interactive Image Upload',
     id: 'interactive-image',
     maxSizeInMB: 3,
-    tipsText: 'Try uploading different file types and sizes to see validation in action.',
-    showTips: true,
   },
   render: (args) => ({
     components: { ImageInput },
     setup() {
-      const selectedImage = ref<File | null>(null);
+      const imageUrl = ref<string>('');
+      const isUploading = ref(false);
       const errorMessage = ref('');
       const successMessage = ref('');
+      const currentFile = ref<File | null>(null);
 
-      const handleImageChange = (file: File | null) => {
+      const handleImageUpload = async (file: File, revertPreview: () => void) => {
         errorMessage.value = '';
-        if (file) {
-          successMessage.value = `Successfully selected: ${file.name}`;
-          setTimeout(() => {
-            successMessage.value = '';
-          }, 3000);
-        } else {
-          successMessage.value = '';
+        successMessage.value = '';
+        currentFile.value = file;
+        isUploading.value = true;
+
+        try {
+          // Simulate random success/failure for demo
+          await new Promise((resolve, reject) => {
+            setTimeout(() => {
+              Math.random() > 0.3 ? resolve(void 0) : reject(new Error('Simulated upload failure'));
+            }, 2000);
+          });
+          
+          imageUrl.value = URL.createObjectURL(file);
+          successMessage.value = `Successfully uploaded: ${file.name}`;
+          setTimeout(() => { successMessage.value = ''; }, 3000);
+        } catch (error) {
+          errorMessage.value = 'Upload failed. Please try again.';
+          revertPreview();
+          currentFile.value = null;
+          setTimeout(() => { errorMessage.value = ''; }, 5000);
+        } finally {
+          isUploading.value = false;
         }
       };
 
       const handleImageError = (error: string) => {
         errorMessage.value = error;
         successMessage.value = '';
-        setTimeout(() => {
-          errorMessage.value = '';
-        }, 5000);
+        setTimeout(() => { errorMessage.value = ''; }, 5000);
       };
 
-      return { args, selectedImage, errorMessage, successMessage, handleImageChange, handleImageError };
+      return { args, imageUrl, isUploading, errorMessage, successMessage, currentFile, handleImageUpload, handleImageError };
     },
     template: `
       <div class="w-96 space-y-4">
         <ImageInput 
           v-bind="args" 
-          v-model="selectedImage"
-          @change="handleImageChange"
+          v-model="imageUrl"
+          :isUploading="isUploading"
+          @upload="handleImageUpload"
           @error="handleImageError"
         />
         
@@ -251,73 +339,72 @@ export const Interactive: Story = {
           <p class="text-green-600 text-sm">{{ successMessage }}</p>
         </div>
         
-        <div v-if="selectedImage" class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+        <div v-if="currentFile && !isUploading" class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
           <h4 class="font-medium text-sm text-blue-800">File Details:</h4>
           <ul class="text-sm text-blue-600 mt-1 space-y-1">
-            <li><strong>Name:</strong> {{ selectedImage.name }}</li>
-            <li><strong>Size:</strong> {{ (selectedImage.size / 1024).toFixed(1) }}KB</li>
-            <li><strong>Type:</strong> {{ selectedImage.type }}</li>
-            <li><strong>Last Modified:</strong> {{ new Date(selectedImage.lastModified).toLocaleString() }}</li>
+            <li><strong>Name:</strong> {{ currentFile.name }}</li>
+            <li><strong>Size:</strong> {{ (currentFile.size / 1024).toFixed(1) }}KB</li>
+            <li><strong>Type:</strong> {{ currentFile.type }}</li>
+            <li><strong>Last Modified:</strong> {{ new Date(currentFile.lastModified).toLocaleString() }}</li>
           </ul>
+        </div>
+        
+        <div v-if="isUploading" class="p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+          <p class="text-yellow-600 text-sm">Uploading... (70% chance of success for demo)</p>
+        </div>
+        
+        <div class="text-xs text-gray-500">
+          <p>Try uploading different file types and sizes to see validation in action. Maximum 3MB.</p>
         </div>
       </div>
     `,
   }),
 };
 
-// Pre-loaded image example
-export const PreLoaded: Story = {
+// Upload with failure demonstration
+export const UploadFailure: Story = {
   args: {
-    label: 'Edit Profile Picture',
-    id: 'edit-profile',
-    tipsText: 'Click the camera icon to replace the current image.',
-    showTips: true,
+    label: 'Upload Failure Demo',
+    id: 'failure-demo',
   },
   render: (args) => ({
     components: { ImageInput },
     setup() {
-      const selectedImage = ref<File | null>(null);
+      const imageUrl = ref<string>('');
+      const isUploading = ref(false);
+      const errorMessage = ref('');
       
-      // Simulate a pre-loaded image by creating a File object
-      // In real usage, this would come from your data store
-      const createMockFile = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = 100;
-        canvas.height = 100;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.fillStyle = '#4f46e5';
-          ctx.fillRect(0, 0, 100, 100);
-          ctx.fillStyle = 'white';
-          ctx.font = '20px Arial';
-          ctx.textAlign = 'center';
-          ctx.fillText('DEMO', 50, 55);
-        }
+      const handleUpload = async (_file: File, revertPreview: () => void) => {
+        isUploading.value = true;
+        errorMessage.value = '';
         
-        return new Promise<File>((resolve) => {
-          canvas.toBlob((blob) => {
-            if (blob) {
-              const file = new File([blob], 'demo-image.png', { type: 'image/png' });
-              resolve(file);
-            }
+        try {
+          // Always fail for demo
+          await new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Simulated failure')), 1500);
           });
-        });
+        } catch (error) {
+          errorMessage.value = 'Upload failed! Preview reverted to original.';
+          revertPreview();
+          setTimeout(() => { errorMessage.value = ''; }, 4000);
+        } finally {
+          isUploading.value = false;
+        }
       };
-
-      // Set initial image
-      createMockFile().then(file => {
-        selectedImage.value = file;
-      });
-
-      return { args, selectedImage };
+      
+      return { args, imageUrl, isUploading, errorMessage, handleUpload };
     },
     template: `
-      <div class="w-96">
-        <ImageInput v-bind="args" v-model="selectedImage" />
-        <p class="text-xs text-gray-500 mt-2">
-          This example shows how the component looks with a pre-loaded image. 
-          Hover over the image to see the replace functionality.
-        </p>
+      <div class="w-96 space-y-4">
+        <ImageInput v-bind="args" v-model="imageUrl" :isUploading="isUploading" @upload="handleUpload" />
+        
+        <div v-if="errorMessage" class="p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p class="text-red-600 text-sm">{{ errorMessage }}</p>
+        </div>
+        
+        <div class="text-xs text-gray-500">
+          <p>This demo always fails uploads to show preview reversion functionality.</p>
+        </div>
       </div>
     `,
   }),
@@ -328,65 +415,107 @@ export const AllVariants: Story = {
   render: () => ({
     components: { ImageInput },
     setup() {
-      const avatar = ref<File | null>(null);
-      const cover = ref<File | null>(null);
-      const logo = ref<File | null>(null);
-      const simple = ref<File | null>(null);
-      return { avatar, cover, logo, simple };
+      const avatarUrl = ref<string>('');
+      const coverUrl = ref<string>('');
+      const logoUrl = ref<string>('');
+      const simpleUrl = ref<string>('');
+      
+      const avatarUploading = ref(false);
+      const coverUploading = ref(false);
+      const logoUploading = ref(false);
+      const simpleUploading = ref(false);
+      
+      const handleAvatarUpload = async (file: File, _revertPreview: () => void) => {
+        avatarUploading.value = true;
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        avatarUrl.value = URL.createObjectURL(file);
+        avatarUploading.value = false;
+      };
+      
+      const handleCoverUpload = async (file: File, _revertPreview: () => void) => {
+        coverUploading.value = true;
+        await new Promise(resolve => setTimeout(resolve, 2500));
+        coverUrl.value = URL.createObjectURL(file);
+        coverUploading.value = false;
+      };
+      
+      const handleLogoUpload = async (file: File, _revertPreview: () => void) => {
+        logoUploading.value = true;
+        await new Promise(resolve => setTimeout(resolve, 1800));
+        logoUrl.value = URL.createObjectURL(file);
+        logoUploading.value = false;
+      };
+      
+      const handleSimpleUpload = async (file: File, _revertPreview: () => void) => {
+        simpleUploading.value = true;
+        await new Promise(resolve => setTimeout(resolve, 1200));
+        simpleUrl.value = URL.createObjectURL(file);
+        simpleUploading.value = false;
+      };
+      
+      return { 
+        avatarUrl, coverUrl, logoUrl, simpleUrl,
+        avatarUploading, coverUploading, logoUploading, simpleUploading,
+        handleAvatarUpload, handleCoverUpload, handleLogoUpload, handleSimpleUpload
+      };
     },
     template: `
       <div class="space-y-8 w-full max-w-4xl">
         <div>
           <h3 class="text-lg font-semibold mb-4">Avatar Upload (Small)</h3>
-          <div class="w-96">
+          <div class="w-96 space-y-2">
             <ImageInput 
-              v-model="avatar"
+              v-model="avatarUrl"
               label="Profile Avatar"
               id="avatar-demo"
-              :max-size-in-m-b="1"
-              tips-text="Square image recommended, 150x150px minimum. Max 1MB."
-              :show-tips="true"
+              :maxSizeInMB="1"
+              :isUploading="avatarUploading"
+              @upload="handleAvatarUpload"
             />
+            <p class="text-xs text-gray-500">Square image recommended, 150x150px minimum. Max 1MB.</p>
           </div>
         </div>
         
         <div>
           <h3 class="text-lg font-semibold mb-4">Cover Photo (Large)</h3>
-          <div class="w-96">
+          <div class="w-96 space-y-2">
             <ImageInput 
-              v-model="cover"
+              v-model="coverUrl"
               label="Cover Image"
               id="cover-demo"
-              :max-size-in-m-b="10"
-              tips-text="High-resolution image, 1920x1080px recommended. Max 10MB."
-              :show-tips="true"
+              :maxSizeInMB="10"
+              :isUploading="coverUploading"
+              @upload="handleCoverUpload"
             />
+            <p class="text-xs text-gray-500">High-resolution image, 1920x1080px recommended. Max 10MB.</p>
           </div>
         </div>
         
         <div>
           <h3 class="text-lg font-semibold mb-4">Logo Upload (PNG Only)</h3>
-          <div class="w-96">
+          <div class="w-96 space-y-2">
             <ImageInput 
-              v-model="logo"
+              v-model="logoUrl"
               label="Company Logo"
               id="logo-demo"
-              accepted-formats="image/png"
-              :max-size-in-m-b="2"
-              tips-text="PNG format only for transparent backgrounds. Max 2MB."
-              :show-tips="true"
+              acceptedFormats="image/png"
+              :maxSizeInMB="2"
+              :isUploading="logoUploading"
+              @upload="handleLogoUpload"
             />
+            <p class="text-xs text-gray-500">PNG format only for transparent backgrounds. Max 2MB.</p>
           </div>
         </div>
         
         <div>
-          <h3 class="text-lg font-semibold mb-4">Simple Upload (No Tips)</h3>
+          <h3 class="text-lg font-semibold mb-4">Simple Upload</h3>
           <div class="w-96">
             <ImageInput 
-              v-model="simple"
+              v-model="simpleUrl"
               label="Simple Image"
               id="simple-demo"
-              :show-tips="false"
+              :isUploading="simpleUploading"
+              @upload="handleSimpleUpload"
             />
           </div>
         </div>

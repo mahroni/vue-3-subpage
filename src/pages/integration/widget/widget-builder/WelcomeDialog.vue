@@ -1,7 +1,7 @@
 <template>
     <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
-            <ImageInput label="Brand Icon" id="welcome-dialog-image" tipsText="We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB." :showTips="true" />
+            <ImageInput label="Brand Icon" id="welcome-dialog-image" tipsText="We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB." :showTips="true" v-model="welcomeDialogReact.brandIcon" :isUploading="welcomeDialogReact.isUploading" @upload="uploadImage" />
             <TextArea v-model="welcomeDialogReact.firstDescription" label="First Description" />
             <TextArea v-model="welcomeDialogReact.secondDescription" label="Second Description" />
             <ImageInput label="Icon" id="welcome-dialog-icon" tipsText="We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB." :showTips="true" />
@@ -70,8 +70,30 @@ const welcomeDialogReact = reactive({
     isAttentionGrabberImage: true,
     isAttentionGrabberText: true,
     attentionGrabberTextDescription: '',
-    attentionGrabberAppearDelay: ''
+    attentionGrabberAppearDelay: '',
+    brandIcon: '',
+    isUploading: false
 })
+
+// mock upload image
+const uploadImage = async (file: File, revertPreview: () => void) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    welcomeDialogReact.isUploading = true;
+    try {
+        const response = await fetch('/upload', {
+            method: 'POST',
+            body: formData
+        });
+        const data = await response.json();
+        welcomeDialogReact.brandIcon = data.data.imageUrl;
+    } catch (error) {
+        console.error(error);
+        revertPreview();
+    } finally {
+        welcomeDialogReact.isUploading = false;
+    }
+}
 
 const welcomeDialog = computed({
     get: () => welcomeDialogReact.isWelcomeDialog,
