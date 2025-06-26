@@ -7,8 +7,9 @@
         <input :id="id" :type="currentType" :class="inputClasses({ disabled })" :value="modelValue" @input="onInput"
           @focus="isFocused = true" @blur="isFocused = false" :placeholder="placeholder" :disabled="disabled" />
 
-        <button v-if="clearable && modelValue && !disabled"
-          class="cursor-pointer  transition-colors ease-in-out duration-300" @click="onClear" :disabled="disabled">
+        <button v-if="clearable" class="cursor-pointer invisible transition-colors ease-in-out duration-300" :class="{
+          'visible': modelValue,
+        }" @click="onClear" :disabled="disabled">
           <Icon name="close" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
 
