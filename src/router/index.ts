@@ -14,10 +14,7 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/whatsapp',
       name: 'whatsapp',
-      beforeEnter: () => {
-        window.location.href = `/integration?channel=whatsapp`;
-        return false;
-      },
+      component: () => import('@/views/integration/WhatsappListChannelView.vue'),
     },
     {
       path: '/instagram',

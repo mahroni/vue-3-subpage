@@ -18,3 +18,8 @@ export const qiscusApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/qiscus', { params }),
   getById: (id: number) => apiV3.get<any>(`/admin/channel/qiscus/${id}`),
 };
+
+export const whatsappApi = {
+  get: (params: IParams) => apiV3.get<any[]>('/admin/channel/wa', { params }),
+  getById: (id: number) => apiV3.get<any>(`/admin/channel/wa/${id}`),
+};
