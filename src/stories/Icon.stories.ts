@@ -924,11 +924,3 @@ export const BotChannelIcon: Story = {
     size: 32,
   },
 };
-
-// Error handling
-export const IconNotFound: Story = {
-  args: {
-    name: 'non-existent-icon',
-    size: 32,
-  },
-};
