@@ -68,7 +68,7 @@ function updateChannelStatus(data: { id: number; isActive: boolean }) {
 function search(query: string) {
   channelsStore.meta.search = query;
   channelsStore.meta.page = 1;
-  channelsStore.getQiscusChannels();
+  channelsStore.fetchQiscusChannels();
 }
 
 function pagination(type: string) {
@@ -88,10 +88,10 @@ function pagination(type: string) {
       channelsStore.meta.page = channelsStore.meta.total_page;
       break;
   }
-  channelsStore.getQiscusChannels();
+  channelsStore.fetchQiscusChannels();
 }
 
 onMounted(async () => {
-  await channelsStore.getQiscusChannels();
+  await channelsStore.fetchQiscusChannels();
 });
 </script>

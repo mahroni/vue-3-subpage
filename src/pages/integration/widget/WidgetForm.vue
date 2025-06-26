@@ -10,7 +10,11 @@
       </p>
 
       <div class="flex w-140 items-center gap-5">
-        <div class="h-20 w-20 bg-slate-400" />
+        <div
+          class="border-primary flex h-20 w-20 items-center justify-center rounded-lg border border-dashed"
+        >
+          <img :src="channelBadge ?? ''" width="68" height="68" alt="Channel Badge " />
+        </div>
         <div class="flex flex-1 flex-col items-start gap-1">
           <h4 class="text-text-subtitle text-sm font-semibold">Channel Badge Icon</h4>
           <p class="text-text-placeholder text-xs font-normal">
@@ -34,9 +38,23 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { useQiscusStore } from '@/stores/integration-qiscus';
 import Input from '@/components/form/Input.vue';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 
-const channelName = ref('');
+const channelName = ref<string | null>(null);
+
+const route = useRoute();
+const channelsStore = useQiscusStore();
+
+const channelBadge = computed(() => channelsStore.detail?.badge_url);
+
+onMounted(async () => {
+  const chId = route.params.channelId;
+  if (!chId) return;
+  await channelsStore.fetchDetailChannel(Number(chId));
+  channelName.value = channelsStore.detail?.name ?? null;
+});
 </script>

@@ -27,7 +27,6 @@
         <thead>
           <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
             <th class="px-2 py-4 text-left font-normal">Channel Name</th>
-            <th class="px-6 py-4 text-left font-normal">Channel ID</th>
             <th class="px-6 py-4 text-right font-normal">Action</th>
           </tr>
         </thead>
@@ -45,19 +44,6 @@
               <div class="flex items-center gap-2">
                 <img :src="channel.badgeUrl" alt="channel badge" class="h-6 w-6" />
                 <span class="text-text-title font-medium">{{ channel.name }}</span>
-              </div>
-            </td>
-
-            <!-- Channel ID -->
-            <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
-              <div class="flex items-center gap-2">
-                <span class="text-text-title font-semibold">{{ channel.channelId }}</span>
-                <ButtonIcon
-                  title="Copy Channel ID"
-                  @click.stop="copyToClipboard(channel.channelId)"
-                >
-                  <CopyIcon :size="12" />
-                </ButtonIcon>
               </div>
             </td>
 
@@ -142,7 +128,6 @@ import Icon from '@/components/icons/Icon.vue';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
-  CopyIcon,
   DoubleChevronLeftIcon,
   DoubleChevronRightIcon,
 } from '@/components/icons';
@@ -214,9 +199,6 @@ function pagination(type: string) {
 
 function getDetailChannel(channel: IChannel) {
   // Emit an event to parent component to handle channel detail view
-  router.push({
-    name: 'WhatsappChannelDetail',
-    params: { channelId: channel.id },
-  });
+  window.location.href = `/integration?ch=whatsapp&chid=${channel.id}`;
 }
 </script>

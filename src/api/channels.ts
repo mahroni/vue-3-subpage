@@ -16,10 +16,10 @@ interface IParams {
 
 export const qiscusApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/qiscus', { params }),
-  getById: (id: number) => apiV3.get<any>(`/admin/channel/qiscus/${id}`),
+  getById: (id: number) => apiV2.get<any>(`/qiscus/${id}`),
 };
 
 export const whatsappApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/wa', { params }),
-  getById: (id: number) => apiV3.get<any>(`/admin/channel/wa/${id}`),
+  getById: (id: number) => apiV2.get<any>(`/wa/${id}`),
 };
