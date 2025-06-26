@@ -8,7 +8,7 @@
     <!-- Header -->
     <div class="flex items-center gap-2">
       <Icon name="chat" :size="20" />
-      <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
+      <h2 class="text-text-title text-xl font-semibold">WhatsApp</h2>
     </div>
 
     <!-- Banner documentation -->
@@ -18,7 +18,7 @@
     <div class="shadow-large flex items-center justify-between rounded-2xl bg-white">
       <!-- Search Input with Icon -->
       <TableListChannel
-        :channels="qiscus_channels"
+        :channels="whatsapp_channels"
         @updateChannelStatus="updateChannelStatus"
         @search="search"
         @pagination="pagination"
@@ -30,12 +30,12 @@
 <script setup lang="ts">
 import { onMounted, computed } from 'vue';
 import { useAppConfigStore } from '@/stores/app-config';
-import { useQiscusStore } from '@/stores/integration-qiscus';
-import type { IQiscusChannel } from '@/types/channels';
+import { useWhatsappStore } from '@/stores/integration-whatsapp';
+import type { IWhatsappChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { Icon } from '@/components/icons';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
-import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
+import TableListChannel from '@/pages/integration/whatsapp/TableListChannel.vue';
 
 // props
 const appConfigStore = useAppConfigStore();
@@ -46,21 +46,20 @@ appConfigStore.setConfig({
   appVersion: '1.0.0',
 });
 
-const channelsStore = useQiscusStore();
+const channelsStore = useWhatsappStore();
 
-const qiscus_channels = computed(() =>
-  channelsStore.channels.map((channel: IQiscusChannel) => ({
+const whatsapp_channels = computed(() =>
+  channelsStore.channels.map((channel: IWhatsappChannel) => ({
     id: channel.id,
     name: channel.name,
     channelId: channel.id.toString(),
     isActive: channel.is_active,
-    badgeUrl: channel.badge_url ? channel.badge_url : CHANNEL_BADGE_URL.qiscus,
+    badgeUrl: channel.badge_url ? channel.badge_url : CHANNEL_BADGE_URL.whatsapp,
   }))
 );
 
 function updateChannelStatus(data: { id: number; isActive: boolean }) {
   console.log(data);
-
   // channelsStore.updateChannelStatus(data.id, data.isActive, channelType);
   // alert success
 }
@@ -68,7 +67,7 @@ function updateChannelStatus(data: { id: number; isActive: boolean }) {
 function search(query: string) {
   channelsStore.meta.search = query;
   channelsStore.meta.page = 1;
-  channelsStore.getQiscusChannels();
+  channelsStore.getWhatsappChannels();
 }
 
 function pagination(type: string) {
@@ -88,10 +87,10 @@ function pagination(type: string) {
       channelsStore.meta.page = channelsStore.meta.total_page;
       break;
   }
-  channelsStore.getQiscusChannels();
+  channelsStore.getWhatsappChannels();
 }
 
 onMounted(async () => {
-  await channelsStore.getQiscusChannels();
+  await channelsStore.getWhatsappChannels();
 });
 </script>
