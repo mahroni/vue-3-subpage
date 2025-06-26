@@ -1,13 +1,13 @@
 <template>
-  <div class="flex flex-col gap-8 px-12 py-8">
+  <div class="flex flex-col gap-8 px-12 py-8 h-screen">
     <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
-      <Icon name="chevron-left" :size="20" />
+      <ChevronLeftIcon :size="20" class="text-primary" />
       Integration
     </router-link>
 
     <!-- Header -->
     <div class="flex items-center gap-2">
-      <Icon name="chat" :size="20" />
+      <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" loading="lazy" width="20" height="20" />
       <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>
 
@@ -15,14 +15,10 @@
     <QiscusBannerDoc />
 
     <!-- Table section -->
-    <div class="shadow-large flex items-center justify-between rounded-2xl bg-white">
+    <div class="shadow-large flex items-center justify-between rounded-2xl flex-1 overflow-hidden">
       <!-- Search Input with Icon -->
-      <TableListChannel
-        :channels="qiscus_channels"
-        @updateChannelStatus="updateChannelStatus"
-        @search="search"
-        @pagination="pagination"
-      />
+      <TableListChannel :channels="qiscus_channels" @updateChannelStatus="updateChannelStatus" @search="search"
+        @pagination="pagination" class="h-full" />
     </div>
   </div>
 </template>
@@ -33,9 +29,9 @@ import { useAppConfigStore } from '@/stores/app-config';
 import { useQiscusStore } from '@/stores/integration-qiscus';
 import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { Icon } from '@/components/icons';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
+import { ChevronLeftIcon } from '@/components/icons';
 
 // props
 const appConfigStore = useAppConfigStore();
