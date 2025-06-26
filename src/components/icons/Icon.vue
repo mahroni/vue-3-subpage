@@ -197,12 +197,22 @@ const iconRegistry = {
   square: SquareIcon,
   'user-circle': UserCircleIcon,
   omnichannel: OmnichannelIcon,
-  // Common icons
   home: HomeIcon,
   'double-chevron-left': DoubleChevronLeftIcon,
   'double-chevron-right': DoubleChevronRightIcon,
   qiscus: QiscusIcon,
   sign: SignIcon,
+
+  // Channel Icons
+  widget: WidgetIcon,
+  whatsapp: WhatsAppIcon,
+  facebook: FacebookIcon,
+  line: LineIcon,
+  telegram: TelegramIcon,
+  instagram: InstagramIcon,
+  tiktok: TiktokIcon,
+  'custom-channel': CustomChannelIcon,
+  bot: BotIcon,
 };
 
 const iconComponent = computed(() => {

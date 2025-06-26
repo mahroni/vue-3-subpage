@@ -96,3 +96,11 @@ export { default as SignIcon } from './SignIcon.vue';
 
 // Channel Icons (from subdirectory)
 export { default as WidgetIcon } from './channel-icons/WidgetIcon.vue';
+export { default as WhatsAppIcon } from './channel-icons/WhatsappIcon.vue';
+export { default as FacebookIcon } from './channel-icons/FacebookIcon.vue';
+export { default as LineIcon } from './channel-icons/LineIcon.vue';
+export { default as TelegramIcon } from './channel-icons/TelegramIcon.vue';
+export { default as InstagramIcon } from './channel-icons/InstagramIcon.vue';
+export { default as CustomChannelIcon } from './channel-icons/CustomChannelIcon.vue';
+export { default as BotIcon } from './channel-icons/BotIcon.vue';
+export { default as TiktokIcon } from './channel-icons/TiktokIcon.vue';

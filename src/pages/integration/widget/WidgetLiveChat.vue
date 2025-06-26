@@ -9,6 +9,9 @@
     <template v-if="activeTab === 'Call to Action'">
       <CallToAction />
     </template>
+    <template v-if="activeTab === 'Channels'">
+      <Channels />
+    </template>
   </div>
 </template>
 
@@ -21,6 +24,7 @@ import ServerIcon from '@/components/icons/ServerIcon.vue';
 import ToggleLeftIcon from '@/components/icons/ToggleLeftIcon.vue';
 
 import CallToAction from './widget-builder/CallToAction.vue';
+import Channels from './widget-builder/Channels.vue';
 import WelcomeDialog from './widget-builder/WelcomeDialog.vue';
 
 interface Tab {
