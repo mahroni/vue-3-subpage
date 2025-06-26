@@ -31,11 +31,11 @@
 import { onMounted, computed } from 'vue';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useWhatsappStore } from '@/stores/integration-whatsapp';
-import TableListChannel from '@/pages/integration/whatsapp/TableListChannel.vue';
 import type { IWhatsappChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { Icon } from '@/components/icons';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
+import TableListChannel from '@/pages/integration/whatsapp/TableListChannel.vue';
 
 // props
 const appConfigStore = useAppConfigStore();
@@ -59,6 +59,7 @@ const whatsapp_channels = computed(() =>
 );
 
 function updateChannelStatus(data: { id: number; isActive: boolean }) {
+  console.log(data);
   // channelsStore.updateChannelStatus(data.id, data.isActive, channelType);
   // alert success
 }

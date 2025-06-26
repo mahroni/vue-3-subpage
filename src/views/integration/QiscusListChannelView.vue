@@ -31,11 +31,11 @@
 import { onMounted, computed } from 'vue';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useQiscusStore } from '@/stores/integration-qiscus';
-import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
 import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { Icon } from '@/components/icons';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
+import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
 
 // props
 const appConfigStore = useAppConfigStore();
@@ -59,6 +59,8 @@ const qiscus_channels = computed(() =>
 );
 
 function updateChannelStatus(data: { id: number; isActive: boolean }) {
+  console.log(data);
+
   // channelsStore.updateChannelStatus(data.id, data.isActive, channelType);
   // alert success
 }
