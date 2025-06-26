@@ -18,6 +18,14 @@ import Drawer from '@/components/common/Drawer.vue';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import Modal from '@/components/common/Modal.vue';
 import Select from '@/components/form/Select.vue';
+import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
+import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
+import AttentionGrabber from '@/components/ui/widget-preview/AttentionGrabber.vue';
+import ChannelList from '@/components/ui/widget-preview/ChannelList.vue';
+import ChannelListLoading from '@/components/ui/widget-preview/ChannelListLoading.vue';
+import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
+import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
+import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -351,6 +359,42 @@ onMounted(() => {
       <Select
         :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
         v-model="selectedValue" disabled />
+    </div>
+
+    <div class="mt-4 text-left flex gap-4 flex-wrap flex-shrink-0">
+      <WelcomingPage :imageUrl="pokemonDetail?.sprites?.back_default" :title="pokemonDetail?.name"
+        :subtitle="pokemonDetail?.name" :actions="[
+          {
+            label: 'Ask for Questions',
+            iconUrl: '',
+          },
+        ]" />
+      <WelcomingPageLoading />
+      <AttentionGrabber
+        image-url="https://fastly.picsum.photos/id/1/5000/3333.jpg?hmac=Asv2DU3rA_5D1xSe22xZK47WEAN0wjWeFOhzd13ujW4"
+        title="Hello, there is Promo!" />
+      <ChannelList
+        imageUrl="https://fastly.picsum.photos/id/1/5000/3333.jpg?hmac=Asv2DU3rA_5D1xSe22xZK47WEAN0wjWeFOhzd13ujW4"
+        title="Hello, there is Promo!" subtitle="Welcome to Qiscus!" introduction="Welcome to Qiscus!" :channels="[
+          {
+            label: 'WhatsApp',
+            iconUrl: CHANNEL_BADGE_URL.whatsapp,
+          },
+          {
+            label: 'Instagram',
+            iconUrl: CHANNEL_BADGE_URL.instagram,
+          },
+
+          {
+            label: 'TikTok',
+            iconUrl: CHANNEL_BADGE_URL.tiktok,
+          },
+        ]" />
+      <ChannelListLoading />
+      <LoginForm title="Hello there," subtitle="Welcome to Qiscus!"
+        description="Please fill the details below before chatting with us!" />
+
+      <ChatFormLoading />
     </div>
   </div>
 </template>

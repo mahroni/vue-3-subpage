@@ -378,8 +378,8 @@ export const AllIcons: Story = {
           <p class="text-xs mt-2">shop</p>
         </div>
         <div class="text-center">
-          <Icon name="chat-1" :size="24" />
-          <p class="text-xs mt-2">chat-1</p>
+          <Icon name="chat" :size="24" />
+          <p class="text-xs mt-2">chat</p>
         </div>
         <div class="text-center">
           <Icon name="minus" :size="24" />
@@ -501,8 +501,12 @@ export const AllIcons: Story = {
           <p class="text-xs mt-2">double-chevron-right</p>
         </div>
         <div class="text-center">
-          <Icon name="chat" :size="24" />
-          <p class="text-xs mt-2">chat</p>
+          <Icon name="qiscus" :size="24" />
+          <p class="text-xs mt-2">qiscus</p>
+        </div>
+        <div class="text-center">
+          <Icon name="sign" :size="24" />
+          <p class="text-xs mt-2">sign</p>
         </div>
       </div>
     `,

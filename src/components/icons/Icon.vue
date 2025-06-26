@@ -14,7 +14,7 @@ import {
   BackPaginationIcon,
   BroadcastIcon,
   BulkResolvedIcon,
-  Chat1Icon,
+  ChatIcon,
   ChatTemplateIcon,
   CheckIcon,
   ChevronDownIcon,
@@ -71,6 +71,7 @@ import {
   PresentationIcon,
   PuzzleIcon,
   QCRMIcon,
+  QiscusIcon,
   QTicketingIcon,
   RefreshIcon,
   ReplyIcon,
@@ -93,8 +94,8 @@ import {
   WhatsappBusinessIcon,
   WindowIcon,
   WorkFlowIcon,
+  SignIcon,
   // Channel Icons
-  WidgetIcon,
 } from './index';
 
 interface IconProps {
@@ -169,7 +170,7 @@ const iconRegistry = {
   back: BackIcon,
   next: NextIcon,
   shop: ShopIcon,
-  'chat-1': Chat1Icon,
+  'chat': ChatIcon,
   minus: MinusIcon,
   check: CheckIcon,
   'additional-information': AdditionalInformation,
@@ -198,9 +199,10 @@ const iconRegistry = {
   omnichannel: OmnichannelIcon,
   // Common icons
   home: HomeIcon,
-  chat: WidgetIcon, // Using WidgetIcon for chat
   'double-chevron-left': DoubleChevronLeftIcon,
   'double-chevron-right': DoubleChevronRightIcon,
+  qiscus: QiscusIcon,
+  sign: SignIcon,
 };
 
 const iconComponent = computed(() => {
