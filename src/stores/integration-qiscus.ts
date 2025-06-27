@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { qiscusApi } from '@/api/channels';
-import type { IQiscusChannel, IUpdateQiscusChannel } from '../types/channels';
+import type { IQiscusChannel } from '../types/channels';
 
 export const useQiscusStore = defineStore('qiscus', () => {
   // State

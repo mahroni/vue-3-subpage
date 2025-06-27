@@ -9,10 +9,7 @@
       </p>
 
       <div class="flex items-center gap-5">
-        <ImageInput v-model="channelBadge" />
-        <div class="border-primary flex h-20 w-20 items-center justify-center rounded-lg border border-dashed">
-          <img :src="channelBadge ?? ''" width="68" height="68" alt="Channel Badge " />
-        </div>
+        <ImageInput v-model="channelBadge" id="channel-badge" />
         <div class="flex flex-1  w-[452px] flex-col items-start gap-1">
           <h4 class="text-text-subtitle text-sm font-semibold">Channel Badge Icon</h4>
           <p class="text-text-placeholder text-xs font-normal">
@@ -23,8 +20,8 @@
       </div>
 
       <div class="w-[552px]">
-        <Input v-model="channelName" :disabled="false" :error="false" errorMessage="This field has an error"
-          id="default-input" placeholder="Enter your channel name here" />
+        <Input v-model="channelName" label="Channel Name" :disabled="false" :error="false"
+          errorMessage="This field has an error" id="default-input" placeholder="Enter your channel name here" />
       </div>
     </div>
     <div class="flex justify-end gap-4">
