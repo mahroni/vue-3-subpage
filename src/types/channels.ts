@@ -47,3 +47,19 @@ export interface IQiscusChannel {
   forward_url: null;
   forward_enabled: boolean;
 }
+
+export interface IUpdateQiscusChannel {
+  app_code: string;
+  badge_url: string;
+  id: number;
+  is_active: boolean;
+  is_secure: boolean;
+  name: string;
+  secret_key: string | null;
+}
+
+export interface IUpdateConfigQiscusChannel {
+  offline_message: string;
+  online_message: string;
+  send_online_if_resolved: boolean;
+}

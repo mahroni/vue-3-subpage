@@ -1,62 +1,48 @@
 <template>
   <div :class="containerClasses()">
     <label :for="id" class="text-text-subtitle text-sm font-normal">{{ label }}</label>
-      <!-- Upload Area -->
-    <div
-        @click="triggerFileInput"
-        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-4 transition-colors mt-2"
-        :class="[
-          error
-            ? 'border-red-500 bg-red-50'
-            : 'border-green-500 hover:border-green-600 hover:bg-green-50',
-          props.isUploading ? 'cursor-not-allowed opacity-50' : '',
-        ]"
-      >
-        <!-- Show uploaded image preview if available -->
-        <div v-if="previewUrl" class="group relative">
-          <img
-            :src="previewUrl"
-            :alt="fileName"
-            class="max-h-[48px] min-h-[48px] max-w-[48px] min-w-[48px] rounded-lg object-cover"
-          />
-          <button
-            @click.stop="triggerFileInput"
-            class="absolute inset-0 flex items-center justify-center rounded-lg bg-white text-[#0a0a0a] opacity-0 shadow-lg transition-all duration-200 group-hover:cursor-pointer group-hover:opacity-60"
-            type="button"
-            title="Replace image"
-          >
-            <div v-if="props.isUploading" class="opacity-100">
-              <svg class="animate-spin h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
-              </svg>
-            </div>
-            <!-- <CameraIcon :size="20" /> -->
-          </button>
-        </div>
-
-        <!-- Upload icon when no image -->
-        <div v-else class="flex w-fit items-center justify-center rounded-lg bg-green-200 p-[14px]">
-          <div v-if="props.isUploading" class="relative">
-            <svg class="animate-spin h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <!-- Upload Area -->
+    <div @click="triggerFileInput"
+      class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-1.5 transition-colors" :class="[
+        error
+          ? 'border-red-500 bg-red-50'
+          : 'border-green-500 hover:border-green-600 hover:bg-green-50',
+        props.isUploading ? 'cursor-not-allowed opacity-50' : '',
+      ]">
+      <!-- Show uploaded image preview if available -->
+      <div v-if="previewUrl" class="group relative">
+        <img :src="previewUrl" :alt="fileName"
+          class="max-h-[68px] min-h-[68px] max-w-[68px] min-w-[68px] rounded-lg object-cover" />
+        <button @click.stop="triggerFileInput"
+          class="absolute inset-0 flex items-center justify-center rounded-lg bg-white text-[#0a0a0a] opacity-0 shadow-lg transition-all duration-200 group-hover:cursor-pointer group-hover:opacity-60"
+          type="button" title="Replace image">
+          <div v-if="props.isUploading" class="opacity-100">
+            <svg class="animate-spin h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
             </svg>
           </div>
-          <Icon v-else name="plus" :size="20" class="text-green-600" />
+          <!-- <CameraIcon :size="20" /> -->
+        </button>
+      </div>
+
+      <!-- Upload icon when no image -->
+      <div v-else class="flex w-fit items-center justify-center rounded-lg bg-green-200 p-[14px] m-2.5">
+        <div v-if="props.isUploading" class="relative">
+          <svg class="animate-spin h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
+          </svg>
         </div>
+        <Icon v-else name="plus" :size="20" class="text-green-600" />
+      </div>
     </div>
 
     <!-- Hidden file input -->
-    <input
-      ref="fileInput"
-      type="file"
-      :id="id"
-      :accept="acceptedFormats"
-      @change="handleFileChange"
-      class="hidden"
-      :disabled="props.isUploading"
-    />
+    <input ref="fileInput" type="file" :id="id" :accept="acceptedFormats" @change="handleFileChange" class="hidden"
+      :disabled="props.isUploading" />
   </div>
 </template>
 
@@ -66,7 +52,6 @@ import { Icon } from '@/components/icons';
 import { cva } from 'class-variance-authority';
 
 interface Props {
-  label: string;
   id: string;
   maxSizeInMB?: number;
   acceptedFormats?: string;
@@ -141,14 +126,14 @@ const handleFileChange = (event: Event) => {
     previewUrl.value = dataUrl;
   };
   reader.readAsDataURL(file);
-  
+
   // Revert function to restore previous preview
   const revertPreview = () => {
     previewUrl.value = previousPreviewUrl.value;
     fileName.value = previousPreviewUrl.value ? 'Current image' : '';
     fileSize.value = 0;
   };
-  
+
   // Emit the raw file for server upload with revert function
   emit('upload', file, revertPreview);
 };
