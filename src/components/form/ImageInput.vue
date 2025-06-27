@@ -1,31 +1,22 @@
 <template>
   <div :class="containerClasses()">
-    <label :for="id" class="text-text-subtitle text-sm font-normal">{{ label }}</label>
+    <label v-if="label" :for="id" class="text-text-subtitle text-sm font-normal">{{ label }}</label>
     <div class="mt-2 flex gap-4">
       <!-- Upload Area -->
-      <div
-        @click="triggerFileInput"
-        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-4 transition-colors"
-        :class="[
+      <div @click="triggerFileInput"
+        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-4 transition-colors" :class="[
           error
             ? 'border-red-500 bg-red-50'
             : 'border-green-500 hover:border-green-600 hover:bg-green-50',
           isUploading ? 'cursor-not-allowed opacity-50' : '',
-        ]"
-      >
+        ]">
         <!-- Show uploaded image preview if available -->
         <div v-if="previewUrl" class="group relative">
-          <img
-            :src="previewUrl"
-            :alt="fileName"
-            class="max-h-[48px] min-h-[48px] max-w-[48px] min-w-[48px] rounded-lg object-cover"
-          />
-          <button
-            @click.stop="triggerFileInput"
+          <img :src="previewUrl" :alt="fileName"
+            class="max-h-[48px] min-h-[48px] max-w-[48px] min-w-[48px] rounded-lg object-cover" />
+          <button @click.stop="triggerFileInput"
             class="absolute inset-0 flex items-center justify-center rounded-lg bg-white text-[#0a0a0a] opacity-0 shadow-lg transition-all duration-200 group-hover:cursor-pointer group-hover:opacity-60"
-            type="button"
-            title="Replace image"
-          >
+            type="button" title="Replace image">
             <!-- <CameraIcon :size="20" /> -->
           </button>
         </div>
@@ -52,15 +43,8 @@
     </div>
 
     <!-- Hidden file input -->
-    <input
-      ref="fileInput"
-      type="file"
-      :id="id"
-      :accept="acceptedFormats"
-      @change="handleFileChange"
-      class="hidden"
-      :disabled="isUploading"
-    />
+    <input ref="fileInput" type="file" :id="id" :accept="acceptedFormats" @change="handleFileChange" class="hidden"
+      :disabled="isUploading" />
   </div>
 </template>
 
@@ -70,7 +54,6 @@ import { Icon } from '@/components/icons';
 import { cva } from 'class-variance-authority';
 
 interface Props {
-  label: string;
   id: string;
   tipsText?: string;
   showTips?: boolean;

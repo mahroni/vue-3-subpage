@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { qiscusApi } from '@/api/channels';
-import type { IQiscusChannel } from '../types/channels';
+import type { IQiscusChannel, IUpdateQiscusChannel } from '../types/channels';
 
 export const useQiscusStore = defineStore('qiscus', () => {
   // State
@@ -13,12 +13,18 @@ export const useQiscusStore = defineStore('qiscus', () => {
   const fetchQiscusChannels = async () => {
     const { data } = await qiscusApi.get(meta.value);
     const data2 = data as any;
-    channels.value = data2.data.qiscus_channels || [];
+    channels.value = data2.data || [];
     meta.value = data2.meta || {};
   };
 
   const fetchDetailChannel = async (id: number) => {
     const { data } = await qiscusApi.getById(id);
+    const data2 = data as any;
+    detail.value = data2.data.qiscus_channel;
+  };
+
+  const updateChannel = async () => {
+    const { data } = await qiscusApi.update(detail.value);
     const data2 = data as any;
     detail.value = data2.data.qiscus_channel;
   };
@@ -29,5 +35,6 @@ export const useQiscusStore = defineStore('qiscus', () => {
     detail,
     fetchQiscusChannels,
     fetchDetailChannel,
+    updateChannel,
   };
 });
