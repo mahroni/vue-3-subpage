@@ -50,7 +50,7 @@
         <div
           class="border-stroke-regular bg-surface-secondary flex w-full flex-col gap-y-4 rounded-lg border p-6"
         >
-          <!-- header channle list -->
+          <!-- header channel list -->
           <div class="flex w-full items-center justify-between">
             <h4 class="text-text-title text-base font-semibold">Channel List</h4>
             <Button
@@ -92,7 +92,7 @@
       </div>
     </div>
 
-    <!-- Preview Section (new) -->
+    <!-- Preview Section -->
     <div class="flex flex-1 flex-col items-end gap-4 p-6">
       <ChannelList
         :title="previewTitle"
