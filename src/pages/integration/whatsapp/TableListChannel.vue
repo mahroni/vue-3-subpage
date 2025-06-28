@@ -103,7 +103,7 @@ import {
 import Switch from '@/components/common/Switch.vue';
 import Button from '@/components/common/Button.vue';
 import ButtonIcon from '@/components/common/ButtonIcon.vue';
-import InputCustom from '../../../components/form/InputCustom.vue';
+import InputCustom from '@/components/form/InputCustom.vue';
 
 // interface
 interface IChannel {
