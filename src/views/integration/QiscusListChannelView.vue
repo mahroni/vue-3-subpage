@@ -33,6 +33,7 @@ import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
 import { ChevronLeftIcon } from '@/components/icons';
 
+
 // props
 const appConfigStore = useAppConfigStore();
 

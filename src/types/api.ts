@@ -11,3 +11,9 @@ export interface IResponse<T> {
   data: T;
   meta: IPagination;
 }
+
+export interface IParams {
+  limit?: number;
+  page?: number;
+  search?: string;
+}

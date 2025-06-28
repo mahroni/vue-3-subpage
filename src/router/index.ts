@@ -3,6 +3,8 @@ import type { Router, RouteRecordRaw } from 'vue-router';
 import Home from '@/views/integration/ChannelPage.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
 import QiscusCreateChannelView from '@/views/integration/QiscusCreateChannelView.vue';
+import QiscusListChannelView from '@/views/integration/QiscusListChannelView.vue';
+import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -14,7 +16,7 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/whatsapp',
       name: 'whatsapp',
-      component: () => import('@/views/integration/WhatsappListChannelView.vue'),
+      component: QiscusListChannelView,
     },
     {
       path: '/instagram',
@@ -59,12 +61,12 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/qiscus',
       name: 'qiscus',
-      component: () => import('@/views/integration/QiscusListChannelView.vue'),
+      component: QiscusListChannelView,
     },
     {
       path: '/qiscus/:channelId',
       name: 'QiscusChannelDetail',
-      component: () => import('@/pages/integration/widget/WidgetLayout.vue'),
+      component: WidgetLayout,
     },
     {
       path: '/qiscus/create',

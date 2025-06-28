@@ -6,7 +6,7 @@ import type { IResponse } from '@/types/api';
 
 export const useQiscusStore = defineStore('qiscus', () => {
   // State
-  const loading = ref(false);
+  const isFetchingChannels = ref(false);
   const channels = ref<IQiscusChannel[]>([]);
   const meta = ref<any>({});
   const detail = ref<IQiscusChannel | null>(null);
@@ -14,19 +14,17 @@ export const useQiscusStore = defineStore('qiscus', () => {
   // Methods
   const fetchQiscusChannels = async () => {
     try {
-      loading.value = true;
-      const response = await qiscusApi.get(meta.value);
-      const data = response as unknown as IResponse<IQiscusChannel[]>;
-      console.log('data', data);
-      channels.value = data.data.data || [];
+      isFetchingChannels.value = true;
+      const response: any = await qiscusApi.get(meta.value);
+      const data: any = response.data as IResponse<IQiscusChannel[]>;
+
+      channels.value = data.data || [];
       meta.value = data.data.meta || {};
-      console.log('meta', data.data.meta);
     } catch (error) {
-      console.error('Error fetching Qiscus channels:', error);
       channels.value = [];
       meta.value = {};
     } finally {
-      loading.value = false;
+      isFetchingChannels.value = false;
     }
   };
 
@@ -40,8 +38,8 @@ export const useQiscusStore = defineStore('qiscus', () => {
     channels,
     meta,
     detail,
-    loading,
     fetchQiscusChannels,
     fetchDetailChannel,
+    loading: isFetchingChannels,
   };
 });

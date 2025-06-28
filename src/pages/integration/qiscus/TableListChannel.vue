@@ -4,12 +4,12 @@
       <!-- Search Input -->
       <InputCustom v-model="searchQuery" placeholder="Search channel name" clearable>
         <template #suffix-icon>
-          <Icon name="search" />
+          <SearchIcon :size="12" />
         </template>
       </InputCustom>
 
       <Button to="/qiscus/create" variant="primary" class="flex items-center gap-2" size="small" no-animation>
-        <Icon name="plus" :size="24" />
+        <PlusIcon :size="24" />
         New Integration
       </Button>
     </div>
@@ -37,7 +37,7 @@
                   class="rounded-full aspect-square object-cover" :fallback-src="CHANNEL_BADGE_URL.qiscus" />
                 <span class="text-text-title font-medium text-ellipsis overflow-hidden whitespace-nowrap">{{
                   channel.name
-                }}</span>
+                  }}</span>
               </div>
             </td>
 
@@ -90,10 +90,13 @@
 import { ref, type PropType, watch, computed, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQiscusStore } from '@/stores/integration-qiscus';
-import Icon from '@/components/icons/Icon.vue';
 import {
   CopyIcon,
+  SearchIcon,
+  PlusIcon,
 } from '@/components/icons';
+
+
 import Switch from '@/components/common/Switch.vue';
 import Button from '@/components/common/Button.vue';
 import ButtonIcon from '@/components/common/ButtonIcon.vue';

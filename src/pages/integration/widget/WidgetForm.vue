@@ -3,16 +3,13 @@
     <!-- Banner documentation -->
     <QiscusBannerDoc />
     <div
-      class="border-stroke-regular bg-surface-secondary flex flex-col items-start justify-center gap-8 rounded-xl border p-6"
-    >
+      class="border-stroke-regular bg-surface-secondary flex flex-col items-start justify-center gap-8 rounded-xl border p-6">
       <p class="text-text-placeholder text-xs font-normal">
         Build your Qiscus Live Chat based on your need using our builder.
       </p>
 
       <div class="flex w-140 items-center gap-5">
-        <div
-          class="border-primary flex h-20 w-20 items-center justify-center rounded-lg border border-dashed"
-        >
+        <div class="border-primary flex h-20 w-20 items-center justify-center rounded-lg border border-dashed">
           <img :src="channelBadge ?? ''" width="68" height="68" alt="Channel Badge " />
         </div>
         <div class="flex flex-1 flex-col items-start gap-1">
@@ -25,14 +22,8 @@
       </div>
 
       <div class="w-[552px]">
-        <Input
-          v-model="channelName"
-          :disabled="false"
-          :error="false"
-          errorMessage="This field has an error"
-          id="default-input"
-          placeholder="Enter your channel name here"
-        />
+        <Input v-model="channelName" :disabled="false" :error="false" errorMessage="This field has an error"
+          id="default-input" placeholder="Enter your channel name here" />
       </div>
     </div>
   </div>
@@ -44,7 +35,7 @@ import { useQiscusStore } from '@/stores/integration-qiscus';
 import Input from '@/components/form/Input.vue';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 
-const channelName = ref<string | null>(null);
+const channelName = ref<string>('');
 
 const route = useRoute();
 const channelsStore = useQiscusStore();
@@ -55,6 +46,6 @@ onMounted(async () => {
   const chId = route.params.channelId;
   if (!chId) return;
   await channelsStore.fetchDetailChannel(Number(chId));
-  channelName.value = channelsStore.detail?.name ?? null;
+  channelName.value = channelsStore.detail?.name ?? '';
 });
 </script>

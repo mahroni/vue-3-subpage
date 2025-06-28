@@ -2,15 +2,8 @@
   <div :class="containerClasses()">
     <label v-if="props.label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
-      <input
-        :id="id"
-        type="text"
-        :value="modelValue"
-        @input="onInput"
-        :placeholder="placeholder"
-        :class="computedInputClasses"
-        :disabled="disabled"
-      />
+      <input :id="id" type="text" :value="modelValue" @input="onInput" :placeholder="placeholder"
+        :class="computedInputClasses" :disabled="disabled" />
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
@@ -21,7 +14,7 @@ import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
 
 interface Props {
-  modelValue: string;
+  modelValue: string | number;
   label?: string;
   placeholder?: string;
   id?: string;

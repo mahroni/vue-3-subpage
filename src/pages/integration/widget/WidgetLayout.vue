@@ -27,7 +27,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 
 import MainTab from '@/components/common/Tabs/MainTab.vue';
 import WidgetForm from './WidgetForm.vue';
