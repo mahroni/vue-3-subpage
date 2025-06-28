@@ -65,7 +65,7 @@
       </div>
 
       <!-- Empty State -->
-      <div v-if="props.channels.length === 0 && !channelsStore.loading" class="h-full grid place-items-center">
+      <div v-if="props.channels.length === 0 && !channelsStore.loading" class=" grid h-full place-items-center">
         <EmptyState title="No Results"
           description="You may want to try using different keywords or checking for the typos to find it."
           image_url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
@@ -87,21 +87,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType, watch, computed, type Ref, defineAsyncComponent } from 'vue';
-import { useRouter } from 'vue-router';
-import { useQiscusStore } from '@/stores/integration-qiscus';
+import loading from '@/assets/lottie/loading.json';
+import { Button, ButtonIcon, Image } from '@/components/common/common';
+import InputCustom from '@/components/form/InputCustom.vue';
 import {
   CopyIcon,
-  SearchIcon,
   PlusIcon,
+  SearchIcon,
 } from '@/components/icons';
-import { Button, ButtonIcon, Image } from '@/components/common/common';
-
-import loading from '@/assets/lottie/loading.json';
-import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import Pagination from '@/components/ui/Pagination.vue';
 import EmptyState from '@/components/ui/EmptyState.vue';
-import InputCustom from '@/components/form/InputCustom.vue';
+import Pagination from '@/components/ui/Pagination.vue';
+import { useQiscusStore } from '@/stores/integration-qiscus';
+import { computed, defineAsyncComponent, ref, watch, type PropType, type Ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
 // async component
 const Animate = defineAsyncComponent(() => import('@/components/common/Animate.vue'))

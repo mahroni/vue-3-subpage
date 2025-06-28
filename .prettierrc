@@ -9,9 +9,18 @@
   "arrowParens": "always",
   "endOfLine": "lf",
   "quoteProps": "as-needed",
-  "vueIndentScriptAndStyle": false,
   "htmlWhitespaceSensitivity": "css",
   "singleAttributePerLine": false,
-
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "importOrder": [
+    "^react",
+    "<THIRD_PARTY_MODULES>",
+    "^@[/]",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ]
 }
