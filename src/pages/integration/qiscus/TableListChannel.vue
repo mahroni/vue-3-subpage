@@ -37,7 +37,7 @@
                   class="rounded-full aspect-square object-cover" :fallback-src="CHANNEL_BADGE_URL.qiscus" />
                 <span class="text-text-title font-medium text-ellipsis overflow-hidden whitespace-nowrap">{{
                   channel.name
-                  }}</span>
+                }}</span>
               </div>
             </td>
 
@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType, watch, computed, type Ref, onMounted } from 'vue';
+import { ref, type PropType, watch, computed, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQiscusStore } from '@/stores/integration-qiscus';
 import {
@@ -102,7 +102,6 @@ import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import Pagination from '@/components/ui/Pagination.vue';
 import EmptyState from '@/components/ui/EmptyState.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
-import { useFetchPost } from '@/composables/posts/useFetchPost';
 
 
 // interface

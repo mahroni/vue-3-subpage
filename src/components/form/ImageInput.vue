@@ -1,87 +1,68 @@
 <template>
   <div :class="containerClasses()">
     <label :for="id" class="text-text-subtitle text-sm font-normal">{{ label }}</label>
-    <div class="mt-2 flex gap-4">
-      <!-- Upload Area -->
-      <div
-        @click="triggerFileInput"
-        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-4 transition-colors"
-        :class="[
-          error
-            ? 'border-red-500 bg-red-50'
-            : 'border-green-500 hover:border-green-600 hover:bg-green-50',
-          isUploading ? 'cursor-not-allowed opacity-50' : '',
-        ]"
-      >
-        <!-- Show uploaded image preview if available -->
-        <div v-if="previewUrl" class="group relative">
-          <img
-            :src="previewUrl"
-            :alt="fileName"
-            class="max-h-[48px] min-h-[48px] max-w-[48px] min-w-[48px] rounded-lg object-cover"
-          />
-          <button
-            @click.stop="triggerFileInput"
-            class="absolute inset-0 flex items-center justify-center rounded-lg bg-white text-[#0a0a0a] opacity-0 shadow-lg transition-all duration-200 group-hover:cursor-pointer group-hover:opacity-60"
-            type="button"
-            title="Replace image"
-          >
-            <!-- <CameraIcon :size="20" /> -->
-          </button>
-        </div>
-
-        <!-- Upload icon when no image -->
-        <div v-else class="flex w-fit items-center justify-center rounded-lg bg-green-200 p-[14px]">
-          <Icon name="plus" :size="20" class="text-green-600" />
-        </div>
+    <!-- Upload Area -->
+    <div @click="triggerFileInput"
+      class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-1.5 transition-colors" :class="[
+        error
+          ? 'border-red-500 bg-red-50'
+          : 'border-green-500 hover:border-green-600 hover:bg-green-50',
+        props.isUploading ? 'cursor-not-allowed opacity-50' : '',
+      ]">
+      <!-- Show uploaded image preview if available -->
+      <div v-if="previewUrl" class="group relative">
+        <img :src="previewUrl" :alt="fileName"
+          class="max-h-[68px] min-h-[68px] max-w-[68px] min-w-[68px] rounded-lg object-cover" />
+        <button @click.stop="triggerFileInput"
+          class="absolute inset-0 flex items-center justify-center rounded-lg bg-white text-[#0a0a0a] opacity-0 shadow-lg transition-all duration-200 group-hover:cursor-pointer group-hover:opacity-60"
+          type="button" title="Replace image">
+          <div v-if="props.isUploading" class="opacity-100">
+            <svg class="animate-spin h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
+            </svg>
+          </div>
+          <!-- <CameraIcon :size="20" /> -->
+        </button>
       </div>
 
-      <!-- Tips and Error Messages -->
-      <div class="flex flex-col gap-1">
-        <p v-if="showTips && !error" class="text-xs text-[#A0A0A0]">
-          {{ tipsText }}
-        </p>
-        <p v-if="error" class="text-xs text-red-500">
-          {{ error }}
-        </p>
-        <p v-if="fileName && !error" class="text-xs text-green-600">
-          {{ fileName }} ({{ formatFileSize(fileSize) }})
-        </p>
-        <p v-if="isUploading" class="text-xs text-blue-500">Uploading...</p>
+      <!-- Upload icon when no image -->
+      <div v-else class="flex w-fit items-center justify-center rounded-lg bg-green-200 p-[14px] m-2.5">
+        <div v-if="props.isUploading" class="relative">
+          <svg class="animate-spin h-5 w-5 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
+          </svg>
+        </div>
+        <Icon v-else name="plus" :size="20" class="text-green-600" />
       </div>
     </div>
 
     <!-- Hidden file input -->
-    <input
-      ref="fileInput"
-      type="file"
-      :id="id"
-      :accept="acceptedFormats"
-      @change="handleFileChange"
-      class="hidden"
-      :disabled="isUploading"
-    />
+    <input ref="fileInput" type="file" :id="id" :accept="acceptedFormats" @change="handleFileChange" class="hidden"
+      :disabled="props.isUploading" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { Icon } from '@/components/icons';
 import { cva } from 'class-variance-authority';
 
 interface Props {
-  label: string;
   id: string;
-  tipsText?: string;
-  showTips?: boolean;
+  label: string;
   maxSizeInMB?: number;
   acceptedFormats?: string;
-  modelValue?: File | null;
+  modelValue?: string | null;
+  isUploading?: boolean;
 }
 
 interface Emits {
-  (e: 'update:modelValue', value: File | null): void;
-  (e: 'change', value: File | null): void;
+  (e: 'update:modelValue', value: string | null): void;
+  (e: 'upload', file: File, revertPreview: () => void): void;
   (e: 'error', error: string): void;
 }
 
@@ -90,12 +71,10 @@ const containerClasses = cva('space-y-1');
 const props = withDefaults(defineProps<Props>(), {
   label: 'Label',
   id: 'image-input',
-  tipsText:
-    'We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB.',
-  showTips: true,
   maxSizeInMB: 2,
   acceptedFormats: 'image/jpeg,image/jpg,image/png',
   modelValue: null,
+  isUploading: false,
 });
 
 const emit = defineEmits<Emits>();
@@ -103,17 +82,17 @@ const emit = defineEmits<Emits>();
 // Reactive state
 const fileInput = ref<HTMLInputElement>();
 const previewUrl = ref<string>('');
+const previousPreviewUrl = ref<string>('');
 const fileName = ref<string>('');
 const fileSize = ref<number>(0);
 const error = ref<string>('');
-const isUploading = ref<boolean>(false);
 
 // Computed properties
 const maxSizeInBytes = computed(() => props.maxSizeInMB * 1024 * 1024);
 
 // Methods
 const triggerFileInput = () => {
-  if (isUploading.value) return;
+  if (props.isUploading) return;
   fileInput.value?.click();
 };
 
@@ -134,16 +113,30 @@ const handleFileChange = (event: Event) => {
     return;
   }
 
+  // Store previous preview URL
+  previousPreviewUrl.value = previewUrl.value;
+
   // Set file info
   fileName.value = file.name;
   fileSize.value = file.size;
 
-  // Create preview
-  createPreview(file);
+  // Create preview and emit file for upload
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const dataUrl = e.target?.result as string;
+    previewUrl.value = dataUrl;
+  };
+  reader.readAsDataURL(file);
 
-  // Emit the file
-  emit('update:modelValue', file);
-  emit('change', file);
+  // Revert function to restore previous preview
+  const revertPreview = () => {
+    previewUrl.value = previousPreviewUrl.value;
+    fileName.value = previousPreviewUrl.value ? 'Current image' : '';
+    fileSize.value = 0;
+  };
+
+  // Emit the raw file for server upload with revert function
+  emit('upload', file, revertPreview);
 };
 
 const validateFile = (file: File): string => {
@@ -161,26 +154,21 @@ const validateFile = (file: File): string => {
   return '';
 };
 
-const createPreview = (file: File) => {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    previewUrl.value = e.target?.result as string;
-  };
-  reader.readAsDataURL(file);
-};
-
-const formatFileSize = (bytes: number): string => {
-  if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-};
-
-// Initialize with existing modelValue
-if (props.modelValue) {
-  fileName.value = props.modelValue.name;
-  fileSize.value = props.modelValue.size;
-  createPreview(props.modelValue);
-}
+// Watch for changes to modelValue and update preview
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    if (newValue) {
+      console.log(newValue, 'newValue');
+      previewUrl.value = newValue;
+      fileName.value = 'Current image';
+      fileSize.value = 0;
+    } else {
+      previewUrl.value = '';
+      fileName.value = '';
+      fileSize.value = 0;
+    }
+  },
+  { immediate: true }
+);
 </script>

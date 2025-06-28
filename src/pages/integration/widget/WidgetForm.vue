@@ -26,6 +26,10 @@
           id="default-input" placeholder="Enter your channel name here" />
       </div>
     </div>
+    <div class="flex justify-end gap-4">
+      <Button intent="secondary">Cancel</Button>
+      <Button @click="onUpdateChannel" :disabled="!channelName || !channelBadge">Save</Button>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -34,6 +38,7 @@ import { useRoute } from 'vue-router';
 import { useQiscusStore } from '@/stores/integration-qiscus';
 import Input from '@/components/form/Input.vue';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
+import Button from '@/components/common/Button.vue';
 
 const channelName = ref<string>('');
 
@@ -41,6 +46,11 @@ const route = useRoute();
 const channelsStore = useQiscusStore();
 
 const channelBadge = computed(() => channelsStore.detail?.badge_url);
+
+function onUpdateChannel() {
+  if (!channelName.value || !channelBadge.value) return;
+  channelsStore.updateChannel();
+}
 
 onMounted(async () => {
   const chId = route.params.channelId;

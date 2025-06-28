@@ -34,12 +34,19 @@ export const useQiscusStore = defineStore('qiscus', () => {
     detail.value = data2.data;
   };
 
+  const updateChannel = async () => {
+    const { data } = await qiscusApi.update(detail.value);
+    const data2 = data as any;
+    detail.value = data2.data.qiscus_channel;
+  };
+
   return {
     channels,
     meta,
     detail,
     fetchQiscusChannels,
     fetchDetailChannel,
+    updateChannel,
     loading: isFetchingChannels,
   };
 });
