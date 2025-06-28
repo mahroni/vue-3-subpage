@@ -2,17 +2,17 @@
 import { filterFilledObj } from '@/utils/helper/object';
 import { ref, watch, type Ref } from 'vue'; // Import watch
 
-interface FetchPostMeta {
+interface IParams {
   q?: string;
   limit?: string;
 }
 
-export const useFetchPost = (sourceParams: Ref<FetchPostMeta> | undefined = ref({})) => {
+export const useFetchPost = (sourceParams: Ref<IParams> | undefined = ref({})) => {
   const loading = ref(false);
   const data = ref<any[]>([]);
   const error = ref<Error | null>(null);
 
-  const fetchPost = async (currentParams: FetchPostMeta) => {
+  const fetchPost = async (currentParams: IParams) => {
     try {
       loading.value = true;
       error.value = null;

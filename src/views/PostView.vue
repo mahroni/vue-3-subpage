@@ -2,6 +2,8 @@
 import { useFetchPost } from '@/composables/posts/useFetchPost';
 import { watch, ref, computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
+import CreatePostForm from '@/pages/post/CreatePostForm.vue';
+import Modal from '@/components/common/Modal.vue';
 
 interface Post {
   id: number;
@@ -9,6 +11,9 @@ interface Post {
   tags: string[];
   views: number;
 }
+
+// ref
+const isOpenModal = ref<boolean>(false)
 
 const router = useRouter();
 const route = useRoute();
@@ -78,8 +83,10 @@ const getTableData = computed<Post[]>(() => {
       <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-6 text-center">My Blog Posts</h1>
 
       <div class="overflow-x-auto bg-white shadow-xl rounded-lg p-4">
-        <div class="my-2 flex justify-end gap-2"> <select v-model="limitQuery"
-            class="p-2 rounded-sm outline-1 outline-primary border border-gray-300">
+        <div class="my-2 flex justify-end gap-2">
+          <button class="p-2 rounded-sm bg-primary text-white cursor-pointer hover:bg-primary-hover"
+            @click="isOpenModal = true">create</button>
+          <select v-model="limitQuery" class="p-2 rounded-sm outline-1 outline-primary border border-gray-300">
             <option value="10">10</option>
             <option value="20">20</option>
           </select>
@@ -141,6 +148,18 @@ const getTableData = computed<Post[]>(() => {
           </tbody>
         </table>
       </div>
+
+      <Modal :is-open="isOpenModal" @close="isOpenModal = false">
+        <template #header>
+          Create New Post
+        </template>
+        <template #content>
+          <CreatePostForm @close="isOpenModal = false" />
+        </template>
+        <template #footer>
+          <div></div>
+        </template>
+      </Modal>
     </div>
   </div>
 </template>
