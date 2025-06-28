@@ -1,0 +1,26 @@
+<script setup>
+import { Vue3Lottie } from 'vue3-lottie'
+
+const props = defineProps({
+  source: {
+    type: String,
+    required: true,
+  },
+  height: {
+    type: Number,
+    default: 200,
+  },
+  width: {
+    type: Number,
+    default: 200,
+  },
+});
+</script>
+
+<template>
+  <div>
+    <Vue3Lottie :animationData="source" :height="height" :width="width" />
+  </div>
+</template>
+
+<style scoped></style>

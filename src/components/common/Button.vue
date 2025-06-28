@@ -37,7 +37,7 @@ const handleClick = (event: MouseEvent) => {
 };
 
 const buttonClass = computed(() =>
-  cva('font-bold transition-all duration-200 ease-out transform', {
+  cva('font-semibold transition-all duration-200 ease-out transform', {
     variants: {
       intent: {
         primary: 'bg-primary text-white shadow-sm hover:shadow-md',
@@ -46,7 +46,7 @@ const buttonClass = computed(() =>
         flat: 'bg-transparent text-primary hover:bg-slate-50',
       },
       size: {
-        small: 'py-2 px-4 text-sm',
+        small: 'py-2 px-6 text-sm',
         medium: 'py-3 px-6 text-base',
         large: 'py-4 px-8 text-lg',
       },
@@ -93,19 +93,19 @@ const buttonClass = computed(() =>
         intent: 'primary',
         disabled: false,
         animation: true,
-        class: 'hover:bg-primary-hover hover:scale-105',
+        class: 'hover:bg-primary-hover',
       },
       {
         intent: 'secondary',
         disabled: false,
         animation: true,
-        class: 'hover:bg-primary/5 hover:scale-105',
+        class: 'hover:bg-primary/5',
       },
       {
         intent: 'danger',
         disabled: false,
         animation: true,
-        class: 'hover:bg-red-50 hover:scale-105',
+        class: 'hover:bg-red-50',
       },
       {
         intent: 'flat',
@@ -163,14 +163,8 @@ const buttonClass = computed(() =>
 </script>
 
 <template>
-  <component
-    :is="componentType"
-    :to="to"
-    :type="isButton ? type : undefined"
-    :disabled="isButton ? disabled : undefined"
-    :class="buttonClass"
-    @click="handleClick"
-  >
+  <component :is="componentType" :to="to" :type="isButton ? type : undefined"
+    :disabled="isButton ? disabled : undefined" :class="buttonClass" @click="handleClick">
     <slot />
   </component>
 </template>

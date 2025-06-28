@@ -53,6 +53,7 @@ import { cva } from 'class-variance-authority';
 
 interface Props {
   id: string;
+  label: string;
   maxSizeInMB?: number;
   acceptedFormats?: string;
   modelValue?: string | null;

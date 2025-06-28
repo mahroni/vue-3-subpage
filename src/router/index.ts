@@ -3,6 +3,8 @@ import type { Router, RouteRecordRaw } from 'vue-router';
 import Home from '@/views/integration/ChannelPage.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
 import QiscusCreateChannelView from '@/views/integration/QiscusCreateChannelView.vue';
+import QiscusListChannelView from '@/views/integration/QiscusListChannelView.vue';
+import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -14,7 +16,7 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/whatsapp',
       name: 'whatsapp',
-      component: () => import('@/views/integration/WhatsappListChannelView.vue'),
+      component: QiscusListChannelView,
     },
     {
       path: '/instagram',
@@ -59,12 +61,12 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/qiscus',
       name: 'qiscus',
-      component: () => import('@/views/integration/QiscusListChannelView.vue'),
+      component: QiscusListChannelView,
     },
     {
       path: '/qiscus/:channelId',
       name: 'QiscusChannelDetail',
-      component: () => import('@/pages/integration/widget/WidgetLayout.vue'),
+      component: WidgetLayout,
     },
     {
       path: '/qiscus/create',
@@ -95,7 +97,12 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/home',
       name: 'HomeView',
-      component: () => import('../views/Home.vue'),
+      component: () => import('../views/HomeView.vue'),
+    },
+    {
+      path: '/post',
+      name: 'PostView',
+      component: () => import('../views/PostView.vue'),
     },
   ];
 
@@ -108,22 +115,13 @@ export function createRouter(appId?: string | number): Router {
     dynamicAppId = String(window.vueAppBaseId);
   }
 
-  console.log('ROUTER DEBUG: Using appId:', dynamicAppId);
+  // console.log('ROUTER DEBUG: Using appId:', dynamicAppId);
 
   const VUE_ROUTER_BASE_PATH = dynamicAppId ? `/web/${dynamicAppId}/new-integration/` : '/';
 
   const router = createVueRouter({
     history: createWebHistory(VUE_ROUTER_BASE_PATH),
     routes: routes as RouteRecordRaw[],
-  });
-
-  router.beforeEach((to, from, next) => {
-    console.log('ROUTER DEBUG (4): Navigating from:', from.fullPath, 'to:', to.fullPath);
-    next();
-  });
-
-  router.afterEach((to) => {
-    console.log('ROUTER DEBUG (5): Successfully navigated to:', to.fullPath);
   });
 
   return router;

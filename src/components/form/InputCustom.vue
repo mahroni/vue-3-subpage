@@ -1,14 +1,15 @@
 <template>
   <div :class="containerClasses()">
-    <label :for="id" :class="labelClasses({ disabled })">{{ label }}</label>
+    <label v-if="label" :for="id" :class="labelClasses({ disabled })">{{ label }}</label>
     <div :class="wrapperClasses({ isFocused, error, disabled })">
       <div :class="contentWrapperClasses()">
         <slot name="suffix-icon" />
         <input :id="id" :type="currentType" :class="inputClasses({ disabled })" :value="modelValue" @input="onInput"
           @focus="isFocused = true" @blur="isFocused = false" :placeholder="placeholder" :disabled="disabled" />
 
-        <button v-if="clearable && modelValue && !disabled"
-          class="cursor-pointer  transition-colors ease-in-out duration-300" @click="onClear" :disabled="disabled">
+        <button v-if="clearable" class="cursor-pointer invisible transition-colors ease-in-out duration-300" :class="{
+          'visible': modelValue,
+        }" @click="onClear" :disabled="disabled">
           <Icon name="close" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
 
@@ -44,7 +45,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  label: 'Channel Name',
+  label: '',
   placeholder: '',
   id: 'channel-name-input',
   disabled: false,
@@ -112,7 +113,7 @@ const wrapperClasses = cva(
 
 const contentWrapperClasses = cva('flex w-full flex-row items-center gap-3 px-3 py-3 bg-white');
 
-const inputClasses = cva('w-full bg-white outline-none', {
+const inputClasses = cva('w-full bg-white outline-none text-sm placeholder:text-[#A0A0A0]', {
   variants: {
     disabled: {
       true: 'cursor-not-allowed',

@@ -26,7 +26,7 @@ const buttonClass = computed(() =>
         large: 'h-10 w-10',
       },
       intent: {
-        primary: 'text-primary hover:bg-primary-hover/10 active:bg-primary-hover/10',
+        primary: 'text-primary hover:bg-primary-hover/10 active:bg-primary-hover/20',
         secondary: 'text-gray-500 hover:bg-gray-100 active:bg-gray-200',
       },
     },
