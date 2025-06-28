@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed } from 'vue';
 
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
@@ -15,10 +15,6 @@ const channelPreviewData = computed(() => {
       label: channel.name,
       iconUrl: CHANNEL_BADGE_URL[channel.icon as keyof typeof CHANNEL_BADGE_URL] || '',
     }));
-});
-
-onMounted(() => {
-  console.log('ini data channelPreviewData', channelPreviewData.value);
 });
 </script>
 
