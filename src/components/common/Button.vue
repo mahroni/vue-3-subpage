@@ -4,7 +4,7 @@ import { computed } from 'vue';
 
 interface ButtonProps {
   intent?: 'primary' | 'secondary' | 'danger' | 'flat';
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'large';
   disabled?: boolean;
   shape?: 'rounded' | 'rectangular';
   to?: string;
@@ -14,7 +14,7 @@ interface ButtonProps {
 
 const props = withDefaults(defineProps<ButtonProps>(), {
   intent: 'primary',
-  size: 'medium',
+  size: 'small',
   disabled: false,
   shape: 'rounded',
   type: 'button',
@@ -47,7 +47,6 @@ const buttonClass = computed(() =>
       },
       size: {
         small: 'py-2 px-6 text-sm',
-        medium: 'py-3 px-6 text-base',
         large: 'py-4 px-8 text-lg',
       },
       disabled: {
@@ -147,7 +146,7 @@ const buttonClass = computed(() =>
     ],
     defaultVariants: {
       intent: 'primary',
-      size: 'medium',
+      size: 'small',
       disabled: false,
       shape: 'rounded',
       animation: true,

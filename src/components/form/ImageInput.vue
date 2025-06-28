@@ -4,7 +4,7 @@
     <!-- Upload Area -->
     <div
       @click="triggerFileInput"
-      class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-1.5 transition-colors"
+      class="mt-2 flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-1.5 transition-colors"
       :class="[
         error
           ? 'border-red-500 bg-red-50'
@@ -103,7 +103,7 @@ import { Icon } from '@/components/icons';
 
 interface Props {
   id: string;
-  label: string;
+  label?: string;
   maxSizeInMB?: number;
   acceptedFormats?: string;
   modelValue?: string | null;
