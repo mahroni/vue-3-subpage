@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import ButtonIcon from '@/components/common/ButtonIcon.vue';
 import { ChevronLeftIcon } from '@/components/icons';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import ButtonIcon from '@/components/common/ButtonIcon.vue';
-
 </script>
 
 <template>
-  <div class="bg-white flex flex-col rounded-4xl shadow-[0px_8px_32px_0px_#0A0A0A1F] text-navy-500 w-[360px]">
+  <div
+    class="text-navy-500 flex w-[360px] flex-col rounded-4xl bg-white shadow-[0px_8px_32px_0px_#0A0A0A1F]"
+  >
     <div class="p-8">
-      <div class="flex gap-3 items-center">
+      <div class="flex items-center gap-3">
         <ButtonIcon>
           <ChevronLeftIcon :size="24" class="text-navy-500" />
         </ButtonIcon>
@@ -16,29 +17,28 @@ import ButtonIcon from '@/components/common/ButtonIcon.vue';
         <div class="text-sm font-medium text-[#0A0A0A]">Qiscus Customer Care</div>
       </div>
 
-      <div class="flex flex-col gap-4 mt-8">
-        <div class="bg-surface-disable h-4.5 w-37 rounded-full animate-pulse self-center"></div>
+      <div class="mt-8 flex flex-col gap-4">
+        <div class="bg-surface-disable h-4.5 w-37 animate-pulse self-center rounded-full"></div>
 
         <div
-          class="mt-4 rounded-t-[24px] rounded-br-[24px] rounded-bl-[4px] bg-surface-disable animate-pulse p-4 flex flex-col gap-3">
+          class="bg-surface-disable mt-4 flex animate-pulse flex-col gap-3 rounded-t-[24px] rounded-br-[24px] rounded-bl-[4px] p-4"
+        >
           <div class="flex gap-3">
-            <div class="w-6 h-6 rounded-full bg-white"></div>
-            <div class="h-6 rounded-full bg-white w-[92px]"></div>
+            <div class="h-6 w-6 rounded-full bg-white"></div>
+            <div class="h-6 w-[92px] rounded-full bg-white"></div>
           </div>
-          <div class="min-h-6 h-6 rounded-full bg-white w-full"></div>
-          <div class="min-h-6 h-6 rounded-full bg-white w-full"></div>
-
+          <div class="h-6 min-h-6 w-full rounded-full bg-white"></div>
+          <div class="h-6 min-h-6 w-full rounded-full bg-white"></div>
         </div>
       </div>
-
-
     </div>
 
-    <div class="py-3 px-8">
-      <div class="bg-surface-disable h-[56px] animate-pulse w-full rounded-full"></div>
+    <div class="px-8 py-3">
+      <div class="bg-surface-disable h-[56px] w-full animate-pulse rounded-full"></div>
     </div>
 
-    <div class="border-t border-gray-300 py-2 font-medium text-center text-xs text-[#0A0A0A]">Powered by <span
-        class="text-link-400">Qiscus</span></div>
+    <div class="border-t border-gray-300 py-2 text-center text-xs font-medium text-[#0A0A0A]">
+      Powered by <span class="text-link-400">Qiscus</span>
+    </div>
   </div>
 </template>

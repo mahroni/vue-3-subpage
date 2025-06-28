@@ -28,8 +28,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
+import { computed } from 'vue';
 
 interface SwitchProps {
   modelValue?: boolean;

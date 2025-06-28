@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+
 import Button from '../components/common/Button.vue';
 
 const meta: Meta<typeof Button> = {

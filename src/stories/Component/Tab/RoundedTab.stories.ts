@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import RoundedTab from '@/components/common/Tabs/RoundedTab.vue'; // Adjust the path if your component is in a different location
-import { HomeIcon, SettingIcon, UserIcon } from '@/components/icons'; // Example icons, install 'lucide-vue-next' if you want to use them
+
+import RoundedTab from '@/components/common/Tabs/RoundedTab.vue';
+// Adjust the path if your component is in a different location
+import { HomeIcon, SettingIcon, UserIcon } from '@/components/icons';
+
+// Example icons, install 'lucide-vue-next' if you want to use them
 
 const meta: Meta<typeof RoundedTab> = {
   title: 'Components/Tab/RoundedTab',

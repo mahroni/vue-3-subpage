@@ -1,4 +1,4 @@
-import { apiV1, apiV2, apiV3, apiCall, type ApiResponse } from '../utils/axios';
+import { type ApiResponse, apiCall, apiV1, apiV2, apiV3 } from '../utils/axios';
 
 // Example interfaces for API responses
 interface User {

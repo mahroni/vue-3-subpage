@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
+import { computed } from 'vue';
 
 interface ButtonProps {
   intent?: 'primary' | 'secondary' | 'danger' | 'flat';
@@ -163,8 +163,14 @@ const buttonClass = computed(() =>
 </script>
 
 <template>
-  <component :is="componentType" :to="to" :type="isButton ? type : undefined"
-    :disabled="isButton ? disabled : undefined" :class="buttonClass" @click="handleClick">
+  <component
+    :is="componentType"
+    :to="to"
+    :type="isButton ? type : undefined"
+    :disabled="isButton ? disabled : undefined"
+    :class="buttonClass"
+    @click="handleClick"
+  >
     <slot />
   </component>
 </template>

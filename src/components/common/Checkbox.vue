@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
+import { computed } from 'vue';
 
 const checkboxWrapperVariants = cva('flex items-center space-x-2 cursor-pointer select-none', {
   variants: {

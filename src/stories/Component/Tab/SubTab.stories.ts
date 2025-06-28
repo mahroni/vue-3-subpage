@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+
 import SubTab from '@/components/common/Tabs/SubTab.vue';
-import HomeIcon from '@/components/icons/HomeIcon.vue';
 import { BroadcastIcon, SettingIcon, UserIcon } from '@/components/icons';
+import HomeIcon from '@/components/icons/HomeIcon.vue';
 
 const meta: Meta<typeof SubTab> = {
   title: 'Components/Tab/SubTab',

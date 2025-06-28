@@ -30,11 +30,12 @@
 import { ref } from 'vue';
 
 import MainTab from '@/components/common/Tabs/MainTab.vue';
+import { Icon } from '@/components/icons';
+
+import WidgetCode from './WidgetCode.vue';
 import WidgetForm from './WidgetForm.vue';
 import WidgetLiveChat from './WidgetLiveChat.vue';
-import WidgetCode from './WidgetCode.vue';
 import WidgetSettings from './WidgetSetting.vue';
-import { Icon } from '@/components/icons';
 
 const tabs = ['Overview', 'Live Chat Builder', 'Code Installation', 'Settings'];
 const activeTab = ref(tabs[0] || 'overview');

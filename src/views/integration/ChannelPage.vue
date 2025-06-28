@@ -9,8 +9,12 @@
         Choose your first channel to connect with by click a channel icon below to start connecting
         with your customers. To learn more regarding Qiscus Omnichannel Chat integration and
         tutorial, you can watch tutorial video demo in
-        <a href="//drive.google.com/drive/folders/1JxTfQEkWK2v0MlViZ_YYTNOLDDo6dZPH" target="_blank"
-          rel="noopener noreferrer">this link</a>.
+        <a
+          href="//drive.google.com/drive/folders/1JxTfQEkWK2v0MlViZ_YYTNOLDDo6dZPH"
+          target="_blank"
+          rel="noopener noreferrer"
+          >this link</a
+        >.
       </p>
     </div>
 
@@ -26,8 +30,9 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import ChannelCard from '@/components/common/Cards/ChannelCard.vue';
 import { useRouter } from 'vue-router';
+
+import ChannelCard from '@/components/common/Cards/ChannelCard.vue';
 import SubTab from '@/components/common/Tabs/SubTab.vue';
 
 const router = useRouter();

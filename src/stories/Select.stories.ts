@@ -1,6 +1,9 @@
 // src/components/Select.stories.ts
 import type { Meta, StoryObj } from '@storybook/vue3';
-import Select from '@/components/form/Select.vue'; // Adjust the import path as needed
+
+import Select from '@/components/form/Select.vue';
+
+// Adjust the import path as needed
 
 const meta: Meta<typeof Select> = {
   title: 'Components/Form/Select', // Category and name in Storybook UI

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+
 import Banner from '../components/common/Banner.vue';
 
 const meta: Meta<typeof Banner> = {

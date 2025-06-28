@@ -1,6 +1,12 @@
 <template>
-  <img :src="currentSrc" :alt="alt" @error="handleImageError" class="transition-all duration-300 ease-in-out"
-    :width="width" :height="height" />
+  <img
+    :src="currentSrc"
+    :alt="alt"
+    @error="handleImageError"
+    class="transition-all duration-300 ease-in-out"
+    :width="width"
+    :height="height"
+  />
 </template>
 
 <script setup lang="ts">
@@ -32,10 +38,13 @@ const hasError = ref(false);
 
 // Watch for changes in the `src` prop.
 // 'props.src' is already a reactive reference provided by defineProps.
-watch(() => props.src, (newSrc) => {
-  currentSrc.value = newSrc;
-  hasError.value = false; // Reset error state for the new image
-});
+watch(
+  () => props.src,
+  (newSrc) => {
+    currentSrc.value = newSrc;
+    hasError.value = false; // Reset error state for the new image
+  }
+);
 
 /**
  * Handles the 'error' event on the <img> tag.
@@ -43,7 +52,8 @@ watch(() => props.src, (newSrc) => {
  * it switches the `currentSrc` to the `fallbackSrc`.
  */
 const handleImageError = () => {
-  if (!hasError.value) { // Prevent multiple error attempts
+  if (!hasError.value) {
+    // Prevent multiple error attempts
     currentSrc.value = props.fallbackSrc; // Access fallbackSrc directly from props
     hasError.value = true;
     console.warn(`Image failed to load: ${props.src}. Displaying fallback image.`);

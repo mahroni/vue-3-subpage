@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+
 import Switch from '../components/common/Switch.vue';
 
 const meta: Meta<typeof Switch> = {

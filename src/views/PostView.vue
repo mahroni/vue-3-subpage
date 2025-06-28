@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { useFetchPost } from '@/composables/posts/useFetchPost';
-import { watch, ref, computed } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-import CreatePostForm from '@/pages/post/CreatePostForm.vue';
+import { computed, ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+
 import Modal from '@/components/common/Modal.vue';
+import { useFetchPost } from '@/composables/posts/useFetchPost';
+import CreatePostForm from '@/pages/post/CreatePostForm.vue';
 
 interface Post {
   id: number;
@@ -13,7 +14,7 @@ interface Post {
 }
 
 // ref
-const isOpenModal = ref<boolean>(false)
+const isOpenModal = ref<boolean>(false);
 
 const router = useRouter();
 const route = useRoute();
@@ -64,54 +65,77 @@ watch(searchQuery, (newVal) => {
 
 const fetchQueryParams = computed(() => ({
   q: getQueryString(route.query.q),
-  limit: getQueryString(route.query.limit) ?? '10'
+  limit: getQueryString(route.query.limit) ?? '10',
 }));
 
 const { data: postsData, loading, error } = useFetchPost(fetchQueryParams);
 
 // Refined getTableData as a computed property for better reactivity and type safety
 const getTableData = computed<Post[]>(() => {
-  if (Array.isArray(postsData.value)) return postsData.value
+  if (Array.isArray(postsData.value)) return postsData.value;
 
   return [];
 });
 </script>
 
 <template>
-  <div class="p-4 sm:p-6 md:p-8 flex items-center justify-center min-h-screen bg-gray-100 font-sans">
+  <div
+    class="flex min-h-screen items-center justify-center bg-gray-100 p-4 font-sans sm:p-6 md:p-8"
+  >
     <div class="container mx-auto">
-      <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-6 text-center">My Blog Posts</h1>
+      <h1 class="mb-6 text-center text-3xl font-bold text-gray-800 sm:text-4xl">My Blog Posts</h1>
 
-      <div class="overflow-x-auto bg-white shadow-xl rounded-lg p-4">
+      <div class="overflow-x-auto rounded-lg bg-white p-4 shadow-xl">
         <div class="my-2 flex justify-end gap-2">
-          <button class="p-2 rounded-sm bg-primary text-white cursor-pointer hover:bg-primary-hover"
-            @click="isOpenModal = true">create</button>
-          <select v-model="limitQuery" class="p-2 rounded-sm outline-1 outline-primary border border-gray-300">
+          <button
+            class="bg-primary hover:bg-primary-hover cursor-pointer rounded-sm p-2 text-white"
+            @click="isOpenModal = true"
+          >
+            create
+          </button>
+          <select
+            v-model="limitQuery"
+            class="outline-primary rounded-sm border border-gray-300 p-2 outline-1"
+          >
             <option value="10">10</option>
             <option value="20">20</option>
           </select>
-          <input v-model="searchQuery" placeholder="Search posts..."
-            class="p-2 rounded-sm outline-1 outline-primary border border-gray-300" />
+          <input
+            v-model="searchQuery"
+            placeholder="Search posts..."
+            class="outline-primary rounded-sm border border-gray-300 p-2 outline-1"
+          />
         </div>
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-100">
             <tr>
-              <th scope="col"
-                class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider rounded-tl-lg">
+              <th
+                scope="col"
+                class="rounded-tl-lg px-6 py-3 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase"
+              >
                 ID
               </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase"
+              >
                 Title
               </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase"
+              >
                 Tags
               </th>
-              <th scope="col" class="px-6 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-semibold tracking-wider text-gray-600 uppercase"
+              >
                 Views
               </th>
             </tr>
           </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
+          <tbody class="divide-y divide-gray-200 bg-white">
             <tr v-if="loading">
               <td colspan="4" class="px-6 py-4 text-center text-gray-600">
                 <p>Loading posts, please wait...</p>
@@ -129,18 +153,26 @@ const getTableData = computed<Post[]>(() => {
               </td>
             </tr>
             <template v-else>
-              <tr v-for="(post, index) in getTableData" :key="post.id"
-                :class="{ 'bg-gray-50': index % 2 === 1, 'hover:bg-gray-100': index % 2 === 1, 'hover:bg-gray-50': index % 2 === 0, 'transition duration-150 ease-in-out': true }">
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+              <tr
+                v-for="(post, index) in getTableData"
+                :key="post.id"
+                :class="{
+                  'bg-gray-50': index % 2 === 1,
+                  'hover:bg-gray-100': index % 2 === 1,
+                  'hover:bg-gray-50': index % 2 === 0,
+                  'transition duration-150 ease-in-out': true,
+                }"
+              >
+                <td class="px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
                   {{ post.id }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                <td class="px-6 py-4 text-sm whitespace-nowrap text-gray-700">
                   {{ post.title }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                <td class="px-6 py-4 text-sm whitespace-nowrap text-gray-700">
                   {{ post?.tags.join(', ') }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                <td class="px-6 py-4 text-sm whitespace-nowrap text-gray-700">
                   {{ post.views }}
                 </td>
               </tr>
@@ -150,9 +182,7 @@ const getTableData = computed<Post[]>(() => {
       </div>
 
       <Modal :is-open="isOpenModal" @close="isOpenModal = false">
-        <template #header>
-          Create New Post
-        </template>
+        <template #header> Create New Post </template>
         <template #content>
           <CreatePostForm @close="isOpenModal = false" />
         </template>

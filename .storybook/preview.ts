@@ -1,6 +1,10 @@
 import type { Preview } from '@storybook/vue3-vite';
-import '../src/assets/css/style.css'; // Import Tailwind CSS with custom theme
-import '../src/assets/css/tailwind.css'; // Import Tailwind CSS with custom theme
+
+import '../src/assets/css/style.css';
+// Import Tailwind CSS with custom theme
+import '../src/assets/css/tailwind.css';
+
+// Import Tailwind CSS with custom theme
 
 const preview: Preview = {
   parameters: {

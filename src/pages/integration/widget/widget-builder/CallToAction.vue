@@ -62,13 +62,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
+
 import Switch from '@/components/common/Switch.vue';
-import Divider from '@/components/ui/Divider.vue';
-import Input from '@/components/form/Input.vue';
 import ImageInput from '@/components/form/ImageInput.vue';
+import Input from '@/components/form/Input.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
+import Divider from '@/components/ui/Divider.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
+import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 
 const text = ref('');
 

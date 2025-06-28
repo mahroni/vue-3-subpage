@@ -532,6 +532,9 @@ export * from './common';
 ### Named Exports
 
 ```typescript
+// Usage
+import type { User, UserRole, UserStatus } from '@/types/user';
+
 // types/user.ts
 export interface User {
   id: string;
@@ -541,16 +544,14 @@ export interface User {
 
 export type UserStatus = 'active' | 'inactive' | 'suspended';
 export type UserRole = 'admin' | 'user' | 'moderator';
-
-// Usage
-import type { User, UserStatus, UserRole } from '@/types/user';
 ```
 
 ## Testing Types
 
 ```typescript
 // types/__tests__/user.test.ts
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import type { User } from '../user';
 
 describe('User type', () => {

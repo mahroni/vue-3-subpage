@@ -1,3 +1,4 @@
+// .vscode/settings.json
 {
   "editor.quickSuggestions": {
     "strings": true
@@ -30,7 +31,7 @@
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
   "prettier.requireConfig": true,
-  "prettier.configPath": ".prettierrc.json",
+  "prettier.configPath": ".prettierrc", // <--- CHANGED THIS LINE
   "eslint.validate": [
     "javascript",
     "javascriptreact",

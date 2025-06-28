@@ -28,14 +28,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { computed, onMounted } from 'vue';
+
+import { Icon } from '@/components/icons';
+import TableListChannel from '@/pages/integration/whatsapp/TableListChannel.vue';
+import WhatsappBannerDoc from '@/pages/integration/whatsapp/WhatsappBannerDoc.vue';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useWhatsappStore } from '@/stores/integration-whatsapp';
 import type { IWhatsappChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { Icon } from '@/components/icons';
-import WhatsappBannerDoc from '@/pages/integration/whatsapp/WhatsappBannerDoc.vue';
-import TableListChannel from '@/pages/integration/whatsapp/TableListChannel.vue';
 
 // props
 const appConfigStore = useAppConfigStore();

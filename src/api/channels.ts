@@ -1,4 +1,5 @@
 import type { IParams } from '@/types/api';
+
 import { apiV2, apiV3 } from './../utils/axios';
 
 // API v1 examples

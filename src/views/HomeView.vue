@@ -1,33 +1,35 @@
 tabs
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import Button from '../components/common/Button.vue';
-import Switch from '../components/common/Switch.vue';
-import { apiV2 } from '../utils/axios';
-import Badge from '../components/common/Badge.vue';
-import MainTab from '../components/common/Tabs/MainTab.vue';
-import Banner from '../components/common/Banner.vue';
-import Input from '../components/form/Input.vue';
-import Checkbox from '../components/common/Checkbox.vue';
-import Collapsible from '../components/common/Collapsible.vue';
-import CollapsibleGroup from '../components/common/CollapsibleGroup.vue';
-import SubTab from '../components/common/Tabs/SubTab.vue';
-import InputCustom from '../components/form/InputCustom.vue';
-import Icon from '../components/icons/Icon.vue';
+
 import Drawer from '@/components/common/Drawer.vue';
-import { useSweetAlert } from '@/composables/useSweetAlert';
 import Modal from '@/components/common/Modal.vue';
 import Select from '@/components/form/Select.vue';
-import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
-import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
+import { BroadcastIcon } from '@/components/icons';
+import CloseIcon from '@/components/icons/CloseIcon.vue';
 import AttentionGrabber from '@/components/ui/widget-preview/AttentionGrabber.vue';
 import ChannelList from '@/components/ui/widget-preview/ChannelList.vue';
 import ChannelListLoading from '@/components/ui/widget-preview/ChannelListLoading.vue';
-import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
-import { BroadcastIcon } from '@/components/icons';
-import CloseIcon from '@/components/icons/CloseIcon.vue';
+import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
+import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
+import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
+import { useSweetAlert } from '@/composables/useSweetAlert';
+import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
+
+import Badge from '../components/common/Badge.vue';
+import Banner from '../components/common/Banner.vue';
+import Button from '../components/common/Button.vue';
+import Checkbox from '../components/common/Checkbox.vue';
+import Collapsible from '../components/common/Collapsible.vue';
+import CollapsibleGroup from '../components/common/CollapsibleGroup.vue';
+import Switch from '../components/common/Switch.vue';
+import MainTab from '../components/common/Tabs/MainTab.vue';
+import SubTab from '../components/common/Tabs/SubTab.vue';
+import Input from '../components/form/Input.vue';
+import InputCustom from '../components/form/InputCustom.vue';
+import Icon from '../components/icons/Icon.vue';
+import { apiV2 } from '../utils/axios';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -129,38 +131,44 @@ const toggleModal = (): void => {
 
 const showAlertWarning = () => {
   const { showAlert } = useSweetAlert();
-  showAlert.warning({
-    title: 'Lorem ipsum dolor',
-    text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
-    confirmButtonText: 'Update Live Chat',
-    cancelButtonText: 'Cancel',
-    showCancelButton: true,
-  }).then((result) => {
-    console.log(result);
-  });
+  showAlert
+    .warning({
+      title: 'Lorem ipsum dolor',
+      text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
+      confirmButtonText: 'Update Live Chat',
+      cancelButtonText: 'Cancel',
+      showCancelButton: true,
+    })
+    .then((result) => {
+      console.log(result);
+    });
 };
 
 const showAlertError = () => {
   const { showAlert } = useSweetAlert();
-  showAlert.error({
-    title: 'Lorem ipsum dolor',
-    text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
-    confirmButtonText: 'Update Live Chat',
-    showCancelButton: false,
-  }).then((result) => {
-    console.log(result);
-  });
+  showAlert
+    .error({
+      title: 'Lorem ipsum dolor',
+      text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
+      confirmButtonText: 'Update Live Chat',
+      showCancelButton: false,
+    })
+    .then((result) => {
+      console.log(result);
+    });
 };
 
 const showAlertSuccess = () => {
   const { showAlert } = useSweetAlert();
-  showAlert.success({
-    title: 'Lorem ipsum dolor',
-    text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
-    showCancelButton: false,
-  }).then((result) => {
-    console.log(result);
-  });
+  showAlert
+    .success({
+      title: 'Lorem ipsum dolor',
+      text: 'Lorem ipsum dolor sit amet consectetur. Mauris tortor non mi nisl. Fermentum augue morbi nunc sit et nisi. Urna tellus venenatis sed euismod sit eget urna. Volutpat quis varius magna nec sed ridiculus.',
+      showCancelButton: false,
+    })
+    .then((result) => {
+      console.log(result);
+    });
 };
 
 const selectedValue = ref('');
@@ -258,10 +266,15 @@ onMounted(() => {
     <div class="mt-4 text-left">
       <Input v-model="inputValue" placeholder="Enter your name" />
       <Input v-model="inputValue" placeholder="Enter your name" disabled />
-      <Input v-model="inputValue" placeholder="Enter your name" error errorMessage="This is an error message" />
+      <Input
+        v-model="inputValue"
+        placeholder="Enter your name"
+        error
+        errorMessage="This is an error message"
+      />
     </div>
 
-    <div class="mt-4 text-left flex flex-col gap-4 w-full">
+    <div class="mt-4 flex w-full flex-col gap-4 text-left">
       <InputCustom v-model="inputValue" placeholder="Enter your name" clearable disabled>
         <template #suffix-icon>
           <Icon name="search" />
@@ -273,12 +286,18 @@ onMounted(() => {
         </template>
         <template #append-button>
           <span>Copy</span>
-          <Icon name="copy" class="text-primary w-4 h-4" />
+          <Icon name="copy" class="text-primary h-4 w-4" />
         </template>
       </InputCustom>
       <InputCustom v-model="inputValue" placeholder="Enter your name" type="text" clearable />
-      <InputCustom v-model="inputValue" placeholder="Enter your name" type="text" clearable
-        errorMessage="This is an error message" error />
+      <InputCustom
+        v-model="inputValue"
+        placeholder="Enter your name"
+        type="text"
+        clearable
+        errorMessage="This is an error message"
+        error
+      />
     </div>
 
     <div class="mt-4 flex flex-col gap-2 text-left">
@@ -309,17 +328,28 @@ onMounted(() => {
           </Badge>
         </li>
       </ul>
-      <div v-if="pokemonDetail && Object.keys(pokemonDetail).length > 0" class="mt-4 rounded-lg bg-white p-4 shadow-md">
+      <div
+        v-if="pokemonDetail && Object.keys(pokemonDetail).length > 0"
+        class="mt-4 rounded-lg bg-white p-4 shadow-md"
+      >
         <h1 class="mb-4 text-2xl font-bold capitalize">{{ pokemonDetail.name }}</h1>
 
-        <img :src="pokemonDetail?.sprites?.back_default" :alt="pokemonDetail.name" class="mx-auto rounded-lg shadow-sm"
-          width="150" height="150" />
+        <img
+          :src="pokemonDetail?.sprites?.back_default"
+          :alt="pokemonDetail.name"
+          class="mx-auto rounded-lg shadow-sm"
+          width="150"
+          height="150"
+        />
 
         <div v-if="pokemonDetail?.abilities" class="mt-6">
           <h3 class="mb-2 text-xl font-semibold">Abilities</h3>
           <ul class="flex flex-wrap justify-center gap-2">
-            <li v-for="a in pokemonDetail?.abilities" :key="a?.ability?.name"
-              class="rounded-full bg-gray-100 px-3 py-1 text-gray-700 capitalize">
+            <li
+              v-for="a in pokemonDetail?.abilities"
+              :key="a?.ability?.name"
+              class="rounded-full bg-gray-100 px-3 py-1 text-gray-700 capitalize"
+            >
               {{ a?.ability?.name }}
             </li>
           </ul>
@@ -342,42 +372,67 @@ onMounted(() => {
     <div class="mt-4">
       <Button intent="primary" size="medium" @click="toggleModal">Open Modal</Button>
       <Modal :isOpen="isModalOpen" @close="toggleModal" width="w-[900px]">
-        <template #title>
-          Preview Your Qiscus Live Chat
-        </template>
+        <template #title> Preview Your Qiscus Live Chat </template>
         <template #content>
-          <p v-for="n in 100" :key="n"> asd </p>
+          <p v-for="n in 100" :key="n">asd</p>
         </template>
       </Modal>
     </div>
 
     <div class="mt-4 text-left">
-      <Select label="Select an option"
-        :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
-        v-model="selectedValue" />
       <Select
-        :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
-        v-model="selectedValue" error errorMessage="This is an error message" />
+        label="Select an option"
+        :options="[
+          { value: '1', text: 'Option 1' },
+          { value: '2', text: 'Option 2' },
+          { value: '3', text: 'Option 3' },
+        ]"
+        v-model="selectedValue"
+      />
       <Select
-        :options="[{ value: '1', text: 'Option 1' }, { value: '2', text: 'Option 2' }, { value: '3', text: 'Option 3' }]"
-        v-model="selectedValue" disabled />
+        :options="[
+          { value: '1', text: 'Option 1' },
+          { value: '2', text: 'Option 2' },
+          { value: '3', text: 'Option 3' },
+        ]"
+        v-model="selectedValue"
+        error
+        errorMessage="This is an error message"
+      />
+      <Select
+        :options="[
+          { value: '1', text: 'Option 1' },
+          { value: '2', text: 'Option 2' },
+          { value: '3', text: 'Option 3' },
+        ]"
+        v-model="selectedValue"
+        disabled
+      />
     </div>
 
-    <div class="mt-4 text-left flex gap-4 flex-wrap flex-shrink-0">
-      <WelcomingPage :imageUrl="pokemonDetail?.sprites?.back_default" :title="pokemonDetail?.name"
-        :subtitle="pokemonDetail?.name" :actions="[
+    <div class="mt-4 flex flex-shrink-0 flex-wrap gap-4 text-left">
+      <WelcomingPage
+        :imageUrl="pokemonDetail?.sprites?.back_default"
+        :title="pokemonDetail?.name"
+        :subtitle="pokemonDetail?.name"
+        :actions="[
           {
             label: 'Ask for Questions',
             iconUrl: '',
           },
-        ]" />
+        ]"
+      />
       <WelcomingPageLoading />
       <AttentionGrabber
         image-url="https://fastly.picsum.photos/id/1/5000/3333.jpg?hmac=Asv2DU3rA_5D1xSe22xZK47WEAN0wjWeFOhzd13ujW4"
-        title="Hello, there is Promo!" />
+        title="Hello, there is Promo!"
+      />
       <ChannelList
         imageUrl="https://fastly.picsum.photos/id/1/5000/3333.jpg?hmac=Asv2DU3rA_5D1xSe22xZK47WEAN0wjWeFOhzd13ujW4"
-        title="Hello, there is Promo!" subtitle="Welcome to Qiscus!" introduction="Welcome to Qiscus!" :channels="[
+        title="Hello, there is Promo!"
+        subtitle="Welcome to Qiscus!"
+        introduction="Welcome to Qiscus!"
+        :channels="[
           {
             label: 'WhatsApp',
             iconUrl: CHANNEL_BADGE_URL.whatsapp,
@@ -391,10 +446,14 @@ onMounted(() => {
             label: 'TikTok',
             iconUrl: CHANNEL_BADGE_URL.tiktok,
           },
-        ]" />
+        ]"
+      />
       <ChannelListLoading />
-      <LoginForm title="Hello there," subtitle="Welcome to Qiscus!"
-        description="Please fill the details below before chatting with us!" />
+      <LoginForm
+        title="Hello there,"
+        subtitle="Welcome to Qiscus!"
+        description="Please fill the details below before chatting with us!"
+      />
 
       <ChatFormLoading />
     </div>

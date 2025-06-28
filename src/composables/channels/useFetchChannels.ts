@@ -1,7 +1,8 @@
-import { ref, watchEffect, unref, type Ref } from 'vue';
-import type { IQiscusChannel } from '@/types/channels';
+import { type Ref, ref, unref, watchEffect } from 'vue';
+
 import { qiscusApi } from '@/api/channels';
 import type { IResponse } from '@/types/api';
+import type { IQiscusChannel } from '@/types/channels';
 
 interface FetchChannelsMeta {
   page?: number;

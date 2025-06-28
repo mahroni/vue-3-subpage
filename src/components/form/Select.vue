@@ -4,15 +4,27 @@
       {{ label }}
     </label>
     <div :class="computedSelectWrapperClasses">
-      <select :id="id" :value="selectedValue" @change="handleChange" :class="computedSelectClasses"
-        :disabled="disabled">
+      <select
+        :id="id"
+        :value="selectedValue"
+        @change="handleChange"
+        :class="computedSelectClasses"
+        :disabled="disabled"
+      >
         <option value="" disabled selected>{{ placeholder }}</option>
-        <option v-for="option in options" :key="option.value" :value="option.value" class="text-gray-900">
+        <option
+          v-for="option in options"
+          :key="option.value"
+          :value="option.value"
+          class="text-gray-900"
+        >
           {{ option.text }}
         </option>
       </select>
-      <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-        <ChevronDownIcon class="w-5 h-5" />
+      <div
+        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
+      >
+        <ChevronDownIcon class="h-5 w-5" />
       </div>
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
@@ -20,9 +32,13 @@
 </template>
 
 <script setup lang="ts">
+// Assuming this path is correct
+import { cva } from 'class-variance-authority';
 import { computed, toRefs } from 'vue';
-import { ChevronDownIcon } from '@/components/icons'; // Assuming this path is correct
-import { cva } from 'class-variance-authority'; // Import cva
+
+import { ChevronDownIcon } from '@/components/icons';
+
+// Import cva
 
 interface SelectOption {
   value: string | number;
@@ -37,9 +53,11 @@ const props = defineProps({
   options: {
     type: Array as () => SelectOption[],
     required: true,
-    validator: (value: unknown[]) => value.every(option =>
-      typeof option === 'object' && option !== null && 'value' in option && 'text' in option
-    ),
+    validator: (value: unknown[]) =>
+      value.every(
+        (option) =>
+          typeof option === 'object' && option !== null && 'value' in option && 'text' in option
+      ),
   },
   label: {
     type: String,
@@ -129,7 +147,9 @@ const selectClasses = cva(
 // Computed properties to apply disabled and error states to CVA classes
 const computedLabelClasses = computed(() => labelClasses({ disabled: props.disabled }));
 const computedSelectWrapperClasses = computed(() =>
-  selectWrapperClasses({ /* no specific variants for wrapper yet */ })
+  selectWrapperClasses({
+    /* no specific variants for wrapper yet */
+  })
 );
 const computedSelectClasses = computed(() =>
   selectClasses({

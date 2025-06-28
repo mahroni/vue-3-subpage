@@ -1,4 +1,4 @@
-import { createOmnichannelApp, type QiscusAppConfig } from '../main';
+import { type QiscusAppConfig, createOmnichannelApp } from '../main';
 import { useAppConfigStore } from '../stores/app-config';
 
 // Example 1: Initialize with configuration

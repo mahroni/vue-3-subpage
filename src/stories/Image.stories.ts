@@ -1,6 +1,9 @@
 // src/stories/Image.stories.ts
 import type { Meta, StoryObj } from '@storybook/vue3';
-import Image from '@/components/common/Image.vue'; // Adjust the path to your component
+
+import Image from '@/components/common/Image.vue';
+
+// Adjust the path to your component
 
 const meta: Meta<typeof Image> = {
   title: 'Components/Image',

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { computed, ref } from 'vue';
+
 import TextArea from '../components/form/TextArea.vue';
 
 const meta: Meta<typeof TextArea> = {
@@ -94,7 +95,9 @@ export const WithContent: Story = {
   render: (args) => ({
     components: { TextArea },
     setup() {
-      const value = ref('This is some initial content that demonstrates how the textarea auto-resizes based on the amount of text. You can continue typing and it will expand up to the maximum height limit.');
+      const value = ref(
+        'This is some initial content that demonstrates how the textarea auto-resizes based on the amount of text. You can continue typing and it will expand up to the maximum height limit.'
+      );
       return { args, value };
     },
     template: `
@@ -138,7 +141,9 @@ export const Disabled: Story = {
   render: (args) => ({
     components: { TextArea },
     setup() {
-      const value = ref('This textarea is disabled and cannot be edited. It shows how the component looks in a read-only state with proper styling to indicate it cannot be interacted with.');
+      const value = ref(
+        'This textarea is disabled and cannot be edited. It shows how the component looks in a read-only state with proper styling to indicate it cannot be interacted with.'
+      );
       return { args, value };
     },
     template: `
@@ -233,12 +238,12 @@ export const Interactive: Story = {
     components: { TextArea },
     setup() {
       const value = ref('');
-      const wordCount = computed(() => 
+      const wordCount = computed(() =>
         value.value.trim() ? value.value.trim().split(/\s+/).length : 0
       );
       const charCount = computed(() => value.value.length);
       const isError = computed(() => charCount.value > 0 && charCount.value < 10);
-      
+
       return { args, value, wordCount, charCount, isError };
     },
     template: `
@@ -284,11 +289,11 @@ export const FormValidation: Story = {
       const touched = ref(false);
       const minLength = 20;
       const maxLength = 500;
-      
-      const isValid = computed(() => 
-        value.value.length >= minLength && value.value.length <= maxLength
+
+      const isValid = computed(
+        () => value.value.length >= minLength && value.value.length <= maxLength
       );
-      
+
       const errorMessage = computed(() => {
         if (!touched.value) return '';
         if (value.value.length < minLength) {
@@ -299,11 +304,11 @@ export const FormValidation: Story = {
         }
         return '';
       });
-      
+
       const handleBlur = () => {
         touched.value = true;
       };
-      
+
       return { args, value, touched, isValid, errorMessage, maxLength, handleBlur };
     },
     template: `
@@ -343,8 +348,10 @@ export const AllVariants: Story = {
       const defaultValue = ref('');
       const errorValue = ref('Invalid input');
       const disabledValue = ref('This content cannot be edited');
-      const largeValue = ref('This is a larger textarea with custom height limits. It can expand to accommodate more content while maintaining its maximum height constraint.');
-      
+      const largeValue = ref(
+        'This is a larger textarea with custom height limits. It can expand to accommodate more content while maintaining its maximum height constraint.'
+      );
+
       return { defaultValue, errorValue, disabledValue, largeValue };
     },
     template: `
@@ -417,4 +424,4 @@ export const AllVariants: Story = {
       </div>
     `,
   }),
-}; 
+};

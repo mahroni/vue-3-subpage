@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+
 import { channelsApi } from '../api/channels';
-import type { IWhatsappChannel, IQiscusChannel } from '../types/channels';
+import type { IQiscusChannel, IWhatsappChannel } from '../types/channels';
 
 export const useChannelsStore = defineStore('channels', () => {
   // State

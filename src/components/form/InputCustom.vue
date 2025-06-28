@@ -4,17 +4,36 @@
     <div :class="wrapperClasses({ isFocused, error, disabled })">
       <div :class="contentWrapperClasses()">
         <slot name="suffix-icon" />
-        <input :id="id" :type="currentType" :class="inputClasses({ disabled })" :value="modelValue" @input="onInput"
-          @focus="isFocused = true" @blur="isFocused = false" :placeholder="placeholder" :disabled="disabled" />
+        <input
+          :id="id"
+          :type="currentType"
+          :class="inputClasses({ disabled })"
+          :value="modelValue"
+          @input="onInput"
+          @focus="isFocused = true"
+          @blur="isFocused = false"
+          :placeholder="placeholder"
+          :disabled="disabled"
+        />
 
-        <button v-if="clearable" class="cursor-pointer invisible transition-colors ease-in-out duration-300" :class="{
-          'visible': modelValue,
-        }" @click="onClear" :disabled="disabled">
+        <button
+          v-if="clearable"
+          class="invisible cursor-pointer transition-colors duration-300 ease-in-out"
+          :class="{
+            visible: modelValue,
+          }"
+          @click="onClear"
+          :disabled="disabled"
+        >
           <Icon name="close" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
 
-        <button v-if="type === 'password'" class="cursor-pointer" @click="togglePasswordVisibility"
-          :disabled="disabled">
+        <button
+          v-if="type === 'password'"
+          class="cursor-pointer"
+          @click="togglePasswordVisibility"
+          :disabled="disabled"
+        >
           <Icon :name="passwordIcon" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
       </div>
@@ -23,13 +42,14 @@
         <slot name="append-button" :disabled="disabled"></slot>
       </button>
     </div>
-    <p v-if="error" class="mt-2 text-sm font-normal text-danger">{{ errorMessage }}</p>
+    <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import { cva } from 'class-variance-authority';
+import { computed, ref } from 'vue';
+
 import Icon from '../icons/Icon.vue';
 
 interface Props {
@@ -60,7 +80,9 @@ const emit = defineEmits(['update:modelValue']);
 const isFocused = ref(false);
 const showPassword = ref(false);
 
-const currentType = computed(() => (props.type === 'password' && !showPassword.value ? 'password' : 'text'));
+const currentType = computed(() =>
+  props.type === 'password' && !showPassword.value ? 'password' : 'text'
+);
 const passwordIcon = computed(() => (showPassword.value ? 'eye-slash' : 'eye'));
 
 const onInput = (event: Event) => {

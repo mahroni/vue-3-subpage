@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
+
 import DragDropInput from '../components/form/DragDropInput.vue';
 
 const meta: Meta<typeof DragDropInput> = {
@@ -337,4 +338,4 @@ export const AllVariants: Story = {
       </div>
     `,
   }),
-}; 
+};

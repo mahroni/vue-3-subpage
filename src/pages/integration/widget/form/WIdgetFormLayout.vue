@@ -17,9 +17,10 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from 'vue';
+
 import Switch from '@/components/common/Switch.vue';
 import Divider from '@/components/ui/Divider.vue';
-import { computed } from 'vue';
 
 const props = defineProps<{
   label: string;

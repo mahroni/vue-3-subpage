@@ -4,8 +4,8 @@
   </button>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
+import { computed } from 'vue';
 
 interface ButtonIconProps {
   size?: 'small' | 'medium' | 'large';

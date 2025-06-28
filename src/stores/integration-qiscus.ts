@@ -1,7 +1,9 @@
-import { qiscusApi } from '@/api/channels';
-import type { IResponse } from '@/types/api';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+
+import { qiscusApi } from '@/api/channels';
+import type { IResponse } from '@/types/api';
+
 import type { IQiscusChannel } from '../types/channels';
 
 export const useQiscusStore = defineStore('qiscus', () => {
@@ -21,7 +23,7 @@ export const useQiscusStore = defineStore('qiscus', () => {
       channels.value = data.data || [];
       meta.value = data.data.meta || {};
     } catch (error) {
-      console.error(error)
+      console.error(error);
       channels.value = [];
       meta.value = {};
     } finally {

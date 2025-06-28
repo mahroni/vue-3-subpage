@@ -6,12 +6,34 @@
     </div>
     <Banner intent="negative" type="outline">
       <div class="flex items-center gap-3">
-        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="19" viewBox="0 0 22 19" fill="none">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="19"
+          viewBox="0 0 22 19"
+          fill="none"
+        >
           <path
             d="M9.36333 1.9041L1.25653 15.1827C1.08938 15.4667 1.00094 15.7887 1.00001 16.1167C0.999072 16.4446 1.08567 16.7671 1.25119 17.052C1.41671 17.3369 1.65538 17.5744 1.94346 17.7407C2.23153 17.907 2.55897 17.9964 2.8932 18H19.1068C19.441 17.9964 19.7685 17.907 20.0565 17.7407C20.3446 17.5744 20.5833 17.3369 20.7488 17.052C20.9143 16.7671 21.0009 16.4446 21 16.1167C20.9991 15.7887 20.9106 15.4667 20.7435 15.1827L12.6367 1.9041C12.466 1.62811 12.2258 1.39992 11.9391 1.24156C11.6524 1.0832 11.329 1 11 1C10.671 1 10.3476 1.0832 10.0609 1.24156C9.7742 1.39992 9.53395 1.62811 9.36333 1.9041V1.9041Z"
-            stroke="#EB5757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M11 7V11" stroke="#EB5757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M11 15H11.01" stroke="#EB5757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            stroke="#EB5757"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M11 7V11"
+            stroke="#EB5757"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M11 15H11.01"
+            stroke="#EB5757"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
         <div>Auto Responder is not working if the chatbot setting is enabled.</div>
       </div>
@@ -29,8 +51,10 @@
         </div>
       </div>
     </Banner>
-    <div class="bg-white-100 flex w-full flex-col gap-6 rounded-lg p-6"
-      style="box-shadow: 0px 4px 12px 0px rgba(10, 10, 10, 0.1)">
+    <div
+      class="bg-white-100 flex w-full flex-col gap-6 rounded-lg p-6"
+      style="box-shadow: 0px 4px 12px 0px rgba(10, 10, 10, 0.1)"
+    >
       <div class="text-text-title font-semibold">
         Channel Auto Responder 
         <span class="text-text-placeholder font-normal">(Optional)</span>
@@ -48,11 +72,17 @@
           When you set the auto responder message, it will only be sent once for one conversation
           room on office hour.
         </div>
-        <textarea class="resize-none rounded-lg p-4 outline-0" rows="3" placeholder="Text input"
-          style="box-shadow: 0px 2px 8px 0px rgba(10, 10, 10, 0.1)"></textarea>
+        <textarea
+          class="resize-none rounded-lg p-4 outline-0"
+          rows="3"
+          placeholder="Text input"
+          style="box-shadow: 0px 2px 8px 0px rgba(10, 10, 10, 0.1)"
+        ></textarea>
       </div>
-      <Checkbox v-model="isChecked"
-        label="Keep sending every time a customer initiates a chat session even though the room has been resolved" />
+      <Checkbox
+        v-model="isChecked"
+        label="Keep sending every time a customer initiates a chat session even though the room has been resolved"
+      />
 
       <hr class="border-t border-gray-300" />
 
@@ -62,8 +92,12 @@
           When you set the autoresponder message, it will only be sent once at the beginning of each
           conversation outside office hour.
         </div>
-        <textarea class="resize-none rounded-lg p-4 outline-0" rows="3" placeholder="Text input"
-          style="box-shadow: 0px 2px 8px 0px rgba(10, 10, 10, 0.1)"></textarea>
+        <textarea
+          class="resize-none rounded-lg p-4 outline-0"
+          rows="3"
+          placeholder="Text input"
+          style="box-shadow: 0px 2px 8px 0px rgba(10, 10, 10, 0.1)"
+        ></textarea>
       </div>
       <Checkbox v-model="isChecked2" label="Sent every time a customer sends a message" />
     </div>
@@ -74,10 +108,11 @@
   </div>
 </template>
 <script setup lang="ts">
-import Banner from '@/components/common/Banner.vue';
-import Checkbox from '@/components/common/Checkbox.vue';
-import Button from '@/components/common/Button.vue';
 import { ref } from 'vue';
+
+import Banner from '@/components/common/Banner.vue';
+import Button from '@/components/common/Button.vue';
+import Checkbox from '@/components/common/Checkbox.vue';
 
 const isChecked = ref(false);
 const isChecked2 = ref(false);

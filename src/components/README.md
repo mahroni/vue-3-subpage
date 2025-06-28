@@ -126,12 +126,12 @@ const handleClick = () => {
 ## Import/Export Pattern
 
 ```typescript
+// Usage in other components
+import { ChatMessage, UserProfile } from '@/components';
+
 // index.ts in component directory
 export { default as UserProfile } from './UserProfile.vue';
 export { default as ChatMessage } from './ChatMessage.vue';
-
-// Usage in other components
-import { UserProfile, ChatMessage } from '@/components';
 ```
 
 ## Common Patterns
@@ -168,8 +168,8 @@ import { UserProfile, ChatMessage } from '@/components';
 
 ```vue
 <script setup lang="ts">
-import { useUser } from '@/composables/useUser';
 import { useChat } from '@/composables/useChat';
+import { useUser } from '@/composables/useUser';
 
 const { user } = useUser();
 const { messages, sendMessage } = useChat();

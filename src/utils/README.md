@@ -447,8 +447,9 @@ export function isEmpty(obj: Record<string, any>): boolean {
 
 ```typescript
 // utils/__tests__/date.test.ts
-import { describe, it, expect } from 'vitest';
-import { isToday, formatRelativeTime } from '../date';
+import { describe, expect, it } from 'vitest';
+
+import { formatRelativeTime, isToday } from '../date';
 
 describe('Date utilities', () => {
   it('should detect today correctly', () => {

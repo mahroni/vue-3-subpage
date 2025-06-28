@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
+
 import MainTab from '@/components/common/Tabs/MainTab.vue';
 
 const meta: Meta<typeof MainTab> = {
