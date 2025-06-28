@@ -97,7 +97,12 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/home',
       name: 'HomeView',
-      component: () => import('../views/Home.vue'),
+      component: () => import('../views/HomeView.vue'),
+    },
+    {
+      path: '/post',
+      name: 'PostView',
+      component: () => import('../views/PostView.vue'),
     },
   ];
 
@@ -110,22 +115,13 @@ export function createRouter(appId?: string | number): Router {
     dynamicAppId = String(window.vueAppBaseId);
   }
 
-  console.log('ROUTER DEBUG: Using appId:', dynamicAppId);
+  // console.log('ROUTER DEBUG: Using appId:', dynamicAppId);
 
   const VUE_ROUTER_BASE_PATH = dynamicAppId ? `/web/${dynamicAppId}/new-integration/` : '/';
 
   const router = createVueRouter({
     history: createWebHistory(VUE_ROUTER_BASE_PATH),
     routes: routes as RouteRecordRaw[],
-  });
-
-  router.beforeEach((to, from, next) => {
-    console.log('ROUTER DEBUG (4): Navigating from:', from.fullPath, 'to:', to.fullPath);
-    next();
-  });
-
-  router.afterEach((to) => {
-    console.log('ROUTER DEBUG (5): Successfully navigated to:', to.fullPath);
   });
 
   return router;

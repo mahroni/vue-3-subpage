@@ -4,7 +4,7 @@
       <!-- Search Input -->
       <InputCustom v-model="searchQuery" placeholder="Search channel name" clearable>
         <template #suffix-icon>
-          <SearchIcon :size="12" />
+          <SearchIcon :size="24" />
         </template>
       </InputCustom>
 
@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType, watch, computed, type Ref } from 'vue';
+import { ref, type PropType, watch, computed, type Ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQiscusStore } from '@/stores/integration-qiscus';
 import {
@@ -95,18 +95,14 @@ import {
   SearchIcon,
   PlusIcon,
 } from '@/components/icons';
+import { Button, ButtonIcon, Animate, Image } from '@/components/common/common';
 
-
-import Switch from '@/components/common/Switch.vue';
-import Button from '@/components/common/Button.vue';
-import ButtonIcon from '@/components/common/ButtonIcon.vue';
-import InputCustom from '@/components/form/InputCustom.vue';
-import Animate from '@/components/common/Animate.vue';
 import loading from '@/assets/lottie/loading.json';
-import EmptyState from '@/components/ui/EmptyState.vue';
-import Image from '@/components/common/Image.vue';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import Pagination from '@/components/ui/Pagination.vue';
+import EmptyState from '@/components/ui/EmptyState.vue';
+import InputCustom from '@/components/form/InputCustom.vue';
+import { useFetchPost } from '@/composables/posts/useFetchPost';
 
 
 // interface
