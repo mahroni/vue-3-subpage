@@ -68,8 +68,8 @@ layouts/
 </template>
 
 <script setup lang="ts">
-import LayoutHeader from './components/Header.vue';
 import LayoutFooter from './components/Footer.vue';
+import LayoutHeader from './components/Header.vue';
 
 // Layout props
 interface Props {
@@ -260,6 +260,7 @@ defineProps<Props>();
 
 <script setup lang="ts">
 import { ref } from 'vue';
+
 import DashboardSidebar from './components/DashboardSidebar.vue';
 import DashboardTopNav from './components/DashboardTopNav.vue';
 
@@ -673,9 +674,9 @@ const closeSidebar = () => {
 </template>
 
 <script setup lang="ts">
-import DefaultLayout from '@/layouts/DefaultLayout.vue';
-import DashboardSidebar from '@/components/DashboardSidebar.vue';
 import DashboardFooter from '@/components/DashboardFooter.vue';
+import DashboardSidebar from '@/components/DashboardSidebar.vue';
+import DefaultLayout from '@/layouts/DefaultLayout.vue';
 </script>
 ```
 
@@ -698,8 +699,8 @@ import DashboardFooter from '@/components/DashboardFooter.vue';
 </template>
 
 <script setup lang="ts">
-import AuthLayout from '@/layouts/AuthLayout.vue';
 import LoginForm from '@/components/LoginForm.vue';
+import AuthLayout from '@/layouts/AuthLayout.vue';
 </script>
 ```
 

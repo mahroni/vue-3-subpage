@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { cva } from 'class-variance-authority';
+
 import Icon from '../icons/Icon.vue';
 
 interface BannerProps {

@@ -1,4 +1,4 @@
-import Swal, { type SweetAlertResult, type SweetAlertOptions } from 'sweetalert2';
+import Swal, { type SweetAlertOptions, type SweetAlertResult } from 'sweetalert2';
 
 interface AlertParams {
   text: string;
@@ -104,7 +104,7 @@ export const useSweetAlert = () => {
     const mergedCustomClasses = {
       ...DEFAULT_POPUP_CLASSES, // Always include the base classes
       ...specificCustomClasses, // Apply specific classes for the type
-      ...params.customClass,   // User-provided custom classes take highest precedence
+      ...params.customClass, // User-provided custom classes take highest precedence
     };
     const options = _buildAlertOptions(type, params, mergedCustomClasses);
     return _showSwal(options);

@@ -27,8 +27,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import Collapsible from './Collapsible.vue'; // Adjust path if necessary
+import { onMounted, ref } from 'vue';
+
+import Collapsible from './Collapsible.vue';
+
+// Adjust path if necessary
 
 // Define the interface for an item in the collapsible group
 interface CollapsibleGroupItem {

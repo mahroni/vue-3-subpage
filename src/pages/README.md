@@ -82,11 +82,12 @@ pages/
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useUser } from '@/composables/useUser';
-import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+
 import ErrorMessage from '@/components/ui/ErrorMessage.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
+import { useUser } from '@/composables/useUser';
 
 // Route
 const route = useRoute();
@@ -182,9 +183,10 @@ onMounted(() => {
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+
+import LoginForm from '@/components/auth/LoginForm.vue';
 import { useAuth } from '@/composables/useAuth';
 import AuthLayout from '@/layouts/AuthLayout.vue';
-import LoginForm from '@/components/auth/LoginForm.vue';
 
 // Router
 const router = useRouter();
@@ -275,15 +277,16 @@ const handleLogin = async (credentials: LoginCredentials) => {
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
+import ChatHeader from '@/components/chat/ChatHeader.vue';
+import ChatInput from '@/components/chat/ChatInput.vue';
+import ChatMessages from '@/components/chat/ChatMessages.vue';
+import ChatSettingsModal from '@/components/chat/ChatSettingsModal.vue';
+import ChatSidebar from '@/components/chat/ChatSidebar.vue';
 import { useChat } from '@/composables/useChat';
 import ChatLayout from '@/layouts/ChatLayout.vue';
-import ChatSidebar from '@/components/chat/ChatSidebar.vue';
-import ChatHeader from '@/components/chat/ChatHeader.vue';
-import ChatMessages from '@/components/chat/ChatMessages.vue';
-import ChatInput from '@/components/chat/ChatInput.vue';
-import ChatSettingsModal from '@/components/chat/ChatSettingsModal.vue';
 
 // Route
 const route = useRoute();
@@ -402,8 +405,8 @@ Wrap page content in appropriate layouts.
 </template>
 
 <script setup lang="ts">
-import DashboardLayout from '@/layouts/DashboardLayout.vue';
 import UserProfileForm from '@/components/user/UserProfileForm.vue';
+import DashboardLayout from '@/layouts/DashboardLayout.vue';
 </script>
 ```
 
@@ -435,8 +438,8 @@ Extract business logic into composables.
 
 ```vue
 <script setup lang="ts">
-import { useUser } from '@/composables/useUser';
 import { useChat } from '@/composables/useChat';
+import { useUser } from '@/composables/useUser';
 
 const { user, updateProfile } = useUser();
 const { rooms, joinRoom } = useChat();
@@ -521,7 +524,8 @@ onUnmounted(() => {
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue';
+
 import { useUsers } from '@/composables/useUsers';
 
 const { users, isLoading, createUser, updateUser, deleteUser } = useUsers();
@@ -690,8 +694,9 @@ onMounted(() => {
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
 import { useUsers } from '@/composables/useUsers';
 
 const route = useRoute();

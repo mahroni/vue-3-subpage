@@ -13,13 +13,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Component } from 'vue';
-import RoundedTab from '../../../components/common/Tabs/RoundedTab.vue';
-import ServerIcon from '../../../components/icons/ServerIcon.vue';
-import ToggleLeftIcon from '../../../components/icons/ToggleLeftIcon.vue';
-import IntegrationIcon from '../../../components/icons/IntegrationIcon.vue';
-import WelcomeDialog from './widget-builder/WelcomeDialog.vue';
+import { type Component, ref } from 'vue';
+
+import RoundedTab from '@/components/common/Tabs/RoundedTab.vue';
+import IntegrationIcon from '@/components/icons/IntegrationIcon.vue';
+import ServerIcon from '@/components/icons/ServerIcon.vue';
+import ToggleLeftIcon from '@/components/icons/ToggleLeftIcon.vue';
+
 import CallToAction from './widget-builder/CallToAction.vue';
+import WelcomeDialog from './widget-builder/WelcomeDialog.vue';
 
 interface Tab {
   label: string;

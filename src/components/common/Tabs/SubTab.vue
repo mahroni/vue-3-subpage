@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
-import Icon from '../../icons/Icon.vue';
+import { computed } from 'vue';
 import { ref } from 'vue';
+import type { Component } from 'vue';
+
+import { ChevronDownIcon } from '@/components/icons';
 
 interface TabItem {
   id: string;
   label: string;
-  icon?: string;
+  icon?: Component;
   children?: TabItem[];
 }
 
@@ -17,7 +19,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void;
+  (e: 'update:modelValue', value: TabItem): void;
 }>();
 
 const TabItemClass = cva(
@@ -65,17 +67,12 @@ function selectTab(tab: TabItem, child: TabItem | null) {
       :class="TabItemClass({ isActive: modelValue.id === tab.id })"
       @click="selectParentTab(tab)"
     >
-      <Icon :name="tab.icon" v-if="tab.icon" width="16" height="16" class="text-primary-500" />
+      <component :is="tab.icon" v-if="tab.icon" width="16" height="16" class="text-primary-500" />
       {{ tab.label }}
-      <Icon
-        name="arrow-down"
-        v-if="tab.children && tab.children.length > 0"
-        width="16"
-        height="16"
-      />
+      <ChevronDownIcon v-if="tab.children && tab.children.length > 0" width="16" height="16" />
 
       <ul
-        class="absolute top-full left-0 w-auto min-w-full divide-y divide-gray-300 rounded-lg bg-white p-2 text-left shadow-lg"
+        class="absolute top-full left-0 z-10 w-auto min-w-full divide-y divide-gray-300 rounded-lg bg-white p-2 text-left shadow-lg"
         v-if="showChildren?.id === tab.id && tab.children && tab.children.length > 0"
       >
         <li

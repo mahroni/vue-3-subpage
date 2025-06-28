@@ -114,18 +114,23 @@ appConfigStore.setConfig({
 
 ```typescript
 import {
-  apiV1, // API v1 instance
-  apiV2, // API v2 instance
-  apiV3, // API v3 instance
-  apiCall, // Typed helper function
+  // API v3 instance
+  apiCall,
+  apiV1,
+  // API v1 instance
+  apiV2,
+  // API v2 instance
+  apiV3,
+  // Typed helper function
   createAxiosInstance, // Factory function for custom instances
 } from '@/utils/axios';
 ```
 
 ```typescript
 import {
-  useAppConfigStore, // Pinia store for app configuration
+  // Pinia store for app configuration
   type AppConfig, // TypeScript interface for app config
+  useAppConfigStore,
 } from '@/stores/app-config';
 ```
 
@@ -152,7 +157,7 @@ const product = await apiV3.put(`/products/${id}`, productData);
 ### Using Service Functions
 
 ```typescript
-import { userApi, postApi, productApi } from '@/utils/api-examples';
+import { postApi, productApi, userApi } from '@/utils/api-examples';
 
 // User operations (API v1)
 const users = await userApi.getUsers();
@@ -187,9 +192,10 @@ if (result.success) {
 
 ```vue
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { userApi } from '@/utils/api-examples';
+import { onMounted, ref } from 'vue';
+
 import { useAppConfigStore } from '@/stores/app-config';
+import { userApi } from '@/utils/api-examples';
 import type { User } from '@/utils/api-examples';
 
 const users = ref<User[]>([]);

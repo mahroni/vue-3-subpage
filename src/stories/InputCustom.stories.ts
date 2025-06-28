@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import InputCustom from '../components/form/InputCustom.vue'; // Assuming TextInput.vue is in the same directory or adjust the path
+
+import InputCustom from '../components/form/InputCustom.vue';
+// Assuming TextInput.vue is in the same directory or adjust the path
 import Icon from '../components/icons/Icon.vue';
 
 const meta: Meta<typeof InputCustom> = {

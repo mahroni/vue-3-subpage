@@ -31,7 +31,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+
 import { Icon } from '@/components/icons';
 
 // Define component props using defineProps

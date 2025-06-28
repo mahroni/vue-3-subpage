@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
-import Input from '../components/form/Input.vue'; // Adjust the path to your component
+
+import Input from '../components/form/Input.vue';
+
+// Adjust the path to your component
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Form/Input',

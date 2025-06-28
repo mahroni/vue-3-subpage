@@ -1,6 +1,6 @@
 // FormCheckbox.stories.ts or FormCheckbox.stories.js (depending on your preference)
-
 import type { Meta, StoryObj } from '@storybook/vue3';
+
 import Checkbox from '../components/common/Checkbox.vue';
 
 // More on how to set up stories at: https://storybook.js.org/docs/vue/api/doc-block-meta

@@ -1,23 +1,29 @@
 <template>
   <teleport to="body">
     <transition name="drawer-backdrop-fade">
-      <div v-if="isOpen" class="fixed inset-0 bg-[#0A0A0A99] bg-opacity-50 z-[998]" @click="closeDrawer"></div>
+      <div
+        v-if="isOpen"
+        class="bg-opacity-50 fixed inset-0 z-[998] bg-[#0A0A0A99]"
+        @click="closeDrawer"
+      ></div>
     </transition>
 
     <transition name="drawer-slide">
-      <div v-if="isOpen"
-        class="fixed top-0 right-0 w-[456px] max-w-full h-full bg-white shadow-xl flex flex-col z-[999] rounded-l-2xl">
-        <div class="flex items-center justify-between p-4 border-b border-gray-200">
+      <div
+        v-if="isOpen"
+        class="fixed top-0 right-0 z-[999] flex h-full w-[456px] max-w-full flex-col rounded-l-2xl bg-white shadow-xl"
+      >
+        <div class="flex items-center justify-between border-b border-gray-200 p-4">
           <slot name="header">
             <h2 class="text-xl font-semibold text-[#0A0A0A]">Preview Your Qiscus Live Chat</h2>
             <CloseIcon @click="closeDrawer" class="cursor-pointer" />
           </slot>
         </div>
 
-        <div class="flex-grow p-4 overflow-y-auto">
+        <div class="flex-grow overflow-y-auto p-4">
           <slot>
             <p class="text-gray-700">This is the default content inside the drawer.</p>
-            <p class="text-gray-700 mt-2">Provide your custom content using the default slot.</p>
+            <p class="mt-2 text-gray-700">Provide your custom content using the default slot.</p>
           </slot>
         </div>
       </div>
@@ -26,7 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, watch } from 'vue';
+
 import CloseIcon from '../icons/CloseIcon.vue';
 
 interface DrawerProps {
@@ -68,7 +75,6 @@ watch(
   { immediate: true }
 );
 </script>
-
 
 <style scoped>
 /* Transition for Backdrop Fade */

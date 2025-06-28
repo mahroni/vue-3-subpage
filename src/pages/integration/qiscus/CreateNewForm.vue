@@ -58,9 +58,10 @@
 </template>
 
 <script setup lang="ts">
-import Input from '@/components/form/Input.vue';
-import Checkbox from '@/components/common/Checkbox.vue';
 import { ref } from 'vue';
+
+import Checkbox from '@/components/common/Checkbox.vue';
+import Input from '@/components/form/Input.vue';
 
 const modelValue = ref(false);
 const channelName = ref('');

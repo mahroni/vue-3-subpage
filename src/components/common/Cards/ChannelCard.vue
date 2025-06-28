@@ -1,7 +1,8 @@
 <template>
   <div
-    class="card bg-white-100 flex max-w-md cursor-pointer flex-col gap-3 rounded-2xl border border-gray-300 p-6 transition-colors ease-in duration-200"
-    :class="channel.type">
+    class="card bg-white-100 flex max-w-md cursor-pointer flex-col gap-3 rounded-2xl border border-gray-300 p-6 transition-colors duration-200 ease-in"
+    :class="channel.type"
+  >
     <div class="z-10 flex items-center justify-between text-sm font-semibold">
       <div class="flex items-center gap-3">
         <img class="h-10 w-10" :src="channel.icon" loading="lazy" />
@@ -20,13 +21,13 @@ import Badge from '@/components/common/Badge.vue';
 
 defineProps<{
   channel: {
-    type: string,
-    name: string,
-    icon: string,
-    status: string,
-    description: string,
+    type: string;
+    name: string;
+    icon: string;
+    status: string;
+    description: string;
   };
-}>();   
+}>();
 </script>
 <style scoped>
 .card {

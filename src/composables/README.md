@@ -44,7 +44,8 @@ composables/
 
 ```typescript
 // useUser.ts
-import { ref, computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+
 import type { User } from '@/types';
 
 export function useUser() {
@@ -107,7 +108,7 @@ export function useUser() {
 
 ```typescript
 // useCounter.ts
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue';
 
 interface CounterOptions {
   initialValue?: number;
@@ -159,7 +160,7 @@ export function useCounter(options: CounterOptions = {}): CounterReturn {
 
 ```typescript
 // useAsyncData.ts
-import { ref, computed } from 'vue';
+import { computed, ref } from 'vue';
 
 interface AsyncState<T> {
   data: T | null;
@@ -382,7 +383,7 @@ export function useEventBus() {
 
 ```typescript
 // useForm.ts
-import { reactive, computed } from 'vue';
+import { computed, reactive } from 'vue';
 
 export function useForm<T extends Record<string, any>>(initialData: T) {
   const form = reactive({ ...initialData });
@@ -423,7 +424,8 @@ export function useForm<T extends Record<string, any>>(initialData: T) {
 
 ```typescript
 // useCounter.test.ts
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import { useCounter } from './useCounter';
 
 describe('useCounter', () => {

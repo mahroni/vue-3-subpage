@@ -1,4 +1,8 @@
+// .vscode/settings.json
 {
+  "editor.quickSuggestions": {
+    "strings": true
+  },
   "cSpell.words": [
     "autodocs",
     "autoresponder",
@@ -16,25 +20,31 @@
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "typescript.suggest.autoImports": true,
   "tailwindCSS.includeLanguages": {
-    "vue": "html",
-    "vue-html": "html"
+    "javascript": "html",
+    "typescript": "html",
+    "jsx": "html",
+    "tsx": "html",
+    "html": "html"
   },
   "tailwindCSS.experimental.classRegex": [
     ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
     ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
   ],
-  "editor.quickSuggestions": {
-    "strings": true
-  },
-  "files.associations": {
-    "*.vue": "vue"
-  },    
+  "prettier.requireConfig": true,
+  "prettier.configPath": ".prettierrc", // <--- CHANGED THIS LINE
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "json",
+    "markdown"
+  ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-  "source.fixAll.eslint": "always"
-  },
-  "prettier.requireConfig": true,
-  "prettier.configPath": ".prettierrc",
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit"
+  }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8 px-12 py-8 h-screen">
+  <div class="flex h-screen flex-col gap-8 px-12 py-8">
     <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
       <ChevronLeftIcon :size="20" class="text-primary" />
       Integration
@@ -7,7 +7,13 @@
 
     <!-- Header -->
     <div class="flex items-center gap-2">
-      <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" loading="lazy" width="20" height="20" />
+      <img
+        :src="CHANNEL_BADGE_URL.qiscus"
+        alt="Qiscus Logo"
+        loading="lazy"
+        width="20"
+        height="20"
+      />
       <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>
 
@@ -15,24 +21,29 @@
     <QiscusBannerDoc />
 
     <!-- Table section -->
-    <div class="shadow-large flex items-center justify-between rounded-2xl flex-1 overflow-hidden">
+    <div class="shadow-large flex flex-1 items-center justify-between overflow-hidden rounded-2xl">
       <!-- Search Input with Icon -->
-      <TableListChannel :channels="qiscus_channels" @updateChannelStatus="updateChannelStatus" @search="search"
-        @pagination="pagination" class="h-full" />
+      <TableListChannel
+        :channels="qiscus_channels"
+        @updateChannelStatus="updateChannelStatus"
+        @search="search"
+        @pagination="pagination"
+        class="h-full"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue';
+import { computed, onMounted } from 'vue';
+
+import { ChevronLeftIcon } from '@/components/icons';
+import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
+import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useQiscusStore } from '@/stores/integration-qiscus';
 import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
-import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
-import { ChevronLeftIcon } from '@/components/icons';
-
 
 // props
 const appConfigStore = useAppConfigStore();

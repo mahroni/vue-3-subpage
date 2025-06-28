@@ -1,10 +1,11 @@
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
-import type { Router, RouteRecordRaw } from 'vue-router';
-import Home from '@/views/integration/ChannelPage.vue';
+import type { RouteRecordRaw, Router } from 'vue-router';
+
+import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
+import Home from '@/views/integration/ChannelPage.vue';
 import QiscusCreateChannelView from '@/views/integration/QiscusCreateChannelView.vue';
 import QiscusListChannelView from '@/views/integration/QiscusListChannelView.vue';
-import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -94,16 +95,16 @@ export function createRouter(appId?: string | number): Router {
       name: 'auto-responder',
       component: AutoResponder,
     },
-    {
-      path: '/home',
-      name: 'HomeView',
-      component: () => import('../views/HomeView.vue'),
-    },
-    {
-      path: '/post',
-      name: 'PostView',
-      component: () => import('../views/PostView.vue'),
-    },
+    // {
+    //   path: '/home',
+    //   name: 'HomeView',
+    //   component: () => import('../views/HomeView.vue'),
+    // },
+    // {
+    //   path: '/post',
+    //   name: 'PostView',
+    //   component: () => import('../views/PostView.vue'),
+    // },
   ];
 
   // Use the provided appId or fall back to window.vueAppBaseId

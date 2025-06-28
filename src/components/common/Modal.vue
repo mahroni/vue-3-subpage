@@ -1,15 +1,25 @@
 <template>
   <teleport to="body">
     <transition name="drawer-backdrop-fade">
-      <div v-if="isOpen" class="fixed inset-0 bg-[#0A0A0A99] bg-opacity-50 z-[998] flex items-center justify-center"
-        @click="closeDrawer">
-      </div>
+      <div
+        v-if="isOpen"
+        class="bg-opacity-50 fixed inset-0 z-[998] flex items-center justify-center bg-[#0A0A0A99]"
+        @click="closeDrawer"
+      ></div>
     </transition>
 
     <transition name="modal-slide-fade">
-      <div @click.stop v-if="isOpen" id="modal-container"
-        :class="[dynamicWidthClass, 'max-w-full h-auto max-h-[90vh] bg-white shadow-xl flex flex-col z-[999] rounded-2xl overflow-hidden', 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2']">
-        <div class="flex items-center justify-between p-6 border-b border-gray-200">
+      <div
+        @click.stop
+        v-if="isOpen"
+        id="modal-container"
+        :class="[
+          dynamicWidthClass,
+          'z-[999] flex h-auto max-h-[90vh] max-w-full flex-col overflow-hidden rounded-2xl bg-white shadow-xl',
+          'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+        ]"
+      >
+        <div class="flex items-center justify-between border-b border-gray-200 p-6">
           <slot name="header">
             <h2 class="text-xl font-semibold text-[#0A0A0A]">
               <slot name="title">Modal Title</slot>
@@ -18,15 +28,19 @@
           </slot>
         </div>
 
-        <div class="flex-grow px-6 overflow-y-auto ">
-          <slot name="content">
-          </slot>
+        <div class="flex-grow overflow-y-auto px-6">
+          <slot name="content"> </slot>
         </div>
         <div
-          class="flex gap-3.5 items-center justify-center p-4 border-t border-gray-200 shadow-[0px_-4px_8px_0px_#00000014]">
+          class="flex items-center justify-center gap-3.5 border-t border-gray-200 p-4 shadow-[0px_-4px_8px_0px_#00000014]"
+        >
           <slot name="footer">
-            <button @click="closeDrawer" class="px-4 py-2 rounded-md bg-gray-200 text-gray-800">Cancel</button>
-            <button @click="closeDrawer" class="px-4 py-2 rounded-md bg-blue-500 text-white">Save</button>
+            <button @click="closeDrawer" class="rounded-md bg-gray-200 px-4 py-2 text-gray-800">
+              Cancel
+            </button>
+            <button @click="closeDrawer" class="rounded-md bg-blue-500 px-4 py-2 text-white">
+              Save
+            </button>
           </slot>
         </div>
       </div>
@@ -35,7 +49,8 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onMounted, onUnmounted, computed } from 'vue';
+import { computed, onMounted, onUnmounted, watch } from 'vue';
+
 import CloseIcon from '../icons/CloseIcon.vue';
 
 interface ModalProps {
@@ -119,7 +134,9 @@ const dynamicWidthClass = computed(() => {
 }
 
 .modal-slide-fade-enter-active {
-  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+  transition:
+    opacity 0.3s ease-out,
+    transform 0.3s ease-out;
 }
 
 .modal-slide-fade-leave-to {
@@ -128,6 +145,8 @@ const dynamicWidthClass = computed(() => {
 }
 
 .modal-slide-fade-leave-active {
-  transition: opacity 0.25s ease-in, transform 0.25s ease-in;
+  transition:
+    opacity 0.25s ease-in,
+    transform 0.25s ease-in;
 }
 </style>

@@ -104,8 +104,8 @@ assets/
 
 <script setup lang="ts">
 // Import assets for dynamic usage
-import logoUrl from '@/assets/images/logo/qiscus-logo.svg';
 import defaultAvatar from '@/assets/images/avatars/default-avatar.png';
+import logoUrl from '@/assets/images/logo/qiscus-logo.svg';
 
 const assets = {
   logo: logoUrl,
@@ -491,7 +491,8 @@ export const preloadAssets = async (assets: string[]): Promise<void> => {
 
 ```typescript
 // assets/__tests__/assets.test.ts
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+
 import { assetRegistry, getAsset, getAssetsByCategory } from '../registry';
 
 describe('Asset Registry', () => {
@@ -527,8 +528,8 @@ describe('Asset Registry', () => {
 
 ```typescript
 // vite.config.ts
-import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite';
 
 export default defineConfig({
   plugins: [vue()],

@@ -1,15 +1,14 @@
-import { createApp } from 'vue';
 import { createPinia } from 'pinia';
-
-import App from './App.vue';
-import { createRouter } from './router';
-import { useAppConfigStore } from './stores/app-config';
-
 import 'sweetalert2/dist/sweetalert2.min.css';
+import { createApp } from 'vue';
+
 import '@/assets/css/sweet-alert-custom.css';
 
-import './assets/css/tailwind.css';
+import App from './App.vue';
 import './assets/css/style.css';
+import './assets/css/tailwind.css';
+import { createRouter } from './router';
+import { useAppConfigStore } from './stores/app-config';
 
 export interface QiscusAppConfig {
   userToken: string;
@@ -17,10 +16,7 @@ export interface QiscusAppConfig {
   appVersion: string;
 }
 
-export function createOmnichannelApp(
-  container: string | Element,
-  config: QiscusAppConfig
-) {
+export function createOmnichannelApp(container: string | Element, config: QiscusAppConfig) {
   const app = createApp(App);
   const pinia = createPinia();
 

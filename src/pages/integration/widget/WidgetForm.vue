@@ -3,13 +3,16 @@
     <!-- Banner documentation -->
     <QiscusBannerDoc />
     <div
-      class="border-stroke-regular bg-surface-secondary flex flex-col items-start justify-center gap-8 rounded-xl border p-6">
+      class="border-stroke-regular bg-surface-secondary flex flex-col items-start justify-center gap-8 rounded-xl border p-6"
+    >
       <p class="text-text-placeholder text-xs font-normal">
         Build your Qiscus Live Chat based on your need using our builder.
       </p>
 
       <div class="flex w-140 items-center gap-5">
-        <div class="border-primary flex h-20 w-20 items-center justify-center rounded-lg border border-dashed">
+        <div
+          class="border-primary flex h-20 w-20 items-center justify-center rounded-lg border border-dashed"
+        >
           <img :src="channelBadge ?? ''" width="68" height="68" alt="Channel Badge " />
         </div>
         <div class="flex flex-1 flex-col items-start gap-1">
@@ -22,8 +25,14 @@
       </div>
 
       <div class="w-[552px]">
-        <Input v-model="channelName" :disabled="false" :error="false" errorMessage="This field has an error"
-          id="default-input" placeholder="Enter your channel name here" />
+        <Input
+          v-model="channelName"
+          :disabled="false"
+          :error="false"
+          errorMessage="This field has an error"
+          id="default-input"
+          placeholder="Enter your channel name here"
+        />
       </div>
     </div>
     <div class="flex justify-end gap-4">
@@ -33,12 +42,13 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { useQiscusStore } from '@/stores/integration-qiscus';
+
+import Button from '@/components/common/Button.vue';
 import Input from '@/components/form/Input.vue';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
-import Button from '@/components/common/Button.vue';
+import { useQiscusStore } from '@/stores/integration-qiscus';
 
 const channelName = ref<string>('');
 

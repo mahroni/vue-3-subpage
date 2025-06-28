@@ -1,6 +1,9 @@
 // src/composables/posts/useFetchPost.ts
+import { type Ref, ref, watch } from 'vue';
+
 import { filterFilledObj } from '@/utils/helper/object';
-import { ref, watch, type Ref } from 'vue'; // Import watch
+
+// Import watch
 
 interface IParams {
   q?: string;

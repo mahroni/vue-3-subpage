@@ -94,17 +94,19 @@ views/
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
+
+import DownloadIcon from '@/components/icons/DownloadIcon.vue';
+import RefreshIcon from '@/components/icons/RefreshIcon.vue';
+import ErrorMessage from '@/components/ui/ErrorMessage.vue';
+import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
 import { useDashboard } from '@/composables/useDashboard';
 import { useNotifications } from '@/composables/useNotifications';
-import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
-import ErrorMessage from '@/components/ui/ErrorMessage.vue';
-import StatsWidget from './components/DashboardWidgets/StatsWidget.vue';
+
 import ActivityWidget from './components/DashboardWidgets/ActivityWidget.vue';
 import ChartWidget from './components/DashboardWidgets/ChartWidget.vue';
 import QuickActionCard from './components/DashboardWidgets/QuickActionCard.vue';
-import RefreshIcon from '@/components/icons/RefreshIcon.vue';
-import DownloadIcon from '@/components/icons/DownloadIcon.vue';
+import StatsWidget from './components/DashboardWidgets/StatsWidget.vue';
 
 // Composables
 const {
@@ -309,15 +311,17 @@ onUnmounted(() => {
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+
 import { useChat } from '@/composables/useChat';
 import { useWebSocket } from '@/composables/useWebSocket';
-import ChatSidebar from './components/ChatComponents/ChatSidebar.vue';
+
 import ChatHeader from './components/ChatComponents/ChatHeader.vue';
-import ChatMessages from './components/ChatComponents/ChatMessages.vue';
 import ChatInput from './components/ChatComponents/ChatInput.vue';
+import ChatMessages from './components/ChatComponents/ChatMessages.vue';
 import ChatSettings from './components/ChatComponents/ChatSettings.vue';
+import ChatSidebar from './components/ChatComponents/ChatSidebar.vue';
 import CreateRoomModal from './components/ChatComponents/CreateRoomModal.vue';
 
 // Route and Router

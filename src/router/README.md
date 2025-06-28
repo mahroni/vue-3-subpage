@@ -47,13 +47,14 @@ router/
 // router/index.ts
 import { createRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw } from 'vue-router';
-import { authRoutes } from './routes/auth';
-import { dashboardRoutes } from './routes/dashboard';
-import { chatRoutes } from './routes/chat';
-import { adminRoutes } from './routes/admin';
-import { errorRoutes } from './routes/error';
+
 import { authGuard } from './guards/auth';
 import { permissionGuard } from './guards/permissions';
+import { adminRoutes } from './routes/admin';
+import { authRoutes } from './routes/auth';
+import { chatRoutes } from './routes/chat';
+import { dashboardRoutes } from './routes/dashboard';
+import { errorRoutes } from './routes/error';
 
 // Base routes
 const baseRoutes: RouteRecordRaw[] = [
@@ -344,7 +345,11 @@ export const errorRoutes: RouteRecordRaw[] = [
 ```typescript
 // router/guards/auth.ts
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
+// router/guards/permissions.ts
+import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
+
 import { useAuth } from '@/composables/useAuth';
+import { useUser } from '@/composables/useUser';
 
 export const authGuard = async (
   to: RouteLocationNormalized,
@@ -383,10 +388,6 @@ export const authGuard = async (
 
   next();
 };
-
-// router/guards/permissions.ts
-import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
-import { useUser } from '@/composables/useUser';
 
 export const permissionGuard = async (
   to: RouteLocationNormalized,
@@ -428,7 +429,10 @@ export { permissionGuard } from './permissions';
 
 ```typescript
 // router/middleware/auth.ts
+// router/middleware/loading.ts
+import { ref } from 'vue';
 import type { RouteLocationNormalized } from 'vue-router';
+
 import { useAuth } from '@/composables/useAuth';
 
 export const authMiddleware = async (to: RouteLocationNormalized) => {
@@ -438,9 +442,6 @@ export const authMiddleware = async (to: RouteLocationNormalized) => {
     throw new Error('Authentication required');
   }
 };
-
-// router/middleware/loading.ts
-import { ref } from 'vue';
 
 const isLoading = ref(false);
 
@@ -694,8 +695,9 @@ export const ROUTE_META = {
 
 ```typescript
 // router/__tests__/routes.test.ts
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { createRouter, createWebHistory } from 'vue-router';
+
 import { routes } from '../routes';
 
 const router = createRouter({

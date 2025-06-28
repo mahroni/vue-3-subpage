@@ -3,11 +3,11 @@ import { computed } from 'vue';
 
 // Import all icon components from barrel export
 import {
+  APIIcon,
   // Individual Icon components
   AdditionalInformation,
   AgentManagementIcon,
   AnalyticsIcon,
-  APIIcon,
   AppCenterIcon,
   AttentionIcon,
   BackIcon,
@@ -71,8 +71,8 @@ import {
   PresentationIcon,
   PuzzleIcon,
   QCRMIcon,
-  QiscusIcon,
   QTicketingIcon,
+  QiscusIcon,
   RefreshIcon,
   ReplyIcon,
   RobolabsIcon,
@@ -80,6 +80,8 @@ import {
   SendIcon,
   SettingIcon,
   ShopIcon,
+  SignIcon,
+  // Channel Icons
   SquareIcon,
   SubmitTicketIcon,
   SubscriptionIcon,
@@ -94,8 +96,6 @@ import {
   WhatsappBusinessIcon,
   WindowIcon,
   WorkFlowIcon,
-  SignIcon,
-  // Channel Icons
 } from './index';
 
 interface IconProps {
@@ -170,7 +170,7 @@ const iconRegistry = {
   back: BackIcon,
   next: NextIcon,
   shop: ShopIcon,
-  'chat': ChatIcon,
+  chat: ChatIcon,
   minus: MinusIcon,
   check: CheckIcon,
   'additional-information': AdditionalInformation,

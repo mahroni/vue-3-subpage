@@ -1,5 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+
 import { useAppConfigStore } from '../stores/app-config';
 
 // API Base URLs from environment variables

@@ -2,16 +2,23 @@
   <div :class="containerClasses()">
     <label v-if="props.label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
-      <input :id="id" type="text" :value="modelValue" @input="onInput" :placeholder="placeholder"
-        :class="computedInputClasses" :disabled="disabled" />
+      <input
+        :id="id"
+        type="text"
+        :value="modelValue"
+        @input="onInput"
+        :placeholder="placeholder"
+        :class="computedInputClasses"
+        :disabled="disabled"
+      />
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
+import { computed } from 'vue';
 
 interface Props {
   modelValue: string | number;
@@ -29,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   error: false, // Default to no error
   errorMessage: 'This field has an error', // Default error message
-  modelValue: ''
+  modelValue: '',
 });
 
 const emit = defineEmits(['update:modelValue']);

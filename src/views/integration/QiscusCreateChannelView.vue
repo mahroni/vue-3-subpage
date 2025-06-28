@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+
 import Icon from '@/components/icons/Icon.vue';
 import CreateNewForm from '@/pages/integration/qiscus/CreateNewForm.vue';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';

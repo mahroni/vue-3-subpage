@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+
 import { whatsappApi } from '@/api/channels';
+
 import type { IWhatsappChannel } from '../types/channels';
 
 export const useWhatsappStore = defineStore('whatsapp', () => {

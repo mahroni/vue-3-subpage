@@ -8,7 +8,13 @@
         </template>
       </InputCustom>
 
-      <Button to="/whatsapp/create" variant="primary" class="flex items-center gap-2" size="small" no-animation>
+      <Button
+        to="/whatsapp/create"
+        variant="primary"
+        class="flex items-center gap-2"
+        size="small"
+        no-animation
+      >
         <Icon name="plus" :size="16" />
         New Integration
       </Button>
@@ -27,8 +33,12 @@
 
         <!-- Table Body -->
         <tbody class="divide-y divide-gray-100">
-          <tr v-for="channel in props.channels" :key="channel.id" @click.prevent="getDetailChannel(channel)"
-            class="hover:bg-gray-50">
+          <tr
+            v-for="channel in props.channels"
+            :key="channel.id"
+            @click.prevent="getDetailChannel(channel)"
+            class="hover:bg-gray-50"
+          >
             <!-- Channel Name -->
             <td class="border-stroke-regular cursor-pointer border-b px-2 py-4">
               <div class="flex items-center gap-2">
@@ -39,8 +49,13 @@
 
             <!-- Action (Switch) -->
             <td class="border-stroke-regular border-b px-6 py-4 text-right">
-              <Switch v-model="channel.isActive" size="small" variant="success" @click.stop="() => ''"
-                @update:model-value="updateChannelStatus(channel.id, $event)" />
+              <Switch
+                v-model="channel.isActive"
+                size="small"
+                variant="success"
+                @click.stop="() => ''"
+                @update:model-value="updateChannelStatus(channel.id, $event)"
+              />
             </td>
           </tr>
         </tbody>
@@ -55,28 +70,43 @@
       </div>
 
       <div class="flex items-center gap-4">
-        <ButtonIcon @click="pagination('first')" class="text-primary cursor-pointer"
-          :class="{ 'text-text-disable cursor-not-allowed': channelsStore.meta.page === 1 }">
+        <ButtonIcon
+          @click="pagination('first')"
+          class="text-primary cursor-pointer"
+          :class="{ 'text-text-disable cursor-not-allowed': channelsStore.meta.page === 1 }"
+        >
           <DoubleChevronLeftIcon :size="24" />
         </ButtonIcon>
-        <ButtonIcon @click="pagination('prev')" class="text-primary cursor-pointer"
-          :class="{ 'text-text-disable cursor-not-allowed': channelsStore.meta.page === 1 }">
+        <ButtonIcon
+          @click="pagination('prev')"
+          class="text-primary cursor-pointer"
+          :class="{ 'text-text-disable cursor-not-allowed': channelsStore.meta.page === 1 }"
+        >
           <ChevronLeftIcon :size="24" />
         </ButtonIcon>
         <div
-          class="flex h-10 w-12 items-center justify-center rounded-lg text-base font-bold shadow-[0px_7px_17px_0px_#33333312]">
+          class="flex h-10 w-12 items-center justify-center rounded-lg text-base font-bold shadow-[0px_7px_17px_0px_#33333312]"
+        >
           {{ channelsStore.meta.page }}
         </div>
-        <ButtonIcon @click="pagination('next')" class="text-primary cursor-pointer" :class="{
-          'text-text-disable cursor-not-allowed':
-            channelsStore.meta.page === channelsStore.meta.total_page,
-        }">
+        <ButtonIcon
+          @click="pagination('next')"
+          class="text-primary cursor-pointer"
+          :class="{
+            'text-text-disable cursor-not-allowed':
+              channelsStore.meta.page === channelsStore.meta.total_page,
+          }"
+        >
           <ChevronRightIcon :size="24" />
         </ButtonIcon>
-        <ButtonIcon @click="pagination('last')" class="text-primary cursor-pointer" :class="{
-          'text-text-disable cursor-not-allowed':
-            channelsStore.meta.page === channelsStore.meta.total_page,
-        }">
+        <ButtonIcon
+          @click="pagination('last')"
+          class="text-primary cursor-pointer"
+          :class="{
+            'text-text-disable cursor-not-allowed':
+              channelsStore.meta.page === channelsStore.meta.total_page,
+          }"
+        >
           <DoubleChevronRightIcon :size="24" />
         </ButtonIcon>
       </div>
@@ -90,20 +120,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType, watch, computed } from 'vue';
+import { type PropType, computed, ref, watch } from 'vue';
 import { type Ref } from 'vue';
-import { useWhatsappStore } from '@/stores/integration-whatsapp';
-import Icon from '@/components/icons/Icon.vue';
+
+import Button from '@/components/common/Button.vue';
+import ButtonIcon from '@/components/common/ButtonIcon.vue';
+import Switch from '@/components/common/Switch.vue';
+import InputCustom from '@/components/form/InputCustom.vue';
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
   DoubleChevronLeftIcon,
   DoubleChevronRightIcon,
 } from '@/components/icons';
-import Switch from '@/components/common/Switch.vue';
-import Button from '@/components/common/Button.vue';
-import ButtonIcon from '@/components/common/ButtonIcon.vue';
-import InputCustom from '../../../components/form/InputCustom.vue';
+import Icon from '@/components/icons/Icon.vue';
+import { useWhatsappStore } from '@/stores/integration-whatsapp';
 
 // interface
 interface IChannel {
