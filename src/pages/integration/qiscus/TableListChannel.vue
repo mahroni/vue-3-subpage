@@ -87,7 +87,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType, watch, computed, type Ref } from 'vue';
+import { ref, type PropType, watch, computed, type Ref, defineAsyncComponent } from 'vue';
 import { useRouter } from 'vue-router';
 import { useQiscusStore } from '@/stores/integration-qiscus';
 import {
@@ -95,7 +95,7 @@ import {
   SearchIcon,
   PlusIcon,
 } from '@/components/icons';
-import { Button, ButtonIcon, Animate, Image } from '@/components/common/common';
+import { Button, ButtonIcon, Image } from '@/components/common/common';
 
 import loading from '@/assets/lottie/loading.json';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
@@ -103,6 +103,8 @@ import Pagination from '@/components/ui/Pagination.vue';
 import EmptyState from '@/components/ui/EmptyState.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
 
+// async component
+const Animate = defineAsyncComponent(() => import('@/components/common/Animate.vue'))
 
 // interface
 interface IChannel {
