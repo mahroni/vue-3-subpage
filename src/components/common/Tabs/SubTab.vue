@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { cva } from 'class-variance-authority';
-import Icon from '../../icons/Icon.vue';
 import { ref } from 'vue';
+import type { Component } from 'vue';
+import { ChevronDownIcon } from '@/components/icons';
 
 interface TabItem {
   id: string;
   label: string;
-  icon?: string;
+  icon?: Component;
   children?: TabItem[];
 }
 
@@ -17,7 +18,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string): void;
+  (e: 'update:modelValue', value: TabItem): void;
 }>();
 
 const TabItemClass = cva(
@@ -59,32 +60,18 @@ function selectTab(tab: TabItem, child: TabItem | null) {
 
 <template>
   <ul class="flex w-full gap-0.5 border-b border-gray-300 bg-transparent text-sm select-none">
-    <li
-      v-for="tab in currentTabs"
-      :key="tab.id"
-      :class="TabItemClass({ isActive: modelValue.id === tab.id })"
-      @click="selectParentTab(tab)"
-    >
-      <Icon :name="tab.icon" v-if="tab.icon" width="16" height="16" class="text-primary-500" />
+    <li v-for="tab in currentTabs" :key="tab.id" :class="TabItemClass({ isActive: modelValue.id === tab.id })"
+      @click="selectParentTab(tab)">
+      <component :is="tab.icon" v-if="tab.icon" width="16" height="16" class="text-primary-500" />
       {{ tab.label }}
-      <Icon
-        name="arrow-down"
-        v-if="tab.children && tab.children.length > 0"
-        width="16"
-        height="16"
-      />
+      <ChevronDownIcon v-if="tab.children && tab.children.length > 0" width="16" height="16" />
 
       <ul
-        class="absolute top-full left-0 w-auto min-w-full divide-y divide-gray-300 rounded-lg bg-white p-2 text-left shadow-lg"
-        v-if="showChildren?.id === tab.id && tab.children && tab.children.length > 0"
-      >
-        <li
-          v-for="child in tab.children"
-          :key="child.id"
+        class="absolute top-full left-0 w-auto min-w-full divide-y divide-gray-300 rounded-lg bg-white p-2 text-left shadow-lg z-10"
+        v-if="showChildren?.id === tab.id && tab.children && tab.children.length > 0">
+        <li v-for="child in tab.children" :key="child.id"
           class="max-w-[300px] cursor-pointer overflow-hidden p-2 text-sm text-ellipsis whitespace-nowrap hover:font-medium"
-          :title="child.label"
-          @click.stop="selectTab(tab, child)"
-        >
+          :title="child.label" @click.stop="selectTab(tab, child)">
           {{ child.label }}
         </li>
       </ul>

@@ -26,6 +26,8 @@ import ChannelListLoading from '@/components/ui/widget-preview/ChannelListLoadin
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
+import { BroadcastIcon } from '@/components/icons';
+import CloseIcon from '@/components/icons/CloseIcon.vue';
 
 const handleClick = () => {
   console.log('Button clicked');
@@ -75,39 +77,39 @@ const tabs = [
   {
     id: 'tab-1',
     label: 'Tab 1',
-    icon: 'broadcast',
+    icon: BroadcastIcon,
     children: [
       {
         id: 'tab-1-1',
         label: 'Tab 1 Apa Yaa',
-        icon: 'close',
+        icon: CloseIcon,
       },
       {
         id: 'tab-1-2',
         label: 'Tab 2',
-        icon: 'close',
+        icon: CloseIcon,
       },
     ],
   },
   {
     id: 'tab-2',
     label: 'Tab 2',
-    icon: 'broadcast',
+    icon: BroadcastIcon,
   },
   {
     id: 'tab-3',
     label: 'Tab 3',
-    icon: 'broadcast',
+    icon: BroadcastIcon,
     children: [
       {
         id: 'tab-3-1',
         label: 'Tab 1',
-        icon: 'close',
+        icon: CloseIcon,
       },
       {
         id: 'tab-3-2',
         label: 'Tab 2',
-        icon: 'close',
+        icon: CloseIcon,
       },
     ],
   },
