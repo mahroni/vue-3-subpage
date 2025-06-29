@@ -29,28 +29,39 @@
                     <RadioInput v-model="loginFormReact.customerIdentifier" label="Phone Number"
                         :options="customerIdentifierOptions" />
                     <Banner intent="positive" type="solid">
-                        If you use phone number to login, we won’t be able to send chat history and
+                        If you use phone number to login, we won't be able to send chat history and
                         notes to the
-                        customer’s email after the room is resolved.
+                        customer's email after the room is resolved.
                     </Banner>
                 </template>
             </WidgetFormLayout>
 
-            <div
-                class="flex p-6 justify-between items-center bg-gray-200 rounded-2xl border border-gray-300 w-full">
-                <span class="text-text-title text-base font-semibold">Additional Field</span>
-                <Button intent="flat" size="xsmall" type="button" @click="addAdditionalField">
-                    <template #prefixIcon>
-                        <PlusIcon class="w-4 h-4" />
-                    </template>
-                    <span>Add More Field</span>
-                </Button>
+            <div class="flex flex-col gap-4 bg-gray-200 rounded-2xl border border-gray-300 p-6">
+                <div class="flex justify-between items-center  w-full">
+                    <span class="text-text-title text-base font-semibold">Additional Field</span>
+                    <Button intent="flat" size="xsmall" type="button" @click="addAdditionalField">
+                        <template #prefixIcon>
+                            <PlusIcon class="w-4 h-4" />
+                        </template>
+                        <span>Add More Field</span>
+                    </Button>
+                </div>
+                <Divider v-if="additionalFieldsArray.length > 0" />
+                <ul class="flex flex-col gap-6" v-if="additionalFieldsArray.length > 0">
+                    <li v-for="(field, index) in additionalFieldsArray" :key="field.title"
+                        class="flex justify-between items-center">
+                        <span class="text-text-title text-sm font-medium">{{ field.title }}</span>
+                        <DropdownMenu :options="getFieldOptions(index)"
+                            @select="handleFieldMenuSelect" />
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 
     <!-- Add Additional Field Modal -->
-    <Modal :isOpen="isOpenModal" @close="isOpenModal = false" confirmText="Add Field">
+    <Modal :isOpen="isOpenModal" @close="isOpenModal = false" confirmText="Add Field"
+        @confirm="addAdditionalFieldConfirm">
         <template #title>
             Add Additional Field
         </template>
@@ -79,6 +90,7 @@
 import Banner from '@/components/common/Banner.vue';
 import Button from '@/components/common/Button.vue';
 import { Checkbox } from '@/components/common/common';
+import DropdownMenu from '@/components/common/DropdownMenu.vue';
 import Modal from '@/components/common/Modal.vue';
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
@@ -86,6 +98,7 @@ import RadioInput from '@/components/form/RadioInput.vue';
 import Select from '@/components/form/Select.vue';
 import TextArea from '@/components/form/TextArea.vue';
 import { PlusIcon } from '@/components/icons';
+import Divider from '@/components/ui/Divider.vue';
 import { reactive, ref } from 'vue';
 import DropdownItemInput from '../form/DropdownItemInput.vue';
 import IconSelectInput from '../form/IconSelectInput.vue';
@@ -100,6 +113,8 @@ interface AdditionalField {
     dropdownItems: string[];
     isRequired: boolean;
 }
+
+const additionalFieldsArray = ref<AdditionalField[]>([]);
 
 const loginFormReact = reactive({
     firstDescription: '',
@@ -118,7 +133,6 @@ const additionalField = reactive<AdditionalField>({
     dropdownItems: [],
     isRequired: false,
 });
-
 
 const isOpenModal = ref(false);
 
@@ -173,5 +187,60 @@ const icons = [
 
 const addAdditionalField = () => {
     isOpenModal.value = true;
+}
+
+const resetAdditionalField = () => {
+    additionalField.type = '';
+    additionalField.title = '';
+    additionalField.placeholder = '';
+    additionalField.required = false;
+    additionalField.iconField = '';
+    additionalField.dropdownItems = [];
+    additionalField.isRequired = false;
+}
+
+const addAdditionalFieldConfirm = () => {
+    additionalFieldsArray.value.push({ ...additionalField });
+    resetAdditionalField();
+    isOpenModal.value = false;
+}
+
+const getFieldOptions = (index: number) => {
+    const field = additionalFieldsArray.value[index];
+    if (!field) return [];
+
+    return [
+        {
+            label: 'Edit Field',
+            value: 'edit',
+            action: () => editField(field),
+        },
+        {
+            label: 'Delete Field',
+            value: 'delete',
+            class: 'text-red-600',
+            action: () => deleteField(index),
+        },
+    ];
+};
+
+const editField = (field: AdditionalField) => {
+    isOpenModal.value = true;
+    additionalField.type = field.type;
+    additionalField.title = field.title;
+    additionalField.placeholder = field.placeholder;
+    additionalField.required = field.required;
+    additionalField.iconField = field.iconField;
+    additionalField.dropdownItems = [...field.dropdownItems];
+    additionalField.isRequired = field.isRequired;
+}
+
+const deleteField = (index: number) => {
+    additionalFieldsArray.value.splice(index, 1);
+}
+
+const handleFieldMenuSelect = (option: any) => {
+    // Actions are handled in the option.action function
+    console.log('Selected:', option);
 }
 </script>

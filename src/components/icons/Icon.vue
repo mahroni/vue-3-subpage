@@ -53,6 +53,7 @@ import {
   InboxIcon,
   InformationIcon,
   IntegrationIcon,
+  KebabIcon,
   LineChartIcon,
   LoginIcon,
   LogoutIcon,
@@ -221,6 +222,7 @@ const iconRegistry = {
   'briefcase': BriefcaseIcon,
   'globe': GlobeIcon,
   'phone': PhoneIcon,
+  'kebab': KebabIcon,
 };
 
 const iconComponent = computed(() => {

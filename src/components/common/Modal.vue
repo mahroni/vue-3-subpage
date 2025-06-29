@@ -30,7 +30,7 @@
             <button @click="closeDrawer" class="rounded-md bg-gray-200 px-4 py-2 text-gray-800">
               Cancel
             </button>
-            <button @click="closeDrawer" class="rounded-md bg-primary px-4 py-2 text-white">
+            <button @click="confirmAction" class="rounded-md bg-primary px-4 py-2 text-white">
               {{ props.confirmText || 'Save' }}
             </button>
           </slot>
@@ -65,7 +65,12 @@ const props = withDefaults(defineProps<ModalProps>(), {
 
 const emit = defineEmits<{
   (e: 'close'): void;
+  (e: 'confirm'): void;
 }>();
+
+const confirmAction = (): void => {
+  emit('confirm');
+};
 
 const closeDrawer = (): void => {
   emit('close');

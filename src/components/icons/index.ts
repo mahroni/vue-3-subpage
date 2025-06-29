@@ -51,6 +51,7 @@ export { default as IdentificationIcon } from './IdentificationIcon.vue';
 export { default as InboxIcon } from './InboxIcon.vue';
 export { default as InformationIcon } from './InformationIcon.vue';
 export { default as IntegrationIcon } from './IntegrationIcon.vue';
+export { default as KebabIcon } from './KebabIcon.vue';
 export { default as LineChartIcon } from './LineChartIcon.vue';
 export { default as LoginIcon } from './LoginIcon.vue';
 export { default as LogoutIcon } from './LogoutIcon.vue';
@@ -105,3 +106,4 @@ export { default as WorkFlowIcon } from './WorkFlowIcon.vue';
 
 // Channel Icons (from subdirectory)
 export { default as WidgetIcon } from './channel-icons/WidgetIcon.vue';
+
