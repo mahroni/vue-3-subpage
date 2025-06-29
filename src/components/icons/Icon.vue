@@ -192,16 +192,6 @@ const iconRegistry = {
   qiscus: QiscusIcon,
   sign: SignIcon,
 
-  // Channel Icons
-  widget: WidgetIcon,
-  whatsapp: WhatsAppIcon,
-  facebook: FacebookIcon,
-  line: LineIcon,
-  telegram: TelegramIcon,
-  instagram: InstagramIcon,
-  tiktok: TiktokIcon,
-  'custom-channel': CustomChannelIcon,
-  bot: BotIcon,
 } as const;
 
 // Extract icon names as a union type for TypeScript autocomplete

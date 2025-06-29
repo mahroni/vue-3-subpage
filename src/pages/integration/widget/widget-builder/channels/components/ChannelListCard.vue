@@ -2,11 +2,13 @@
 import { ref } from 'vue';
 
 import Button from '@/components/common/Button.vue';
+import Switch from '@/components/common/Switch.vue';
+import { ChatIcon } from '@/components/icons';
 import Icon from '@/components/icons/Icon.vue';
 import Divider from '@/components/ui/Divider.vue';
-import Switch from '@/components/common/Switch.vue';
 
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
+import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import ModalAddChannel from './ModalAddChannel.vue';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
@@ -45,7 +47,15 @@ const isModalOpen = ref(false);
           <div class="flex w-full items-center gap-2">
             <!-- Icon & Name -->
             <div class="flex flex-1 items-center gap-3">
-              <Icon :name="channel.icon" :size="24" class="text-primary" />
+              <img
+              :src="CHANNEL_BADGE_URL[channel.icon as keyof typeof CHANNEL_BADGE_URL]"
+              alt=""
+              class="h-6 w-6"
+              width="24"
+              height="24"
+              v-if="channel.icon"
+            />
+            <ChatIcon :size="24" v-else />
               <h4 class="text-text-title text-sm font-medium">{{ channel.name }}</h4>
             </div>
 

@@ -1,10 +1,9 @@
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
-import type { IconName } from '@/components/icons/Icon.vue';
 
 interface ChannelItem {
   id: number;
-  icon: IconName;
+  icon: string;
   name: string;
   enabled: boolean;
   link: string;
@@ -50,7 +49,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
       const newId = Math.max(...channelList.value.map((item) => item.id), 0) + 1;
       const qiscusChannel = {
         id: newId,
-        icon: 'qiscus' as IconName,
+        icon: 'qiscus',
         name: previewLiveChatName.value || 'Live Chat',
         enabled: true,
         link: '',
@@ -70,7 +69,6 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   // Watch previewLiveChatName for update qiscus live chat channel name
   watch(previewLiveChatName, (newName) => {
     const qiscusChannel = channelList.value.find((channel) => channel.icon === 'qiscus');
-    console.log('qiscusChannel', qiscusChannel);
     if (qiscusChannel) {
       qiscusChannel.name = newName || 'Live Chat';
     }
