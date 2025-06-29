@@ -41,6 +41,13 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     channelList.value.push(newChannel);
   };
 
+  const removeChannel = (channelId: number) => {
+    const index = channelList.value.findIndex((channel) => channel.id === channelId);
+    if (index !== -1) {
+      channelList.value.splice(index, 1);
+    }
+  };
+
   const addQiscusLiveChatChannel = () => {
     // check if qiscus live chat channel already exists
     const existingChannel = channelList.value.find((channel) => channel.icon === 'qiscus');
@@ -102,6 +109,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
 
     // Actions
     addChannel,
+    removeChannel,
     addQiscusLiveChatChannel,
     removeQiscusLiveChatChannel,
   };
