@@ -1,6 +1,6 @@
 <template>
-  <div class="flex w-full items-start gap-8 self-stretch p-4">
-    <div class="flex flex-col gap-8">
+  <div class="flex w-full items-start gap-8 self-stretch p-4 justify-between">
+    <div class="flex flex-col gap-8 w-full max-w-[50%]">
       <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
           <ImageInput label="Brand Icon" id="welcome-dialog-image"
@@ -16,7 +16,7 @@
           </ImageInput>
           <TextArea v-model="welcomeDialogReact.firstDescription" label="First Description" />
           <TextArea v-model="welcomeDialogReact.secondDescription" label="Second Description" />
-          <ImageInput label="Icon" id="welcome-dialog-icon">
+          <ImageInput v-model="welcomeDialogActions.iconUrl" label="Icon" id="welcome-dialog-icon">
             <template #tips>
               <div class="text-[#A0A0A0] text-sm font-normal">
                 We recommend an image of at least 360x360 pixels. You can upload images in JPG,
@@ -25,7 +25,7 @@
               </div>
             </template>
           </ImageInput>
-          <Input v-model="welcomeDialogReact.description" label="Description" />
+          <Input v-model="welcomeDialogActions.label" label="Description" />
           <InputCustom v-model="welcomeDialogReact.appearDelay" label="Appear Delay">
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
@@ -34,7 +34,6 @@
           <Checkbox v-model="welcomeDialogReact.isMakeAutoExpand" label="Make Auto Expand" />
         </template>
       </WidgetFormLayout>
-
       <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
         <template #additional-info>
           <Banner intent="warning" type="solid">
@@ -64,6 +63,20 @@
         </template>
       </WidgetFormLayout>
     </div>
+
+    <!-- PREVIEW -->
+    <div v-if="welcomeDialogReact.isWelcomeDialog" class="flex p-6">
+      <WelcomingPage :title="welcomeDialogReact.firstDescription" :subtitle="welcomeDialogReact.secondDescription"
+        :imageUrl="welcomeDialogReact.brandIcon" :actions="welcomeDialogReact.actions" />
+    </div>
+
+    <div v-else-if="welcomeDialogReact.isAttentionGrabber" class="flex p-6">
+      <AttentionGrabber :imageUrl="welcomeDialogReact.isAttentionGrabberImage ? welcomeDialogReact.attentionGrabberImage : ''" :title="welcomeDialogReact.isAttentionGrabberText ? welcomeDialogReact.attentionGrabberTextDescription : ''" />
+    </div>
+
+    <div v-else class="flex p-6">
+      <WelcomingPageLoading/>
+    </div>
   </div>
 </template>
 
@@ -79,24 +92,40 @@ import InputCustom from '@/components/form/InputCustom.vue';
 import TextArea from '@/components/form/TextArea.vue';
 import { WarningIcon } from '@/components/icons';
 
+import AttentionGrabber from '@/components/ui/widget-preview/AttentionGrabber.vue';
+import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
+import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import OptionalInput from '../form/OptionalInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
+
+const welcomeDialogActions = reactive(
+  {
+    label: 'Ask for Questions',
+    iconUrl: '',
+  },
+);
 
 const welcomeDialogReact = reactive({
   isWelcomeDialog: true,
   isAttentionGrabber: false,
-  firstDescription: '',
-  secondDescription: '',
-  description: '',
+  firstDescription: 'Hello There,',
+  secondDescription: 'Welcome to Qiscus',
+  description: 'Ask for Questions',
   appearDelay: '',
   isMakeAutoExpand: false,
   isAttentionGrabberImage: true,
   isAttentionGrabberText: true,
   attentionGrabberTextDescription: '',
   attentionGrabberAppearDelay: '',
+  attentionGrabberImage: '',
   brandIcon: '',
   isUploading: false,
+  actions: [
+    welcomeDialogActions,
+  ],
 });
+
+
 
 // mock upload image
 const uploadImage = async (file: File, revertPreview: () => void) => {

@@ -1,6 +1,6 @@
 <template>
-    <div class="flex w-full items-start gap-8 self-stretch p-4">
-        <div class="flex flex-col gap-8">
+    <div class="flex w-full items-start gap-8 self-stretch p-4 justify-between">
+        <div class="flex flex-col gap-8 max-w-[50%]">
             <WidgetFormLayout label="Login Form">
                 <template #additional-info>
                     <Banner intent="positive" type="solid">
@@ -57,6 +57,11 @@
                 </ul>
             </div>
         </div>
+
+        <!-- PREVIEW -->
+        <div class="flex p-6">
+            <LoginForm :title="loginFormReact.firstDescription" :subtitle="loginFormReact.secondDescription" :description="loginFormReact.subtitle" />
+        </div>
     </div>
 
     <!-- Add Additional Field Modal -->
@@ -99,6 +104,7 @@ import Select from '@/components/form/Select.vue';
 import TextArea from '@/components/form/TextArea.vue';
 import { PlusIcon } from '@/components/icons';
 import Divider from '@/components/ui/Divider.vue';
+import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
 import { reactive, ref } from 'vue';
 import DropdownItemInput from '../form/DropdownItemInput.vue';
 import IconSelectInput from '../form/IconSelectInput.vue';
@@ -117,9 +123,9 @@ interface AdditionalField {
 const additionalFieldsArray = ref<AdditionalField[]>([]);
 
 const loginFormReact = reactive({
-    firstDescription: '',
-    secondDescription: '',
-    subtitle: '',
+    firstDescription: 'Hello There,',
+    secondDescription: 'Welcome to Qiscus',
+    subtitle: 'Please fill the details below before chatting with us!',
     buttonForm: '',
     customerIdentifier: '',
 });

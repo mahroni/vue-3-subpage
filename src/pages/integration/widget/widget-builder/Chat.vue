@@ -1,6 +1,6 @@
 <template>
-    <div class="flex w-full items-start gap-8 self-stretch p-4">
-        <div class="flex flex-col gap-8">
+    <div class="flex w-full items-start gap-8 self-stretch p-4 justify-between">
+        <div class="flex w-full flex-col gap-8 max-w-[50%]">
             <WIdgetFormLayout label="Chat">
                 <template #inputs>
                     <ImageInput v-model="chatReact.customerServiceAvatar" :isUploading="chatReact.isUploading"
@@ -20,12 +20,18 @@
                 </template>
             </WIdgetFormLayout>
         </div>
+
+        <!-- PREVIEW -->
+        <div class="flex p-6">
+            <ChatFormLoading/>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
+import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import { reactive } from 'vue';
 import WIdgetFormLayout from '../form/WIdgetFormLayout.vue';
 
