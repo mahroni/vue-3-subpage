@@ -2,10 +2,10 @@
   <div :class="containerClasses()">
     <label :for="id" class="text-text-subtitle text-sm font-normal">{{ label }}</label>
 
-    <div class="flex gap-4 items-start">
+    <div class="flex gap-4 items-start mt-2">
       <!-- Upload Area -->
       <div @click="triggerFileInput"
-        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-1.5 transition-colors mt-2"
+        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-1.5 transition-colors"
         :class="[
           error
             ? 'border-red-500 bg-red-50'

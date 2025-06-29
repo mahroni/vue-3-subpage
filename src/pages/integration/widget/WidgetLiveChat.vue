@@ -12,6 +12,9 @@
         <template v-if="activeTab === 'Login Form'">
             <LoginForm />
         </template>
+        <template v-if="activeTab === 'Chat'">
+            <Chat />
+        </template>
     </div>
 </template>
 
@@ -21,6 +24,7 @@ import { type Component, ref } from 'vue';
 import RoundedTab from '@/components/common/Tabs/RoundedTab.vue';
 import { ChatOutlineIcon, IntegrationIcon, PalleteIcon, ServerIcon, TableIcon, ToggleLeftIcon } from '@/components/icons';
 import CallToAction from './widget-builder/CallToAction.vue';
+import Chat from './widget-builder/Chat.vue';
 import LoginForm from './widget-builder/LoginForm.vue';
 import WelcomeDialog from './widget-builder/WelcomeDialog.vue';
 
