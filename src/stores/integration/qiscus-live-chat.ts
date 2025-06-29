@@ -48,6 +48,18 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     }
   };
 
+  const updateChannel = (channelId: number, updatedData: any) => {
+    const index = channelList.value.findIndex((channel) => channel.id === channelId);
+
+    if (index !== -1 && channelList.value[index]) {
+      const channel = channelList.value[index];
+      if (updatedData.name !== undefined) channel.name = updatedData.name;
+      if (updatedData.icon !== undefined) channel.icon = updatedData.icon;
+      if (updatedData.link !== undefined) channel.link = updatedData.link;
+      if (updatedData.enabled !== undefined) channel.enabled = updatedData.enabled;
+    }
+  };
+
   const addQiscusLiveChatChannel = () => {
     // check if qiscus live chat channel already exists
     const existingChannel = channelList.value.find((channel) => channel.icon === 'qiscus');
@@ -110,6 +122,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     // Actions
     addChannel,
     removeChannel,
+    updateChannel,
     addQiscusLiveChatChannel,
     removeQiscusLiveChatChannel,
   };

@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
+import Banner from '@/components/common/Banner.vue';
 import Button from '@/components/common/Button.vue';
 import Modal from '@/components/common/Modal.vue';
-import Banner from '@/components/common/Banner.vue';
+import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import TextArea from '@/components/form/TextArea.vue';
-import ImageInput from '@/components/form/ImageInput.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
@@ -16,32 +16,64 @@ const channelLink = ref<string>('');
 const channelBadgeIcon = ref<string>('');
 
 // props
-const { modelValue } = defineProps<{
+const { modelValue, editingChannel } = defineProps<{
   modelValue: boolean;
+  editingChannel?: any;
 }>();
 
 // emits
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
+  (e: 'close'): void;
 }>();
+
+// Watch for editing channel changes
+watch(
+  () => editingChannel,
+  (newChannel) => {
+    if (newChannel) {
+      channelName.value = newChannel.name || '';
+      channelLink.value = newChannel.link || '';
+      channelBadgeIcon.value = newChannel.icon || '';
+    } else {
+      // Reset form when not editing
+      channelName.value = '';
+      channelLink.value = '';
+      channelBadgeIcon.value = '';
+    }
+  },
+  { immediate: true }
+);
 
 const closeModal = () => {
   emit('update:modelValue', false);
+  emit('close');
 };
 
 const handleAddChannel = () => {
-  qiscusLiveChatStore.addChannel({
-    icon: channelBadgeIcon.value,
-    name: channelName.value,
-    enabled: false,
-  });
+  if (editingChannel) {
+    // Update existing channel
+    qiscusLiveChatStore.updateChannel(editingChannel.id, {
+      icon: channelBadgeIcon.value,
+      name: channelName.value,
+      link: channelLink.value,
+    });
+  } else {
+    // Add new channel
+    qiscusLiveChatStore.addChannel({
+      icon: channelBadgeIcon.value,
+      name: channelName.value,
+      enabled: false,
+      link: channelLink.value,
+    });
+  }
   closeModal();
 };
 </script>
 
 <template>
   <Modal :isOpen="modelValue" @close="closeModal" width="w-[592px]">
-    <template #title> Add Channel</template>
+    <template #title>{{ editingChannel ? 'Edit Channel' : 'Add Channel' }}</template>
     <template #content>
       <div class="flex flex-col gap-6 pb-6">
         <Banner :closeable="false" intent="positive" type="solid">
@@ -91,7 +123,9 @@ const handleAddChannel = () => {
     </template>
     <template #footer>
       <Button intent="secondary" size="small" @click="closeModal">Cancel</Button>
-      <Button intent="primary" size="small" @click="handleAddChannel">Add Channel</Button>
+      <Button intent="primary" size="small" @click="handleAddChannel">
+        {{ editingChannel ? 'Update Channel' : 'Add Channel' }}
+      </Button>
     </template>
   </Modal>
 </template>

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-// Add event listener for clicking outside
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 
 import Button from '@/components/common/Button.vue';
 import Switch from '@/components/common/Switch.vue';
@@ -11,11 +9,12 @@ import Divider from '@/components/ui/Divider.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
-import ModalAddChannel from './ModalAddChannel.vue';
+import ModalChannelList from './ModalChannelList.vue';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 const isModalOpen = ref(false);
 const activeDropdown = ref<number | null>(null);
+const editingChannel = ref<any>(null);
 
 const toggleDropdown = (channelId: number) => {
   activeDropdown.value = activeDropdown.value === channelId ? null : channelId;
@@ -26,8 +25,11 @@ const closeDropdown = () => {
 };
 
 const editChannel = (channelId: number) => {
-  console.log('Edit channel:', channelId);
-  // TODO: Implement edit functionality
+  const channel = qiscusLiveChatStore.channelList.find((ch) => ch.id === channelId);
+  if (channel) {
+    editingChannel.value = { ...channel };
+    isModalOpen.value = true;
+  }
   closeDropdown();
 };
 
@@ -131,5 +133,9 @@ onUnmounted(() => {
   </div>
 
   <!-- Modal Add Channel -->
-  <ModalAddChannel v-model="isModalOpen" />
+  <ModalChannelList
+    v-model="isModalOpen"
+    :editingChannel="editingChannel"
+    @close="editingChannel = null"
+  />
 </template>
