@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
 
-interface ChannelItem {
-  id: number;
-  icon: string;
-  name: string;
-  enabled: boolean;
-  link: string;
-}
+import type {
+  IWidgetChannel,
+  WidgetChannelCreateData,
+  WidgetChannelUpdateData,
+} from '@/pages/integration/widget/widget-builder/channels/channels';
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
   // State
@@ -21,7 +19,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   const channelLink = ref<string>('');
   const channelBadgeIcon = ref<string>('');
 
-  const channelList = ref<ChannelItem[]>([
+  const channelList = ref<IWidgetChannel[]>([
     { id: 1, icon: 'whatsapp', name: 'Whatsapp', enabled: true, link: '' },
     { id: 2, icon: 'facebook', name: 'Facebook', enabled: false, link: '' },
     { id: 3, icon: 'line', name: 'Line', enabled: false, link: '' },
@@ -32,9 +30,9 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   // Getters
 
   // Actions
-  const addChannel = (channel: any) => {
+  const addChannel = (channel: WidgetChannelCreateData): void => {
     const newId = Math.max(...channelList.value.map((item) => item.id), 0) + 1;
-    const newChannel = {
+    const newChannel: IWidgetChannel = {
       id: newId,
       ...channel,
     };
@@ -48,15 +46,11 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     }
   };
 
-  const updateChannel = (channelId: number, updatedData: any) => {
+  const updateChannel = (channelId: number, updatedData: WidgetChannelUpdateData): void => {
     const index = channelList.value.findIndex((channel) => channel.id === channelId);
-
     if (index !== -1 && channelList.value[index]) {
-      const channel = channelList.value[index];
-      if (updatedData.name !== undefined) channel.name = updatedData.name;
-      if (updatedData.icon !== undefined) channel.icon = updatedData.icon;
-      if (updatedData.link !== undefined) channel.link = updatedData.link;
-      if (updatedData.enabled !== undefined) channel.enabled = updatedData.enabled;
+      // TypeScript akan memastikan kita hanya update field yang valid
+      Object.assign(channelList.value[index], updatedData);
     }
   };
 
@@ -66,7 +60,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
 
     if (!existingChannel) {
       const newId = Math.max(...channelList.value.map((item) => item.id), 0) + 1;
-      const qiscusChannel = {
+      const qiscusChannel: IWidgetChannel = {
         id: newId,
         icon: 'qiscus',
         name: previewLiveChatName.value || 'Live Chat',

@@ -9,6 +9,8 @@ import Input from '@/components/form/Input.vue';
 import TextArea from '@/components/form/TextArea.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import type { IWidgetChannel, WidgetChannelFormData } from '../channels';
+
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 
 const channelName = ref<string>('');
@@ -16,9 +18,9 @@ const channelLink = ref<string>('');
 const channelBadgeIcon = ref<string>('');
 
 // props
-const { modelValue, editingChannel } = defineProps<{
+const props = defineProps<{
   modelValue: boolean;
-  editingChannel?: any;
+  editingChannel?: IWidgetChannel | null;
 }>();
 
 // emits
@@ -29,7 +31,7 @@ const emit = defineEmits<{
 
 // Watch for editing channel changes
 watch(
-  () => editingChannel,
+  () => props.editingChannel,
   (newChannel) => {
     if (newChannel) {
       channelName.value = newChannel.name || '';
@@ -50,21 +52,21 @@ const closeModal = () => {
   emit('close');
 };
 
-const handleAddChannel = () => {
-  if (editingChannel) {
-    // Update existing channel
-    qiscusLiveChatStore.updateChannel(editingChannel.id, {
-      icon: channelBadgeIcon.value,
-      name: channelName.value,
-      link: channelLink.value,
-    });
+const handleAddChannel = (): void => {
+  const formData: WidgetChannelFormData = {
+    name: channelName.value,
+    link: channelLink.value,
+    icon: channelBadgeIcon.value,
+  };
+
+  if (props.editingChannel) {
+    // Update existing channel - TypeScript akan infer type yang benar
+    qiscusLiveChatStore.updateChannel(props.editingChannel.id, formData);
   } else {
-    // Add new channel
+    // Add new channel - TypeScript akan infer type yang benar
     qiscusLiveChatStore.addChannel({
-      icon: channelBadgeIcon.value,
-      name: channelName.value,
+      ...formData,
       enabled: false,
-      link: channelLink.value,
     });
   }
   closeModal();

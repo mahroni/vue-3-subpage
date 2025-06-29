@@ -9,12 +9,13 @@ import Divider from '@/components/ui/Divider.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
+import type { IWidgetChannel } from '../channels';
 import ModalChannelList from './ModalChannelList.vue';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 const isModalOpen = ref(false);
 const activeDropdown = ref<number | null>(null);
-const editingChannel = ref<any>(null);
+const editingChannel = ref<IWidgetChannel | null>(null);
 
 const toggleDropdown = (channelId: number) => {
   activeDropdown.value = activeDropdown.value === channelId ? null : channelId;
