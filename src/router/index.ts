@@ -1,5 +1,5 @@
-import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 import type { RouteRecordRaw, Router } from 'vue-router';
+import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 
 import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
