@@ -48,7 +48,7 @@
         <template #inputs>
           <OptionalInput label="Image" v-model="welcomeDialogReact.isAttentionGrabberImage">
             <DragDropInput label="Upload Image" accept="image/png,image/jpg" acceptText="PNG or JPG"
-              :maxSize="31457280" :maxFiles="5" />
+              :maxSize="31457280" :maxFiles="1" :isUploading="welcomeDialogReact.isAttentionGrabberUploading" @upload="uploadAttentionGrabberImage"/>
           </OptionalInput>
           <OptionalInput label="Text" v-model="welcomeDialogReact.isAttentionGrabberText">
             <TextArea v-model="welcomeDialogReact.attentionGrabberTextDescription"
@@ -120,6 +120,7 @@ const welcomeDialogReact = reactive({
   attentionGrabberImage: '',
   brandIcon: '',
   isUploading: false,
+  isAttentionGrabberUploading: false,
   actions: [
     welcomeDialogActions,
   ],
@@ -144,6 +145,27 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
     revertPreview();
   } finally {
     welcomeDialogReact.isUploading = false;
+  }
+};
+
+const uploadAttentionGrabberImage = async (files: File[]) => {
+  const file = files[0]; // Take the first file since maxFiles is 1
+  if (!file) return;
+  
+  const formData = new FormData();
+  formData.append('file', file);
+  welcomeDialogReact.isAttentionGrabberUploading = true;
+  try {
+    const response = await fetch('/upload', {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await response.json();
+    welcomeDialogReact.attentionGrabberImage = data.data.imageUrl;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    welcomeDialogReact.isAttentionGrabberUploading = false;
   }
 };
 

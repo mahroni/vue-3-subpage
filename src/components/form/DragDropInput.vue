@@ -19,6 +19,7 @@
         :accept="accept"
         @change="handleFileSelect"
         class="hidden"
+        :disabled="isUploading"
       />
 
       <!-- Upload Icon -->
@@ -68,10 +69,20 @@
         </div>
         <button
           @click="removeFile(index)"
-          class="flex items-center justify-center p-1 text-red-500 hover:cursor-pointer hover:text-red-700"
+          class="flex items-center justify-center p-1 text-red-500 hover:cursor-pointer hover:text-red-700 disabled:cursor-default"
           type="button"
+          :disabled="props.isUploading"
         >
-          <ErrorIcon :size="24" class="text-red-500" />
+          <ErrorIcon v-if="!props.isUploading" :size="24" class="text-red-500" />
+          <div v-if="props.isUploading" class="relative">
+            <svg class="h-5 w-5 animate-spin text-green-600" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
+                stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
+            </svg>
+          </div>
         </button>
       </div>
     </div>
@@ -90,7 +101,6 @@ import ErrorIcon from '../icons/ErrorIcon.vue';
 import UploadIcon from '../icons/UploadIcon.vue';
 
 interface Props {
-  modelValue?: File[];
   label?: string;
   id?: string;
   multiple?: boolean;
@@ -100,31 +110,32 @@ interface Props {
   maxFiles?: number;
   error?: boolean;
   errorMessage?: string;
-  disabled?: boolean;
+  disabled?: boolean; 
+  isUploading?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue: () => [],
   label: '',
   id: 'drag-drop-input',
   multiple: false,
   accept: 'image/*',
   acceptText: '',
   maxSize: 10 * 1024 * 1024, // 10MB
-  maxFiles: 5,
+  maxFiles: 1,
   error: false,
   errorMessage: '',
   disabled: false,
+  isUploading: false,
 });
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', files: File[]): void;
   (e: 'error', message: string): void;
+  (e: 'upload', files: File[]): void;
 }>();
 
 const fileInput = ref<HTMLInputElement>();
 const isDragOver = ref(false);
-const files = ref<File[]>(props.modelValue || []);
+const files = ref<File[]>([]);
 
 const containerClasses = computed(() => [
   'w-full',
@@ -158,6 +169,7 @@ const handleDragLeave = (e: DragEvent) => {
 };
 
 const handleDrop = (e: DragEvent) => {
+  if (props.isUploading) return;
   e.preventDefault();
   e.stopPropagation();
   isDragOver.value = false;
@@ -167,7 +179,7 @@ const handleDrop = (e: DragEvent) => {
 };
 
 const triggerFileInput = () => {
-  if (!props.disabled) {
+  if (!props.disabled && !props.isUploading) {
     fileInput.value?.click();
   }
 };
@@ -210,7 +222,7 @@ const processFiles = (newFiles: File[]) => {
   }
 
   files.value = validFiles;
-  emit('update:modelValue', validFiles);
+  emit('upload', validFiles);
 };
 
 const isFileTypeAccepted = (file: File): boolean => {
@@ -232,7 +244,6 @@ const isFileTypeAccepted = (file: File): boolean => {
 
 const removeFile = (index: number) => {
   files.value.splice(index, 1);
-  emit('update:modelValue', files.value);
 };
 
 const formatFileSize = (bytes: number): string => {
