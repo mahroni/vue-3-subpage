@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import Input from '@/components/form/Input.vue';
 import ImageInput from '@/components/form/ImageInput.vue';
+import Input from '@/components/form/Input.vue';
 import TextArea from '@/components/form/TextArea.vue';
-
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
-import PreviewChannels from './components/PreviewChannels.vue';
+
 import ChannelListCard from './components/ChannelListCard.vue';
+import PreviewChannels from './components/PreviewChannels.vue';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 </script>
 
 <template>
   <div class="flex w-full items-start gap-8 self-stretch">
-    <div class="flex w-full flex-1 flex-col">
+    <!-- Form Section -->
+    <div class="flex w-full flex-1 flex-col gap-8">
       <WidgetFormLayout label="Channels" isSwitch v-model="qiscusLiveChatStore.isChannelsEnabled">
         <template #inputs>
           <Input

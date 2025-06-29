@@ -56,7 +56,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="w-full p-4">
+  <div class="w-full">
     <div
       class="border-stroke-regular bg-surface-secondary flex w-full flex-col gap-y-4 rounded-lg border p-6"
     >
