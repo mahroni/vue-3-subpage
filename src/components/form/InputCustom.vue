@@ -4,42 +4,29 @@
     <div :class="wrapperClasses({ isFocused, error, disabled })">
       <div :class="contentWrapperClasses()">
         <slot name="suffix-icon" />
-        <input
-          :id="id"
-          :type="currentType"
-          :class="inputClasses({ disabled })"
-          :value="modelValue"
-          @input="onInput"
-          @focus="isFocused = true"
-          @blur="isFocused = false"
-          :placeholder="placeholder"
-          :disabled="disabled"
-        />
+        <input :id="id" :type="currentType" :class="inputClasses({ disabled })" :value="modelValue"
+          @input="onInput" @focus="isFocused = true" @blur="isFocused = false"
+          :placeholder="placeholder" :disabled="disabled" />
 
-        <button
-          v-if="clearable"
-          class="invisible cursor-pointer transition-colors duration-300 ease-in-out"
-          :class="{
+        <button v-if="clearable"
+          class="invisible cursor-pointer transition-colors duration-300 ease-in-out" :class="{
             visible: modelValue,
-          }"
-          @click="onClear"
-          :disabled="disabled"
-        >
+          }" @click="onClear" :disabled="disabled">
           <Icon name="close" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
 
-        <button
-          v-if="type === 'password'"
-          class="cursor-pointer"
-          @click="togglePasswordVisibility"
-          :disabled="disabled"
-        >
+        <button v-if="type === 'password'" class="cursor-pointer" @click="togglePasswordVisibility"
+          :disabled="disabled">
           <Icon :name="passwordIcon" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
       </div>
 
       <button v-if="$slots['append-button']" :class="appendButtonClasses({ disabled })">
         <slot name="append-button" :disabled="disabled"></slot>
+      </button>
+
+      <button v-if="$slots['append-button-icon']" :class="appendButtonIconClasses({ disabled })">
+        <slot name="append-button-icon" :disabled="disabled"></slot>
       </button>
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
@@ -110,7 +97,7 @@ const labelClasses = cva('text-sm font-normal text-text-subtitle', {
 });
 
 const wrapperClasses = cva(
-  'relative flex flex-row overflow-hidden rounded-lg border border-gray-300 shadow-sm ',
+  'relative flex flex-row overflow-hidden rounded-lg border border-gray-300 shadow-sm mt-2',
   {
     variants: {
       isFocused: {
@@ -154,4 +141,13 @@ const appendButtonClasses = cva(
     },
   }
 );
+
+const appendButtonIconClasses = cva('flex min-w-fit cursor-pointer items-center justify-center bg-white p-4', {
+  variants: {
+    disabled: {
+      true: 'text-[#A0A0A0]',
+      false: 'text-primary',
+    },
+  },
+});
 </script>
