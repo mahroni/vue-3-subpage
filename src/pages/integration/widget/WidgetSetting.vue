@@ -1,16 +1,16 @@
 <template>
   <CollapsibleGroup :items="items">
     <template #item-id-1="{ item }">
-      <div class="mb-4 flex justify-between gap-8">
+      <div class="flex justify-between gap-8">
         {{ item.content }}
         <Switch size="medium" />
       </div>
-      <Button intent="secondary">Set Channel Auto Responder</Button>
+      <Button intent="secondary" class="mt-4">Set Channel Auto Responder</Button>
     </template>
     <template #item-id-2="{ item }">
-      <div class="mb-4 flex justify-between gap-8">
+      <div class="flex justify-between gap-8">
         <div v-html="item.content"></div>
-        <Switch @click="onToggleEnhanceConversationSecurity" v-model="isSecure" size="medium" />
+        <Switch @change="onToggleEnhanceConversationSecurity" v-model="isSecure" size="medium" />
       </div>
     </template>
   </CollapsibleGroup>
@@ -42,10 +42,12 @@ const items = [
 
 const isSecure = ref(channelsStore.detail?.is_secure ?? false);
 
-const onToggleEnhanceConversationSecurity = () => {
-  if (!channelsStore.detail) return;
-  isSecure.value = !isSecure.value;
-  channelsStore.detail.is_secure = isSecure.value;
-  channelsStore.updateChannel();
+const onToggleEnhanceConversationSecurity = (e) => {
+  console.log(e);
+  const params = {
+    id: Number(channelsStore.detail?.id),
+    is_secure: e,
+  };
+  channelsStore.updateChannel(params);
 };
 </script>

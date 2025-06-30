@@ -100,11 +100,11 @@ export function createRouter(appId?: string | number): Router {
     //   name: 'HomeView',
     //   component: () => import('../views/HomeView.vue'),
     // },
-    // {
-    //   path: '/post',
-    //   name: 'PostView',
-    //   component: () => import('../views/PostView.vue'),
-    // },
+    {
+      path: '/post',
+      name: 'PostView',
+      component: () => import('../views/PostView.vue'),
+    },
   ];
 
   // Use the provided appId or fall back to window.vueAppBaseId

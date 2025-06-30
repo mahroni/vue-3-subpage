@@ -33,7 +33,7 @@
         </thead>
 
         <!-- Table Body -->
-        <tbody v-if="!channelsStore.loading" class="divide-y divide-gray-100">
+        <tbody v-if="!Qiscus.loading" class="divide-y divide-gray-100">
           <tr
             v-for="channel in props.channels"
             :key="channel.id"
@@ -85,13 +85,13 @@
         </tbody>
       </table>
 
-      <div v-if="channelsStore.loading" class="grid h-full place-items-center">
+      <div v-if="Qiscus.loading" class="grid h-full place-items-center">
         <Animate :source="loading" />
       </div>
 
       <!-- Empty State -->
       <div
-        v-if="props.channels.length === 0 && !channelsStore.loading"
+        v-if="props.channels.length === 0 && !Qiscus.loading"
         class="grid h-full place-items-center"
       >
         <EmptyState
@@ -108,7 +108,7 @@
           </span>
         </div>
 
-        <Pagination :meta="channelsStore.meta" @pagination="pagination" />
+        <Pagination :meta="Qiscus.meta" @pagination="pagination" />
       </div>
     </div>
   </div>
@@ -124,7 +124,7 @@ import InputCustom from '@/components/form/InputCustom.vue';
 import { CopyIcon, PlusIcon, SearchIcon } from '@/components/icons';
 import EmptyState from '@/components/ui/EmptyState.vue';
 import Pagination from '@/components/ui/Pagination.vue';
-import { useQiscusStore } from '@/stores/integration-qiscus';
+import { useFetchQiscus } from '@/composables/channels/qiscus/useFetchQiscus';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
 // async component
@@ -152,7 +152,7 @@ const emit = defineEmits(['updateChannelStatus', 'search', 'pagination']);
 
 // declare
 const router = useRouter();
-const channelsStore = useQiscusStore();
+const Qiscus = useFetchQiscus();
 
 const searchQuery = ref('') as Ref<string>;
 const timeout = ref<NodeJS.Timeout | null>(null);
@@ -168,16 +168,13 @@ watch(searchQuery, (newVal) => {
 
 // computed
 const paginationInfo = computed(() => {
-  const start = (channelsStore.meta.page - 1) * channelsStore.meta.limit + 1;
-  const end = Math.min(
-    channelsStore.meta.page * channelsStore.meta.limit,
-    channelsStore.meta.total
-  );
-  return `${start}-${end} of ${channelsStore.meta.total} items`;
+  const start = (Qiscus.meta.value.page - 1) * Qiscus.meta.value.limit + 1;
+  const end = Math.min(Qiscus.meta.value.page * Qiscus.meta.value.limit, Qiscus.meta.value.total);
+  return `${start}-${end} of ${Qiscus.meta.value.total} items`;
 });
 
 const isShowPagination = computed(() => {
-  return channelsStore.meta.total_page > 1 && !channelsStore.loading;
+  return Qiscus.meta.total_page > 1 && !Qiscus.loading;
 });
 
 // function
@@ -194,8 +191,8 @@ function updateChannelStatus(id: number, isActive: boolean) {
 
 // pagination function
 function pagination(type: 'first' | 'prev' | 'next' | 'last') {
-  if (type === 'next' && channelsStore.meta.page === channelsStore.meta.total_page) return;
-  if (type === 'prev' && channelsStore.meta.page === 1) return;
+  if (type === 'next' && Qiscus.meta.value.page === Qiscus.meta.value.total_page) return;
+  if (type === 'prev' && Qiscus.meta.value.page === 1) return;
   emit('pagination', type);
 }
 

@@ -10,11 +10,7 @@
       </p>
 
       <div class="flex w-140 items-center gap-5">
-        <div
-          class="border-primary flex h-20 w-20 items-center justify-center rounded-lg border border-dashed"
-        >
-          <img :src="channelBadge ?? ''" width="68" height="68" alt="Channel Badge " />
-        </div>
+        <ImageInput v-model="channelBadge" id="channel-badge" @error="(e) => (errorMessages = e)" />
         <div class="flex flex-1 flex-col items-start gap-1">
           <h4 class="text-text-subtitle text-sm font-semibold">Channel Badge Icon</h4>
           <p class="text-text-placeholder text-xs font-normal">
@@ -23,6 +19,10 @@
           </p>
         </div>
       </div>
+
+      <Banner v-if="errorMessages" intent="negative" closeable>
+        {{ errorMessages }}
+      </Banner>
 
       <div class="w-[552px]">
         <Input
@@ -45,12 +45,15 @@
 import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
+import Banner from '@/components/common/Banner.vue';
 import Button from '@/components/common/Button.vue';
+import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 import { useQiscusStore } from '@/stores/integration-qiscus';
 
 const channelName = ref<string>('');
+const errorMessages = ref<string>('');
 
 const route = useRoute();
 const channelsStore = useQiscusStore();
@@ -59,7 +62,12 @@ const channelBadge = computed(() => channelsStore.detail?.badge_url);
 
 function onUpdateChannel() {
   if (!channelName.value || !channelBadge.value) return;
-  channelsStore.updateChannel();
+  const params = {
+    badge_url: channelBadge.value,
+    id: Number(channelsStore.detail?.id),
+    name: channelName.value,
+  };
+  channelsStore.updateChannel(params);
 }
 
 onMounted(async () => {

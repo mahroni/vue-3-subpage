@@ -12,8 +12,9 @@ export interface IResponse<T> {
   meta: IPagination;
 }
 
-export interface IParams {
+export interface IPagination2 {
   limit?: number;
   page?: number;
-  search?: string;
+  total_page?: number;
+  total?: number;
 }

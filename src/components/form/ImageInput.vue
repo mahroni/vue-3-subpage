@@ -1,6 +1,6 @@
 <template>
   <div :class="containerClasses()">
-    <label :for="id" class="text-text-subtitle text-sm font-normal">{{ label }}</label>
+    <label v-if="label" :for="id" class="text-text-subtitle text-sm font-normal">{{ label }}</label>
 
     <div class="flex gap-4 items-start mt-2">
       <!-- Upload Area -->
@@ -66,7 +66,7 @@ import { Icon } from '@/components/icons';
 
 interface Props {
   id: string;
-  label: string;
+  label?: string;
   maxSize?: number;
   acceptedFormats?: string;
   modelValue?: string | null;
@@ -82,7 +82,7 @@ interface Emits {
 const containerClasses = cva('space-y-1');
 
 const props = withDefaults(defineProps<Props>(), {
-  label: 'Label',
+  label: '',
   id: 'image-input',
   maxSize: 2048,
   acceptedFormats: 'image/jpeg,image/jpg,image/png',
