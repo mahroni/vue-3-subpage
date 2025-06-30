@@ -1,5 +1,5 @@
 <template>
-    <div class="flex w-full items-start gap-8 self-stretch p-4 justify-between">
+    <div class="flex w-full items-start gap-8 self-stretch justify-between">
         <div class="flex flex-col gap-8 max-w-[50%]">
             <WidgetFormLayout label="Login Form">
                 <template #additional-info>
@@ -60,15 +60,15 @@
 
         <!-- PREVIEW -->
         <div class="flex p-6">
-            <LoginForm :title="loginFormReact.firstDescription" :subtitle="loginFormReact.secondDescription" :description="loginFormReact.subtitle" />
+            <LoginForm :title="loginFormReact.firstDescription" :subtitle="loginFormReact.secondDescription" :description="loginFormReact.subtitle" :buttonText="loginFormReact.buttonForm" />
         </div>
     </div>
 
     <!-- Add Additional Field Modal -->
-    <Modal :isOpen="isOpenModal" @close="isOpenModal = false" confirmText="Add Field"
+    <Modal :isOpen="isOpenModal" @close="isOpenModal = false"
         @confirm="addAdditionalFieldConfirm">
         <template #title>
-            Add Additional Field
+            {{ modalStateText.title }}
         </template>
         <template #content>
             <div class="flex flex-col gap-2 mb-9">
@@ -91,7 +91,7 @@
         <template #footer>
             <Button intent="secondary" size="small" @click="isOpenModal = false">Cancel</Button>
             <Button intent="primary" size="small" @click="addAdditionalFieldConfirm">
-                Add Field
+                {{ modalStateText.confirmButton }}
             </Button>
         </template>
     </Modal>
@@ -127,12 +127,16 @@ interface AdditionalField {
 }
 
 const additionalFieldsArray = ref<AdditionalField[]>([]);
+const modalStateText = reactive({
+    title: 'Add Additional Field',
+    confirmButton: 'Add Field',
+});
 
 const loginFormReact = reactive({
     firstDescription: 'Hello There,',
     secondDescription: 'Welcome to Qiscus',
     subtitle: 'Please fill the details below before chatting with us!',
-    buttonForm: '',
+    buttonForm: 'Start Chat',
     customerIdentifier: '',
 });
 
@@ -199,6 +203,8 @@ const icons = [
 
 const addAdditionalField = () => {
     isOpenModal.value = true;
+    modalStateText.title = 'Add Additional Field';
+    modalStateText.confirmButton = 'Add Field';
 }
 
 const resetAdditionalField = () => {
@@ -253,6 +259,9 @@ const deleteField = (index: number) => {
 
 const handleFieldMenuSelect = (option: any) => {
     // Actions are handled in the option.action function
-    console.log('Selected:', option);
+    if (option.value === 'edit') {
+        modalStateText.title = 'Edit Additional Field';
+        modalStateText.confirmButton = 'Update Field';
+    }
 }
 </script>
