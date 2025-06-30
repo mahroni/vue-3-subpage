@@ -1,6 +1,9 @@
 // Main Icon component
 export { default as Icon } from './Icon.vue';
 
+// Export the IconName type for external use
+export type { IconName } from './Icon.vue';
+
 // Individual Icon components (alphabetically sorted)
 export { default as AdditionalInformation } from './AdditionalInformation.vue';
 export { default as AgentManagementIcon } from './AgentManagementIcon.vue';
@@ -103,7 +106,4 @@ export { default as WarningIcon } from './WarningIcon.vue';
 export { default as WhatsappBusinessIcon } from './WhatsappBusinessIcon.vue';
 export { default as WindowIcon } from './WindowIcon.vue';
 export { default as WorkFlowIcon } from './WorkFlowIcon.vue';
-
-// Channel Icons (from subdirectory)
-export { default as WidgetIcon } from './channel-icons/WidgetIcon.vue';
 

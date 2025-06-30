@@ -185,36 +185,36 @@ onMounted(() => {
       Welcome to the home page of your Vue 3 + TypeScript + Vue Router application!
     </p>
     <div class="mt-4 flex justify-center gap-4">
-      <Button @click="handleClick" intent="primary" size="medium">Click me</Button>
-      <Button intent="primary" size="medium" disabled>Click me</Button>
-      <Button intent="secondary" size="medium">Click me</Button>
-      <Button intent="secondary" size="medium" disabled>Click me</Button>
-      <Button intent="danger" size="medium">Click me</Button>
-      <Button intent="danger" size="medium" disabled>Click me</Button>
+      <Button @click="handleClick" intent="primary">Click me</Button>
+      <Button intent="primary" disabled>Click me</Button>
+      <Button intent="secondary">Click me</Button>
+      <Button intent="secondary" disabled>Click me</Button>
+      <Button intent="danger">Click me</Button>
+      <Button intent="danger" disabled>Click me</Button>
     </div>
 
     <div class="mt-4 flex justify-center gap-4">
-      <Button intent="primary" size="medium" shape="rectangular">Click me</Button>
-      <Button intent="primary" size="medium" shape="rectangular" disabled>Click me</Button>
-      <Button intent="secondary" size="medium" shape="rectangular">Click me</Button>
-      <Button intent="secondary" size="medium" shape="rectangular" disabled>Click me</Button>
-      <Button intent="danger" size="medium" shape="rectangular">Click me</Button>
-      <Button intent="danger" size="medium" shape="rectangular" disabled>Click me</Button>
+      <Button intent="primary" shape="rectangular">Click me</Button>
+      <Button intent="primary" shape="rectangular" disabled>Click me</Button>
+      <Button intent="secondary" shape="rectangular">Click me</Button>
+      <Button intent="secondary" shape="rectangular" disabled>Click me</Button>
+      <Button intent="danger" shape="rectangular">Click me</Button>
+      <Button intent="danger" shape="rectangular" disabled>Click me</Button>
     </div>
 
     <div class="mt-4 flex justify-center gap-4">
-      <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
-      <Button intent="flat" size="medium" shape="rounded" to="/about" disabled>Click me</Button>
-      <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
-      <Button intent="flat" size="medium" shape="rounded" to="/about" disabled>Click me</Button>
-      <Button intent="flat" size="medium" shape="rounded" to="/about">Click me</Button>
+      <Button intent="flat" shape="rounded" to="/about">Click me</Button>
+      <Button intent="flat" shape="rounded" to="/about" disabled>Click me</Button>
+      <Button intent="flat" shape="rounded" to="/about">Click me</Button>
+      <Button intent="flat" shape="rounded" to="/about" disabled>Click me</Button>
+      <Button intent="flat" shape="rounded" to="/about">Click me</Button>
     </div>
 
     <div class="mt-4 flex justify-center gap-4">
-      <Switch v-model="isChecked" size="medium" variant="success" aria-label="Success switch" />
-      <Switch v-model="isChecked" size="medium" variant="warning" aria-label="Warning switch" />
-      <Switch v-model="isChecked" size="medium" variant="danger" aria-label="Danger switch" />
-      <Switch v-model="isChecked" size="medium" variant="default" aria-label="Default switch" />
+      <Switch v-model="isChecked" variant="success" aria-label="Success switch" />
+      <Switch v-model="isChecked" variant="warning" aria-label="Warning switch" />
+      <Switch v-model="isChecked" variant="danger" aria-label="Danger switch" />
+      <Switch v-model="isChecked" variant="default" aria-label="Default switch" />
     </div>
 
     <div>
@@ -358,19 +358,19 @@ onMounted(() => {
     </div>
 
     <div class="mt-4">
-      <Button intent="primary" size="medium" @click="toggleDrawer">Open Drawer</Button>
+      <Button intent="primary" @click="toggleDrawer">Open Drawer</Button>
     </div>
 
     <Drawer :isOpen="isDrawerOpen" @close="toggleDrawer" />
 
     <div class="mt-4">
-      <Button intent="primary" size="medium" @click="showAlertWarning">Show Alert Warning</Button>
-      <Button intent="primary" size="medium" @click="showAlertError">Show Alert Error</Button>
-      <Button intent="primary" size="medium" @click="showAlertSuccess">Show Alert Success</Button>
+      <Button intent="primary" @click="showAlertWarning">Show Alert Warning</Button>
+      <Button intent="primary" @click="showAlertError">Show Alert Error</Button>
+      <Button intent="primary" @click="showAlertSuccess">Show Alert Success</Button>
     </div>
 
     <div class="mt-4">
-      <Button intent="primary" size="medium" @click="toggleModal">Open Modal</Button>
+      <Button intent="primary" @click="toggleModal">Open Modal</Button>
       <Modal :isOpen="isModalOpen" @close="toggleModal" width="w-[900px]">
         <template #title> Preview Your Qiscus Live Chat </template>
         <template #content>

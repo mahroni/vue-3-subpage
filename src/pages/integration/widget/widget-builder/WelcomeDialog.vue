@@ -1,6 +1,6 @@
 <template>
   <div class="flex w-full items-start gap-8 self-stretch p-4 justify-between">
-    <div class="flex flex-col gap-8 w-full max-w-[50%]">
+    <div class="flex flex-col gap-8 w-full flex-1">
       <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
           <ImageInput label="Brand Icon" id="welcome-dialog-image"
@@ -65,16 +65,16 @@
     </div>
 
     <!-- PREVIEW -->
-    <div v-if="welcomeDialogReact.isWelcomeDialog" class="flex p-6">
+    <div v-if="welcomeDialogReact.isWelcomeDialog" class="flex p-6 flex-1 flex-col items-end">
       <WelcomingPage :title="welcomeDialogReact.firstDescription" :subtitle="welcomeDialogReact.secondDescription"
         :imageUrl="welcomeDialogReact.brandIcon" :actions="welcomeDialogReact.actions" />
     </div>
 
-    <div v-else-if="welcomeDialogReact.isAttentionGrabber" class="flex p-6">
+    <div v-else-if="welcomeDialogReact.isAttentionGrabber" class="flex p-6 flex-1 flex-col items-end">
       <AttentionGrabber :imageUrl="welcomeDialogReact.isAttentionGrabberImage ? welcomeDialogReact.attentionGrabberImage : ''" :title="welcomeDialogReact.isAttentionGrabberText ? welcomeDialogReact.attentionGrabberTextDescription : ''" />
     </div>
 
-    <div v-else class="flex p-6">
+    <div v-else class="flex p-6 flex-1 flex-col items-end">
       <WelcomingPageLoading/>
     </div>
   </div>
@@ -91,9 +91,9 @@ import Input from '@/components/form/Input.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
 import TextArea from '@/components/form/TextArea.vue';
 import { WarningIcon } from '@/components/icons';
+import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 
 import AttentionGrabber from '@/components/ui/widget-preview/AttentionGrabber.vue';
-import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import OptionalInput from '../form/OptionalInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';

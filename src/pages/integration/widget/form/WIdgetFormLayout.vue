@@ -1,17 +1,3 @@
-<template>
-  <div class="flex w-full flex-col gap-4 rounded-2xl border-[1px] border-gray-300 bg-gray-200 p-6">
-    <div class="flex w-full items-center justify-between gap-2">
-      <label class="text-text-subtitle text-base font-semibold">{{ label }}</label>
-      <Switch v-if="isSwitch" size="large" v-model="modelValue" variant="success" />
-    </div>
-    <Divider v-if="modelValue || $slots['additional-info']" />
-    <slot name="additional-info" />
-    <div class="flex flex-col gap-6" v-if="modelValue || !isSwitch">
-      <slot name="inputs" />
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { computed } from 'vue';
 
@@ -33,3 +19,26 @@ const modelValue = computed({
   set: (value: boolean) => emit('update:modelValue', value),
 });
 </script>
+
+<template>
+  <div
+    class="border-stroke-regular bg-surface-secondary flex w-full flex-1 flex-col gap-4 rounded-lg border p-6"
+  >
+    <!-- Header Section -->
+    <div class="flex w-full items-center justify-between gap-2">
+      <label class="text-text-title text-base font-semibold">{{ label }}</label>
+      <Switch v-if="isSwitch" size="large" v-model="modelValue" variant="success" />
+    </div>
+
+    <!-- Divider -->
+    <Divider v-if="modelValue || $slots['additional-info']" />
+
+    <!-- Additional Info -->
+    <slot name="additional-info" />
+
+    <!-- Inputs -->
+    <div class="flex flex-col gap-6" v-if="modelValue || !isSwitch">
+      <slot name="inputs" />
+    </div>
+  </div>
+</template>

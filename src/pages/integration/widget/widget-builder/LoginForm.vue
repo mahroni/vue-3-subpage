@@ -39,7 +39,7 @@
             <div class="flex flex-col gap-4 bg-gray-200 rounded-2xl border border-gray-300 p-6">
                 <div class="flex justify-between items-center  w-full">
                     <span class="text-text-title text-base font-semibold">Additional Field</span>
-                    <Button intent="flat" size="xsmall" type="button" @click="addAdditionalField">
+                    <Button intent="flat" size="small" type="button" @click="addAdditionalField">
                         <template #prefixIcon>
                             <PlusIcon class="w-4 h-4" />
                         </template>
@@ -87,6 +87,12 @@
                     <IconSelectInput v-model="additionalField.iconField" :icons="icons" />
                 </div>
             </div>
+        </template>
+        <template #footer>
+            <Button intent="secondary" size="small" @click="isOpenModal = false">Cancel</Button>
+            <Button intent="primary" size="small" @click="addAdditionalFieldConfirm">
+                Add Field
+            </Button>
         </template>
     </Modal>
 </template>
