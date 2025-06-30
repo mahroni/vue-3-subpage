@@ -5,6 +5,7 @@ import Banner from '@/components/common/Banner.vue';
 import Button from '@/components/common/Button.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
 import Icon from '@/components/icons/Icon.vue';
+import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import LoginFormLoading from '@/components/ui/widget-preview/LoginFormLoading.vue';
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
@@ -97,6 +98,23 @@ const colorValue = ref('#01416C');
         description="Please fill the details below before chatting with us!"
         :color="colorValue"
       />
+
+      <div class="bg-surface-disable h-16 w-16 rounded-full" />
+
+      <ChatFormLoading>
+        <template #bubble>
+          <div class="flex justify-end">
+            <div
+              class="rounded-t-[24px] rounded-br-[4px] rounded-bl-[24px] p-4 text-sm text-white"
+              :style="{ backgroundColor: colorValue }"
+            >
+              Hello there, Im Qiscus Folks!
+            </div>
+          </div>
+        </template>
+      </ChatFormLoading>
+
+      <div class="bg-surface-disable h-16 w-16 rounded-full" />
     </div>
   </div>
 </template>
