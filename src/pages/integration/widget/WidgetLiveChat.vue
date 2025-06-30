@@ -28,7 +28,7 @@ const activeTab = ref(tabs[0]?.label || '');
 
 <template>
   <div class="bg-white-100 flex w-full flex-col rounded-2xl border-[1px] border-gray-300">
-    <div class="flex w-full items-center justify-between border-b-[1px] border-gray-300 p-4">
+    <div class="flex w-full items-center justify-between border-b-[1px] border-gray-300 p-4 sticky top-0 bg-white-100 z-50">
       <RoundedTab :tabs="tabs" v-model="activeTab" />
     </div>
     <div class="p-4">
