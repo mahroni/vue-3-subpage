@@ -2,7 +2,10 @@
 import { ref } from 'vue';
 
 import Banner from '@/components/common/Banner.vue';
+import Button from '@/components/common/Button.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
+import Icon from '@/components/icons/Icon.vue';
+import LoginFormLoading from '@/components/ui/widget-preview/LoginFormLoading.vue';
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 
@@ -55,6 +58,23 @@ const colorValue = ref('#01416C');
 
     <!-- Preview Section -->
     <div class="flex flex-1 flex-col items-end gap-4 p-6">
+      <!-- Navigation Buttons -->
+      <div class="flex gap-2">
+        <Button intent="flat" disableAnimation class="border-button-primary border !px-3 !py-1">
+          <template #prefixIcon>
+            <Icon name="back" :size="18" />
+          </template>
+          <span class="text-xs font-semibold">Previous</span>
+        </Button>
+
+        <Button intent="flat" disableAnimation class="border-button-primary border !px-3 !py-1">
+          <template #suffixIcon>
+            <Icon name="next" :size="18" />
+          </template>
+          <span class="text-xs font-semibold">Next</span>
+        </Button>
+      </div>
+
       <WelcomingPage
         title="Hello there!"
         subtitle="Welcome to Qiscus!"
@@ -67,9 +87,16 @@ const colorValue = ref('#01416C');
         class="flex h-16 items-center justify-center gap-3 rounded-4xl px-6 py-2.5"
         :style="{ backgroundColor: colorValue }"
       >
-        <div class="bg-surface-disable h-6 w-6 rounded-full" />
-        <div class="bg-surface-disable h-4.5 w-[80px] rounded-full" />
+        <div class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
+        <div class="bg-surface-disable h-4.5 w-[80px] animate-pulse rounded-full" />
       </div>
+
+      <LoginFormLoading
+        title="Hello there,"
+        subtitle="Welcome to Qiscus!"
+        description="Please fill the details below before chatting with us!"
+        :color="colorValue"
+      />
     </div>
   </div>
 </template>
