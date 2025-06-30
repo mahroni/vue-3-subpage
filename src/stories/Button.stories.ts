@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
+
+
 import Button from '../components/common/Button.vue';
+
+
+
+
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -100,13 +106,6 @@ export const Small: Story = {
   args: {
     size: 'small',
     default: 'Small Button',
-  },
-};
-
-export const Medium: Story = {
-  args: {
-    size: 'medium',
-    default: 'Medium Button',
   },
 };
 
@@ -236,7 +235,7 @@ export const AllVariants: Story = {
 export const Playground: Story = {
   args: {
     intent: 'primary',
-    size: 'medium',
+    size: 'large',
     shape: 'rounded',
     disabled: false,
     disableAnimation: false,

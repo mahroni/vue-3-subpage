@@ -24,7 +24,7 @@ const meta: Meta<typeof ImageInput> = {
       control: { type: 'text' },
       description: 'Unique identifier for the input',
     },
-    maxSizeInMB: {
+    maxSize: {
       control: { type: 'number' },
       description: 'Maximum file size in megabytes',
     },
@@ -113,7 +113,7 @@ export const SmallImage: Story = {
   args: {
     label: 'Avatar Image',
     id: 'avatar',
-    maxSizeInMB: 1,
+    maxSize: 1024,
   },
   render: (args) => ({
     components: { ImageInput },
@@ -146,7 +146,7 @@ export const LargeImage: Story = {
   args: {
     label: 'Cover Photo',
     id: 'cover-photo',
-    maxSizeInMB: 10,
+    maxSize: 10240,
   },
   render: (args) => ({
     components: { ImageInput },
@@ -180,7 +180,7 @@ export const WebPSupport: Story = {
     label: 'Modern Image Upload',
     id: 'webp-image',
     acceptedFormats: 'image/jpeg,image/png,image/webp',
-    maxSizeInMB: 5,
+    maxSize: 5120,
   },
   render: (args) => ({
     components: { ImageInput },
@@ -243,7 +243,7 @@ export const PNGOnly: Story = {
     label: 'Logo Upload (PNG Only)',
     id: 'logo-png',
     acceptedFormats: 'image/png',
-    maxSizeInMB: 2,
+    maxSize: 2048,
   },
   render: (args) => ({
     components: { ImageInput },
@@ -276,7 +276,7 @@ export const Interactive: Story = {
   args: {
     label: 'Interactive Image Upload',
     id: 'interactive-image',
-    maxSizeInMB: 3,
+    maxSize: 3072,
   },
   render: (args) => ({
     components: { ImageInput },
@@ -495,7 +495,7 @@ export const AllVariants: Story = {
               v-model="avatarUrl"
               label="Profile Avatar"
               id="avatar-demo"
-              :maxSizeInMB="1"
+              :maxSize="1024"
               :isUploading="avatarUploading"
               @upload="handleAvatarUpload"
             />
@@ -510,7 +510,7 @@ export const AllVariants: Story = {
               v-model="coverUrl"
               label="Cover Image"
               id="cover-demo"
-              :maxSizeInMB="10"
+              :maxSize="10240"
               :isUploading="coverUploading"
               @upload="handleCoverUpload"
             />
@@ -526,7 +526,7 @@ export const AllVariants: Story = {
               label="Company Logo"
               id="logo-demo"
               acceptedFormats="image/png"
-              :maxSizeInMB="2"
+              :maxSize="2048"
               :isUploading="logoUploading"
               @upload="handleLogoUpload"
             />
