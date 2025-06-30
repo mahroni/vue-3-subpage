@@ -6,6 +6,7 @@ const props = defineProps<{
   title: string;
   subtitle: string;
   description: string;
+  buttonText?: string;
 }>();
 </script>
 
@@ -52,7 +53,7 @@ const props = defineProps<{
 
     <div class="px-8 py-3">
       <button class="bg-navy-500 w-full rounded-2xl py-4 text-base font-medium text-white">
-        Start Chat
+        {{ props.buttonText || 'Start Chat' }}
       </button>
     </div>
 
