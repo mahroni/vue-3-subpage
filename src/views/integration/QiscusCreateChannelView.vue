@@ -4,7 +4,7 @@
       @click="router.go(-1)"
       class="text-primary flex cursor-pointer items-center gap-2 font-semibold"
     >
-      <Icon name="arrow-left" :size="20" />
+      <Icon name="chevron-left" :size="20" />
       Integration
     </button>
 
