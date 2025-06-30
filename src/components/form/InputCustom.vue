@@ -4,19 +4,36 @@
     <div :class="wrapperClasses({ isFocused, error, disabled })">
       <div :class="contentWrapperClasses()">
         <slot name="suffix-icon" />
-        <input :id="id" :type="currentType" :class="inputClasses({ disabled })" :value="modelValue"
-          @input="onInput" @focus="isFocused = true" @blur="isFocused = false"
-          :placeholder="placeholder" :disabled="disabled" />
+        <input
+          :id="id"
+          :type="currentType"
+          :class="inputClasses({ disabled })"
+          :value="modelValue"
+          @input="onInput"
+          @focus="isFocused = true"
+          @blur="isFocused = false"
+          :placeholder="placeholder"
+          :disabled="disabled"
+        />
 
-        <button v-if="clearable"
-          class="invisible cursor-pointer transition-colors duration-300 ease-in-out" :class="{
+        <button
+          v-if="clearable"
+          class="invisible cursor-pointer transition-colors duration-300 ease-in-out"
+          :class="{
             visible: modelValue,
-          }" @click="onClear" :disabled="disabled">
+          }"
+          @click="onClear"
+          :disabled="disabled"
+        >
           <Icon name="close" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
 
-        <button v-if="type === 'password'" class="cursor-pointer" @click="togglePasswordVisibility"
-          :disabled="disabled">
+        <button
+          v-if="type === 'password'"
+          class="cursor-pointer"
+          @click="togglePasswordVisibility"
+          :disabled="disabled"
+        >
           <Icon :name="passwordIcon" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
       </div>
@@ -142,12 +159,15 @@ const appendButtonClasses = cva(
   }
 );
 
-const appendButtonIconClasses = cva('flex min-w-fit cursor-pointer items-center justify-center bg-white p-4', {
-  variants: {
-    disabled: {
-      true: 'text-[#A0A0A0]',
-      false: 'text-primary',
+const appendButtonIconClasses = cva(
+  'flex min-w-fit cursor-pointer items-center justify-center bg-white p-3',
+  {
+    variants: {
+      disabled: {
+        true: 'text-[#A0A0A0]',
+        false: 'text-primary',
+      },
     },
-  },
-});
+  }
+);
 </script>

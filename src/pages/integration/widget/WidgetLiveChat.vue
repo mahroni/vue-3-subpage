@@ -2,9 +2,18 @@
 import { type Component, ref } from 'vue';
 
 import RoundedTab from '@/components/common/Tabs/RoundedTab.vue';
-import { ChatOutlineIcon, IntegrationIcon, PalleteIcon, ServerIcon, TableIcon, ToggleLeftIcon } from '@/components/icons';
+import {
+  ChatOutlineIcon,
+  IntegrationIcon,
+  PalleteIcon,
+  ServerIcon,
+  TableIcon,
+  ToggleLeftIcon,
+} from '@/components/icons';
+
 import CallToAction from './widget-builder/CallToAction.vue';
 import Chat from './widget-builder/Chat.vue';
+import ColorScheme from './widget-builder/ColorScheme.vue';
 import LoginForm from './widget-builder/LoginForm.vue';
 import WelcomeDialog from './widget-builder/WelcomeDialog.vue';
 import Channels from './widget-builder/channels/Channels.vue';
@@ -15,13 +24,13 @@ interface Tab {
 }
 
 const tabs = [
-    { label: 'Welcome Dialog', icon: ServerIcon },
-    { label: 'Call to Action', icon: ToggleLeftIcon },
-    { label: 'Channels', icon: IntegrationIcon },
-    { label: 'Login Form', icon: TableIcon},
-    { label: 'Chat', icon: ChatOutlineIcon},
-    { label: 'Color Scheme', icon: PalleteIcon}
-] as Tab[]
+  { label: 'Welcome Dialog', icon: ServerIcon },
+  { label: 'Call to Action', icon: ToggleLeftIcon },
+  { label: 'Channels', icon: IntegrationIcon },
+  { label: 'Login Form', icon: TableIcon },
+  { label: 'Chat', icon: ChatOutlineIcon },
+  { label: 'Color Scheme', icon: PalleteIcon },
+] as Tab[];
 
 const activeTab = ref(tabs[0]?.label || '');
 </script>
@@ -43,10 +52,13 @@ const activeTab = ref(tabs[0]?.label || '');
       </template>
       <template v-if="activeTab === 'Login Form'">
         <LoginForm />
-    </template>
-    <template v-if="activeTab === 'Chat'">
+      </template>
+      <template v-if="activeTab === 'Chat'">
         <Chat />
-    </template>
+      </template>
+      <template v-if="activeTab === 'Color Scheme'">
+        <ColorScheme />
+      </template>
     </div>
   </div>
 </template>
