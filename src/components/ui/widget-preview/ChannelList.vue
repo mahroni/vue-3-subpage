@@ -29,18 +29,28 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <div
-    class="text-navy-500 flex w-[360px] flex-col rounded-4xl bg-white shadow-[0px_8px_32px_0px_#0A0A0A1F]"
-  >
-    <div class="flex-1 p-8">
-      <ButtonIcon>
-        <ChevronLeftIcon :size="24" class="!text-navy-500" />
-      </ButtonIcon>
+  <div class="flex w-[360px] flex-col rounded-4xl bg-white shadow-[0px_8px_32px_0px_#0A0A0A1F]">
+    <!-- Main Section -->
+    <div class="flex flex-col gap-8 p-8">
+      <!-- Header Section -->
+      <div class="flex flex-col gap-6">
+        <ButtonIcon>
+          <ChevronLeftIcon :size="24" class="!text-navy-500" />
+        </ButtonIcon>
 
-      <div class="mt-6 text-2xl">{{ props.title }}</div>
-      <div class="text-2xl font-bold">{{ props.subtitle }}</div>
+        <div class="text-surface-primary-blue flex flex-col">
+          <div class="mt-6 text-2xl">{{ props.title }}</div>
+          <div class="text-2xl font-bold">{{ props.subtitle }}</div>
+        </div>
+      </div>
 
-      <div class="mt-8 flex max-h-[350px] flex-col gap-2 overflow-y-auto">
+      <!-- Channel List Section -->
+      <div class="flex max-h-[350px] flex-col gap-4 overflow-y-auto">
+        <p v-if="props.introduction" class="text-text-title text-sm font-medium">
+          {{ props.introduction }}
+        </p>
+
+        <!-- Channel List Item -->
         <button
           v-for="action in props.channels"
           :key="action.label"
@@ -64,6 +74,7 @@ const props = withDefaults(defineProps<Props>(), {
           </div>
         </button>
 
+        <!-- Skeleton Loading -->
         <div
           v-for="i in 2"
           :key="i"
@@ -72,6 +83,7 @@ const props = withDefaults(defineProps<Props>(), {
       </div>
     </div>
 
+    <!-- Footer Section (Powered by Qiscus) -->
     <div class="border-t border-gray-300 py-2 text-center text-xs font-medium text-[#0A0A0A]">
       Powered by <span class="text-link-400">Qiscus</span>
     </div>

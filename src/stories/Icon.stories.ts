@@ -509,6 +509,44 @@ export const AllIcons: Story = {
           <Icon name="sign" :size="24" />
           <p class="text-xs mt-2">sign</p>
         </div>
+
+        <!-- Channel Icons -->
+        <div class="text-center">
+          <Icon name="widget" :size="24" />
+          <p class="text-xs mt-2">widget</p>
+        </div>
+        <div class="text-center">
+          <Icon name="whatsapp" :size="24" />
+          <p class="text-xs mt-2">whatsapp</p>
+        </div>
+        <div class="text-center">
+          <Icon name="facebook" :size="24" />
+          <p class="text-xs mt-2">facebook</p>
+        </div>
+        <div class="text-center">
+          <Icon name="line" :size="24" />
+          <p class="text-xs mt-2">line</p>
+        </div>
+        <div class="text-center">
+          <Icon name="telegram" :size="24" />
+          <p class="text-xs mt-2">telegram</p>
+        </div>
+        <div class="text-center">
+          <Icon name="instagram" :size="24" />
+          <p class="text-xs mt-2">instagram</p>
+        </div>
+        <div class="text-center">
+          <Icon name="tiktok" :size="24" />
+          <p class="text-xs mt-2">tiktok</p>
+        </div>
+        <div class="text-center">
+          <Icon name="custom-channel" :size="24" />
+          <p class="text-xs mt-2">custom-channel</p>
+        </div>
+        <div class="text-center">
+          <Icon name="bot" :size="24" />
+          <p class="text-xs mt-2">bot</p>
+        </div>
       </div>
     `,
   }),
@@ -823,10 +861,66 @@ export const OmnichannelIcon: Story = {
   },
 };
 
-// Error handling
-export const IconNotFound: Story = {
+// Channel Icons - Individual Stories
+export const WidgetChannelIcon: Story = {
   args: {
-    name: 'non-existent-icon',
+    name: 'widget',
+    size: 32,
+  },
+};
+
+export const WhatsappChannelIcon: Story = {
+  args: {
+    name: 'whatsapp',
+    size: 32,
+  },
+};
+
+export const FacebookChannelIcon: Story = {
+  args: {
+    name: 'facebook',
+    size: 32,
+  },
+};
+
+export const LineChannelIcon: Story = {
+  args: {
+    name: 'line',
+    size: 32,
+  },
+};
+
+export const TelegramChannelIcon: Story = {
+  args: {
+    name: 'telegram',
+    size: 32,
+  },
+};
+
+export const InstagramChannelIcon: Story = {
+  args: {
+    name: 'instagram',
+    size: 32,
+  },
+};
+
+export const TiktokChannelIcon: Story = {
+  args: {
+    name: 'tiktok',
+    size: 32,
+  },
+};
+
+export const CustomChannelIcon: Story = {
+  args: {
+    name: 'custom-channel',
+    size: 32,
+  },
+};
+
+export const BotChannelIcon: Story = {
+  args: {
+    name: 'bot',
     size: 32,
   },
 };

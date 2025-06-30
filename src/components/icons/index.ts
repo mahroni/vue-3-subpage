@@ -1,6 +1,9 @@
 // Main Icon component
 export { default as Icon } from './Icon.vue';
 
+// Export the IconName type for external use
+export type { IconName } from './Icon.vue';
+
 // Individual Icon components (alphabetically sorted)
 export { default as AdditionalInformation } from './AdditionalInformation.vue';
 export { default as AgentManagementIcon } from './AgentManagementIcon.vue';
@@ -69,6 +72,7 @@ export { default as PredifinedMessageIcon } from './PredifinedMessageIcon.vue';
 export { default as PresentationIcon } from './PresentationIcon.vue';
 export { default as PuzzleIcon } from './PuzzleIcon.vue';
 export { default as QCRMIcon } from './QCRMIcon.vue';
+export { default as QiscusIcon } from './QiscusIcon.vue';
 export { default as QTicketingIcon } from './QTicketingIcon.vue';
 export { default as RefreshIcon } from './RefreshIcon.vue';
 export { default as ReplyIcon } from './ReplyIcon.vue';
@@ -77,6 +81,7 @@ export { default as SearchIcon } from './SearchIcon.vue';
 export { default as SendIcon } from './SendIcon.vue';
 export { default as SettingIcon } from './SettingIcon.vue';
 export { default as ShopIcon } from './ShopIcon.vue';
+export { default as SignIcon } from './SignIcon.vue';
 export { default as SquareIcon } from './SquareIcon.vue';
 export { default as SubmitTicketIcon } from './SubmitTicketIcon.vue';
 export { default as SubscriptionIcon } from './SubscriptionIcon.vue';
@@ -91,8 +96,3 @@ export { default as WarningIcon } from './WarningIcon.vue';
 export { default as WhatsappBusinessIcon } from './WhatsappBusinessIcon.vue';
 export { default as WindowIcon } from './WindowIcon.vue';
 export { default as WorkFlowIcon } from './WorkFlowIcon.vue';
-export { default as QiscusIcon } from './QiscusIcon.vue';
-export { default as SignIcon } from './SignIcon.vue';
-
-// Channel Icons (from subdirectory)
-export { default as WidgetIcon } from './channel-icons/WidgetIcon.vue';

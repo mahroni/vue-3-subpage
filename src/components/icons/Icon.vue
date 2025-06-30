@@ -98,17 +98,6 @@ import {
   WorkFlowIcon,
 } from './index';
 
-interface IconProps {
-  name: string;
-  size?: number;
-  class?: string;
-}
-
-const props = withDefaults(defineProps<IconProps>(), {
-  size: 24,
-  class: '',
-});
-
 // Icon registry - maps icon names to components
 const iconRegistry = {
   inbox: InboxIcon,
@@ -197,17 +186,30 @@ const iconRegistry = {
   square: SquareIcon,
   'user-circle': UserCircleIcon,
   omnichannel: OmnichannelIcon,
-  // Common icons
   home: HomeIcon,
   'double-chevron-left': DoubleChevronLeftIcon,
   'double-chevron-right': DoubleChevronRightIcon,
   qiscus: QiscusIcon,
   sign: SignIcon,
-};
+
+} as const;
+
+// Extract icon names as a union type for TypeScript autocomplete
+export type IconName = keyof typeof iconRegistry;
+
+interface IconProps {
+  name: IconName; // Now type-safe with autocomplete
+  size?: number;
+  class?: string;
+}
+
+const props = withDefaults(defineProps<IconProps>(), {
+  size: 24,
+  class: '',
+});
 
 const iconComponent = computed(() => {
-  const iconName = props.name.toLowerCase();
-  return iconRegistry[iconName as keyof typeof iconRegistry];
+  return iconRegistry[props.name];
 });
 
 const iconClasses = computed(() => {

@@ -15,6 +15,7 @@ const props = withDefaults(
   <svg
     :width="props.size"
     :height="props.size"
+    :class="props.class"
     viewBox="0 0 18 18"
     fill="none"
     stroke="currentColor"
