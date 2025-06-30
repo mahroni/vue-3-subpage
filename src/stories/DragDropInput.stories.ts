@@ -52,6 +52,10 @@ const meta: Meta<typeof DragDropInput> = {
       control: { type: 'boolean' },
       description: 'Disable the input',
     },
+    isUploading: {
+      control: { type: 'boolean' },
+      description: 'Show uploading state',
+    },
   },
   tags: ['autodocs'],
 };
@@ -69,11 +73,14 @@ export const Default: Story = {
     components: { DragDropInput },
     setup() {
       const files = ref<File[]>([]);
-      return { args, files };
+      const handleUpload = (uploadedFiles: File[]) => {
+        files.value = uploadedFiles;
+      };
+      return { args, files, handleUpload };
     },
     template: `
       <div class="w-96">
-        <DragDropInput v-bind="args" v-model="files" />
+        <DragDropInput v-bind="args" @upload="handleUpload" />
         <div v-if="files.length > 0" class="mt-4">
           <p class="text-sm font-medium">Selected files:</p>
           <ul class="text-xs text-gray-600">
@@ -98,11 +105,14 @@ export const SingleFile: Story = {
     components: { DragDropInput },
     setup() {
       const files = ref<File[]>([]);
-      return { args, files };
+      const handleUpload = (uploadedFiles: File[]) => {
+        files.value = uploadedFiles;
+      };
+      return { args, files, handleUpload };
     },
     template: `
       <div class="w-96">
-        <DragDropInput v-bind="args" v-model="files" />
+        <DragDropInput v-bind="args" @upload="handleUpload" />
       </div>
     `,
   }),
@@ -122,11 +132,14 @@ export const MultipleFiles: Story = {
     components: { DragDropInput },
     setup() {
       const files = ref<File[]>([]);
-      return { args, files };
+      const handleUpload = (uploadedFiles: File[]) => {
+        files.value = uploadedFiles;
+      };
+      return { args, files, handleUpload };
     },
     template: `
       <div class="w-96">
-        <DragDropInput v-bind="args" v-model="files" />
+        <DragDropInput v-bind="args" @upload="handleUpload" />
       </div>
     `,
   }),
@@ -143,11 +156,14 @@ export const WithError: Story = {
     components: { DragDropInput },
     setup() {
       const files = ref<File[]>([]);
-      return { args, files };
+      const handleUpload = (uploadedFiles: File[]) => {
+        files.value = uploadedFiles;
+      };
+      return { args, files, handleUpload };
     },
     template: `
       <div class="w-96">
-        <DragDropInput v-bind="args" v-model="files" />
+        <DragDropInput v-bind="args" @upload="handleUpload" />
       </div>
     `,
   }),
@@ -163,11 +179,37 @@ export const Disabled: Story = {
     components: { DragDropInput },
     setup() {
       const files = ref<File[]>([]);
-      return { args, files };
+      const handleUpload = (uploadedFiles: File[]) => {
+        files.value = uploadedFiles;
+      };
+      return { args, files, handleUpload };
     },
     template: `
       <div class="w-96">
-        <DragDropInput v-bind="args" v-model="files" />
+        <DragDropInput v-bind="args" @upload="handleUpload" />
+      </div>
+    `,
+  }),
+};
+
+// Loading/Uploading state
+export const Uploading: Story = {
+  args: {
+    label: 'Upload Files (Uploading)',
+    isUploading: true,
+  },
+  render: (args) => ({
+    components: { DragDropInput },
+    setup() {
+      const files = ref<File[]>([]);
+      const handleUpload = (uploadedFiles: File[]) => {
+        files.value = uploadedFiles;
+      };
+      return { args, files, handleUpload };
+    },
+    template: `
+      <div class="w-96">
+        <DragDropInput v-bind="args" @upload="handleUpload" />
       </div>
     `,
   }),
@@ -187,11 +229,14 @@ export const LargeFiles: Story = {
     components: { DragDropInput },
     setup() {
       const files = ref<File[]>([]);
-      return { args, files };
+      const handleUpload = (uploadedFiles: File[]) => {
+        files.value = uploadedFiles;
+      };
+      return { args, files, handleUpload };
     },
     template: `
       <div class="w-96">
-        <DragDropInput v-bind="args" v-model="files" />
+        <DragDropInput v-bind="args" @upload="handleUpload" />
       </div>
     `,
   }),
@@ -207,11 +252,14 @@ export const NoLabel: Story = {
     components: { DragDropInput },
     setup() {
       const files = ref<File[]>([]);
-      return { args, files };
+      const handleUpload = (uploadedFiles: File[]) => {
+        files.value = uploadedFiles;
+      };
+      return { args, files, handleUpload };
     },
     template: `
       <div class="w-96">
-        <DragDropInput v-bind="args" v-model="files" />
+        <DragDropInput v-bind="args" @upload="handleUpload" />
       </div>
     `,
   }),
@@ -233,6 +281,15 @@ export const Interactive: Story = {
       const files = ref<File[]>([]);
       const errorMessage = ref('');
       const hasError = ref(false);
+      const isUploading = ref(false);
+
+      const handleUpload = async (uploadedFiles: File[]) => {
+        isUploading.value = true;
+        // Simulate upload delay
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        files.value = uploadedFiles;
+        isUploading.value = false;
+      };
 
       const handleError = (message: string) => {
         errorMessage.value = message;
@@ -243,15 +300,16 @@ export const Interactive: Story = {
         }, 3000);
       };
 
-      return { args, files, errorMessage, hasError, handleError };
+      return { args, files, errorMessage, hasError, isUploading, handleUpload, handleError };
     },
     template: `
       <div class="w-96 space-y-4">
         <DragDropInput 
           v-bind="args" 
-          v-model="files" 
           :error="hasError"
           :error-message="errorMessage"
+          :is-uploading="isUploading"
+          @upload="handleUpload"
           @error="handleError"
         />
         
@@ -281,7 +339,27 @@ export const AllVariants: Story = {
       const singleFile = ref<File[]>([]);
       const multipleFiles = ref<File[]>([]);
       const errorFiles = ref<File[]>([]);
-      return { singleFile, multipleFiles, errorFiles };
+
+      const handleSingleUpload = (files: File[]) => {
+        singleFile.value = files;
+      };
+
+      const handleMultipleUpload = (files: File[]) => {
+        multipleFiles.value = files;
+      };
+
+      const handleErrorUpload = (files: File[]) => {
+        errorFiles.value = files;
+      };
+
+      return {
+        singleFile,
+        multipleFiles,
+        errorFiles,
+        handleSingleUpload,
+        handleMultipleUpload,
+        handleErrorUpload,
+      };
     },
     template: `
       <div class="space-y-8 w-full max-w-4xl">
@@ -289,12 +367,12 @@ export const AllVariants: Story = {
           <h3 class="text-lg font-semibold mb-4">Single File Upload</h3>
           <div class="w-96">
             <DragDropInput 
-              v-model="singleFile"
               label="Upload Profile Picture"
               :multiple="false"
               accept="image/*"
               accept-text="PNG, JPG up to 2MB"
               :max-size="2 * 1024 * 1024"
+              @upload="handleSingleUpload"
             />
           </div>
         </div>
@@ -303,13 +381,13 @@ export const AllVariants: Story = {
           <h3 class="text-lg font-semibold mb-4">Multiple Files Upload</h3>
           <div class="w-96">
             <DragDropInput 
-              v-model="multipleFiles"
               label="Upload Documents"
               :multiple="true"
               accept=".pdf,.doc,.docx"
               accept-text="PDF, DOC, DOCX up to 10MB each"
               :max-size="10 * 1024 * 1024"
               :max-files="5"
+              @upload="handleMultipleUpload"
             />
           </div>
         </div>
@@ -318,10 +396,10 @@ export const AllVariants: Story = {
           <h3 class="text-lg font-semibold mb-4">Error State</h3>
           <div class="w-96">
             <DragDropInput 
-              v-model="errorFiles"
               label="Upload with Error"
               :error="true"
               error-message="File validation failed"
+              @upload="handleErrorUpload"
             />
           </div>
         </div>
@@ -332,6 +410,16 @@ export const AllVariants: Story = {
             <DragDropInput 
               label="Disabled Upload"
               :disabled="true"
+            />
+          </div>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Uploading State</h3>
+          <div class="w-96">
+            <DragDropInput 
+              label="Uploading Files"
+              :is-uploading="true"
             />
           </div>
         </div>

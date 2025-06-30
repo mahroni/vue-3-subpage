@@ -1,3 +1,85 @@
+<template>
+  <div class="flex w-full items-start gap-8 self-stretch p-4 justify-between">
+    <div class="flex flex-col gap-8 w-full flex-1">
+      <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
+        <template #inputs>
+          <ImageInput label="Brand Icon" id="welcome-dialog-image"
+            v-model="welcomeDialogReact.brandIcon" :isUploading="welcomeDialogReact.isUploading"
+            @upload="uploadImage">
+            <template #tips>
+              <div class="text-[#A0A0A0] text-sm font-normal">
+                We recommend an image of at least 360x360 pixels. You can upload images in JPG,
+                JPEG, or
+                PNG format with a maximum size of 2MB.
+              </div>
+            </template>
+          </ImageInput>
+          <TextArea v-model="welcomeDialogReact.firstDescription" label="First Description" />
+          <TextArea v-model="welcomeDialogReact.secondDescription" label="Second Description" />
+          <ImageInput v-model="welcomeDialogActions.iconUrl" label="Icon" id="welcome-dialog-icon">
+            <template #tips>
+              <div class="text-[#A0A0A0] text-sm font-normal">
+                We recommend an image of at least 360x360 pixels. You can upload images in JPG,
+                JPEG, or
+                PNG format with a maximum size of 2MB.
+              </div>
+            </template>
+          </ImageInput>
+          <Input v-model="welcomeDialogActions.label" label="Description" />
+          <InputCustom v-model="welcomeDialogReact.appearDelay" label="Appear Delay">
+            <template #append-button>
+              <div class="text-text-title text-sm font-medium">Seconds</div>
+            </template>
+          </InputCustom>
+          <Checkbox v-model="welcomeDialogReact.isMakeAutoExpand" label="Make Auto Expand" />
+        </template>
+      </WidgetFormLayout>
+      <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
+        <template #additional-info>
+          <Banner intent="warning" type="solid">
+            <div class="flex items-center gap-4">
+              <WarningIcon :size="24" class="text-negative-400" />
+              <span class="text-text-title text-sm font-normal">
+                Welcome dialog won't be rendered if attention grabber is active
+              </span>
+            </div>
+          </Banner>
+        </template>
+        <template #inputs>
+          <OptionalInput label="Image" v-model="welcomeDialogReact.isAttentionGrabberImage">
+            <DragDropInput label="Upload Image" accept="image/png,image/jpg" acceptText="PNG or JPG"
+              :maxSize="31457280" :maxFiles="1" :isUploading="welcomeDialogReact.isAttentionGrabberUploading" @upload="uploadAttentionGrabberImage"/>
+          </OptionalInput>
+          <OptionalInput label="Text" v-model="welcomeDialogReact.isAttentionGrabberText">
+            <TextArea v-model="welcomeDialogReact.attentionGrabberTextDescription"
+              label="Text Description" />
+          </OptionalInput>
+          <InputCustom v-model="welcomeDialogReact.attentionGrabberAppearDelay"
+            label="Appear Delay">
+            <template #append-button>
+              <div class="text-text-title text-sm font-medium">Seconds</div>
+            </template>
+          </InputCustom>
+        </template>
+      </WidgetFormLayout>
+    </div>
+
+    <!-- PREVIEW -->
+    <div v-if="welcomeDialogReact.isWelcomeDialog" class="flex p-6 flex-1 flex-col items-end">
+      <WelcomingPage :title="welcomeDialogReact.firstDescription" :subtitle="welcomeDialogReact.secondDescription"
+        :imageUrl="welcomeDialogReact.brandIcon" :actions="welcomeDialogReact.actions" />
+    </div>
+
+    <div v-else-if="welcomeDialogReact.isAttentionGrabber" class="flex p-6 flex-1 flex-col items-end">
+      <AttentionGrabber :imageUrl="welcomeDialogReact.isAttentionGrabberImage ? welcomeDialogReact.attentionGrabberImage : ''" :title="welcomeDialogReact.isAttentionGrabberText ? welcomeDialogReact.attentionGrabberTextDescription : ''" />
+    </div>
+
+    <div v-else class="flex p-6 flex-1 flex-col items-end">
+      <WelcomingPageLoading/>
+    </div>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import { computed, reactive } from 'vue';
 
@@ -10,28 +92,41 @@ import InputCustom from '@/components/form/InputCustom.vue';
 import TextArea from '@/components/form/TextArea.vue';
 import { WarningIcon } from '@/components/icons';
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
-import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import AttentionGrabber from '@/components/ui/widget-preview/AttentionGrabber.vue';
+import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import OptionalInput from '../form/OptionalInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
+
+const welcomeDialogActions = reactive(
+  {
+    label: 'Ask for Questions',
+    iconUrl: '',
+  },
+);
 
 const welcomeDialogReact = reactive({
   isWelcomeDialog: true,
   isAttentionGrabber: false,
-  firstDescription: '',
-  secondDescription: '',
-  description: '',
+  firstDescription: 'Hello There,',
+  secondDescription: 'Welcome to Qiscus',
+  description: 'Ask for Questions',
   appearDelay: '',
   isMakeAutoExpand: false,
   isAttentionGrabberImage: true,
   isAttentionGrabberText: true,
   attentionGrabberTextDescription: '',
   attentionGrabberAppearDelay: '',
+  attentionGrabberImage: '',
   brandIcon: '',
   isUploading: false,
+  isAttentionGrabberUploading: false,
+  actions: [
+    welcomeDialogActions,
+  ],
 });
 
-const qiscusLiveChatStore = useQiscusLiveChatStore();
+
 
 // mock upload image
 const uploadImage = async (file: File, revertPreview: () => void) => {
@@ -50,6 +145,27 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
     revertPreview();
   } finally {
     welcomeDialogReact.isUploading = false;
+  }
+};
+
+const uploadAttentionGrabberImage = async (files: File[]) => {
+  const file = files[0]; // Take the first file since maxFiles is 1
+  if (!file) return;
+  
+  const formData = new FormData();
+  formData.append('file', file);
+  welcomeDialogReact.isAttentionGrabberUploading = true;
+  try {
+    const response = await fetch('/upload', {
+      method: 'POST',
+      body: formData,
+    });
+    const data = await response.json();
+    welcomeDialogReact.attentionGrabberImage = data.data.imageUrl;
+  } catch (error) {
+    console.error(error);
+  } finally {
+    welcomeDialogReact.isAttentionGrabberUploading = false;
   }
 };
 
@@ -75,92 +191,3 @@ const attentionGrabber = computed({
   },
 });
 </script>
-
-<template>
-  <div class="flex w-full items-start gap-8 self-stretch">
-    <!-- Form Section -->
-    <div class="flex w-full flex-1 flex-col gap-8">
-      <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
-        <template #inputs>
-          <ImageInput
-            label="Brand Icon"
-            id="welcome-dialog-image"
-            tipsText="We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB."
-            :showTips="true"
-            v-model="welcomeDialogReact.brandIcon"
-            :isUploading="welcomeDialogReact.isUploading"
-            @upload="uploadImage"
-          />
-          <TextArea v-model="qiscusLiveChatStore.previewTitle" label="Greeting Title" />
-          <TextArea v-model="qiscusLiveChatStore.previewSubtitle" label="Welcome Message" />
-          <ImageInput
-            label="Icon"
-            id="welcome-dialog-icon"
-            tipsText="We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB."
-            :showTips="true"
-          />
-          <Input v-model="welcomeDialogReact.description" label="Description" />
-          <InputCustom v-model="welcomeDialogReact.appearDelay" label="Appear Delay">
-            <template #append-button>
-              <div class="text-text-title text-sm font-medium">Seconds</div>
-            </template>
-          </InputCustom>
-          <Checkbox v-model="welcomeDialogReact.isMakeAutoExpand" label="Make Auto Expand" />
-        </template>
-      </WidgetFormLayout>
-
-      <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
-        <template #additional-info>
-          <Banner intent="warning" type="solid">
-            <div class="flex items-center gap-4">
-              <WarningIcon :size="24" class="text-negative-400" />
-              <span class="text-text-title text-sm font-normal">
-                Welcome dialog won't be rendered if attention grabber is active
-              </span>
-            </div>
-          </Banner>
-        </template>
-        <template #inputs>
-          <OptionalInput label="Image" v-model="welcomeDialogReact.isAttentionGrabberImage">
-            <DragDropInput
-              label="Upload Image"
-              accept="image/png,image/jpg"
-              acceptText="PNG or JPG"
-              :maxSize="31457280"
-              :maxFiles="5"
-            />
-          </OptionalInput>
-          <OptionalInput label="Text" v-model="welcomeDialogReact.isAttentionGrabberText">
-            <TextArea
-              v-model="welcomeDialogReact.attentionGrabberTextDescription"
-              label="Text Description"
-            />
-          </OptionalInput>
-          <InputCustom
-            v-model="welcomeDialogReact.attentionGrabberAppearDelay"
-            label="Appear Delay"
-          >
-            <template #append-button>
-              <div class="text-text-title text-sm font-medium">Seconds</div>
-            </template>
-          </InputCustom>
-        </template>
-      </WidgetFormLayout>
-    </div>
-
-    <!-- Preview Section -->
-    <div class="flex flex-1 flex-col items-end gap-4 p-6">
-      <WelcomingPage
-        :imageUrl="welcomeDialogReact.brandIcon"
-        :title="qiscusLiveChatStore.previewTitle"
-        :subtitle="qiscusLiveChatStore.previewSubtitle"
-        :actions="[
-          {
-            label: 'Ask for Questions',
-            iconUrl: '',
-          },
-        ]"
-      />
-    </div>
-  </div>
-</template>

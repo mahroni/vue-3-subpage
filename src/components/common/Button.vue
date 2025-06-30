@@ -37,7 +37,7 @@ const handleClick = (event: MouseEvent) => {
 };
 
 const buttonClass = computed(() =>
-  cva('font-semibold transition-all duration-200 ease-out transform', {
+  cva('font-semibold transition-all duration-200 ease-out transform flex gap-2 items-center', {
     variants: {
       intent: {
         primary: 'bg-primary text-white shadow-sm hover:shadow-md',
@@ -46,6 +46,7 @@ const buttonClass = computed(() =>
         flat: 'bg-transparent text-primary hover:bg-slate-50',
       },
       size: {
+        xsmall: 'py-1 px-2 text-xs',
         small: 'py-2 px-6 text-sm',
         large: 'py-4 px-8 text-lg',
       },
@@ -162,14 +163,10 @@ const buttonClass = computed(() =>
 </script>
 
 <template>
-  <component
-    :is="componentType"
-    :to="to"
-    :type="isButton ? type : undefined"
-    :disabled="isButton ? disabled : undefined"
-    :class="buttonClass"
-    @click="handleClick"
-  >
+  <component :is="componentType" :to="to" :type="isButton ? type : undefined"
+    :disabled="isButton ? disabled : undefined" :class="buttonClass" @click="handleClick">
+    <slot name="prefixIcon" />
     <slot />
+    <slot name="suffixIcon" />
   </component>
 </template>

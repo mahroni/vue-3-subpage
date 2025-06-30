@@ -40,21 +40,106 @@ Icons use \`currentColor\` so they can be styled with CSS color properties.
     name: {
       control: { type: 'select' },
       options: [
-        'home',
-        'user',
-        'setting',
-        'search',
-        'plus',
-        'copy',
-        'close',
+        'inbox',
         'broadcast',
-        'arrow-down',
-        'arrow-left',
-        'chevron-left',
+        'customer',
+        'analytics',
+        'integration',
+        'app-center',
+        'robolabs',
+        'ticketing',
+        'qcrm',
+        'workflow',
+        'mobile',
+        'setting',
+        'help',
+        'logout',
+        'filter-on',
+        'chat-template',
+        'notes',
+        'credit-card',
+        'user',
+        'predifined-message',
+        'hours',
+        'tags',
+        'bulk-resolved',
+        'send',
+        'customer-properties',
+        'notification',
+        'search',
+        'subscription',
+        'merge',
+        'eye',
+        'custom-agent-allocation',
+        'template-message',
+        'submit-ticket',
+        'whatsapp-business',
+        'general',
+        'agent-management',
+        'api',
+        'copy',
+        'information',
+        'more',
+        'plus',
+        'filter',
+        'edit',
+        'refresh',
+        'puzzle',
+        'success',
+        'error',
+        'attention',
+        'warning',
         'chevron-right',
+        'chevron-left',
+        'chevron-up',
+        'chevron-down',
+        'next-pagination',
+        'back-pagination',
+        'close',
+        'back',
+        'next',
+        'shop',
+        'chat',
+        'minus',
+        'check',
+        'additional-information',
+        'date',
+        'reply',
+        'currencies',
+        'coin-stack',
+        'file-search',
+        'clock-fast-forward',
+        'line-chart',
+        'login',
+        'identification',
+        'window',
+        'package',
+        'newspaper',
+        'megaphone',
+        'edit-file',
+        'presentation',
+        'user-3',
+        'clipboard',
+        'delete',
+        'open-tab',
+        'trending',
+        'square',
+        'user-circle',
+        'omnichannel',
+        'home',
         'double-chevron-left',
         'double-chevron-right',
-        'chat',
+        'qiscus',
+        'sign',
+        'chat-outline',
+        'pallete',
+        'table',
+        'toggle-left',
+        'server',
+        'pin',
+        'briefcase',
+        'globe',
+        'phone',
       ],
       description: 'Icon name to display',
     },
@@ -124,13 +209,12 @@ export const Colors: Story = {
         </div>
         <div class="text-center">
           <Icon name="home" :size="24" class="text-icon-disable" />
-          <p class="text-sm mt-2">Disable </p>
+          <p class="text-sm mt-2">Disabled</p>
         </div>
         <div class="text-center">
           <Icon name="home" :size="30" class="text-icon-white bg-slate-700 p-1 rounded-md" />
           <p class="text-sm mt-2">White</p>
         </div>
-        
       </div>
     `,
   }),
@@ -141,786 +225,417 @@ export const AllIcons: Story = {
   render: () => ({
     components: { Icon },
     template: `
-      <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-10 gap-7">
+      <div class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-10 gap-4">
         <div class="text-center">
           <Icon name="inbox" :size="24" />
-          <p class="text-xs mt-2">inbox</p>
+          <p class="text-xs mt-1">inbox</p>
         </div>
         <div class="text-center">
           <Icon name="broadcast" :size="24" />
-          <p class="text-xs mt-2">broadcast</p>
+          <p class="text-xs mt-1">broadcast</p>
         </div>
         <div class="text-center">
           <Icon name="customer" :size="24" />
-          <p class="text-xs mt-2">customer</p>
+          <p class="text-xs mt-1">customer</p>
         </div>
         <div class="text-center">
           <Icon name="analytics" :size="24" />
-          <p class="text-xs mt-2">analytics</p>
+          <p class="text-xs mt-1">analytics</p>
         </div>
         <div class="text-center">
           <Icon name="integration" :size="24" />
-          <p class="text-xs mt-2">integration</p>
+          <p class="text-xs mt-1">integration</p>
         </div>
         <div class="text-center">
           <Icon name="app-center" :size="24" />
-          <p class="text-xs mt-2">app-center</p>
+          <p class="text-xs mt-1">app-center</p>
         </div>
         <div class="text-center">
           <Icon name="robolabs" :size="24" />
-          <p class="text-xs mt-2">robolabs</p>
+          <p class="text-xs mt-1">robolabs</p>
         </div>
         <div class="text-center">
           <Icon name="ticketing" :size="24" />
-          <p class="text-xs mt-2">ticketing</p>
+          <p class="text-xs mt-1">ticketing</p>
         </div>
         <div class="text-center">
           <Icon name="qcrm" :size="24" />
-          <p class="text-xs mt-2">qcrm</p>
+          <p class="text-xs mt-1">qcrm</p>
         </div>
         <div class="text-center">
           <Icon name="workflow" :size="24" />
-          <p class="text-xs mt-2">workflow</p>
+          <p class="text-xs mt-1">workflow</p>
         </div>
         <div class="text-center">
           <Icon name="mobile" :size="24" />
-          <p class="text-xs mt-2">mobile</p>
+          <p class="text-xs mt-1">mobile</p>
         </div>
         <div class="text-center">
           <Icon name="setting" :size="24" />
-          <p class="text-xs mt-2">setting</p>
+          <p class="text-xs mt-1">setting</p>
         </div>
         <div class="text-center">
           <Icon name="help" :size="24" />
-          <p class="text-xs mt-2">help</p>
+          <p class="text-xs mt-1">help</p>
         </div>
         <div class="text-center">
           <Icon name="logout" :size="24" />
-          <p class="text-xs mt-2">logout</p>
+          <p class="text-xs mt-1">logout</p>
         </div>
         <div class="text-center">
           <Icon name="filter-on" :size="24" />
-          <p class="text-xs mt-2">filter-on</p>
+          <p class="text-xs mt-1">filter-on</p>
         </div>
         <div class="text-center">
           <Icon name="chat-template" :size="24" />
-          <p class="text-xs mt-2">chat-template</p>
+          <p class="text-xs mt-1">chat-template</p>
         </div>
         <div class="text-center">
           <Icon name="notes" :size="24" />
-          <p class="text-xs mt-2">notes</p>
+          <p class="text-xs mt-1">notes</p>
         </div>
         <div class="text-center">
           <Icon name="credit-card" :size="24" />
-          <p class="text-xs mt-2">credit-card</p>
+          <p class="text-xs mt-1">credit-card</p>
         </div>
         <div class="text-center">
           <Icon name="user" :size="24" />
-          <p class="text-xs mt-2">user</p>
+          <p class="text-xs mt-1">user</p>
         </div>
         <div class="text-center">
           <Icon name="predifined-message" :size="24" />
-          <p class="text-xs mt-2">predifined-message</p>
+          <p class="text-xs mt-1">predifined-message</p>
         </div>
         <div class="text-center">
           <Icon name="hours" :size="24" />
-          <p class="text-xs mt-2">hours</p>
+          <p class="text-xs mt-1">hours</p>
         </div>
         <div class="text-center">
           <Icon name="tags" :size="24" />
-          <p class="text-xs mt-2">tags</p>
+          <p class="text-xs mt-1">tags</p>
         </div>
         <div class="text-center">
           <Icon name="bulk-resolved" :size="24" />
-          <p class="text-xs mt-2">bulk-resolved</p>
+          <p class="text-xs mt-1">bulk-resolved</p>
         </div>
         <div class="text-center">
           <Icon name="send" :size="24" />
-          <p class="text-xs mt-2">send</p>
+          <p class="text-xs mt-1">send</p>
         </div>
         <div class="text-center">
           <Icon name="customer-properties" :size="24" />
-          <p class="text-xs mt-2">customer-properties</p>
+          <p class="text-xs mt-1">customer-properties</p>
         </div>
         <div class="text-center">
           <Icon name="notification" :size="24" />
-          <p class="text-xs mt-2">notification</p>
+          <p class="text-xs mt-1">notification</p>
         </div>
         <div class="text-center">
           <Icon name="search" :size="24" />
-          <p class="text-xs mt-2">search</p>
+          <p class="text-xs mt-1">search</p>
         </div>
         <div class="text-center">
           <Icon name="subscription" :size="24" />
-          <p class="text-xs mt-2">subscription</p>
+          <p class="text-xs mt-1">subscription</p>
         </div>
         <div class="text-center">
           <Icon name="merge" :size="24" />
-          <p class="text-xs mt-2">merge</p>
+          <p class="text-xs mt-1">merge</p>
         </div>
         <div class="text-center">
           <Icon name="eye" :size="24" />
-          <p class="text-xs mt-2">eye</p>
+          <p class="text-xs mt-1">eye</p>
         </div>
         <div class="text-center">
           <Icon name="custom-agent-allocation" :size="24" />
-          <p class="text-xs mt-2">custom-agent-allocation</p>
+          <p class="text-xs mt-1">custom-agent-allocation</p>
         </div>
         <div class="text-center">
           <Icon name="template-message" :size="24" />
-          <p class="text-xs mt-2">template-message</p>
+          <p class="text-xs mt-1">template-message</p>
         </div>
         <div class="text-center">
           <Icon name="submit-ticket" :size="24" />
-          <p class="text-xs mt-2">submit-ticket</p>
+          <p class="text-xs mt-1">submit-ticket</p>
         </div>
         <div class="text-center">
           <Icon name="whatsapp-business" :size="24" />
-          <p class="text-xs mt-2">whatsapp-business</p>
+          <p class="text-xs mt-1">whatsapp-business</p>
         </div>
         <div class="text-center">
           <Icon name="general" :size="24" />
-          <p class="text-xs mt-2">general</p>
+          <p class="text-xs mt-1">general</p>
         </div>
         <div class="text-center">
           <Icon name="agent-management" :size="24" />
-          <p class="text-xs mt-2">agent-management</p>
+          <p class="text-xs mt-1">agent-management</p>
         </div>
         <div class="text-center">
           <Icon name="api" :size="24" />
-          <p class="text-xs mt-2">api</p>
+          <p class="text-xs mt-1">api</p>
         </div>
         <div class="text-center">
           <Icon name="copy" :size="24" />
-          <p class="text-xs mt-2">copy</p>
+          <p class="text-xs mt-1">copy</p>
         </div>
         <div class="text-center">
           <Icon name="information" :size="24" />
-          <p class="text-xs mt-2">information</p>
+          <p class="text-xs mt-1">information</p>
         </div>
         <div class="text-center">
           <Icon name="more" :size="24" />
-          <p class="text-xs mt-2">more</p>
+          <p class="text-xs mt-1">more</p>
         </div>
         <div class="text-center">
           <Icon name="plus" :size="24" />
-          <p class="text-xs mt-2">plus</p>
+          <p class="text-xs mt-1">plus</p>
         </div>
         <div class="text-center">
           <Icon name="filter" :size="24" />
-          <p class="text-xs mt-2">filter</p>
+          <p class="text-xs mt-1">filter</p>
         </div>
         <div class="text-center">
           <Icon name="edit" :size="24" />
-          <p class="text-xs mt-2">edit</p>
+          <p class="text-xs mt-1">edit</p>
         </div>
         <div class="text-center">
           <Icon name="refresh" :size="24" />
-          <p class="text-xs mt-2">refresh</p>
+          <p class="text-xs mt-1">refresh</p>
         </div>
         <div class="text-center">
           <Icon name="puzzle" :size="24" />
-          <p class="text-xs mt-2">puzzle</p>
+          <p class="text-xs mt-1">puzzle</p>
         </div>
         <div class="text-center">
           <Icon name="success" :size="24" />
-          <p class="text-xs mt-2">success</p>
+          <p class="text-xs mt-1">success</p>
         </div>
         <div class="text-center">
           <Icon name="error" :size="24" />
-          <p class="text-xs mt-2">error</p>
+          <p class="text-xs mt-1">error</p>
         </div>
         <div class="text-center">
           <Icon name="attention" :size="24" />
-          <p class="text-xs mt-2">attention</p>
+          <p class="text-xs mt-1">attention</p>
         </div>
         <div class="text-center">
           <Icon name="warning" :size="24" />
-          <p class="text-xs mt-2">warning</p>
+          <p class="text-xs mt-1">warning</p>
         </div>
         <div class="text-center">
           <Icon name="chevron-right" :size="24" />
-          <p class="text-xs mt-2">chevron-right</p>
+          <p class="text-xs mt-1">chevron-right</p>
         </div>
         <div class="text-center">
           <Icon name="chevron-left" :size="24" />
-          <p class="text-xs mt-2">chevron-left</p>
+          <p class="text-xs mt-1">chevron-left</p>
         </div>
         <div class="text-center">
           <Icon name="chevron-up" :size="24" />
-          <p class="text-xs mt-2">chevron-up</p>
+          <p class="text-xs mt-1">chevron-up</p>
         </div>
         <div class="text-center">
           <Icon name="chevron-down" :size="24" />
-          <p class="text-xs mt-2">chevron-down</p>
+          <p class="text-xs mt-1">chevron-down</p>
         </div>
         <div class="text-center">
           <Icon name="next-pagination" :size="24" />
-          <p class="text-xs mt-2">next-pagination</p>
+          <p class="text-xs mt-1">next-pagination</p>
         </div>
         <div class="text-center">
           <Icon name="back-pagination" :size="24" />
-          <p class="text-xs mt-2">back-pagination</p>
+          <p class="text-xs mt-1">back-pagination</p>
         </div>
         <div class="text-center">
           <Icon name="close" :size="24" />
-          <p class="text-xs mt-2">close</p>
+          <p class="text-xs mt-1">close</p>
         </div>
         <div class="text-center">
           <Icon name="back" :size="24" />
-          <p class="text-xs mt-2">back</p>
+          <p class="text-xs mt-1">back</p>
         </div>
         <div class="text-center">
           <Icon name="next" :size="24" />
-          <p class="text-xs mt-2">next</p>
+          <p class="text-xs mt-1">next</p>
         </div>
         <div class="text-center">
           <Icon name="shop" :size="24" />
-          <p class="text-xs mt-2">shop</p>
+          <p class="text-xs mt-1">shop</p>
         </div>
         <div class="text-center">
           <Icon name="chat" :size="24" />
-          <p class="text-xs mt-2">chat</p>
+          <p class="text-xs mt-1">chat</p>
         </div>
         <div class="text-center">
           <Icon name="minus" :size="24" />
-          <p class="text-xs mt-2">minus</p>
+          <p class="text-xs mt-1">minus</p>
         </div>
         <div class="text-center">
           <Icon name="check" :size="24" />
-          <p class="text-xs mt-2">check</p>
+          <p class="text-xs mt-1">check</p>
         </div>
         <div class="text-center">
           <Icon name="additional-information" :size="24" />
-          <p class="text-xs mt-2">additional-information</p>
+          <p class="text-xs mt-1">additional-information</p>
         </div>
         <div class="text-center">
           <Icon name="date" :size="24" />
-          <p class="text-xs mt-2">date</p>
+          <p class="text-xs mt-1">date</p>
         </div>
         <div class="text-center">
           <Icon name="reply" :size="24" />
-          <p class="text-xs mt-2">reply</p>
+          <p class="text-xs mt-1">reply</p>
         </div>
         <div class="text-center">
           <Icon name="currencies" :size="24" />
-          <p class="text-xs mt-2">currencies</p>
+          <p class="text-xs mt-1">currencies</p>
         </div>
         <div class="text-center">
           <Icon name="coin-stack" :size="24" />
-          <p class="text-xs mt-2">coin-stack</p>
+          <p class="text-xs mt-1">coin-stack</p>
         </div>
         <div class="text-center">
           <Icon name="file-search" :size="24" />
-          <p class="text-xs mt-2">file-search</p>
+          <p class="text-xs mt-1">file-search</p>
         </div>
         <div class="text-center">
           <Icon name="clock-fast-forward" :size="24" />
-          <p class="text-xs mt-2">clock-fast-forward</p>
+          <p class="text-xs mt-1">clock-fast-forward</p>
         </div>
         <div class="text-center">
           <Icon name="line-chart" :size="24" />
-          <p class="text-xs mt-2">line-chart</p>
+          <p class="text-xs mt-1">line-chart</p>
         </div>
         <div class="text-center">
           <Icon name="login" :size="24" />
-          <p class="text-xs mt-2">login</p>
+          <p class="text-xs mt-1">login</p>
         </div>
         <div class="text-center">
           <Icon name="identification" :size="24" />
-          <p class="text-xs mt-2">identification</p>
+          <p class="text-xs mt-1">identification</p>
         </div>
         <div class="text-center">
           <Icon name="window" :size="24" />
-          <p class="text-xs mt-2">window</p>
+          <p class="text-xs mt-1">window</p>
         </div>
         <div class="text-center">
           <Icon name="package" :size="24" />
-          <p class="text-xs mt-2">package</p>
+          <p class="text-xs mt-1">package</p>
         </div>
         <div class="text-center">
           <Icon name="newspaper" :size="24" />
-          <p class="text-xs mt-2">newspaper</p>
+          <p class="text-xs mt-1">newspaper</p>
         </div>
         <div class="text-center">
           <Icon name="megaphone" :size="24" />
-          <p class="text-xs mt-2">megaphone</p>
+          <p class="text-xs mt-1">megaphone</p>
         </div>
         <div class="text-center">
           <Icon name="edit-file" :size="24" />
-          <p class="text-xs mt-2">edit-file</p>
+          <p class="text-xs mt-1">edit-file</p>
         </div>
         <div class="text-center">
           <Icon name="presentation" :size="24" />
-          <p class="text-xs mt-2">presentation</p>
+          <p class="text-xs mt-1">presentation</p>
         </div>
         <div class="text-center">
           <Icon name="user-3" :size="24" />
-          <p class="text-xs mt-2">user-3</p>
+          <p class="text-xs mt-1">user-3</p>
         </div>
         <div class="text-center">
           <Icon name="clipboard" :size="24" />
-          <p class="text-xs mt-2">clipboard</p>
+          <p class="text-xs mt-1">clipboard</p>
         </div>
         <div class="text-center">
           <Icon name="delete" :size="24" />
-          <p class="text-xs mt-2">delete</p>
+          <p class="text-xs mt-1">delete</p>
         </div>
         <div class="text-center">
           <Icon name="open-tab" :size="24" />
-          <p class="text-xs mt-2">open-tab</p>
+          <p class="text-xs mt-1">open-tab</p>
         </div>
         <div class="text-center">
           <Icon name="trending" :size="24" />
-          <p class="text-xs mt-2">trending</p>
+          <p class="text-xs mt-1">trending</p>
         </div>
         <div class="text-center">
           <Icon name="square" :size="24" />
-          <p class="text-xs mt-2">square</p>
+          <p class="text-xs mt-1">square</p>
         </div>
         <div class="text-center">
           <Icon name="user-circle" :size="24" />
-          <p class="text-xs mt-2">user-circle</p>
+          <p class="text-xs mt-1">user-circle</p>
         </div>
         <div class="text-center">
           <Icon name="omnichannel" :size="24" />
-          <p class="text-xs mt-2">omnichannel</p>
+          <p class="text-xs mt-1">omnichannel</p>
         </div>
-
-
-        <!-- Common icons -->
         <div class="text-center">
           <Icon name="home" :size="24" />
-          <p class="text-xs mt-2">home</p>
+          <p class="text-xs mt-1">home</p>
         </div>
         <div class="text-center">
           <Icon name="double-chevron-left" :size="24" />
-          <p class="text-xs mt-2">double-chevron-left</p>
+          <p class="text-xs mt-1">double-chevron-left</p>
         </div>
         <div class="text-center">
           <Icon name="double-chevron-right" :size="24" />
-          <p class="text-xs mt-2">double-chevron-right</p>
+          <p class="text-xs mt-1">double-chevron-right</p>
         </div>
         <div class="text-center">
           <Icon name="qiscus" :size="24" />
-          <p class="text-xs mt-2">qiscus</p>
+          <p class="text-xs mt-1">qiscus</p>
         </div>
         <div class="text-center">
           <Icon name="sign" :size="24" />
-          <p class="text-xs mt-2">sign</p>
-        </div>
-
-        <!-- Channel Icons -->
-        <div class="text-center">
-          <Icon name="widget" :size="24" />
-          <p class="text-xs mt-2">widget</p>
+          <p class="text-xs mt-1">sign</p>
         </div>
         <div class="text-center">
-          <Icon name="whatsapp" :size="24" />
-          <p class="text-xs mt-2">whatsapp</p>
+          <Icon name="chat-outline" :size="24" />
+          <p class="text-xs mt-1">chat-outline</p>
         </div>
         <div class="text-center">
-          <Icon name="facebook" :size="24" />
-          <p class="text-xs mt-2">facebook</p>
+          <Icon name="pallete" :size="24" />
+          <p class="text-xs mt-1">pallete</p>
         </div>
         <div class="text-center">
-          <Icon name="line" :size="24" />
-          <p class="text-xs mt-2">line</p>
+          <Icon name="table" :size="24" />
+          <p class="text-xs mt-1">table</p>
         </div>
         <div class="text-center">
-          <Icon name="telegram" :size="24" />
-          <p class="text-xs mt-2">telegram</p>
+          <Icon name="toggle-left" :size="24" />
+          <p class="text-xs mt-1">toggle-left</p>
         </div>
         <div class="text-center">
-          <Icon name="instagram" :size="24" />
-          <p class="text-xs mt-2">instagram</p>
+          <Icon name="server" :size="24" />
+          <p class="text-xs mt-1">server</p>
         </div>
         <div class="text-center">
-          <Icon name="tiktok" :size="24" />
-          <p class="text-xs mt-2">tiktok</p>
+          <Icon name="pin" :size="24" />
+          <p class="text-xs mt-1">pin</p>
         </div>
         <div class="text-center">
-          <Icon name="custom-channel" :size="24" />
-          <p class="text-xs mt-2">custom-channel</p>
+          <Icon name="briefcase" :size="24" />
+          <p class="text-xs mt-1">briefcase</p>
         </div>
         <div class="text-center">
-          <Icon name="bot" :size="24" />
-          <p class="text-xs mt-2">bot</p>
+          <Icon name="globe" :size="24" />
+          <p class="text-xs mt-1">globe</p>
+        </div>
+        <div class="text-center">
+          <Icon name="phone" :size="24" />
+          <p class="text-xs mt-1">phone</p>
         </div>
       </div>
     `,
   }),
 };
 
-// Individual icon stories for better documentation
-export const HomeIcon: Story = {
+// Interactive playground
+export const Playground: Story = {
   args: {
     name: 'home',
-    size: 32,
-  },
-};
-
-export const InboxIcon: Story = {
-  args: {
-    name: 'inbox',
-    size: 32,
-  },
-};
-
-export const BroadcastIcon: Story = {
-  args: {
-    name: 'broadcast',
-    size: 32,
-  },
-};
-
-export const CustomerIcon: Story = {
-  args: {
-    name: 'customer',
-    size: 32,
-  },
-};
-
-export const AnalyticsIcon: Story = {
-  args: {
-    name: 'analytics',
-    size: 32,
-  },
-};
-
-export const IntegrationIcon: Story = {
-  args: {
-    name: 'integration',
-    size: 32,
-  },
-};
-
-export const SettingIcon: Story = {
-  args: {
-    name: 'setting',
-    size: 32,
-  },
-};
-
-export const UserIcon: Story = {
-  args: {
-    name: 'user',
-    size: 32,
-  },
-};
-
-export const SearchIcon: Story = {
-  args: {
-    name: 'search',
-    size: 32,
-  },
-};
-
-export const PlusIcon: Story = {
-  args: {
-    name: 'plus',
-    size: 32,
-  },
-};
-
-export const CopyIcon: Story = {
-  args: {
-    name: 'copy',
-    size: 32,
-  },
-};
-
-export const EditIcon: Story = {
-  args: {
-    name: 'edit',
-    size: 32,
-  },
-};
-
-export const DeleteIcon: Story = {
-  args: {
-    name: 'delete',
-    size: 32,
-  },
-};
-
-export const CloseIcon: Story = {
-  args: {
-    name: 'close',
-    size: 32,
-  },
-};
-
-export const FilterIcon: Story = {
-  args: {
-    name: 'filter',
-    size: 32,
-  },
-};
-
-export const RefreshIcon: Story = {
-  args: {
-    name: 'refresh',
-    size: 32,
-  },
-};
-
-export const SuccessIcon: Story = {
-  args: {
-    name: 'success',
-    size: 32,
-  },
-};
-
-export const ErrorIcon: Story = {
-  args: {
-    name: 'error',
-    size: 32,
-  },
-};
-
-export const WarningIcon: Story = {
-  args: {
-    name: 'warning',
-    size: 32,
-  },
-};
-
-export const AttentionIcon: Story = {
-  args: {
-    name: 'attention',
-    size: 32,
-  },
-};
-
-export const ChevronLeftIcon: Story = {
-  args: {
-    name: 'chevron-left',
-    size: 32,
-  },
-};
-
-export const ChevronRightIcon: Story = {
-  args: {
-    name: 'chevron-right',
-    size: 32,
-  },
-};
-
-export const ChevronUpIcon: Story = {
-  args: {
-    name: 'chevron-up',
-    size: 32,
-  },
-};
-
-export const ChevronDownIcon: Story = {
-  args: {
-    name: 'chevron-down',
-    size: 32,
-  },
-};
-
-export const DoubleChevronLeftIcon: Story = {
-  args: {
-    name: 'double-chevron-left',
-    size: 32,
-  },
-};
-
-export const DoubleChevronRightIcon: Story = {
-  args: {
-    name: 'double-chevron-right',
-    size: 32,
-  },
-};
-
-export const BackIcon: Story = {
-  args: {
-    name: 'back',
-    size: 32,
-  },
-};
-
-export const NextIcon: Story = {
-  args: {
-    name: 'next',
-    size: 32,
-  },
-};
-
-export const CheckIcon: Story = {
-  args: {
-    name: 'check',
-    size: 32,
-  },
-};
-
-export const MinusIcon: Story = {
-  args: {
-    name: 'minus',
-    size: 32,
-  },
-};
-
-export const MoreIcon: Story = {
-  args: {
-    name: 'more',
-    size: 32,
-  },
-};
-
-export const InformationIcon: Story = {
-  args: {
-    name: 'information',
-    size: 32,
-  },
-};
-
-export const HelpIcon: Story = {
-  args: {
-    name: 'help',
-    size: 32,
-  },
-};
-
-export const EyeIcon: Story = {
-  args: {
-    name: 'eye',
-    size: 32,
-  },
-};
-
-export const SendIcon: Story = {
-  args: {
-    name: 'send',
-    size: 32,
-  },
-};
-
-export const ChatIcon: Story = {
-  args: {
-    name: 'chat',
-    size: 32,
-  },
-};
-
-export const LogoutIcon: Story = {
-  args: {
-    name: 'logout',
-    size: 32,
-  },
-};
-
-export const NotificationIcon: Story = {
-  args: {
-    name: 'notification',
-    size: 32,
-  },
-};
-
-export const TagsIcon: Story = {
-  args: {
-    name: 'tags',
-    size: 32,
-  },
-};
-
-export const SquareIcon: Story = {
-  args: {
-    name: 'square',
-    size: 32,
-  },
-};
-
-export const UserCircleIcon: Story = {
-  args: {
-    name: 'user-circle',
-    size: 32,
-  },
-};
-
-export const ClipboardIcon: Story = {
-  args: {
-    name: 'clipboard',
-    size: 32,
-  },
-};
-
-export const TrendingIcon: Story = {
-  args: {
-    name: 'trending',
-    size: 32,
-  },
-};
-
-export const OmnichannelIcon: Story = {
-  args: {
-    name: 'omnichannel',
-    size: 32,
-  },
-};
-
-// Channel Icons - Individual Stories
-export const WidgetChannelIcon: Story = {
-  args: {
-    name: 'widget',
-    size: 32,
-  },
-};
-
-export const WhatsappChannelIcon: Story = {
-  args: {
-    name: 'whatsapp',
-    size: 32,
-  },
-};
-
-export const FacebookChannelIcon: Story = {
-  args: {
-    name: 'facebook',
-    size: 32,
-  },
-};
-
-export const LineChannelIcon: Story = {
-  args: {
-    name: 'line',
-    size: 32,
-  },
-};
-
-export const TelegramChannelIcon: Story = {
-  args: {
-    name: 'telegram',
-    size: 32,
-  },
-};
-
-export const InstagramChannelIcon: Story = {
-  args: {
-    name: 'instagram',
-    size: 32,
-  },
-};
-
-export const TiktokChannelIcon: Story = {
-  args: {
-    name: 'tiktok',
-    size: 32,
-  },
-};
-
-export const CustomChannelIcon: Story = {
-  args: {
-    name: 'custom-channel',
-    size: 32,
-  },
-};
-
-export const BotChannelIcon: Story = {
-  args: {
-    name: 'bot',
-    size: 32,
+    size: 24,
+    class: 'text-icon-black',
   },
 };

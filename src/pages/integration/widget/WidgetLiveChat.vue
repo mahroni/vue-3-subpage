@@ -2,11 +2,10 @@
 import { type Component, ref } from 'vue';
 
 import RoundedTab from '@/components/common/Tabs/RoundedTab.vue';
-import IntegrationIcon from '@/components/icons/IntegrationIcon.vue';
-import ServerIcon from '@/components/icons/ServerIcon.vue';
-import ToggleLeftIcon from '@/components/icons/ToggleLeftIcon.vue';
-
+import { ChatOutlineIcon, IntegrationIcon, PalleteIcon, ServerIcon, TableIcon, ToggleLeftIcon } from '@/components/icons';
 import CallToAction from './widget-builder/CallToAction.vue';
+import Chat from './widget-builder/Chat.vue';
+import LoginForm from './widget-builder/LoginForm.vue';
 import WelcomeDialog from './widget-builder/WelcomeDialog.vue';
 import Channels from './widget-builder/channels/Channels.vue';
 
@@ -16,10 +15,13 @@ interface Tab {
 }
 
 const tabs = [
-  { label: 'Welcome Dialog', icon: ServerIcon },
-  { label: 'Call to Action', icon: ToggleLeftIcon },
-  { label: 'Channels', icon: IntegrationIcon },
-] as Tab[];
+    { label: 'Welcome Dialog', icon: ServerIcon },
+    { label: 'Call to Action', icon: ToggleLeftIcon },
+    { label: 'Channels', icon: IntegrationIcon },
+    { label: 'Login Form', icon: TableIcon},
+    { label: 'Chat', icon: ChatOutlineIcon},
+    { label: 'Color Scheme', icon: PalleteIcon}
+] as Tab[]
 
 const activeTab = ref(tabs[0]?.label || '');
 </script>
@@ -39,6 +41,12 @@ const activeTab = ref(tabs[0]?.label || '');
       <template v-if="activeTab === 'Channels'">
         <Channels />
       </template>
+      <template v-if="activeTab === 'Login Form'">
+        <LoginForm />
+    </template>
+    <template v-if="activeTab === 'Chat'">
+        <Chat />
+    </template>
     </div>
   </div>
 </template>
