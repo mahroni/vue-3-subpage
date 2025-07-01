@@ -18,12 +18,12 @@
               </div>
             </template>
           </ImageInput>
-          <TextArea v-model="qiscusLiveChatStore.firstDescriptionLoginForm" label="First Description" />
-          <TextArea v-model="qiscusLiveChatStore.secondDescriptionLoginForm" label="Second Description" />
-          <TextArea v-model="qiscusLiveChatStore.subtitleLoginForm" label="Subtitle" />
-          <Input label="Button Form" v-model="qiscusLiveChatStore.buttonFormLoginForm" />
+          <TextArea v-model="loginFormState.firstDescription" label="First Description" />
+          <TextArea v-model="loginFormState.secondDescription" label="Second Description" />
+          <TextArea v-model="loginFormState.subtitle" label="Subtitle" />
+          <Input label="Button Form" v-model="loginFormState.buttonForm" />
           <RadioInput
-            v-model="qiscusLiveChatStore.customerIdentifierLoginForm"
+            v-model="loginFormState.customerIdentifier"
             label="Phone Number"
             :options="qiscusLiveChatStore.customerIdentifierOptions"
           />
@@ -44,10 +44,10 @@
             <span>Add More Field</span>
           </Button>
         </div>
-        <Divider v-if="qiscusLiveChatStore.additionalFieldLoginForm.length > 0" />
-        <ul class="flex flex-col gap-6" v-if="qiscusLiveChatStore.additionalFieldLoginForm.length > 0">
+        <Divider v-if="loginFormState.additionalField.length > 0" />
+        <ul class="flex flex-col gap-6" v-if="loginFormState.additionalField.length > 0">
           <li
-            v-for="(field, index) in qiscusLiveChatStore.additionalFieldLoginForm"
+            v-for="(field, index) in loginFormState.additionalField"
             :key="field.title"
             class="flex items-center justify-between"
           >
@@ -61,10 +61,10 @@
     <!-- PREVIEW -->
     <div class="bg-white-100 sticky top-20 z-50 flex flex-1 flex-col items-end p-6">
       <LoginForm
-        :title="qiscusLiveChatStore.firstDescriptionLoginForm"
-        :subtitle="qiscusLiveChatStore.secondDescriptionLoginForm"
-        :description="qiscusLiveChatStore.subtitleLoginForm"
-        :buttonText="qiscusLiveChatStore.buttonFormLoginForm"
+        :title="loginFormState.firstDescription"
+        :subtitle="loginFormState.secondDescription"
+        :description="loginFormState.subtitle"
+        :buttonText="loginFormState.buttonForm"
       />
     </div>
   </div>
@@ -114,6 +114,7 @@ import Divider from '@/components/ui/Divider.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
 
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
+import { storeToRefs } from 'pinia';
 import DropdownItemInput from '../form/DropdownItemInput.vue';
 import IconSelectInput from '../form/IconSelectInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
@@ -129,6 +130,7 @@ interface AdditionalField {
 }
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
+const { loginFormState } = storeToRefs(useQiscusLiveChatStore());
 
 const additionalField = reactive<AdditionalField>({
   type: '',
@@ -157,13 +159,13 @@ const resetAdditionalField = () => {
 };
 
 const addAdditionalFieldConfirm = () => {
-  qiscusLiveChatStore.additionalFieldLoginForm.push({ ...additionalField });
+  loginFormState.value.additionalField.push({ ...additionalField });
   resetAdditionalField();
   isOpenModal.value = false;
 };
 
 const getFieldOptions = (index: number) => {
-  const field = qiscusLiveChatStore.additionalFieldLoginForm[index];
+  const field = loginFormState.value.additionalField[index];
   if (!field) return [];
 
   return [
@@ -193,7 +195,7 @@ const editField = (field: AdditionalField) => {
 };
 
 const deleteField = (index: number) => {
-  qiscusLiveChatStore.additionalFieldLoginForm.splice(index, 1);
+  loginFormState.value.additionalField.splice(index, 1);
 };
 
 const handleFieldMenuSelect = (option: any) => {
