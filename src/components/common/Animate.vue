@@ -3,7 +3,7 @@ import { Vue3Lottie } from 'vue3-lottie';
 
 const props = defineProps({
   source: {
-    type: String,
+    type: Object,
     required: true,
   },
   height: {

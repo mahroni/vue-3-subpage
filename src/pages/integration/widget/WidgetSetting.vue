@@ -42,8 +42,7 @@ const items = [
 
 const isSecure = ref(channelsStore.detail?.is_secure ?? false);
 
-const onToggleEnhanceConversationSecurity = (e) => {
-  console.log(e);
+const onToggleEnhanceConversationSecurity = (e: boolean) => {
   const params = {
     id: Number(channelsStore.detail?.id),
     is_secure: e,
