@@ -38,10 +38,10 @@
 import { computed, onMounted } from 'vue';
 
 import { ChevronLeftIcon } from '@/components/icons';
+import { useFetchQiscus } from '@/composables/channels/qiscus/useFetchQiscus';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
 import { useAppConfigStore } from '@/stores/app-config';
-import { useQiscusStore } from '@/stores/integration-qiscus';
 import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
@@ -54,10 +54,10 @@ appConfigStore.setConfig({
   appVersion: '1.0.0',
 });
 
-const channelsStore = useQiscusStore();
+const Qiscus = useFetchQiscus();
 
 const qiscus_channels = computed(() =>
-  channelsStore.channels.map((channel: IQiscusChannel) => ({
+  Qiscus.data.value.map((channel: IQiscusChannel) => ({
     id: channel.id,
     name: channel.name,
     channelId: channel.id.toString(),
@@ -74,32 +74,33 @@ function updateChannelStatus(data: { id: number; isActive: boolean }) {
 }
 
 function search(query: string) {
-  channelsStore.meta.search = query;
-  channelsStore.meta.page = 1;
-  channelsStore.fetchQiscusChannels();
+  Qiscus.meta.value.page = 1;
+  // Qiscus.meta.value.search = query;
+  Qiscus.fetchChannels();
 }
 
 function pagination(type: string) {
   switch (type) {
     case 'next':
-      channelsStore.meta.page += 1;
+      if (!Qiscus.meta.value.page) return;
+      Qiscus.meta.value.page += 1;
       break;
     case 'prev':
-      if (channelsStore.meta.page > 1) {
-        channelsStore.meta.page -= 1;
+      if (Qiscus.meta.value.page && Qiscus.meta.value.page > 1) {
+        Qiscus.meta.value.page -= 1;
       }
       break;
     case 'first':
-      channelsStore.meta.page = 1;
+      Qiscus.meta.value.page = 1;
       break;
     case 'last':
-      channelsStore.meta.page = channelsStore.meta.total_page;
+      Qiscus.meta.value.page = Qiscus.meta.value.total_page;
       break;
   }
-  channelsStore.fetchQiscusChannels();
+  Qiscus.fetchChannels();
 }
 
 onMounted(async () => {
-  await channelsStore.fetchQiscusChannels();
+  await Qiscus.fetchChannels();
 });
 </script>

@@ -70,12 +70,8 @@
   </div>
 
   <!-- Add Additional Field Modal -->
-  <Modal
-    :isOpen="isOpenModal"
-    @close="isOpenModal = false"
-    confirmText="Add Field"
-    @confirm="addAdditionalFieldConfirm"
-  >
+  <Modal :isOpen="isOpenModal" @close="isOpenModal = false" confirmText="Add Field"
+    @confirm="addAdditionalFieldConfirm">
     <template #title> Add Additional Field </template>
     <template #content>
       <div class="mb-9 flex flex-col gap-2">
@@ -146,6 +142,7 @@ const additionalField = reactive<AdditionalField>({
 
 const isOpenModal = ref(false);
 
+>>>>>>> ca2936747b7990e544ea36693fe5389a72e9b56b
 const addAdditionalField = () => {
   isOpenModal.value = true;
 };

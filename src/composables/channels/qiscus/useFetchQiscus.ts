@@ -1,4 +1,4 @@
-import { type Ref, ref, unref, watchEffect } from 'vue';
+import { ref, toValue } from 'vue';
 
 import { qiscusApi } from '@/api/channels';
 import type { IResponse } from '@/types/api';
@@ -10,20 +10,18 @@ interface FetchChannelsMeta {
   [key: string]: any;
 }
 
-export const useFetchChannels = (initialMeta: FetchChannelsMeta | Ref<FetchChannelsMeta> = {}) => {
+export const useFetchQiscus = () => {
   const loading = ref(false);
   const data = ref<IQiscusChannel[]>([]);
-  const meta = ref<FetchChannelsMeta>(unref(initialMeta));
+  const meta = ref<FetchChannelsMeta>({});
   const error = ref<Error | null>(null);
 
-  const fetchChannels = async (overrideMeta?: FetchChannelsMeta) => {
+  const fetchChannels = async () => {
     try {
       loading.value = true;
       error.value = null;
 
-      const currentMeta = overrideMeta ? { ...meta.value, ...overrideMeta } : meta.value;
-
-      const response = await qiscusApi.get(currentMeta);
+      const response = await qiscusApi.get({});
       const dataResponse = response.data as unknown as IResponse<IQiscusChannel[]>;
 
       data.value = dataResponse.data;
@@ -37,13 +35,9 @@ export const useFetchChannels = (initialMeta: FetchChannelsMeta | Ref<FetchChann
     }
   };
 
-  watchEffect(() => {
-    fetchChannels();
-  });
-
   return {
     loading,
-    data,
+    data: toValue(data),
     meta,
     error,
     fetchChannels,

@@ -25,7 +25,7 @@
           @click="onClear"
           :disabled="disabled"
         >
-          <Icon name="close" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
+          <CloseIcon class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
 
         <button
@@ -34,7 +34,7 @@
           @click="togglePasswordVisibility"
           :disabled="disabled"
         >
-          <Icon :name="passwordIcon" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
+          <EyeIcon :name="passwordIcon" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
       </div>
 
@@ -54,7 +54,8 @@
 import { cva } from 'class-variance-authority';
 import { computed, ref } from 'vue';
 
-import Icon from '../icons/Icon.vue';
+import CloseIcon from '@/components/icons/CloseIcon.vue';
+import EyeIcon from '@/components/icons/EyeIcon.vue';
 
 interface Props {
   modelValue: string;
@@ -87,7 +88,6 @@ const showPassword = ref(false);
 const currentType = computed(() =>
   props.type === 'password' && !showPassword.value ? 'password' : 'text'
 );
-const passwordIcon = computed(() => (showPassword.value ? 'eye-slash' : 'eye'));
 
 const onInput = (event: Event) => {
   emit('update:modelValue', (event.target as HTMLInputElement).value);
@@ -160,7 +160,7 @@ const appendButtonClasses = cva(
 );
 
 const appendButtonIconClasses = cva(
-  'flex min-w-fit cursor-pointer items-center justify-center bg-white p-3',
+  'flex min-w-fit cursor-pointer items-center justify-center bg-white p-4',
   {
     variants: {
       disabled: {

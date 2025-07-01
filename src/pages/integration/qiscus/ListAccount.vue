@@ -1,13 +1,13 @@
 <template>
   <div class="flex flex-col gap-8 px-12 py-8">
     <button class="text-primary flex items-center gap-2 font-semibold">
-      <Icon name="arrow-left" :size="20" />
+      <ChevronLeftIcon :size="20" />
       Integration
     </button>
 
     <!-- Header -->
     <div class="flex items-center gap-2">
-      <Icon name="chat" :size="20" />
+      <ChatIcon :size="20" />
       <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>
 
@@ -34,6 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import Icon from '@/components/icons/Icon.vue';
+import ChatIcon from '@/components/icons/ChatIcon.vue';
+import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon.vue';
 import TableListAccount from '@/pages/integration/list-account/TableListAccount.vue';
 </script>
