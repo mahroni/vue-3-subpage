@@ -28,31 +28,18 @@ const handleTabClick = (tab: string) => {
 
 <template>
   <ul class="flex w-fit items-center gap-1 select-none">
-    <li
-      v-for="tab in tabs"
-      :key="tab.label"
-      @click="handleTabClick(tab.label)"
-      @keydown.enter="handleTabClick(tab.label)"
-      @keydown.space="handleTabClick(tab.label)"
-      :tabindex="0"
-      role="tab"
-      :aria-selected="props.modelValue === tab.label"
-      :aria-controls="`tab-panel-${tab.label}`"
-      class="text-text-title flex cursor-pointer items-center gap-2 rounded-full border-[1px] px-3 py-2 transition-all duration-200 ease-out"
-      :class="[
-        modelValue === tab.label
-          ? 'bg-soft-green border-[#27B199]'
-          : 'border-transparent bg-transparent',
-      ]"
-    >
+    <li v-for="tab in tabs" :key="tab.label" @click="handleTabClick(tab.label)"
+      @keydown.enter="handleTabClick(tab.label)" @keydown.space="handleTabClick(tab.label)" :tabindex="0" role="tab"
+      :aria-selected="props.modelValue === tab.label" :aria-controls="`tab-panel-${tab.label}`"
+      class="text-text-title flex cursor-pointer items-center gap-2 rounded-full border-[1px] px-3 py-2 transition-all duration-200 ease-linear border-transparent bg-transparent hover:bg-gray-300 "
+      :class="{
+        '!bg-soft-green !border-primary': modelValue === tab.label
+      }">
       <span v-if="tab.icon">
-        <component
-          :is="tab.icon"
-          :size="24"
-          :class="props.modelValue === tab.label ? 'text-[#27B199]' : 'text-text-title'"
-        />
+        <component :is="tab.icon" :size="24"
+          :class="props.modelValue === tab.label ? 'text-primary' : 'text-text-title'" />
       </span>
-      <span :class="props.modelValue === tab.label ? 'text-[#27B199]' : 'text-text-title'">{{
+      <span :class="props.modelValue === tab.label ? 'text-primary' : 'text-text-title'">{{
         tab.label
       }}</span>
     </li>

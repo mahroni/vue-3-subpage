@@ -1,6 +1,6 @@
 import type { IParams } from '@/types/api';
 
-import { apiV2, apiV3 } from './../utils/axios';
+import apiV1, { apiV2, apiV3 } from './../utils/axios';
 
 // API v1 examples
 export const channelsApi = {
@@ -23,4 +23,9 @@ export const whatsappApi = {
 export const configApi = {
   get: (id: number | string, params: any) =>
     apiV2.get<any[]>(`/channels/${id}/configs`, { params }),
+};
+
+export const botApi = {
+  get: () => apiV1.get<any[]>('/app/bot'),
+  changeStatus: (params: any) => apiV1.post<any[]>('/app/bot/activation', { params }),
 };

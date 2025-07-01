@@ -61,3 +61,9 @@ export interface IUpdateConfigQiscusChannel {
   online_message: string;
   send_online_if_resolved: boolean;
 }
+
+export interface IBotChannel {
+  bot_webhook_url: string;
+  is_bot_enabled: boolean;
+  is_force_send_bot: boolean;
+}

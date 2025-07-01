@@ -1,24 +1,21 @@
 import { ref } from 'vue';
 
-import { configApi } from '@/api/channels';
+import { botApi } from '@/api/channels';
 import type { IResponse } from '@/types/api';
-import type { IQiscusChannel } from '@/types/channels';
+import type { IBotChannel } from '@/types/channels';
 
-export const useFetchConfig = () => {
+export const useFetchBot = () => {
   const loading = ref(false);
-  const data = ref<IQiscusChannel | null>(null);
+  const data = ref<IBotChannel | null>(null);
   const error = ref<Error | null>(null);
 
-  const fetch = async (id: number | string, source: string) => {
+  const fetch = async () => {
     try {
       loading.value = true;
       error.value = null;
 
-      const params = {
-        source,
-      };
-      const response = await configApi.get(id, params);
-      const dataResponse = response.data as unknown as IResponse<IQiscusChannel>;
+      const response = await botApi.get();
+      const dataResponse = response.data as unknown as IResponse<IBotChannel>;
 
       data.value = dataResponse.data;
     } catch (err) {

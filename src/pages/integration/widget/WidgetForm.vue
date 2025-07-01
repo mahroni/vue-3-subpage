@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <form @submit.prevent="update" class="flex flex-col gap-8">
     <!-- Banner documentation -->
     <QiscusBannerDoc />
     <div
@@ -30,9 +30,9 @@
     </div>
     <div class="flex justify-end gap-4">
       <Button intent="secondary" @click="router.back()">Cancel</Button>
-      <Button @click="update" :disabled="isDisabled">Save</Button>
+      <Button type="submit" :disabled="isDisabled">Save</Button>
     </div>
-  </div>
+  </form>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
@@ -42,7 +42,9 @@ import Banner from '@/components/common/Banner.vue';
 import Button from '@/components/common/Button.vue';
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
+import { useFetchBot } from "@/composables/channels/bot/useFetchBot";
 import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qiscus';
+import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 
@@ -55,6 +57,8 @@ const router = useRouter()
 const { showAlert } = useSweetAlert()
 const { fetchChannelById, data: widget } = useFetchQiscusDetail()
 const { update: updateChannel, error, loading } = useUpdateQiscus()
+const uConfig = useFetchConfig()
+const uBot = useFetchBot()
 
 // computed
 const channelBadge = computed(() => widget.value?.badge_url);
@@ -84,6 +88,10 @@ function update() {
   })
 }
 
+function setData() {
+  channelName.value = widget.value?.name ?? ''
+}
+
 onMounted(async () => {
   const { id } = route.params;
   if (!id) return
@@ -91,6 +99,10 @@ onMounted(async () => {
   channelId.value = (Array.isArray(id) ? id[0] : id) as string;
   await fetchChannelById(channelId.value)
 
-  channelName.value = widget.value?.name ?? ''
+  // get additional data
+  uConfig.fetch(channelId.value, 'qiscus')
+  uBot.fetch()
+
+  setData()
 })
 </script>
