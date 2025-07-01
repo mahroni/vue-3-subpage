@@ -6,7 +6,7 @@
           <ImageInput
             label="Brand Icon"
             id="welcome-dialog-image"
-            v-model="qiscusLiveChatStore.brandIconWelcomeDialog"
+            v-model="welcomeDialogState.brandIconWelcomeDialog"
             :isUploading="isUploadingBrandIcon"
             @upload="uploadImage"
           >
@@ -17,8 +17,8 @@
               </div>
             </template>
           </ImageInput>
-          <TextArea v-model="qiscusLiveChatStore.firstDescriptionWelcomeDialog" label="First Description" />
-          <TextArea v-model="qiscusLiveChatStore.secondDescriptionWelcomeDialog" label="Second Description" />
+          <TextArea v-model="welcomeDialogState.firstDescriptionWelcomeDialog" label="First Description" />
+          <TextArea v-model="welcomeDialogState.secondDescriptionWelcomeDialog" label="Second Description" />
           <ImageInput v-model="firstAction.iconUrl" label="Icon" id="welcome-dialog-icon">
             <template #tips>
               <div class="text-sm font-normal text-[#A0A0A0]">
@@ -28,12 +28,12 @@
             </template>
           </ImageInput>
           <Input v-model="firstAction.label" label="Description" />
-          <InputCustom v-model="qiscusLiveChatStore.appearDelayWelcomeDialog" label="Appear Delay">
+          <InputCustom v-model="welcomeDialogState.appearDelayWelcomeDialog" label="Appear Delay">
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
           </InputCustom>
-          <Checkbox v-model="qiscusLiveChatStore.isAutoExpandWelcomeDialog" label="Make Auto Expand" />
+          <Checkbox v-model="welcomeDialogState.isAutoExpandWelcomeDialog" label="Make Auto Expand" />
         </template>
       </WidgetFormLayout>
       <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
@@ -48,7 +48,7 @@
           </Banner>
         </template>
         <template #inputs>
-          <OptionalInput label="Image" v-model="qiscusLiveChatStore.isAttentionGrabberImage">
+          <OptionalInput label="Image" v-model="welcomeDialogState.isAttentionGrabberImage">
             <DragDropInput
               label="Upload Image"
               accept="image/png,image/jpg"
@@ -59,14 +59,14 @@
               @upload="uploadAttentionGrabberImage"
             />
           </OptionalInput>
-          <OptionalInput label="Text" v-model="qiscusLiveChatStore.isAttentionGrabberText">
+          <OptionalInput label="Text" v-model="welcomeDialogState.isAttentionGrabberText">
             <TextArea
-              v-model="qiscusLiveChatStore.attentionGrabberTextDescription"
+              v-model="welcomeDialogState.attentionGrabberTextDescription"
               label="Text Description"
             />
           </OptionalInput>
           <InputCustom
-            v-model="qiscusLiveChatStore.attentionGrabberAppearDelay"
+            v-model="welcomeDialogState.attentionGrabberAppearDelay"
             label="Appear Delay"
           >
             <template #append-button>
@@ -78,26 +78,26 @@
     </div>
 
     <!-- PREVIEW -->
-    <div v-if="qiscusLiveChatStore.isWelcomeDialog" class="flex flex-1 flex-col items-end p-6">
+    <div v-if="welcomeDialogState.isWelcomeDialog" class="flex flex-1 flex-col items-end p-6">
       <WelcomingPage
-        :title="qiscusLiveChatStore.firstDescriptionWelcomeDialog"
-        :subtitle="qiscusLiveChatStore.secondDescriptionWelcomeDialog"
-        :imageUrl="qiscusLiveChatStore.brandIconWelcomeDialog"
-        :actions="qiscusLiveChatStore.actionsWelcomeDialog"
+        :title="welcomeDialogState.firstDescriptionWelcomeDialog"
+        :subtitle="welcomeDialogState.secondDescriptionWelcomeDialog"
+        :imageUrl="welcomeDialogState.brandIconWelcomeDialog"
+        :actions="welcomeDialogState.actionsWelcomeDialog"
       />
     </div>
 
     <div
-      v-else-if="qiscusLiveChatStore.isAttentionGrabber"
+      v-else-if="welcomeDialogState.isAttentionGrabber"
       class="flex flex-1 flex-col items-end p-6"
     >
       <AttentionGrabber
         :imageUrl="
-          qiscusLiveChatStore.isAttentionGrabberImage ? qiscusLiveChatStore.attentionGrabberImage : ''
+          welcomeDialogState.isAttentionGrabberImage ? welcomeDialogState.attentionGrabberImage : ''
         "
         :title="
-          qiscusLiveChatStore.isAttentionGrabberText
-            ? qiscusLiveChatStore.attentionGrabberTextDescription
+          welcomeDialogState.isAttentionGrabberText
+            ? welcomeDialogState.attentionGrabberTextDescription
             : ''
         "
       />
@@ -125,10 +125,11 @@ import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
+import { storeToRefs } from 'pinia';
 import OptionalInput from '../form/OptionalInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
 
-const qiscusLiveChatStore = useQiscusLiveChatStore();
+const { welcomeDialogState } = storeToRefs(useQiscusLiveChatStore());
 const isUploadingAttentionGrabberImage = ref(false);
 const isUploadingBrandIcon = ref(false);
 
@@ -143,7 +144,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
       body: formData,
     });
     const data = await response.json();
-    qiscusLiveChatStore.brandIconWelcomeDialog = data.data.imageUrl;
+    welcomeDialogState.value.brandIconWelcomeDialog = data.data.imageUrl;
   } catch (error) {
     console.error(error);
     revertPreview();
@@ -165,7 +166,7 @@ const uploadAttentionGrabberImage = async (files: File[]) => {
       body: formData,
     });
     const data = await response.json();
-    qiscusLiveChatStore.attentionGrabberImage = data.data.imageUrl;
+    welcomeDialogState.value.attentionGrabberImage = data.data.imageUrl;
   } catch (error) {
     console.error(error);
   } finally {
@@ -174,32 +175,32 @@ const uploadAttentionGrabberImage = async (files: File[]) => {
 };
 
 const welcomeDialog = computed({
-  get: () => qiscusLiveChatStore.isWelcomeDialog,
+  get: () => welcomeDialogState.value.isWelcomeDialog,
   set: (value: boolean) => {
-    qiscusLiveChatStore.isWelcomeDialog = value;
+    welcomeDialogState.value.isWelcomeDialog = value;
     // If welcome dialog is turned on, turn off attention grabber
     if (value) {
-      qiscusLiveChatStore.isAttentionGrabber = false;
+      welcomeDialogState.value.isAttentionGrabber = false;
     }
   },
 });
 
 const attentionGrabber = computed({
-  get: () => qiscusLiveChatStore.isAttentionGrabber,
+  get: () => welcomeDialogState.value.isAttentionGrabber,
   set: (value: boolean) => {
-    qiscusLiveChatStore.isAttentionGrabber = value;
+    welcomeDialogState.value.isAttentionGrabber = value;
     // If attention grabber is turned on, turn off welcome dialog
     if (value) {
-      qiscusLiveChatStore.isWelcomeDialog = false;
+      welcomeDialogState.value.isWelcomeDialog = false;
     }
   },
 });
 
 // Ensure first action always exists
 const firstAction = computed(() => {
-  if (!qiscusLiveChatStore.actionsWelcomeDialog[0]) {
-    qiscusLiveChatStore.actionsWelcomeDialog.push({ label: '', iconUrl: '' });
+  if (!welcomeDialogState.value.actionsWelcomeDialog[0]) {
+    welcomeDialogState.value.actionsWelcomeDialog.push({ label: '', iconUrl: '' });
   }
-  return qiscusLiveChatStore.actionsWelcomeDialog[0]!;
+  return welcomeDialogState.value.actionsWelcomeDialog[0]!;
 });
 </script>
