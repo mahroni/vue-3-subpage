@@ -12,6 +12,7 @@ import ChannelList from '@/components/ui/widget-preview/ChannelList.vue';
 import ChannelListLoading from '@/components/ui/widget-preview/ChannelListLoading.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
+import LoginFormLoading from '@/components/ui/widget-preview/LoginFormLoading.vue';
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import { useSweetAlert } from '@/composables/useSweetAlert';
@@ -450,6 +451,11 @@ onMounted(() => {
       />
       <ChannelListLoading />
       <LoginForm
+        title="Hello there,"
+        subtitle="Welcome to Qiscus!"
+        description="Please fill the details below before chatting with us!"
+      />
+      <LoginFormLoading
         title="Hello there,"
         subtitle="Welcome to Qiscus!"
         description="Please fill the details below before chatting with us!"

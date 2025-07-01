@@ -1,7 +1,18 @@
 <script setup lang="ts">
 import ButtonIcon from '@/components/common/ButtonIcon.vue';
 import { ChevronLeftIcon } from '@/components/icons';
-import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
+
+const props = withDefaults(
+  defineProps<{
+    title?: string;
+    color?: string;
+    icon?: string;
+  }>(),
+  {
+    // title: 'Qiscus Customer Care',
+    // icon: CHANNEL_BADGE_URL.qiscus,
+  }
+);
 </script>
 
 <template>
@@ -9,17 +20,22 @@ import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
     class="text-navy-500 flex w-[360px] flex-col rounded-4xl bg-white shadow-[0px_8px_32px_0px_#0A0A0A1F]"
   >
     <div class="p-8">
+      <!-- Header -->
       <div class="flex items-center gap-3">
-        <ButtonIcon>
+        <ButtonIcon v-if="props.icon">
           <ChevronLeftIcon :size="24" class="text-navy-500" />
         </ButtonIcon>
-        <img :src="CHANNEL_BADGE_URL.qiscus" width="32" height="32" />
-        <div class="text-sm font-medium text-[#0A0A0A]">Qiscus Customer Care</div>
+        <div v-else class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
+        <img v-if="props.icon" :src="props.icon" width="32" height="32" />
+        <div v-else class="bg-surface-disable h-8 w-8 animate-pulse rounded-full" />
+        <div v-if="props.title" class="text-sm font-medium text-[#0A0A0A]">{{ props.title }}</div>
+        <div v-else class="bg-surface-disable h-4.5 w-[148px] animate-pulse rounded-full" />
       </div>
 
       <div class="mt-8 flex flex-col gap-4">
         <div class="bg-surface-disable h-4.5 w-37 animate-pulse self-center rounded-full"></div>
 
+        <!-- Bubble Skeleton -->
         <div
           class="bg-surface-disable mt-4 flex animate-pulse flex-col gap-3 rounded-t-[24px] rounded-br-[24px] rounded-bl-[4px] p-4"
         >
@@ -30,6 +46,8 @@ import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
           <div class="h-6 min-h-6 w-full rounded-full bg-white"></div>
           <div class="h-6 min-h-6 w-full rounded-full bg-white"></div>
         </div>
+        <!-- Slot data -->
+        <slot name="bubble" />
       </div>
     </div>
 

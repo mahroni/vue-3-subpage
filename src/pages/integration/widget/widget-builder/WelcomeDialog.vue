@@ -1,16 +1,19 @@
 <template>
-  <div class="flex w-full items-start gap-8 self-stretch justify-between relative">
-    <div class="flex flex-col gap-8 w-full flex-1">
+  <div class="flex w-full items-start justify-between gap-8 self-stretch p-4">
+    <div class="flex w-full flex-1 flex-col gap-8">
       <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
-          <ImageInput label="Brand Icon" id="welcome-dialog-image"
-            v-model="welcomeDialogReact.brandIcon" :isUploading="welcomeDialogReact.isUploading"
-            @upload="uploadImage">
+          <ImageInput
+            label="Brand Icon"
+            id="welcome-dialog-image"
+            v-model="welcomeDialogReact.brandIcon"
+            :isUploading="welcomeDialogReact.isUploading"
+            @upload="uploadImage"
+          >
             <template #tips>
-              <div class="text-[#A0A0A0] text-sm font-normal">
+              <div class="text-sm font-normal text-[#A0A0A0]">
                 We recommend an image of at least 360x360 pixels. You can upload images in JPG,
-                JPEG, or
-                PNG format with a maximum size of 2MB.
+                JPEG, or PNG format with a maximum size of 2MB.
               </div>
             </template>
           </ImageInput>
@@ -18,10 +21,9 @@
           <TextArea v-model="welcomeDialogReact.secondDescription" label="Second Description" />
           <ImageInput v-model="welcomeDialogActions.iconUrl" label="Icon" id="welcome-dialog-icon">
             <template #tips>
-              <div class="text-[#A0A0A0] text-sm font-normal">
+              <div class="text-sm font-normal text-[#A0A0A0]">
                 We recommend an image of at least 360x360 pixels. You can upload images in JPG,
-                JPEG, or
-                PNG format with a maximum size of 2MB.
+                JPEG, or PNG format with a maximum size of 2MB.
               </div>
             </template>
           </ImageInput>
@@ -47,15 +49,26 @@
         </template>
         <template #inputs>
           <OptionalInput label="Image" v-model="welcomeDialogReact.isAttentionGrabberImage">
-            <DragDropInput label="Upload Image" accept="image/png,image/jpg" acceptText="PNG or JPG"
-              :maxSize="31457280" :maxFiles="1" :isUploading="welcomeDialogReact.isAttentionGrabberUploading" @upload="uploadAttentionGrabberImage"/>
+            <DragDropInput
+              label="Upload Image"
+              accept="image/png,image/jpg"
+              acceptText="PNG or JPG"
+              :maxSize="31457280"
+              :maxFiles="1"
+              :isUploading="welcomeDialogReact.isAttentionGrabberUploading"
+              @upload="uploadAttentionGrabberImage"
+            />
           </OptionalInput>
           <OptionalInput label="Text" v-model="welcomeDialogReact.isAttentionGrabberText">
-            <TextArea v-model="welcomeDialogReact.attentionGrabberTextDescription"
-              label="Text Description" />
+            <TextArea
+              v-model="welcomeDialogReact.attentionGrabberTextDescription"
+              label="Text Description"
+            />
           </OptionalInput>
-          <InputCustom v-model="welcomeDialogReact.attentionGrabberAppearDelay"
-            label="Appear Delay">
+          <InputCustom
+            v-model="welcomeDialogReact.attentionGrabberAppearDelay"
+            label="Appear Delay"
+          >
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
@@ -65,17 +78,33 @@
     </div>
 
     <!-- PREVIEW -->
-    <div v-if="welcomeDialogReact.isWelcomeDialog" class="flex p-6 flex-1 flex-col items-end sticky top-20 bg-white-100 z-50">
-      <WelcomingPage :title="welcomeDialogReact.firstDescription" :subtitle="welcomeDialogReact.secondDescription"
-        :imageUrl="welcomeDialogReact.brandIcon" :actions="welcomeDialogReact.actions" />
+    <div v-if="welcomeDialogReact.isWelcomeDialog" class="flex flex-1 flex-col items-end p-6">
+      <WelcomingPage
+        :title="welcomeDialogReact.firstDescription"
+        :subtitle="welcomeDialogReact.secondDescription"
+        :imageUrl="welcomeDialogReact.brandIcon"
+        :actions="welcomeDialogReact.actions"
+      />
     </div>
 
-    <div v-else-if="welcomeDialogReact.isAttentionGrabber" class="flex p-6 flex-1 flex-col items-end sticky top-20 bg-white-100 z-50">
-      <AttentionGrabber :imageUrl="welcomeDialogReact.isAttentionGrabberImage ? welcomeDialogReact.attentionGrabberImage : ''" :title="welcomeDialogReact.isAttentionGrabberText ? welcomeDialogReact.attentionGrabberTextDescription : ''" />
+    <div
+      v-else-if="welcomeDialogReact.isAttentionGrabber"
+      class="flex flex-1 flex-col items-end p-6"
+    >
+      <AttentionGrabber
+        :imageUrl="
+          welcomeDialogReact.isAttentionGrabberImage ? welcomeDialogReact.attentionGrabberImage : ''
+        "
+        :title="
+          welcomeDialogReact.isAttentionGrabberText
+            ? welcomeDialogReact.attentionGrabberTextDescription
+            : ''
+        "
+      />
     </div>
 
-    <div v-else class="flex p-6 flex-1 flex-col items-end sticky top-20 bg-white-100 z-50">
-      <WelcomingPageLoading/>
+    <div v-else class="flex flex-1 flex-col items-end p-6">
+      <WelcomingPageLoading />
     </div>
   </div>
 </template>
@@ -91,19 +120,17 @@ import Input from '@/components/form/Input.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
 import TextArea from '@/components/form/TextArea.vue';
 import { WarningIcon } from '@/components/icons';
-import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
-
 import AttentionGrabber from '@/components/ui/widget-preview/AttentionGrabber.vue';
+import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
+
 import OptionalInput from '../form/OptionalInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
 
-const welcomeDialogActions = reactive(
-  {
-    label: 'Ask for Questions',
-    iconUrl: '',
-  },
-);
+const welcomeDialogActions = reactive({
+  label: 'Ask for Questions',
+  iconUrl: '',
+});
 
 const welcomeDialogReact = reactive({
   isWelcomeDialog: true,
@@ -121,12 +148,8 @@ const welcomeDialogReact = reactive({
   brandIcon: '',
   isUploading: false,
   isAttentionGrabberUploading: false,
-  actions: [
-    welcomeDialogActions,
-  ],
+  actions: [welcomeDialogActions],
 });
-
-
 
 // mock upload image
 const uploadImage = async (file: File, revertPreview: () => void) => {
@@ -151,7 +174,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
 const uploadAttentionGrabberImage = async (files: File[]) => {
   const file = files[0]; // Take the first file since maxFiles is 1
   if (!file) return;
-  
+
   const formData = new FormData();
   formData.append('file', file);
   welcomeDialogReact.isAttentionGrabberUploading = true;

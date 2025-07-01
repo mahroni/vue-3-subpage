@@ -95,11 +95,11 @@ export function createRouter(appId?: string | number): Router {
       name: 'auto-responder',
       component: AutoResponder,
     },
-    // {
-    //   path: '/home',
-    //   name: 'HomeView',
-    //   component: () => import('../views/HomeView.vue'),
-    // },
+    {
+      path: '/home',
+      name: 'HomeView',
+      component: () => import('../views/HomeView.vue'),
+    },
     // {
     //   path: '/post',
     //   name: 'PostView',
