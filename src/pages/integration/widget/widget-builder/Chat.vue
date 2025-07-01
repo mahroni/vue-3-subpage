@@ -1,6 +1,6 @@
 <template>
-    <div class="flex w-full items-start gap-8 self-stretch p-4 justify-between">
-        <div class="flex w-full flex-col gap-8 max-w-[50%]">
+    <div class="flex w-full items-start gap-8 self-stretch justify-between">
+        <div class="flex w-full flex-col gap-8 flex-1">
             <WIdgetFormLayout label="Chat">
                 <template #inputs>
                     <ImageInput v-model="chatReact.customerServiceAvatar" :isUploading="chatReact.isUploading"
@@ -22,7 +22,7 @@
         </div>
 
         <!-- PREVIEW -->
-        <div class="flex p-6">
+        <div class="flex p-6 flex-1 flex-col items-end">
             <ChatFormLoading/>
         </div>
     </div>

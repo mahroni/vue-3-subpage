@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full items-start gap-8 self-stretch p-4 justify-between">
+  <div class="flex w-full items-start gap-8 self-stretch justify-between">
     <div class="flex flex-col gap-8 w-full flex-1">
       <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
