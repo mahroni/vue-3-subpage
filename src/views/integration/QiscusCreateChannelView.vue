@@ -4,7 +4,7 @@
       @click="router.go(-1)"
       class="text-primary flex cursor-pointer items-center gap-2 font-semibold"
     >
-      <Icon name="arrow-left" :size="20" />
+      <ChevronLeftIcon :size="20" />
       Integration
     </button>
 
@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
-import Icon from '@/components/icons/Icon.vue';
+import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon.vue';
 import CreateNewForm from '@/pages/integration/qiscus/CreateNewForm.vue';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 
