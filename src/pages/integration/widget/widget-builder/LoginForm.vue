@@ -132,10 +132,10 @@ interface AdditionalField {
 }
 
 const additionalFieldsArray = ref<AdditionalField[]>([]);
-const modalStateText = reactive({
-  title: 'Add Additional Field',
-  confirmButton: 'Add Field',
-});
+// const modalStateText = reactive({
+//   title: 'Add Additional Field',
+//   confirmButton: 'Add Field',
+// });
 
 const loginFormReact = reactive({
   firstDescription: 'Hello There,',
