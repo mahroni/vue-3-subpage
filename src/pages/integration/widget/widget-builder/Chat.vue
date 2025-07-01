@@ -4,8 +4,8 @@
       <WIdgetFormLayout label="Chat">
         <template #inputs>
           <ImageInput
-            v-model="chatReact.customerServiceAvatar"
-            :isUploading="chatReact.isUploading"
+            v-model="qiscusLiveChatStore.customerServiceAvatarChatForm"
+            :isUploading="isUploading"
             @upload="uploadImage"
             label="Customer Service Avatar"
             id="customer-service-avatar"
@@ -18,7 +18,7 @@
             </template>
           </ImageInput>
           <Input
-            v-model="chatReact.customerServiceName"
+            v-model="qiscusLiveChatStore.customerServiceNameChatForm"
             label="Customer Service Name"
             id="customer-service-name"
           />
@@ -34,36 +34,33 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
-
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
+import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { ref } from 'vue';
 import WIdgetFormLayout from '../form/WIdgetFormLayout.vue';
 
-const chatReact = reactive({
-  customerServiceName: '',
-  customerServiceAvatar: '',
-  isUploading: false,
-});
+const qiscusLiveChatStore = useQiscusLiveChatStore();
+const isUploading = ref(false);
 
 const uploadImage = async (file: File, revertPreview: () => void) => {
   const formData = new FormData();
   formData.append('file', file);
-  chatReact.isUploading = true;
+  isUploading.value = true;
   try {
     const response = await fetch('/upload', {
       method: 'POST',
       body: formData,
     });
     const data = await response.json();
-    chatReact.customerServiceAvatar = data.data.imageUrl;
+    qiscusLiveChatStore.customerServiceAvatarChatForm = data.data.imageUrl;
   } catch (error) {
     console.error(error);
     revertPreview();
   } finally {
-    chatReact.isUploading = false;
+    isUploading.value = false;
   }
 };
 </script>
