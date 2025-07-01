@@ -7,9 +7,11 @@ interface Props {
     icons: Icon[]
 }
 
+import type { IconName } from '@/components/icons/Icon.vue';
+
 interface Icon {
     name: string;
-    icon: string;
+    icon: IconName;
 }
 
 const props = defineProps<Props>();

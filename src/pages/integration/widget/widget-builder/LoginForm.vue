@@ -22,11 +22,8 @@
           <TextArea v-model="loginFormReact.secondDescription" label="Second Description" />
           <TextArea v-model="loginFormReact.subtitle" label="Subtitle" />
           <Input label="Button Form" v-model="loginFormReact.buttonForm" />
-          <RadioInput
-            v-model="loginFormReact.customerIdentifier"
-            label="Phone Number"
-            :options="customerIdentifierOptions"
-          />
+          <RadioInput v-model="loginFormReact.customerIdentifier" label="Phone Number"
+            :options="customerIdentifierOptions" />
           <Banner intent="positive" type="solid">
             If you use phone number to login, we won't be able to send chat history and notes to the
             customer's email after the room is resolved.
@@ -46,11 +43,8 @@
         </div>
         <Divider v-if="additionalFieldsArray.length > 0" />
         <ul class="flex flex-col gap-6" v-if="additionalFieldsArray.length > 0">
-          <li
-            v-for="(field, index) in additionalFieldsArray"
-            :key="field.title"
-            class="flex items-center justify-between"
-          >
+          <li v-for="(field, index) in additionalFieldsArray" :key="field.title"
+            class="flex items-center justify-between">
             <span class="text-text-title text-sm font-medium">{{ field.title }}</span>
             <DropdownMenu :options="getFieldOptions(index)" @select="handleFieldMenuSelect" />
           </li>
@@ -60,22 +54,14 @@
 
     <!-- PREVIEW -->
     <div class="bg-white-100 sticky top-20 z-50 flex flex-1 flex-col items-end p-6">
-      <LoginForm
-        :title="loginFormReact.firstDescription"
-        :subtitle="loginFormReact.secondDescription"
-        :description="loginFormReact.subtitle"
-        :buttonText="loginFormReact.buttonForm"
-      />
+      <LoginForm :title="loginFormReact.firstDescription" :subtitle="loginFormReact.secondDescription"
+        :description="loginFormReact.subtitle" :buttonText="loginFormReact.buttonForm" />
     </div>
   </div>
 
   <!-- Add Additional Field Modal -->
-  <Modal
-    :isOpen="isOpenModal"
-    @close="isOpenModal = false"
-    confirmText="Add Field"
-    @confirm="addAdditionalFieldConfirm"
-  >
+  <Modal :isOpen="isOpenModal" @close="isOpenModal = false" confirmText="Add Field"
+    @confirm="addAdditionalFieldConfirm">
     <template #title> Add Additional Field </template>
     <template #content>
       <div class="mb-9 flex flex-col gap-2">
@@ -183,7 +169,7 @@ const fieldTypeOptions = [
   },
 ];
 
-const icons = [
+const icons: any = [
   {
     name: 'Date',
     icon: 'date',
