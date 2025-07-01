@@ -7,3 +7,4 @@ export { default as Checkbox } from './Checkbox.vue';
 export { default as CollapsibleGroup } from './CollapsibleGroup.vue';
 export { default as Drawer } from './Drawer.vue';
 export { default as Image } from './Image.vue';
+export { default as Switch } from './Switch.vue';
