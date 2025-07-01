@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, watch } from 'vue';
-
-
+import { reactive, ref, watch } from 'vue';
 
 import type { IconName } from '@/components/icons/Icon.vue';
 import type {
@@ -9,7 +7,7 @@ import type {
   WidgetChannelCreateData,
   WidgetChannelUpdateData,
 } from '@/pages/integration/widget/widget-builder/channels/channels';
-import type { IActionWelcomeDialog, IAdditionalField } from '@/types/live-chat';
+import type { IChatFormState, ILoginFormState, IWelcomeDialogState } from '@/types/live-chat';
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
   // STATE
@@ -31,32 +29,36 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     { id: 6, icon: 'tiktok', name: 'Tiktok', enabled: true, link: '' },
   ]);
   // state for welcome dialog
-  const isWelcomeDialog = ref<boolean>(true);
-  const isAttentionGrabber = ref<boolean>(false);
-  const firstDescriptionWelcomeDialog = ref<string>('Hello There,');
-  const secondDescriptionWelcomeDialog = ref<string>('Welcome to Qiscus');
-  const descriptionWelcomeDialog = ref<string>('Ask for Questions');
-  const appearDelayWelcomeDialog = ref<string>('');
-  const isAutoExpandWelcomeDialog = ref<boolean>(false);
-  const isAttentionGrabberImage = ref<boolean>(true);
-  const isAttentionGrabberText = ref<boolean>(true);
-  const attentionGrabberTextDescription = ref<string>('');
-  const attentionGrabberAppearDelay = ref<string>('');
-  const attentionGrabberImage = ref<string>('');
-  const brandIconWelcomeDialog = ref<string>('');
-  const actionsWelcomeDialog = ref<IActionWelcomeDialog[]>([
-    {
-      label: 'Ask for Questions',
-      iconUrl: '',
-    },
-  ]);
+  const welcomeDialogState = reactive<IWelcomeDialogState>({
+    isWelcomeDialog: true,
+    isAttentionGrabber: false,
+    firstDescriptionWelcomeDialog: 'Hello There,',
+    secondDescriptionWelcomeDialog: 'Welcome to Qiscus',
+    descriptionWelcomeDialog: 'Ask for Questions',
+    appearDelayWelcomeDialog: '',
+    isAutoExpandWelcomeDialog: false,
+    isAttentionGrabberImage: true,
+    isAttentionGrabberText: true,
+    attentionGrabberTextDescription: '',
+    attentionGrabberAppearDelay: '',
+    attentionGrabberImage: '',
+    brandIconWelcomeDialog: '',
+    actionsWelcomeDialog: [
+      {
+        label: 'Ask for Questions',
+        iconUrl: '',
+      },
+    ],
+  });
   // state for login form
-  const firstDescriptionLoginForm = ref<string>('Hello There,');
-  const secondDescriptionLoginForm = ref<string>('Welcome to Qiscus');
-  const subtitleLoginForm = ref<string>('Please fill the details below before chatting with us!');
-  const buttonFormLoginForm = ref<string>('');
-  const customerIdentifierLoginForm = ref<string>('');
-  const additionalFieldLoginForm = ref<IAdditionalField[]>([]);
+  const loginFormState = reactive<ILoginFormState>({
+    firstDescription: 'Hello There,',
+    secondDescription: 'Welcome to Qiscus',
+    subtitle: 'Please fill the details below before chatting with us!',
+    buttonForm: '',
+    customerIdentifier: '',
+    additionalField: [],
+  });
 
   const customerIdentifierOptions = ref<{ label: string; value: string }[]>([
     {
@@ -105,8 +107,10 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     },
   ]);
   // state for chat form
-  const customerServiceNameChatForm = ref<string>('');
-  const customerServiceAvatarChatForm = ref<string>('');
+  const chatFormState = reactive<IChatFormState>({
+    customerServiceName: '',
+    customerServiceAvatar: '',
+  });
 
   // GETTERS
 
@@ -160,45 +164,6 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     }
   };
 
-  // actions for welcome dialog
-  const resetWelcomeDialogState = () => {
-    isWelcomeDialog.value = true;
-    isAttentionGrabber.value = false;
-    firstDescriptionWelcomeDialog.value = 'Hello There,';
-    secondDescriptionWelcomeDialog.value = 'Welcome to Qiscus';
-    descriptionWelcomeDialog.value = 'Ask for Questions';
-    appearDelayWelcomeDialog.value = '';
-    isAutoExpandWelcomeDialog.value = false;
-    isAttentionGrabberImage.value = true;
-    isAttentionGrabberText.value = true;
-    attentionGrabberTextDescription.value = '';
-    attentionGrabberAppearDelay.value = '';
-    attentionGrabberImage.value = '';
-    brandIconWelcomeDialog.value = '';
-    actionsWelcomeDialog.value = [
-      {
-        label: 'Ask for Questions',
-        iconUrl: '',
-      },
-    ];
-  };
-
-  // actions for login form
-  const resetLoginFormState = () => {
-    firstDescriptionLoginForm.value = 'Hello There,';
-    secondDescriptionLoginForm.value = 'Welcome to Qiscus';
-    subtitleLoginForm.value = 'Please fill the details below before chatting with us!';
-    buttonFormLoginForm.value = '';
-    customerIdentifierLoginForm.value = '';
-    additionalFieldLoginForm.value = [];
-  };
-
-  // actions for chat form
-  const resetChatFormState = () => {
-    customerServiceNameChatForm.value = '';
-    customerServiceAvatarChatForm.value = '';
-  };
-
   // Watch previewLiveChatName for update qiscus live chat channel name
   watch(previewLiveChatName, (newName) => {
     const qiscusChannel = channelList.value.find((channel) => channel.icon === 'qiscus');
@@ -231,34 +196,14 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     channelBadgeIcon,
     channelList,
     // state for welcome dialog
-    isWelcomeDialog,
-    isAttentionGrabber,
-    firstDescriptionWelcomeDialog,
-    secondDescriptionWelcomeDialog,
-    descriptionWelcomeDialog,
-    appearDelayWelcomeDialog,
-    isAutoExpandWelcomeDialog,
-    isAttentionGrabberImage,
-    isAttentionGrabberText,
-    attentionGrabberTextDescription,
-    attentionGrabberAppearDelay,
-    attentionGrabberImage,
-    brandIconWelcomeDialog,
-    actionsWelcomeDialog,
+    welcomeDialogState,
     // state for login form
-    firstDescriptionLoginForm,
-    secondDescriptionLoginForm,
-    subtitleLoginForm,
-    buttonFormLoginForm,
-    customerIdentifierLoginForm,
-    additionalFieldLoginForm,
+    loginFormState,
     customerIdentifierOptions,
     fieldTypeOptionsAdditionalField,
     iconsAdditionalField,
     // state for chat form
-    customerServiceNameChatForm,
-    customerServiceAvatarChatForm,
-
+    chatFormState,
     // Getters
 
     // Actions
@@ -267,11 +212,5 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     updateChannel,
     addQiscusLiveChatChannel,
     removeQiscusLiveChatChannel,
-    // actions for welcome dialog
-    resetWelcomeDialogState,
-    // actions for login form
-    resetLoginFormState,
-    // actions for chat form
-    resetChatFormState,
   };
 });
