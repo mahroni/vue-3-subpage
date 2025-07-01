@@ -18,14 +18,14 @@
               </div>
             </template>
           </ImageInput>
-          <TextArea v-model="loginFormReact.firstDescription" label="First Description" />
-          <TextArea v-model="loginFormReact.secondDescription" label="Second Description" />
-          <TextArea v-model="loginFormReact.subtitle" label="Subtitle" />
-          <Input label="Button Form" v-model="loginFormReact.buttonForm" />
+          <TextArea v-model="qiscusLiveChatStore.firstDescriptionLoginForm" label="First Description" />
+          <TextArea v-model="qiscusLiveChatStore.secondDescriptionLoginForm" label="Second Description" />
+          <TextArea v-model="qiscusLiveChatStore.subtitleLoginForm" label="Subtitle" />
+          <Input label="Button Form" v-model="qiscusLiveChatStore.buttonFormLoginForm" />
           <RadioInput
-            v-model="loginFormReact.customerIdentifier"
+            v-model="qiscusLiveChatStore.customerIdentifierLoginForm"
             label="Phone Number"
-            :options="customerIdentifierOptions"
+            :options="qiscusLiveChatStore.customerIdentifierOptions"
           />
           <Banner intent="positive" type="solid">
             If you use phone number to login, we won't be able to send chat history and notes to the
@@ -44,10 +44,10 @@
             <span>Add More Field</span>
           </Button>
         </div>
-        <Divider v-if="additionalFieldsArray.length > 0" />
-        <ul class="flex flex-col gap-6" v-if="additionalFieldsArray.length > 0">
+        <Divider v-if="qiscusLiveChatStore.additionalFieldLoginForm.length > 0" />
+        <ul class="flex flex-col gap-6" v-if="qiscusLiveChatStore.additionalFieldLoginForm.length > 0">
           <li
-            v-for="(field, index) in additionalFieldsArray"
+            v-for="(field, index) in qiscusLiveChatStore.additionalFieldLoginForm"
             :key="field.title"
             class="flex items-center justify-between"
           >
@@ -61,10 +61,10 @@
     <!-- PREVIEW -->
     <div class="bg-white-100 sticky top-20 z-50 flex flex-1 flex-col items-end p-6">
       <LoginForm
-        :title="loginFormReact.firstDescription"
-        :subtitle="loginFormReact.secondDescription"
-        :description="loginFormReact.subtitle"
-        :buttonText="loginFormReact.buttonForm"
+        :title="qiscusLiveChatStore.firstDescriptionLoginForm"
+        :subtitle="qiscusLiveChatStore.secondDescriptionLoginForm"
+        :description="qiscusLiveChatStore.subtitleLoginForm"
+        :buttonText="qiscusLiveChatStore.buttonFormLoginForm"
       />
     </div>
   </div>
@@ -79,7 +79,7 @@
     <template #title> Add Additional Field </template>
     <template #content>
       <div class="mb-9 flex flex-col gap-2">
-        <Select label="Field Type" :options="fieldTypeOptions" v-model="additionalField.type" />
+        <Select label="Field Type" :options="qiscusLiveChatStore.fieldTypeOptionsAdditionalField" v-model="additionalField.type" />
         <div v-if="additionalField.type !== ''" class="flex flex-col gap-6">
           <Input label="Title" v-model="additionalField.title" />
           <Input label="Placeholder" v-model="additionalField.placeholder" />
@@ -89,7 +89,7 @@
           <div class="my-2 flex items-center">
             <Checkbox label="Set this field to required" v-model="additionalField.required" />
           </div>
-          <IconSelectInput v-model="additionalField.iconField" :icons="icons" />
+          <IconSelectInput v-model="additionalField.iconField" :icons="qiscusLiveChatStore.iconsAdditionalField" />
         </div>
       </div>
     </template>
@@ -117,6 +117,7 @@ import { PlusIcon } from '@/components/icons';
 import Divider from '@/components/ui/Divider.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
 
+import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 import DropdownItemInput from '../form/DropdownItemInput.vue';
 import IconSelectInput from '../form/IconSelectInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
@@ -131,19 +132,7 @@ interface AdditionalField {
   isRequired: boolean;
 }
 
-const additionalFieldsArray = ref<AdditionalField[]>([]);
-// const modalStateText = reactive({
-//   title: 'Add Additional Field',
-//   confirmButton: 'Add Field',
-// });
-
-const loginFormReact = reactive({
-  firstDescription: 'Hello There,',
-  secondDescription: 'Welcome to Qiscus',
-  subtitle: 'Please fill the details below before chatting with us!',
-  buttonForm: '',
-  customerIdentifier: '',
-});
+const qiscusLiveChatStore = useQiscusLiveChatStore();
 
 const additionalField = reactive<AdditionalField>({
   type: '',
@@ -156,55 +145,6 @@ const additionalField = reactive<AdditionalField>({
 });
 
 const isOpenModal = ref(false);
-
-const customerIdentifierOptions = [
-  {
-    label: 'Email',
-    value: 'email',
-  },
-  {
-    label: 'Phone Number',
-    value: 'phone',
-  },
-];
-
-const fieldTypeOptions = [
-  {
-    text: 'Input Text',
-    value: 'input',
-  },
-  {
-    text: 'Text Area',
-    value: 'textarea',
-  },
-  {
-    text: 'Dropdown',
-    value: 'dropdown',
-  },
-];
-
-const icons = [
-  {
-    name: 'Date',
-    icon: 'date',
-  },
-  {
-    name: 'Location',
-    icon: 'pin',
-  },
-  {
-    name: 'Briefcase',
-    icon: 'briefcase',
-  },
-  {
-    name: 'Globe',
-    icon: 'globe',
-  },
-  {
-    name: 'Phone',
-    icon: 'phone',
-  },
-];
 
 const addAdditionalField = () => {
   isOpenModal.value = true;
@@ -221,13 +161,13 @@ const resetAdditionalField = () => {
 };
 
 const addAdditionalFieldConfirm = () => {
-  additionalFieldsArray.value.push({ ...additionalField });
+  qiscusLiveChatStore.additionalFieldLoginForm.push({ ...additionalField });
   resetAdditionalField();
   isOpenModal.value = false;
 };
 
 const getFieldOptions = (index: number) => {
-  const field = additionalFieldsArray.value[index];
+  const field = qiscusLiveChatStore.additionalFieldLoginForm[index];
   if (!field) return [];
 
   return [
@@ -257,7 +197,7 @@ const editField = (field: AdditionalField) => {
 };
 
 const deleteField = (index: number) => {
-  additionalFieldsArray.value.splice(index, 1);
+  qiscusLiveChatStore.additionalFieldLoginForm.splice(index, 1);
 };
 
 const handleFieldMenuSelect = (option: any) => {
