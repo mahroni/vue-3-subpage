@@ -22,7 +22,7 @@
         </div>
 
         <!-- PREVIEW -->
-        <div class="flex p-6 flex-1 flex-col items-end">
+        <div class="flex p-6 flex-1 flex-col items-end sticky top-20 bg-white-100 z-50">
             <ChatFormLoading/>
         </div>
     </div>

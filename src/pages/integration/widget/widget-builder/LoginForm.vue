@@ -1,6 +1,6 @@
 <template>
     <div class="flex w-full items-start gap-8 self-stretch justify-between">
-        <div class="flex flex-col gap-8 max-w-[50%]">
+        <div class="flex flex-col gap-8 flex-1">
             <WidgetFormLayout label="Login Form">
                 <template #additional-info>
                     <Banner intent="positive" type="solid">
@@ -59,7 +59,7 @@
         </div>
 
         <!-- PREVIEW -->
-        <div class="flex p-6">
+        <div class="flex p-6 flex-1 flex-col items-end sticky top-20 bg-white-100 z-50">
             <LoginForm :title="loginFormReact.firstDescription" :subtitle="loginFormReact.secondDescription" :description="loginFormReact.subtitle" :buttonText="loginFormReact.buttonForm" />
         </div>
     </div>
