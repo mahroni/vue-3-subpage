@@ -7,15 +7,19 @@
 
     <!-- Header -->
     <div class="flex items-center gap-2">
-      <Icon name="chat" :size="20" />
+      <ChatIcon :size="20" />
       <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>
 
     <div class="bg-surface-highlight rounded-lg p-4 text-sm font-medium">
       <p>
         To learn more about Qiscus Live Chat Integration, you can refer to this
-        <a class="text-notification-link font-semibold underline"
-          href="https://docs.qiscus.com/docs/live-chat-integration" target="_blank">Documentation</a>.
+        <a
+          class="text-notification-link font-semibold underline"
+          href="https://docs.qiscus.com/docs/live-chat-integration"
+          target="_blank"
+          >Documentation</a
+        >.
       </p>
     </div>
 
@@ -30,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { ChevronLeftIcon } from '@/components/icons';
-import Icon from '@/components/icons/Icon.vue';
+import ChatIcon from '@/components/icons/ChatIcon.vue';
+import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon.vue';
 import TableListAccount from '@/pages/integration/list-account/TableListAccount.vue';
 </script>

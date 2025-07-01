@@ -1,7 +1,8 @@
 import { ref, toValue } from 'vue';
-import type { IQiscusChannel } from '@/types/channels';
+
 import { qiscusApi } from '@/api/channels';
 import type { IResponse } from '@/types/api';
+import type { IQiscusChannel } from '@/types/channels';
 
 interface FetchChannelsMeta {
   page?: number;

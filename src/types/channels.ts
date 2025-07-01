@@ -49,13 +49,11 @@ export interface IQiscusChannel {
 }
 
 export interface IUpdateQiscusChannel {
-  app_code: string;
-  badge_url: string;
+  badge_url?: string;
   id: number;
-  is_active: boolean;
-  is_secure: boolean;
-  name: string;
-  secret_key: string | null;
+  is_active?: boolean;
+  is_secure?: boolean;
+  name?: string;
 }
 
 export interface IUpdateConfigQiscusChannel {

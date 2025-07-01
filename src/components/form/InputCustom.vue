@@ -4,18 +4,37 @@
     <div :class="wrapperClasses({ isFocused, error, disabled })">
       <div :class="contentWrapperClasses()">
         <slot name="suffix-icon" />
-        <input :id="id" :type="currentType" :class="inputClasses({ disabled })" :value="modelValue" @input="onInput"
-          @focus="isFocused = true" @blur="isFocused = false" :placeholder="placeholder" :disabled="disabled" />
+        <input
+          :id="id"
+          :type="currentType"
+          :class="inputClasses({ disabled })"
+          :value="modelValue"
+          @input="onInput"
+          @focus="isFocused = true"
+          @blur="isFocused = false"
+          :placeholder="placeholder"
+          :disabled="disabled"
+        />
 
-        <button v-if="clearable" class="invisible cursor-pointer transition-colors duration-300 ease-in-out" :class="{
-          visible: modelValue,
-        }" @click="onClear" :disabled="disabled">
-          <Icon name="close" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
+        <button
+          v-if="clearable"
+          class="invisible cursor-pointer transition-colors duration-300 ease-in-out"
+          :class="{
+            visible: modelValue,
+          }"
+          @click="onClear"
+          :disabled="disabled"
+        >
+          <CloseIcon class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
 
-        <button v-if="type === 'password'" class="cursor-pointer" @click="togglePasswordVisibility"
-          :disabled="disabled">
-          <EyeIcon :size="20" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
+        <button
+          v-if="type === 'password'"
+          class="cursor-pointer"
+          @click="togglePasswordVisibility"
+          :disabled="disabled"
+        >
+          <EyeIcon :name="passwordIcon" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
       </div>
 
@@ -34,7 +53,9 @@
 <script setup lang="ts">
 import { cva } from 'class-variance-authority';
 import { computed, ref } from 'vue';
-import Icon from '../icons/Icon.vue';
+
+import CloseIcon from '@/components/icons/CloseIcon.vue';
+import EyeIcon from '@/components/icons/EyeIcon.vue';
 
 interface Props {
   modelValue: string;
@@ -139,7 +160,7 @@ const appendButtonClasses = cva(
 );
 
 const appendButtonIconClasses = cva(
-  'flex min-w-fit cursor-pointer items-center justify-center bg-white p-3',
+  'flex min-w-fit cursor-pointer items-center justify-center bg-white p-4',
   {
     variants: {
       disabled: {
