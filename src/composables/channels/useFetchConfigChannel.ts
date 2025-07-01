@@ -1,27 +1,26 @@
 import { ref } from 'vue';
 
-import { qiscusApi } from '@/api/channels';
+import { configApi } from '@/api/channels';
 import type { IResponse } from '@/types/api';
 import type { IQiscusChannel } from '@/types/channels';
 
-export const useUpdateQiscus = () => {
+export const useFetchConfig = () => {
   const loading = ref(false);
   const data = ref<IQiscusChannel | null>(null);
   const error = ref<Error | null>(null);
 
-  const update = async (id: string | number, payload: any) => {
+  const fetchConfig = async (id: number, source: string) => {
     try {
       loading.value = true;
       error.value = null;
 
-      const response = await qiscusApi.update({
-        id: id,
-        ...payload,
-      });
+      const params = {
+        source,
+      };
+      const response = await configApi.get(id, params);
+      const dataResponse = response.data as unknown as IResponse<IQiscusChannel>;
 
-      const dataResponse = response.data as unknown as IResponse<any>;
-      const { qiscus_channel } = dataResponse.data;
-      data.value = qiscus_channel;
+      data.value = dataResponse.data;
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('An unknown error occurred');
       data.value = null;
@@ -34,6 +33,6 @@ export const useUpdateQiscus = () => {
     loading,
     data,
     error,
-    update,
+    fetchConfig,
   };
 };

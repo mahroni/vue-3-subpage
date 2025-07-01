@@ -15,7 +15,8 @@
     "Swal",
     "Sweetalert",
     "tiktok",
-    "VITE"
+    "VITE",
+    "xsmall"
   ],
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "typescript.suggest.autoImports": true,

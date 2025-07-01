@@ -1,11 +1,11 @@
 import type { RouteRecordRaw, Router } from 'vue-router';
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 
-import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
 import AutoResponder from '@/views/AutoResponder.vue';
 import Home from '@/views/integration/ChannelPage.vue';
 import QiscusCreateChannelView from '@/views/integration/QiscusCreateChannelView.vue';
 import QiscusListChannelView from '@/views/integration/QiscusListChannelView.vue';
+import QiscusDetailView from '@/views/integration/qiscus/QiscusDetailView.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -65,9 +65,9 @@ export function createRouter(appId?: string | number): Router {
       component: QiscusListChannelView,
     },
     {
-      path: '/qiscus/:channelId',
-      name: 'QiscusChannelDetail',
-      component: WidgetLayout,
+      path: '/qiscus/:id',
+      name: 'qiscus-detail',
+      component: QiscusDetailView,
     },
     {
       path: '/qiscus/create',

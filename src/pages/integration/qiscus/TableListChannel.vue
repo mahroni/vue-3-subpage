@@ -177,10 +177,10 @@ const channels = computed(() =>
 );
 
 async function updateChannelStatus(id: number, is_active: boolean) {
-  const { updateStatus, data, error } = useUpdateQiscus();
+  const { update, data, error } = useUpdateQiscus();
 
   try {
-    await updateStatus(id, { is_active });
+    await update(id, { is_active });
 
     if (error.value) {
       // Revert the switch state on the client if API call fails
@@ -267,8 +267,8 @@ async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
 
 function getDetailChannel(channel: IChannel) {
   router.push({
-    name: 'qiscusChannelDetail',
-    params: { channelId: channel.id },
+    name: 'qiscus-detail',
+    params: { id: channel.id },
   });
 }
 </script>

@@ -41,8 +41,8 @@ const buttonClass = computed(() =>
     variants: {
       intent: {
         primary: 'bg-primary text-white shadow-sm hover:shadow-md',
-        secondary: 'bg-transparent border-2 border-primary text-primary shadow-sm hover:shadow-md',
-        danger: 'bg-transparent border-2 border-red-600 text-red-600 shadow-sm hover:shadow-md',
+        secondary: 'bg-transparent border border-primary text-primary shadow-sm hover:shadow-md',
+        danger: 'bg-transparent border border-red-600 text-red-600 shadow-sm hover:shadow-md',
         flat: 'bg-transparent text-primary hover:bg-slate-50',
       },
       size: {
