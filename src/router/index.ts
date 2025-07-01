@@ -118,7 +118,7 @@ export function createRouter(appId?: string | number): Router {
 
   // console.log('ROUTER DEBUG: Using appId:', dynamicAppId);
 
-  const VUE_ROUTER_BASE_PATH = dynamicAppId ? `/web/${dynamicAppId}/new-integration/` : '/';
+  const VUE_ROUTER_BASE_PATH = dynamicAppId ? `/web/${dynamicAppId}/channels/` : '/';
 
   const router = createVueRouter({
     history: createWebHistory(VUE_ROUTER_BASE_PATH),
