@@ -17,7 +17,10 @@ export function createRouter(appId?: string | number): Router {
     {
       path: '/whatsapp',
       name: 'whatsapp',
-      component: QiscusListChannelView,
+      beforeEnter: () => {
+        window.location.href = `/integration?ch=whatsapp`;
+        return false;
+      },
     },
     {
       path: '/instagram',
