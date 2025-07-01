@@ -88,7 +88,6 @@ const showPassword = ref(false);
 const currentType = computed(() =>
   props.type === 'password' && !showPassword.value ? 'password' : 'text'
 );
-const passwordIcon = computed(() => (showPassword.value ? 'eye-slash' : 'eye'));
 
 const onInput = (event: Event) => {
   emit('update:modelValue', (event.target as HTMLInputElement).value);

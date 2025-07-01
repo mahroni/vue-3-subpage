@@ -2,6 +2,8 @@
 // import { Icon } from '@/components/icons';
 import { cva } from 'class-variance-authority';
 
+import type { IconName } from '@/components/icons/Icon.vue';
+
 interface Props {
   modelValue: string;
   icons: Icon[];
@@ -9,7 +11,7 @@ interface Props {
 
 interface Icon {
   name: string;
-  icon: string;
+  icon: IconName;
 }
 
 const props = defineProps<Props>();
@@ -51,7 +53,7 @@ const selectIcon = (iconName: string) => {
         @click="selectIcon(icon.name)"
         :title="icon.name"
       >
-        <!-- <Icon :name="icon.icon" :alt="icon.name" /> -->
+        <Icon :name="icon.icon" :alt="icon.name" />
       </div>
     </div>
   </div>
