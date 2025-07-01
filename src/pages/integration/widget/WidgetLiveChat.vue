@@ -13,10 +13,10 @@ import {
 
 import CallToAction from './widget-builder/CallToAction.vue';
 import Chat from './widget-builder/Chat.vue';
-import ColorScheme from './widget-builder/ColorScheme.vue';
 import LoginForm from './widget-builder/LoginForm.vue';
 import WelcomeDialog from './widget-builder/WelcomeDialog.vue';
 import Channels from './widget-builder/channels/Channels.vue';
+import ColorScheme from './widget-builder/color-scheme/ColorScheme.vue';
 
 interface Tab {
   label: string;
@@ -37,7 +37,9 @@ const activeTab = ref(tabs[0]?.label || '');
 
 <template>
   <div class="bg-white-100 flex w-full flex-col rounded-2xl border-[1px] border-gray-300">
-    <div class="flex w-full items-center justify-between border-b-[1px] border-gray-300 p-4 sticky top-0 bg-white-100 z-50">
+    <div
+      class="bg-white-100 sticky top-0 z-50 flex w-full items-center justify-between border-b-[1px] border-gray-300 p-4"
+    >
       <RoundedTab :tabs="tabs" v-model="activeTab" />
     </div>
     <div class="p-4">

@@ -1,8 +1,8 @@
 <template>
-  <div class="overflow-hidden bg-white px-6 py-[18px]">
+  <div class="overflow-hidden bg-white">
     <!-- Collapsible Header -->
     <div
-      class="flex cursor-pointer items-center justify-between select-none"
+      class="flex cursor-pointer items-center justify-between px-6 py-[18px] select-none"
       @click="toggleCollapse"
     >
       <!-- Slot for the title/header content -->
@@ -13,7 +13,7 @@
       <Icon
         name="chevron-down"
         :class="{ 'rotate-180': !isCollapsed }"
-        class="h-5 w-5 text-gray-600 transition-transform duration-300 ease-in-out"
+        class="text-gray-600 transition-transform duration-300 ease-in-out"
       />
     </div>
 
@@ -23,7 +23,7 @@
       class="transition-all duration-300 ease-in-out"
     >
       <!-- Slot for the collapsible content -->
-      <div class="py-4">
+      <div class="px-6 pb-[18px]">
         <slot></slot>
       </div>
     </div>

@@ -15,7 +15,7 @@
 
         <button v-if="type === 'password'" class="cursor-pointer" @click="togglePasswordVisibility"
           :disabled="disabled">
-          <EyeIcon :size="20" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
+          <EyeIcon class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
       </div>
 
@@ -139,7 +139,7 @@ const appendButtonClasses = cva(
 );
 
 const appendButtonIconClasses = cva(
-  'flex min-w-fit cursor-pointer items-center justify-center bg-white p-3',
+  'flex min-w-fit cursor-pointer items-center justify-center bg-white p-4',
   {
     variants: {
       disabled: {

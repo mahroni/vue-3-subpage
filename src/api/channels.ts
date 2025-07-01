@@ -10,7 +10,7 @@ export const channelsApi = {
 };
 
 export const qiscusApi = {
-  get: (params: IParams) => apiV3.get<any[]>('/admin/channel/qiscus', { params }),
+  get: (params?: IParams) => apiV3.get<any[]>('/admin/channel/qiscus', { params }),
   getById: (id: number) => apiV2.get<any>(`/qiscus/${id}`),
   update: (data: any) => apiV2.post<any>(`qiscus/connect/${data.id}/update`, data),
 };

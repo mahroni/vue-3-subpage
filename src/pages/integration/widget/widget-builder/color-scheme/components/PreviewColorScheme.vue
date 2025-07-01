@@ -1,0 +1,120 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+import Button from '@/components/common/Button.vue';
+import { BackIcon, NextIcon } from '@/components/icons';
+import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
+import LoginFormLoading from '@/components/ui/widget-preview/LoginFormLoading.vue';
+import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
+
+const props = defineProps<{
+  colorValue: string;
+}>();
+
+const carouselContainer = ref<HTMLElement>();
+const currentIndex = ref(0);
+const totalSlides = 3;
+
+const scrollToSlide = (index: number) => {
+  if (!carouselContainer.value) return;
+
+  const container = carouselContainer.value;
+  const slideWidth = container.scrollWidth / totalSlides;
+  container.scrollTo({
+    left: slideWidth * index,
+    behavior: 'smooth',
+  });
+  currentIndex.value = index;
+};
+
+const goToPrevious = () => {
+  const newIndex = currentIndex.value > 0 ? currentIndex.value - 1 : totalSlides - 1;
+  scrollToSlide(newIndex);
+};
+
+const goToNext = () => {
+  const newIndex = currentIndex.value < totalSlides - 1 ? currentIndex.value + 1 : 0;
+  scrollToSlide(newIndex);
+};
+</script>
+
+<template>
+  <div class="flex gap-2">
+    <Button
+      intent="flat"
+      disableAnimation
+      class="border-button-primary border !px-3 !py-1"
+      @click="goToPrevious"
+    >
+      <template #prefixIcon>
+        <BackIcon :size="18" />
+      </template>
+      <span class="text-xs font-semibold">Previous</span>
+    </Button>
+
+    <Button
+      intent="flat"
+      disableAnimation
+      class="border-button-primary border !px-3 !py-1"
+      @click="goToNext"
+    >
+      <template #suffixIcon>
+        <NextIcon :size="18" />
+      </template>
+      <span class="text-xs font-semibold">Next</span>
+    </Button>
+  </div>
+  <div
+    ref="carouselContainer"
+    class="flex w-100 snap-x snap-mandatory gap-10 overflow-x-hidden px-5 py-4"
+  >
+    <!-- Welcome Page -->
+    <div class="flex min-w-full snap-center flex-col items-end gap-4">
+      <WelcomingPage
+        title="Hello there!"
+        subtitle="Welcome to Qiscus!"
+        :textColor="props.colorValue"
+        :imageUrl="''"
+        :actions="[]"
+      />
+
+      <div
+        class="flex h-16 w-fit items-center justify-center gap-3 rounded-4xl px-6 py-2.5"
+        :style="{ backgroundColor: props.colorValue }"
+      >
+        <div class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
+        <div class="bg-surface-disable h-4.5 w-[80px] animate-pulse rounded-full" />
+      </div>
+    </div>
+
+    <!-- Login Form -->
+    <div class="flex min-w-full snap-center flex-col items-end gap-4">
+      <LoginFormLoading
+        title="Hello there,"
+        subtitle="Welcome to Qiscus!"
+        description="Please fill the details below before chatting with us!"
+        :color="props.colorValue"
+      />
+
+      <div class="bg-surface-disable h-16 w-16 rounded-full" />
+    </div>
+
+    <!-- Chat Form -->
+    <div class="flex min-w-full snap-center flex-col items-end gap-4">
+      <ChatFormLoading>
+        <template #bubble>
+          <div class="flex justify-end">
+            <div
+              class="rounded-t-[24px] rounded-br-[4px] rounded-bl-[24px] p-4 text-sm text-white"
+              :style="{ backgroundColor: props.colorValue }"
+            >
+              Hello there, Im Qiscus Folks!
+            </div>
+          </div>
+        </template>
+      </ChatFormLoading>
+
+      <div class="bg-surface-disable h-16 w-16 rounded-full" />
+    </div>
+  </div>
+</template>
