@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full items-start gap-8 self-stretch justify-between">
+  <div class="flex w-full items-start gap-8 self-stretch justify-between relative">
     <div class="flex flex-col gap-8 w-full flex-1">
       <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
@@ -65,16 +65,16 @@
     </div>
 
     <!-- PREVIEW -->
-    <div v-if="welcomeDialogReact.isWelcomeDialog" class="flex p-6 flex-1 flex-col items-end">
+    <div v-if="welcomeDialogReact.isWelcomeDialog" class="flex p-6 flex-1 flex-col items-end sticky top-20 bg-white-100 z-50">
       <WelcomingPage :title="welcomeDialogReact.firstDescription" :subtitle="welcomeDialogReact.secondDescription"
         :imageUrl="welcomeDialogReact.brandIcon" :actions="welcomeDialogReact.actions" />
     </div>
 
-    <div v-else-if="welcomeDialogReact.isAttentionGrabber" class="flex p-6 flex-1 flex-col items-end">
+    <div v-else-if="welcomeDialogReact.isAttentionGrabber" class="flex p-6 flex-1 flex-col items-end sticky top-20 bg-white-100 z-50">
       <AttentionGrabber :imageUrl="welcomeDialogReact.isAttentionGrabberImage ? welcomeDialogReact.attentionGrabberImage : ''" :title="welcomeDialogReact.isAttentionGrabberText ? welcomeDialogReact.attentionGrabberTextDescription : ''" />
     </div>
 
-    <div v-else class="flex p-6 flex-1 flex-col items-end">
+    <div v-else class="flex p-6 flex-1 flex-col items-end sticky top-20 bg-white-100 z-50">
       <WelcomingPageLoading/>
     </div>
   </div>
