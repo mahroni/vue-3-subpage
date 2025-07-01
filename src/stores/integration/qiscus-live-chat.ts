@@ -1,6 +1,9 @@
 import { defineStore } from 'pinia';
 import { ref, watch } from 'vue';
 
+
+
+import type { IconName } from '@/components/icons/Icon.vue';
 import type {
   IWidgetChannel,
   WidgetChannelCreateData,
@@ -55,7 +58,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   const customerIdentifierLoginForm = ref<string>('');
   const additionalFieldLoginForm = ref<IAdditionalField[]>([]);
 
-  const customerIdentifierOptions = ref<{ label: string; value: string }[]>([ 
+  const customerIdentifierOptions = ref<{ label: string; value: string }[]>([
     {
       label: 'Email',
       value: 'email',
@@ -63,7 +66,8 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     {
       label: 'Phone Number',
       value: 'phone',
-    }]);
+    },
+  ]);
   const fieldTypeOptionsAdditionalField = ref<{ text: string; value: string }[]>([
     {
       text: 'Input Text',
@@ -78,7 +82,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
       value: 'dropdown',
     },
   ]);
-  const iconsAdditionalField = ref<{ name: string; icon: string }[]>([
+  const iconsAdditionalField = ref<{ name: string; icon: IconName }[]>([
     {
       name: 'Date',
       icon: 'date',

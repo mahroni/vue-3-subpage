@@ -142,7 +142,6 @@ const additionalField = reactive<AdditionalField>({
 
 const isOpenModal = ref(false);
 
->>>>>>> ca2936747b7990e544ea36693fe5389a72e9b56b
 const addAdditionalField = () => {
   isOpenModal.value = true;
 };
