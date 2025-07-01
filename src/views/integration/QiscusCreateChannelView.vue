@@ -10,7 +10,7 @@
 
     <!-- Header -->
     <div class="flex items-center gap-2">
-      <Icon name="chat" :size="20" />
+      <ChatIcon :size="20" />
       <h2 class="text-text-title text-xl font-semibold">New Integration - Qiscus Live Chat</h2>
     </div>
 
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
+import ChatIcon from '@/components/icons/ChatIcon.vue';
 import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon.vue';
 import CreateNewForm from '@/pages/integration/qiscus/CreateNewForm.vue';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';

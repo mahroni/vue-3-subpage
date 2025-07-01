@@ -1,0 +1,120 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+import Banner from '@/components/common/Banner.vue';
+import Button from '@/components/common/Button.vue';
+import InputCustom from '@/components/form/InputCustom.vue';
+import Icon from '@/components/icons/Icon.vue';
+import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
+import LoginFormLoading from '@/components/ui/widget-preview/LoginFormLoading.vue';
+import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
+import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
+
+const colorValue = ref('#01416C');
+</script>
+
+<template>
+  <div class="flex w-full items-start gap-8 self-stretch">
+    <!-- Form Section -->
+    <div class="flex w-full flex-1 flex-col gap-8">
+      <WidgetFormLayout label="Color Scheme">
+        <template #additional-info> </template>
+        <template #inputs>
+          <Banner intent="positive" type="outline">
+            This configuration sets the base color theme for your live chat, affecting the header
+            text, action buttons, and chat bubbles.
+          </Banner>
+
+          <InputCustom
+            v-model="colorValue"
+            :clearable="false"
+            :disabled="false"
+            :error="false"
+            errorMessage="This field has an error"
+            id="base-color-input"
+            label="Base Color Theme"
+            placeholder="Enter color code (e.g., #0141C)"
+            type="text"
+          >
+            <template #append-button-icon>
+              <div class="relative">
+                <!-- Color Preview -->
+                <div
+                  class="h-6 w-6 rounded border border-gray-200"
+                  :style="{ backgroundColor: colorValue }"
+                ></div>
+                <!-- Hidden Color Picker -->
+                <input
+                  type="color"
+                  :value="colorValue"
+                  @input="colorValue = ($event.target as HTMLInputElement).value"
+                  class="absolute inset-0 h-6 w-6 cursor-pointer opacity-0"
+                />
+              </div>
+            </template>
+          </InputCustom>
+        </template>
+      </WidgetFormLayout>
+    </div>
+
+    <!-- Preview Section -->
+    <div class="flex flex-1 flex-col items-end gap-4 p-6">
+      <!-- Navigation Buttons -->
+      <div class="flex gap-2">
+        <Button intent="flat" disableAnimation class="border-button-primary border !px-3 !py-1">
+          <template #prefixIcon>
+            <Icon name="back" :size="18" />
+          </template>
+          <span class="text-xs font-semibold">Previous</span>
+        </Button>
+
+        <Button intent="flat" disableAnimation class="border-button-primary border !px-3 !py-1">
+          <template #suffixIcon>
+            <Icon name="next" :size="18" />
+          </template>
+          <span class="text-xs font-semibold">Next</span>
+        </Button>
+      </div>
+
+      <WelcomingPage
+        title="Hello there!"
+        subtitle="Welcome to Qiscus!"
+        :textColor="colorValue"
+        :imageUrl="''"
+        :actions="[]"
+      />
+
+      <div
+        class="flex h-16 items-center justify-center gap-3 rounded-4xl px-6 py-2.5"
+        :style="{ backgroundColor: colorValue }"
+      >
+        <div class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
+        <div class="bg-surface-disable h-4.5 w-[80px] animate-pulse rounded-full" />
+      </div>
+
+      <LoginFormLoading
+        title="Hello there,"
+        subtitle="Welcome to Qiscus!"
+        description="Please fill the details below before chatting with us!"
+        :color="colorValue"
+      />
+
+      <div class="bg-surface-disable h-16 w-16 rounded-full" />
+
+      <ChatFormLoading>
+        <template #bubble>
+          <div class="flex justify-end">
+            <div
+              class="rounded-t-[24px] rounded-br-[4px] rounded-bl-[24px] p-4 text-sm text-white"
+              :style="{ backgroundColor: colorValue }"
+            >
+              Hello there, Im Qiscus Folks!
+            </div>
+          </div>
+        </template>
+      </ChatFormLoading>
+
+      <div class="bg-surface-disable h-16 w-16 rounded-full" />
+    </div>
+  </div>
+</template>
