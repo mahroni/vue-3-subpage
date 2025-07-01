@@ -2,14 +2,17 @@
 import { type Component, ref } from 'vue';
 
 import RoundedTab from '@/components/common/Tabs/RoundedTab.vue';
+import { Button, Drawer } from '@/components/common/common';
 import {
   ChatOutlineIcon,
+  CloseIcon,
   IntegrationIcon,
   PalleteIcon,
   ServerIcon,
   TableIcon,
   ToggleLeftIcon,
 } from '@/components/icons';
+import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 
 import CallToAction from './widget-builder/CallToAction.vue';
 import Chat from './widget-builder/Chat.vue';
@@ -33,6 +36,11 @@ const tabs = [
 ] as Tab[];
 
 const activeTab = ref(tabs[0]?.label || '');
+
+const isDrawerOpen = ref(false);
+const toggleDrawer = () => {
+  isDrawerOpen.value = !isDrawerOpen.value;
+};
 </script>
 
 <template>
@@ -41,6 +49,7 @@ const activeTab = ref(tabs[0]?.label || '');
       class="bg-white-100 sticky top-0 z-50 flex w-full items-center justify-between border-b-[1px] border-gray-300 p-4"
     >
       <RoundedTab :tabs="tabs" v-model="activeTab" />
+      <Button @click="toggleDrawer">Save & Preview</Button>
     </div>
     <div class="p-4">
       <template v-if="activeTab === 'Welcome Dialog'">
@@ -63,4 +72,23 @@ const activeTab = ref(tabs[0]?.label || '');
       </template>
     </div>
   </div>
+  <Drawer :isOpen="isDrawerOpen" @close="toggleDrawer">
+    <div class="flex h-full w-full flex-col items-end justify-end gap-4">
+      <WelcomingPage
+        imageUrl=""
+        title="Hello, there,"
+        subtitle="Welcome to Qiscus!"
+        :actions="[
+          {
+            label: 'Ask for Questions',
+            iconUrl: '',
+          },
+        ]"
+      />
+
+      <div class="bg-surface-primary-blue flex h-16 w-16 items-center justify-center rounded-full">
+        <CloseIcon class="text-white-100" />
+      </div>
+    </div>
+  </Drawer>
 </template>
