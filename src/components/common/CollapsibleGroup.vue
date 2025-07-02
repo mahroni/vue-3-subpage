@@ -1,16 +1,9 @@
 <template>
   <div class="shadow-base overflow-hidden rounded-lg">
-    <Collapsible
-      v-for="(item, index) in items"
-      :key="item.id"
-      :title="item.title"
-      :collapsed="activeItemId !== item.id"
-      @update:collapsed="handleCollapseToggle(item.id, $event)"
-      :class="{
+    <Collapsible v-for="(item, index) in items" :key="item.id" :title="item.title" :collapsed="activeItemId !== item.id"
+      @update:collapsed="handleCollapseToggle(item.id, $event)" :class="{
         'border-t border-gray-300': index !== 0,
-      }"
-      :initiallyCollapsed="!item.initiallyOpen"
-    >
+      }" :initiallyCollapsed="!item.initiallyOpen">
       <!-- Pass the content from the item data to the default slot of Collapsible -->
       <template #default>
         <!-- <div v-html="item.content"></div> -->
@@ -71,7 +64,7 @@ const handleCollapseToggle = (id: string, isNowCollapsed: boolean) => {
 onMounted(() => {
   // Check if any item is marked as initially open and set it as active
   const initialOpenItem = props.items.find((item) => item.initiallyOpen);
-  console.log(initialOpenItem?.id);
+
   if (initialOpenItem) {
     activeItemId.value = initialOpenItem?.id;
   } else if (props.items.length > 0) {

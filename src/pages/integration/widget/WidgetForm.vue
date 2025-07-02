@@ -1,10 +1,9 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <form @submit.prevent="update" class="flex flex-col gap-8">
     <!-- Banner documentation -->
     <QiscusBannerDoc />
     <div
-      class="border-stroke-regular bg-surface-secondary flex flex-col items-start justify-center gap-8 rounded-xl border p-6"
-    >
+      class="border-stroke-regular bg-surface-secondary flex flex-col items-start justify-center gap-8 rounded-xl border p-6">
       <p class="text-text-placeholder text-xs font-normal">
         Build your Qiscus Live Chat based on your need using our builder.
       </p>
@@ -25,55 +24,85 @@
       </Banner>
 
       <div class="w-[552px]">
-        <Input
-          v-model="channelName"
-          :disabled="false"
-          :error="false"
-          errorMessage="This field has an error"
-          id="default-input"
-          placeholder="Enter your channel name here"
-        />
+        <Input v-model="channelName" :disabled="false" :error="false" errorMessage="This field has an error"
+          id="default-input" placeholder="Enter your channel name here" />
       </div>
     </div>
     <div class="flex justify-end gap-4">
-      <Button intent="secondary">Cancel</Button>
-      <Button @click="onUpdateChannel" :disabled="!channelName || !channelBadge">Save</Button>
+      <Button intent="secondary" @click="router.back()">Cancel</Button>
+      <Button type="submit" :disabled="isDisabled">Save</Button>
     </div>
-  </div>
+  </form>
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import Banner from '@/components/common/Banner.vue';
 import Button from '@/components/common/Button.vue';
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
+import { useFetchBot } from "@/composables/channels/bot/useFetchBot";
+import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qiscus';
+import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
+import { useSweetAlert } from '@/composables/useSweetAlert';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
-import { useQiscusStore } from '@/stores/integration-qiscus';
 
+const channelId = ref<string>('')
 const channelName = ref<string>('');
 const errorMessages = ref<string>('');
 
-const route = useRoute();
-const channelsStore = useQiscusStore();
+const route = useRoute()
+const router = useRouter()
+const { showAlert } = useSweetAlert()
+const { fetchChannelById, data: widget } = useFetchQiscusDetail()
+const { update: updateChannel, error, loading } = useUpdateQiscus()
+const uConfig = useFetchConfig()
+const uBot = useFetchBot()
 
-const channelBadge = computed(() => channelsStore.detail?.badge_url);
+// computed
+const channelBadge = computed(() => widget.value?.badge_url);
+const isDisabled = computed(() => !channelName.value || !channelBadge.value || loading.value)
 
-function onUpdateChannel() {
+function update() {
   if (!channelName.value || !channelBadge.value) return;
   const params = {
     badge_url: channelBadge.value,
-    id: Number(channelsStore.detail?.id),
     name: channelName.value,
   };
-  channelsStore.updateChannel(params);
+
+  updateChannel(channelId.value, params)
+
+  if (error.value) return showAlert.error({
+    title: 'Error',
+    text: `Failed to update channel. Please try again.`,
+    confirmButtonText: 'Okay',
+    showCancelButton: false,
+  })
+
+  showAlert.success({
+    title: 'Success',
+    text: `Update channel successfully`,
+    confirmButtonText: 'Okay',
+    showCancelButton: false,
+  })
+}
+
+function setData() {
+  channelName.value = widget.value?.name ?? ''
 }
 
 onMounted(async () => {
-  const chId = route.params.channelId;
-  if (!chId) return;
-  await channelsStore.fetchDetailChannel(Number(chId));
-  channelName.value = channelsStore.detail?.name ?? '';
-});
+  const { id } = route.params;
+  if (!id) return
+  // Ensure id is string or number, not array
+  channelId.value = (Array.isArray(id) ? id[0] : id) as string;
+  await fetchChannelById(channelId.value)
+
+  // get additional data
+  uConfig.fetch(channelId.value, 'qiscus')
+  uBot.fetch()
+
+  setData()
+})
 </script>

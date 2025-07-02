@@ -4,7 +4,7 @@
       <WIdgetFormLayout label="Chat">
         <template #inputs>
           <ImageInput
-            v-model="qiscusLiveChatStore.customerServiceAvatarChatForm"
+            v-model="chatFormState.customerServiceAvatar"
             :isUploading="isUploading"
             @upload="uploadImage"
             label="Customer Service Avatar"
@@ -18,7 +18,7 @@
             </template>
           </ImageInput>
           <Input
-            v-model="qiscusLiveChatStore.customerServiceNameChatForm"
+            v-model="chatFormState.customerServiceName"
             label="Customer Service Name"
             id="customer-service-name"
           />
@@ -39,11 +39,12 @@ import Input from '@/components/form/Input.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import WIdgetFormLayout from '../form/WIdgetFormLayout.vue';
 
-const qiscusLiveChatStore = useQiscusLiveChatStore();
 const isUploading = ref(false);
+const { chatFormState } = storeToRefs(useQiscusLiveChatStore());
 
 const uploadImage = async (file: File, revertPreview: () => void) => {
   const formData = new FormData();
@@ -55,7 +56,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
       body: formData,
     });
     const data = await response.json();
-    qiscusLiveChatStore.customerServiceAvatarChatForm = data.data.imageUrl;
+    chatFormState.value.customerServiceAvatar = data.data.imageUrl;
   } catch (error) {
     console.error(error);
     revertPreview();

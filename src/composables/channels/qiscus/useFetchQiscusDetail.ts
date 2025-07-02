@@ -4,22 +4,19 @@ import { qiscusApi } from '@/api/channels';
 import type { IResponse } from '@/types/api';
 import type { IQiscusChannel } from '@/types/channels';
 
-export const useUpdateQiscus = () => {
+export const useFetchQiscusDetail = () => {
   const loading = ref(false);
   const data = ref<IQiscusChannel | null>(null);
   const error = ref<Error | null>(null);
 
-  const update = async (id: string | number, payload: any) => {
+  const fetchChannelById = async (id: number | string) => {
     try {
       loading.value = true;
       error.value = null;
 
-      const response = await qiscusApi.update({
-        id: id,
-        ...payload,
-      });
-
+      const response = await qiscusApi.getById(id);
       const dataResponse = response.data as unknown as IResponse<any>;
+
       const { qiscus_channel } = dataResponse.data;
       data.value = qiscus_channel;
     } catch (err) {
@@ -34,6 +31,6 @@ export const useUpdateQiscus = () => {
     loading,
     data,
     error,
-    update,
+    fetchChannelById,
   };
 };
