@@ -14,6 +14,8 @@ export interface QiscusAppConfig {
   userToken: string;
   appId: string;
   appVersion: string;
+  sdkUserId: string;
+  userSdkToken: string;
 }
 
 export function createOmnichannelApp(container: string | Element, config: QiscusAppConfig) {
@@ -46,5 +48,7 @@ if (document.querySelector('#app')) {
     userToken: import.meta.env.VITE_QISCUS_USER_TOKEN,
     appId: import.meta.env.VITE_QISCUS_APP_ID,
     appVersion: import.meta.env.VITE_QISCUS_APP_VERSION,
+    sdkUserId: import.meta.env.VITE_QISCUS_SDK_USER_ID || '',
+    userSdkToken: import.meta.env.VITE_QISCUS_USER_SDK_TOKEN || '',
   });
 }

@@ -1,4 +1,5 @@
 import type { IParams } from '@/types/api';
+import type { ICreateQiscusChannel } from '@/types/channels';
 
 import apiV1, { apiV2, apiV3 } from './../utils/axios';
 
@@ -12,7 +13,8 @@ export const channelsApi = {
 export const qiscusApi = {
   get: (params?: IParams) => apiV3.get<any[]>('/admin/channel/qiscus', { params }),
   getById: (id: number | string) => apiV2.get<any>(`/qiscus/${id}`),
-  update: (data: any) => apiV2.post<any>(`qiscus/connect/${data.id}/update`, data),
+  update: (data: any) => apiV2.post<any>(`/qiscus/connect/${data.id}/update`, data),
+  post: (data: ICreateQiscusChannel) => apiV2.post<any>(`/qiscus/connect`, data),
 };
 
 export const whatsappApi = {

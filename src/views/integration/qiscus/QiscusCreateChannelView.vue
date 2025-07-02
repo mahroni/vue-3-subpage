@@ -1,11 +1,8 @@
 <template>
   <div class="flex flex-col gap-8 px-12 py-8">
-    <button
-      @click="router.go(-1)"
-      class="text-primary flex cursor-pointer items-center gap-2 font-semibold"
-    >
+    <button @click="router.back()" class="text-primary flex cursor-pointer items-center gap-2 font-semibold">
       <ChevronLeftIcon :size="20" />
-      Integration
+      Qiscus Live Chat List
     </button>
 
     <!-- Header -->
@@ -25,8 +22,8 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 
+import { ChevronLeftIcon } from '@/components/icons';
 import ChatIcon from '@/components/icons/ChatIcon.vue';
-import ChevronLeftIcon from '@/components/icons/ChevronLeftIcon.vue';
 import CreateNewForm from '@/pages/integration/qiscus/CreateNewForm.vue';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 
