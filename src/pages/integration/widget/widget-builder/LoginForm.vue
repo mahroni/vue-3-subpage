@@ -29,13 +29,13 @@
             :textareaAttrs="{ maxlength: 50 }"
           />
           <TextArea
-            v-model="loginFormState.subtitle"
+            v-model="loginFormState.formSubtitle"
             label="Subtitle"
             :textareaAttrs="{ maxlength: 50 }"
           />
           <Input
             label="Button Form"
-            v-model="loginFormState.buttonForm"
+            v-model="loginFormState.buttonText"
             :inputAttrs="{ maxlength: 50 }"
           />
           <RadioInput
