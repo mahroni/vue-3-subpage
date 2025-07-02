@@ -3,7 +3,7 @@
     <div class="flex flex-1 flex-col gap-8">
       <WidgetFormLayout label="Login Form">
         <template #additional-info>
-          <Banner intent="positive" type="solid">
+          <Banner intent="positive" type="outline">
             Figma ipsum component variant main layer. Slice figjam select select pencil. Share mask
             draft edit invite subtract rotate variant. Create subtract hand auto pen object.
             Community figjam flatten.
@@ -20,14 +20,14 @@
           </ImageInput>
           <TextArea v-model="loginFormState.firstDescription" label="First Description" />
           <TextArea v-model="loginFormState.secondDescription" label="Second Description" />
-          <TextArea v-model="loginFormState.subtitle" label="Subtitle" />
-          <Input label="Button Form" v-model="loginFormState.buttonForm" />
+          <TextArea v-model="loginFormState.formSubtitle" label="Subtitle" />
+          <Input label="Button Form" v-model="loginFormState.buttonText" />
           <RadioInput
             v-model="loginFormState.customerIdentifier"
             label="Phone Number"
             :options="qiscusLiveChatStore.customerIdentifierOptions"
           />
-          <Banner intent="positive" type="solid">
+          <Banner intent="positive" type="outline">
             If you use phone number to login, we won't be able to send chat history and notes to the
             customer's email after the room is resolved.
           </Banner>
@@ -44,14 +44,14 @@
             <span>Add More Field</span>
           </Button>
         </div>
-        <Divider v-if="loginFormState.additionalField.length > 0" />
-        <ul class="flex flex-col gap-6" v-if="loginFormState.additionalField.length > 0">
+        <Divider v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields" />
+        <ul class="flex flex-col gap-6" v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields">
           <li
-            v-for="(field, index) in loginFormState.additionalField"
-            :key="field.title"
+            v-for="(field, index) in loginFormState.extraFields"
+            :key="field.name"
             class="flex items-center justify-between"
           >
-            <span class="text-text-title text-sm font-medium">{{ field.title }}</span>
+            <span class="text-text-title text-sm font-medium">{{ field.name }}</span>
             <DropdownMenu :options="getFieldOptions(index)" @select="handleFieldMenuSelect" />
           </li>
         </ul>
@@ -63,8 +63,8 @@
       <LoginForm
         :title="loginFormState.firstDescription"
         :subtitle="loginFormState.secondDescription"
-        :description="loginFormState.subtitle"
-        :buttonText="loginFormState.buttonForm"
+        :description="loginFormState.formSubtitle"
+        :buttonText="loginFormState.buttonText"
       />
     </div>
   </div>
@@ -77,10 +77,10 @@
       <div class="mb-9 flex flex-col gap-2">
         <Select label="Field Type" :options="qiscusLiveChatStore.fieldTypeOptionsAdditionalField" v-model="additionalField.type" />
         <div v-if="additionalField.type !== ''" class="flex flex-col gap-6">
-          <Input label="Title" v-model="additionalField.title" />
+          <Input label="Name" v-model="additionalField.name" />
           <Input label="Placeholder" v-model="additionalField.placeholder" />
           <template v-if="additionalField.type === 'dropdown'">
-            <DropdownItemInput v-model="additionalField.dropdownItems" />
+            <DropdownItemInput v-model="additionalField.options" />
           </template>
           <div class="my-2 flex items-center">
             <Checkbox label="Set this field to required" v-model="additionalField.required" />
@@ -121,12 +121,11 @@ import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
 
 interface AdditionalField {
   type: string;
-  title: string;
+  name: string;
   placeholder: string;
   required: boolean;
-  iconField: any;
-  dropdownItems: string[];
-  isRequired: boolean;
+  iconField?: string;
+  options?: string[];
 }
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
@@ -134,12 +133,11 @@ const { loginFormState } = storeToRefs(useQiscusLiveChatStore());
 
 const additionalField = reactive<AdditionalField>({
   type: '',
-  title: '',
+  name: '',
   placeholder: '',
   required: false,
-  iconField: '',
-  dropdownItems: [],
-  isRequired: false,
+  iconField: undefined,
+  options: [],
 });
 
 const isOpenModal = ref(false);
@@ -150,22 +148,21 @@ const addAdditionalField = () => {
 
 const resetAdditionalField = () => {
   additionalField.type = '';
-  additionalField.title = '';
+  additionalField.name = '';
   additionalField.placeholder = '';
   additionalField.required = false;
   additionalField.iconField = '';
-  additionalField.dropdownItems = [];
-  additionalField.isRequired = false;
+  additionalField.options = [];
 };
 
 const addAdditionalFieldConfirm = () => {
-  loginFormState.value.additionalField.push({ ...additionalField });
+  loginFormState.value.extraFields.push({ ...additionalField });
   resetAdditionalField();
   isOpenModal.value = false;
 };
 
 const getFieldOptions = (index: number) => {
-  const field = loginFormState.value.additionalField[index];
+  const field = loginFormState.value.extraFields[index];
   if (!field) return [];
 
   return [
@@ -186,16 +183,15 @@ const getFieldOptions = (index: number) => {
 const editField = (field: AdditionalField) => {
   isOpenModal.value = true;
   additionalField.type = field.type;
-  additionalField.title = field.title;
+  additionalField.name = field.name;
   additionalField.placeholder = field.placeholder;
   additionalField.required = field.required;
   additionalField.iconField = field.iconField;
-  additionalField.dropdownItems = [...field.dropdownItems];
-  additionalField.isRequired = field.isRequired;
+  additionalField.options = field.options ? [...field.options] : [];
 };
 
 const deleteField = (index: number) => {
-  loginFormState.value.additionalField.splice(index, 1);
+  loginFormState.value.extraFields.splice(index, 1);
 };
 
 const handleFieldMenuSelect = (option: any) => {

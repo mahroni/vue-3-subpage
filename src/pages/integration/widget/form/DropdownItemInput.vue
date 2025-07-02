@@ -14,7 +14,7 @@ const emit = defineEmits<{
     (e: 'update:modelValue', value: string[]): void;
 }>();
 
-const items = ref<string[]>(props.modelValue);
+const items = ref<string[]>(props.modelValue || []);
 
 const addItem = () => {
     if (itemDropdown.value.trim()) {

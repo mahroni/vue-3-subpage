@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-full items-start justify-between gap-8 self-stretch p-4">
+  <div class="flex w-full items-start justify-between gap-8 self-stretch">
     <div class="flex w-full flex-1 flex-col gap-8">
       <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
@@ -28,12 +28,12 @@
             </template>
           </ImageInput>
           <Input v-model="firstAction.label" label="Description" />
-          <InputCustom v-model="welcomeDialogState.appearDelayWelcomeDialog" label="Appear Delay">
+          <InputCustom v-model="welcomeDialogState.welcomeTimeout" label="Appear Delay">
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
           </InputCustom>
-          <Checkbox v-model="welcomeDialogState.isAutoExpandWelcomeDialog" label="Make Auto Expand" />
+          <Checkbox v-model="welcomeDialogState.openAtStart" label="Make Auto Expand" />
         </template>
       </WidgetFormLayout>
       <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
@@ -61,12 +61,12 @@
           </OptionalInput>
           <OptionalInput label="Text" v-model="welcomeDialogState.isAttentionGrabberText">
             <TextArea
-              v-model="welcomeDialogState.attentionGrabberTextDescription"
+              v-model="welcomeDialogState.attentionGrabberText"
               label="Text Description"
             />
           </OptionalInput>
           <InputCustom
-            v-model="welcomeDialogState.attentionGrabberAppearDelay"
+            v-model="grabberTimeoutString"
             label="Appear Delay"
           >
             <template #append-button>
@@ -97,7 +97,7 @@
         "
         :title="
           welcomeDialogState.isAttentionGrabberText
-            ? welcomeDialogState.attentionGrabberTextDescription
+            ? welcomeDialogState.attentionGrabberText
             : ''
         "
       />
@@ -202,5 +202,13 @@ const firstAction = computed(() => {
     welcomeDialogState.value.actionsWelcomeDialog.push({ label: '', iconUrl: '' });
   }
   return welcomeDialogState.value.actionsWelcomeDialog[0]!;
+});
+
+// Convert between string and number for input binding
+const grabberTimeoutString = computed({
+  get: () => welcomeDialogState.value.grabberTimeout.toString(),
+  set: (value: string) => {
+    welcomeDialogState.value.grabberTimeout = parseInt(value) || 0;
+  }
 });
 </script>

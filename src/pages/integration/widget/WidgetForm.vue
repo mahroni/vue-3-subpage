@@ -47,6 +47,8 @@ import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qi
 import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
+import { useAppConfigStore } from '@/stores/app-config';
+import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
 const channelId = ref<string>('')
 const channelName = ref<string>('');
@@ -59,6 +61,8 @@ const { fetchChannelById, data: widget } = useFetchQiscusDetail()
 const { update: updateChannel, error, loading } = useUpdateQiscus()
 const uConfig = useFetchConfig()
 const uBot = useFetchBot()
+const { getWidgetConfig } = useQiscusLiveChatStore()
+const { appId } = useAppConfigStore()
 
 // computed
 const channelBadge = computed(() => widget.value?.badge_url);
@@ -100,9 +104,12 @@ onMounted(async () => {
   await fetchChannelById(channelId.value)
 
   // get additional data
-  uConfig.fetch(channelId.value, 'qiscus')
+  await uConfig.fetch(channelId.value, 'qiscus')
   uBot.fetch()
 
   setData()
+
+  // get widget config
+  getWidgetConfig(appId, channelId.value)
 })
 </script>

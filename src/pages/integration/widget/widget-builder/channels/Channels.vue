@@ -5,10 +5,16 @@ import TextArea from '@/components/form/TextArea.vue';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { ref } from 'vue';
 import ChannelListCard from './components/ChannelListCard.vue';
 import PreviewChannels from './components/PreviewChannels.vue';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
+const isUploadingChannelBadge = ref(false);
+
+const uploadImage = async (file: File, revertPreview: () => void) => {
+  console.log(file, revertPreview);
+};
 </script>
 
 <template>
@@ -54,11 +60,19 @@ const qiscusLiveChatStore = useQiscusLiveChatStore();
           />
 
           <ImageInput
-            label="Icon"
-            id="welcome-dialog-icon"
-            tipsText="We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB."
-            :showTips="true"
-          />
+            label="Live Chat Badge"
+            id="live-chat-badge"
+            v-model="qiscusLiveChatStore.channelBadgeIcon"
+            :isUploading="isUploadingChannelBadge"
+            @upload="uploadImage"
+          >
+            <template #tips>
+              <div class="text-sm font-normal text-[#A0A0A0]">
+                We recommend an image of at least 360x360 pixels. You can upload images in JPG,
+                JPEG, or PNG format with a maximum size of 2MB.
+              </div>
+            </template>
+          </ImageInput>
         </template>
       </WidgetFormLayout>
 

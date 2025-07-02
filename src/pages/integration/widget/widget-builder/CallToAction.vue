@@ -8,13 +8,16 @@ import InputCustom from '@/components/form/InputCustom.vue';
 import Divider from '@/components/ui/Divider.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
+import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
+import { storeToRefs } from 'pinia';
 
-const text = ref('');
+const { callToActionState } = storeToRefs(useQiscusLiveChatStore());
 
-const isWithText = ref(true);
-const isWithIcon = ref(true);
+const isUploadingIconImage = ref(false);
 
-const modelValue = ref('');
+const uploadImage = async (file: File, revertPreview: () => void) => {
+  console.log(file, revertPreview);
+};
 </script>
 
 <template>
@@ -30,12 +33,12 @@ const modelValue = ref('');
           >
             <div class="flex w-full items-center justify-between">
               <h3 class="text-text-title text-base font-semibold">With Text</h3>
-              <Switch v-model="isWithText" variant="success" />
+              <Switch v-model="callToActionState.isWithText" variant="success" />
             </div>
-            <div v-if="isWithText" class="flex w-full flex-col items-start gap-4">
+            <div v-if="callToActionState.isWithText" class="flex w-full flex-col items-start gap-4">
               <Divider />
               <Input
-                v-model="text"
+                v-model="callToActionState.liveChatButtonText"
                 class="w-full"
                 label="Live Chat Button Text"
                 placeholder="Talk to us"
@@ -48,24 +51,31 @@ const modelValue = ref('');
           >
             <div class="flex w-full items-center justify-between">
               <h3 class="text-text-title text-base font-semibold">Icon on Call to Action</h3>
-              <Switch v-model="isWithIcon" variant="success" />
+              <Switch v-model="callToActionState.isWithIcon" variant="success" />
             </div>
-            <div v-if="isWithIcon" class="flex w-full flex-col items-start gap-4">
+            <div v-if="callToActionState.isWithIcon" class="flex w-full flex-col items-start gap-4">
               <Divider />
               <ImageInput
-                label="Icon"
-                id="welcome-dialog-icon"
-                tipsText="We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB."
-                :showTips="true"
-              />
+                label="Icon Image"
+                id="icon-image"
+                v-model="callToActionState.iconImage"
+                :isUploading="isUploadingIconImage"
+                @upload="uploadImage">
+                <template #tips>
+                  <div class="text-sm font-normal text-[#A0A0A0]">
+                    We recommend an image of at least 360x360 pixels. You can upload images in JPG,
+                    JPEG, or PNG format with a maximum size of 2MB.
+                  </div>
+                </template>
+              </ImageInput>
             </div>
           </div>
 
           <InputCustom
             errorMessage="Something went wrong."
-            id="channel-name-input"
+            id="border-radius-input"
             label="Border Radius"
-            v-model="modelValue"
+            v-model="callToActionState.borderRadius"
             placeholder="Try everything!"
             type="text"
           >
