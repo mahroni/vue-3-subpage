@@ -17,12 +17,8 @@
     <!-- Table section -->
     <div class="shadow-large flex items-center justify-between rounded-2xl bg-white">
       <!-- Search Input with Icon -->
-      <TableListChannel
-        :channels="whatsapp_channels"
-        @updateChannelStatus="updateChannelStatus"
-        @search="search"
-        @pagination="pagination"
-      />
+      <TableListChannel :channels="whatsapp_channels" @updateChannelStatus="updateChannelStatus" @search="search"
+        @pagination="pagination" />
     </div>
   </div>
 </template>
@@ -45,6 +41,8 @@ appConfigStore.setConfig({
   userToken: '1FNe6EiEUpRWJYoxlZe1',
   appId: 'zalda-vvq7pksvblaiy7s',
   appVersion: '1.0.0',
+  sdkUserId: '724424069',
+  userSdkToken: 'mUALeQiy60OMvF7RdheE1615272089'
 });
 
 const channelsStore = useWhatsappStore();

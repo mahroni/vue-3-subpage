@@ -56,6 +56,14 @@ export interface IUpdateQiscusChannel {
   name?: string;
 }
 
+export interface ICreateQiscusChannel {
+  badge_url: string;
+  is_active: boolean;
+  is_secure: boolean;
+  is_secure_toc: boolean;
+  name: string;
+}
+
 export interface IUpdateConfigQiscusChannel {
   offline_message: string;
   online_message: string;

@@ -36,7 +36,9 @@ const appConfigStore = useAppConfigStore();
 
 appConfigStore.setConfig({
   userToken: '1FNe6EiEUpRWJYoxlZe1',
+  userSdkToken: 'mUALeQiy60OMvF7RdheE1615272089',
   appId: 'zalda-vvq7pksvblaiy7s',
   appVersion: '1.0.0',
+  sdkUserId: '724424069',
 });
 </script>
