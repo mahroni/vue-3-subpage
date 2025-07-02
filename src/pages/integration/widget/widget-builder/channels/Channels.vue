@@ -28,6 +28,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             class="w-full"
             label="Welcome Channel Title"
             placeholder="Ask for Question"
+            :inputAttrs="{ maxlength: 50 }"
           />
 
           <Input
@@ -35,12 +36,14 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             class="w-full"
             label="Welcome Channel Subtitle"
             placeholder="In Everythings!"
+            :inputAttrs="{ maxlength: 50 }"
           />
           <TextArea
             v-model="qiscusLiveChatStore.previewIntroduction"
             id="description"
             label="Channel Introduction"
             placeholder="More personalized chat with us on:"
+            :textareaAttrs="{ maxlength: 50 }"
           />
         </template>
       </WidgetFormLayout>

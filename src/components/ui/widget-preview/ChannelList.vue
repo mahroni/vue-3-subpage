@@ -39,14 +39,14 @@ const props = withDefaults(defineProps<Props>(), {
         </ButtonIcon>
 
         <div class="text-surface-primary-blue flex flex-col">
-          <div class="mt-6 text-2xl">{{ props.title }}</div>
-          <div class="text-2xl font-bold">{{ props.subtitle }}</div>
+          <div class="mt-6 text-2xl break-words">{{ props.title }}</div>
+          <div class="text-2xl font-bold break-words">{{ props.subtitle }}</div>
         </div>
       </div>
 
       <!-- Channel List Section -->
       <div class="flex max-h-[350px] flex-col gap-4 overflow-y-auto">
-        <p v-if="props.introduction" class="text-text-title text-sm font-medium">
+        <p v-if="props.introduction" class="text-text-title text-sm font-medium break-words">
           {{ props.introduction }}
         </p>
 
