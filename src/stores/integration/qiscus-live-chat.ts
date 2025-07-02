@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { reactive, ref, watch } from 'vue';
 
+import { qiscusApi } from '@/api/channels';
 import type { IconName } from '@/components/icons/Icon.vue';
 import type {
   IWidgetChannel,
@@ -12,6 +13,7 @@ import type {
   IChatFormState,
   ILoginFormState,
   IWelcomeDialogState,
+  IWidgetVariables,
 } from '@/types/live-chat';
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
@@ -53,7 +55,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     isAttentionGrabberImage: true,
     isAttentionGrabberText: true,
     attentionGrabberText: '',
-    grabberTimeout: '',
+    grabberTimeout: 0,
     attentionGrabberImage: '',
     brandIconWelcomeDialog: '',
     actionsWelcomeDialog: [
@@ -177,6 +179,45 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     }
   };
 
+  const getWidgetConfig = async (appId: string, channelId: string) => {
+    try {
+      const { data } = await qiscusApi.getWidgetConfig(appId, channelId);
+      if(data) {
+        console.log(data.data, 'data')
+        const widget : IWidgetVariables = data.data.widget.variables;
+
+        // set state welcome dialog
+        welcomeDialogState.isWelcomeDialog = widget.welcomeMessageStatus;
+        welcomeDialogState.isAttentionGrabber = widget.attentionGrabberStatus;
+        welcomeDialogState.firstDescriptionWelcomeDialog = widget.welcomeText;
+        // welcomeDialogState.secondDescriptionWelcomeDialog = ???;
+        // welcomeDialogState.descriptionWelcomeDialog = ???
+        welcomeDialogState.welcomeTimeout = widget.welcomeTimeout;
+        welcomeDialogState.openAtStart = widget.openAtStart;
+        welcomeDialogState.isAttentionGrabberImage = widget.grabberImage;
+        welcomeDialogState.isAttentionGrabberText = widget.grabberTextStatus;
+        welcomeDialogState.attentionGrabberText = widget.attentionGrabberText;
+        welcomeDialogState.grabberTimeout = widget.grabberTimeout;
+        // welcomeDialogState.brandIconWelcomeDialog = ???
+        welcomeDialogState.attentionGrabberImage = widget.attentionGrabberImage;
+
+        // set state login form
+        loginFormState.firstDescription = widget.formGreet;
+        // loginFormState.secondDescription = ???;
+        loginFormState.formSubtitle = widget.formSubtitle;
+        loginFormState.buttonText = widget.buttonText;
+        loginFormState.customerIdentifier = widget.customerIdentifierInputType;
+        loginFormState.extraFields = widget.extra_fields ?? [];
+
+        // set state chat form
+        chatFormState.customerServiceName = widget.customerServiceName;
+        chatFormState.customerServiceAvatar = widget.customerServiceAvatar;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   // Watch previewLiveChatName for update qiscus live chat channel name
   watch(previewLiveChatName, (newName) => {
     const qiscusChannel = channelList.value.find((channel) => channel.icon === 'qiscus');
@@ -227,5 +268,6 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     updateChannel,
     addQiscusLiveChatChannel,
     removeQiscusLiveChatChannel,
+    getWidgetConfig,
   };
 });

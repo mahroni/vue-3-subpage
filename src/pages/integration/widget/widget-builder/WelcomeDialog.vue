@@ -66,7 +66,7 @@
             />
           </OptionalInput>
           <InputCustom
-            v-model="welcomeDialogState.grabberTimeout"
+            v-model="grabberTimeoutString"
             label="Appear Delay"
           >
             <template #append-button>
@@ -202,5 +202,13 @@ const firstAction = computed(() => {
     welcomeDialogState.value.actionsWelcomeDialog.push({ label: '', iconUrl: '' });
   }
   return welcomeDialogState.value.actionsWelcomeDialog[0]!;
+});
+
+// Convert between string and number for input binding
+const grabberTimeoutString = computed({
+  get: () => welcomeDialogState.value.grabberTimeout.toString(),
+  set: (value: string) => {
+    welcomeDialogState.value.grabberTimeout = parseInt(value) || 0;
+  }
 });
 </script>

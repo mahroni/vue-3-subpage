@@ -77,7 +77,7 @@ export interface IWelcomeDialogState {
   isAttentionGrabberImage: boolean; //grabberImage
   isAttentionGrabberText: boolean; //grabberTextStatus
   attentionGrabberText: string; //attentionGrabberText
-  grabberTimeout: string; //grabberTimeout
+  grabberTimeout: number; //grabberTimeout
   attentionGrabberImage: string; //attentionGrabberImage
   brandIconWelcomeDialog: string;  
   actionsWelcomeDialog: IActionWelcomeDialog[];

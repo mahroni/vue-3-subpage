@@ -44,8 +44,8 @@
             <span>Add More Field</span>
           </Button>
         </div>
-        <Divider v-if="loginFormState.extraFields.length > 0" />
-        <ul class="flex flex-col gap-6" v-if="loginFormState.extraFields.length > 0">
+        <Divider v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields" />
+        <ul class="flex flex-col gap-6" v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields">
           <li
             v-for="(field, index) in loginFormState.extraFields"
             :key="field.name"
