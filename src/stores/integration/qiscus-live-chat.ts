@@ -48,12 +48,12 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     firstDescriptionWelcomeDialog: 'Hello There,',
     secondDescriptionWelcomeDialog: 'Welcome to Qiscus',
     descriptionWelcomeDialog: 'Ask for Questions',
-    appearDelayWelcomeDialog: '',
-    isAutoExpandWelcomeDialog: false,
+    welcomeTimeout: '',
+    openAtStart: false,
     isAttentionGrabberImage: true,
     isAttentionGrabberText: true,
-    attentionGrabberTextDescription: '',
-    attentionGrabberAppearDelay: '',
+    attentionGrabberText: '',
+    grabberTimeout: '',
     attentionGrabberImage: '',
     brandIconWelcomeDialog: '',
     actionsWelcomeDialog: [
@@ -67,10 +67,10 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   const loginFormState = reactive<ILoginFormState>({
     firstDescription: 'Hello There,',
     secondDescription: 'Welcome to Qiscus',
-    subtitle: 'Please fill the details below before chatting with us!',
-    buttonForm: '',
+    formSubtitle: 'Please fill the details below before chatting with us!',
+    buttonText: '',
     customerIdentifier: '',
-    additionalField: [],
+    extraFields: [],
   });
 
   const customerIdentifierOptions = ref<{ label: string; value: string }[]>([

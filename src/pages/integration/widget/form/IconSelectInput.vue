@@ -5,7 +5,7 @@ import { cva } from 'class-variance-authority';
 import type { IconName } from '@/components/icons/Icon.vue';
 
 interface Props {
-  modelValue: string;
+  modelValue: string | undefined;
   icons: Icon[];
 }
 

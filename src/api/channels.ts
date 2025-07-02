@@ -12,7 +12,9 @@ export const channelsApi = {
 export const qiscusApi = {
   get: (params?: IParams) => apiV3.get<any[]>('/admin/channel/qiscus', { params }),
   getById: (id: number | string) => apiV2.get<any>(`/qiscus/${id}`),
-  update: (data: any) => apiV2.post<any>(`qiscus/connect/${data.id}/update`, data),
+  update: (data: any) => apiV2.post<any>(`/qiscus/connect/${data.id}/update`, data),
+  getWidgetConfig: (appId: string, channelId: string) =>
+    apiV2.get<any>(`/app/config/public-widget/${appId}/${channelId}`),
 };
 
 export const whatsappApi = {

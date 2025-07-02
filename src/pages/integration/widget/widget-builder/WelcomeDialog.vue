@@ -28,12 +28,12 @@
             </template>
           </ImageInput>
           <Input v-model="firstAction.label" label="Description" />
-          <InputCustom v-model="welcomeDialogState.appearDelayWelcomeDialog" label="Appear Delay">
+          <InputCustom v-model="welcomeDialogState.welcomeTimeout" label="Appear Delay">
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
           </InputCustom>
-          <Checkbox v-model="welcomeDialogState.isAutoExpandWelcomeDialog" label="Make Auto Expand" />
+          <Checkbox v-model="welcomeDialogState.openAtStart" label="Make Auto Expand" />
         </template>
       </WidgetFormLayout>
       <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
@@ -61,12 +61,12 @@
           </OptionalInput>
           <OptionalInput label="Text" v-model="welcomeDialogState.isAttentionGrabberText">
             <TextArea
-              v-model="welcomeDialogState.attentionGrabberTextDescription"
+              v-model="welcomeDialogState.attentionGrabberText"
               label="Text Description"
             />
           </OptionalInput>
           <InputCustom
-            v-model="welcomeDialogState.attentionGrabberAppearDelay"
+            v-model="welcomeDialogState.grabberTimeout"
             label="Appear Delay"
           >
             <template #append-button>
@@ -97,7 +97,7 @@
         "
         :title="
           welcomeDialogState.isAttentionGrabberText
-            ? welcomeDialogState.attentionGrabberTextDescription
+            ? welcomeDialogState.attentionGrabberText
             : ''
         "
       />
