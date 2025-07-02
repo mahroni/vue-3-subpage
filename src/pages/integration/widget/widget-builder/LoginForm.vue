@@ -79,7 +79,7 @@
         <div v-if="additionalField.type !== ''" class="flex flex-col gap-6">
           <Input label="Name" v-model="additionalField.name" />
           <Input label="Placeholder" v-model="additionalField.placeholder" />
-          <template v-if="additionalField.type === 'dropdown'">
+          <template v-if="additionalField.type === 'dropdown' && additionalField.options">
             <DropdownItemInput v-model="additionalField.options" />
           </template>
           <div class="my-2 flex items-center">
