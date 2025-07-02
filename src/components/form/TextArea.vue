@@ -1,18 +1,9 @@
 <template>
   <div :class="containerClasses()">
-    <label :for="id" :class="computedLabelClasses">{{ label }}</label>
+    <label v-if="label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
-      <textarea
-        ref="textareaRef"
-        :id="id"
-        :value="modelValue"
-        @input="onInput"
-        :placeholder="placeholder"
-        :class="computedInputClasses"
-        :disabled="disabled"
-        @keyup="adjustHeight"
-        rows="1"
-      />
+      <textarea ref="textareaRef" :id="id" :value="modelValue" @input="onInput" :placeholder="placeholder"
+        :class="computedInputClasses" :disabled="disabled" @keyup="adjustHeight" rows="1" />
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
@@ -35,7 +26,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  label: 'Label',
+  label: '',
   placeholder: '',
   id: 'label',
   disabled: false,
