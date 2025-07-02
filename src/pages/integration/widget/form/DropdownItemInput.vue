@@ -7,7 +7,7 @@ import { ref } from 'vue';
 const itemDropdown = ref('');
 
 const props = defineProps<{
-    modelValue?: string[];
+    modelValue: string[];
 }>();
 
 const emit = defineEmits<{
