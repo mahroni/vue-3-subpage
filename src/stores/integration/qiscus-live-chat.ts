@@ -7,7 +7,12 @@ import type {
   WidgetChannelCreateData,
   WidgetChannelUpdateData,
 } from '@/pages/integration/widget/widget-builder/channels/channels';
-import type { IChatFormState, ILoginFormState, IWelcomeDialogState } from '@/types/live-chat';
+import type {
+  ICallToActionState,
+  IChatFormState,
+  ILoginFormState,
+  IWelcomeDialogState,
+} from '@/types/live-chat';
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
   // STATE
@@ -28,6 +33,14 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     { id: 4, icon: 'telegram', name: 'Telegram', enabled: false, link: '' },
     { id: 6, icon: 'tiktok', name: 'Tiktok', enabled: true, link: '' },
   ]);
+  // state for call to action
+  const callToActionState = reactive<ICallToActionState>({
+    isWithText: true,
+    isWithIcon: true,
+    liveChatButtonText: '',
+    iconImage: '',
+    borderRadius: '',
+  });
   // state for welcome dialog
   const welcomeDialogState = reactive<IWelcomeDialogState>({
     isWelcomeDialog: true,
@@ -195,6 +208,8 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     channelLink,
     channelBadgeIcon,
     channelList,
+    // state for call to action
+    callToActionState,
     // state for welcome dialog
     welcomeDialogState,
     // state for login form

@@ -43,3 +43,10 @@ export interface IWelcomeDialogState {
   brandIconWelcomeDialog: string;
   actionsWelcomeDialog: IActionWelcomeDialog[];
 }
+export interface ICallToActionState {
+  isWithText: boolean;
+  isWithIcon: boolean;
+  liveChatButtonText: string;
+  iconImage: string;
+  borderRadius: string;
+}

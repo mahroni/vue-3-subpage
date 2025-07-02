@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import { Icon } from '@/components/icons';
+import { Icon } from '@/components/icons';
 import { cva } from 'class-variance-authority';
 
 import type { IconName } from '@/components/icons/Icon.vue';

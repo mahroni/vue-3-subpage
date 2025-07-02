@@ -3,7 +3,7 @@
     <div class="flex flex-1 flex-col gap-8">
       <WidgetFormLayout label="Login Form">
         <template #additional-info>
-          <Banner intent="positive" type="solid">
+          <Banner intent="positive" type="outline">
             Figma ipsum component variant main layer. Slice figjam select select pencil. Share mask
             draft edit invite subtract rotate variant. Create subtract hand auto pen object.
             Community figjam flatten.
@@ -27,7 +27,7 @@
             label="Phone Number"
             :options="qiscusLiveChatStore.customerIdentifierOptions"
           />
-          <Banner intent="positive" type="solid">
+          <Banner intent="positive" type="outline">
             If you use phone number to login, we won't be able to send chat history and notes to the
             customer's email after the room is resolved.
           </Banner>
