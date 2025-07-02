@@ -60,6 +60,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             class="w-full"
             label="Live Chat Name"
             placeholder="Live Chat"
+            :inputAttrs="{ maxlength: 50 }"
           />
 
           <ImageInput
