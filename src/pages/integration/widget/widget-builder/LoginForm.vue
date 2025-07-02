@@ -18,10 +18,26 @@
               </div>
             </template>
           </ImageInput>
-          <TextArea v-model="loginFormState.firstDescription" label="First Description" />
-          <TextArea v-model="loginFormState.secondDescription" label="Second Description" />
-          <TextArea v-model="loginFormState.formSubtitle" label="Subtitle" />
-          <Input label="Button Form" v-model="loginFormState.buttonText" />
+          <TextArea
+            v-model="loginFormState.firstDescription"
+            label="First Description"
+            :textareaAttrs="{ maxlength: 50 }"
+          />
+          <TextArea
+            v-model="loginFormState.secondDescription"
+            label="Second Description"
+            :textareaAttrs="{ maxlength: 50 }"
+          />
+          <TextArea
+            v-model="loginFormState.subtitle"
+            label="Subtitle"
+            :textareaAttrs="{ maxlength: 50 }"
+          />
+          <Input
+            label="Button Form"
+            v-model="loginFormState.buttonForm"
+            :inputAttrs="{ maxlength: 50 }"
+          />
           <RadioInput
             v-model="loginFormState.customerIdentifier"
             label="Phone Number"
@@ -45,7 +61,10 @@
           </Button>
         </div>
         <Divider v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields" />
-        <ul class="flex flex-col gap-6" v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields">
+        <ul
+          class="flex flex-col gap-6"
+          v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields"
+        >
           <li
             v-for="(field, index) in loginFormState.extraFields"
             :key="field.name"
@@ -70,12 +89,20 @@
   </div>
 
   <!-- Add Additional Field Modal -->
-  <Modal :isOpen="isOpenModal" @close="isOpenModal = false" confirmText="Add Field"
-    @confirm="addAdditionalFieldConfirm">
+  <Modal
+    :isOpen="isOpenModal"
+    @close="isOpenModal = false"
+    confirmText="Add Field"
+    @confirm="addAdditionalFieldConfirm"
+  >
     <template #title> Add Additional Field </template>
     <template #content>
       <div class="mb-9 flex flex-col gap-2">
-        <Select label="Field Type" :options="qiscusLiveChatStore.fieldTypeOptionsAdditionalField" v-model="additionalField.type" />
+        <Select
+          label="Field Type"
+          :options="qiscusLiveChatStore.fieldTypeOptionsAdditionalField"
+          v-model="additionalField.type"
+        />
         <div v-if="additionalField.type !== ''" class="flex flex-col gap-6">
           <Input label="Name" v-model="additionalField.name" />
           <Input label="Placeholder" v-model="additionalField.placeholder" />
@@ -85,7 +112,10 @@
           <div class="my-2 flex items-center">
             <Checkbox label="Set this field to required" v-model="additionalField.required" />
           </div>
-          <IconSelectInput v-model="additionalField.iconField" :icons="qiscusLiveChatStore.iconsAdditionalField" />
+          <IconSelectInput
+            v-model="additionalField.iconField"
+            :icons="qiscusLiveChatStore.iconsAdditionalField"
+          />
         </div>
       </div>
     </template>
@@ -97,6 +127,7 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { reactive, ref } from 'vue';
 
 import Banner from '@/components/common/Banner.vue';
@@ -112,9 +143,8 @@ import TextArea from '@/components/form/TextArea.vue';
 import { PlusIcon } from '@/components/icons';
 import Divider from '@/components/ui/Divider.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
-
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
-import { storeToRefs } from 'pinia';
+
 import DropdownItemInput from '../form/DropdownItemInput.vue';
 import IconSelectInput from '../form/IconSelectInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
