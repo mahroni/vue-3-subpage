@@ -43,9 +43,11 @@ const props = withDefaults(defineProps<Props>(), {
 
         <!-- Title section -->
         <div>
-          <div v-if="props.title" class="text-2xl">{{ props.title }}</div>
+          <div v-if="props.title" class="text-2xl break-words">{{ props.title }}</div>
           <div v-else class="bg-surface-disable h-4.5 w-37 animate-pulse rounded-full"></div>
-          <div v-if="props.subtitle" class="text-2xl font-bold">{{ props.subtitle }}</div>
+          <div v-if="props.subtitle" class="text-2xl font-bold break-words">
+            {{ props.subtitle }}
+          </div>
           <div v-else class="bg-surface-disable mt-3 h-4.5 w-full animate-pulse rounded-full"></div>
         </div>
       </div>
@@ -55,22 +57,26 @@ const props = withDefaults(defineProps<Props>(), {
           <button
             v-for="action in props.actions"
             :key="action.label"
-            class="hover:bg-surface-primary-blue/5 flex cursor-pointer justify-between rounded-xl p-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
+            class="hover:bg-surface-primary-blue/5 flex cursor-pointer rounded-xl p-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
           >
-            <div class="flex items-center gap-2">
-              <img
-                :src="action.iconUrl"
-                alt=""
-                class="h-6 w-6"
-                width="24"
-                height="24"
-                v-if="action.iconUrl"
-              />
-              <ChatIcon :size="24" v-else />
-              <div class="text-sm font-medium">{{ action.label }}</div>
+            <div class="flex min-w-0 flex-1 gap-2">
+              <div class="flex flex-shrink-0 items-center">
+                <img
+                  :src="action.iconUrl"
+                  alt=""
+                  class="h-6 w-6"
+                  width="24"
+                  height="24"
+                  v-if="action.iconUrl"
+                />
+                <ChatIcon :size="24" v-else />
+              </div>
+              <div class="min-w-0 flex-1 text-start text-sm font-medium break-words">
+                {{ action.label }}
+              </div>
             </div>
 
-            <div>
+            <div class="flex flex-shrink-0 items-center">
               <ChevronRightIcon :size="24" />
             </div>
           </button>
