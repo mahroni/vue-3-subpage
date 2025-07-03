@@ -7,6 +7,7 @@ import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
 import Divider from '@/components/ui/Divider.vue';
+import CallToAction from '@/components/ui/widget-preview/CallToAction.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
@@ -42,6 +43,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
                 class="w-full"
                 label="Live Chat Button Text"
                 placeholder="Talk to us"
+                :maxlength="50"
               />
             </div>
           </div>
@@ -79,6 +81,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             v-model="callToActionState.borderRadius"
             placeholder="Try everything!"
             type="text"
+            :maxlength="50"
           >
             <template #append-button="{ disabled }">
               <div :class="{ 'cursor-not-allowed opacity-50': disabled }">
@@ -93,6 +96,12 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
     <!-- Preview Section -->
     <div class="sticky top-20 z-10 flex flex-1 flex-col items-end gap-4 p-6">
       <WelcomingPageLoading />
+
+      <!-- CTA Preview -->
+      <CallToAction
+        :imageUrl="callToActionState.iconImage"
+        :title="callToActionState.liveChatButtonText"
+      />
     </div>
   </div>
 </template>

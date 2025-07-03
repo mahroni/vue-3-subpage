@@ -16,6 +16,7 @@ export { default as BackPaginationIcon } from './BackPaginationIcon.vue';
 export { default as BriefcaseIcon } from './BriefcaseIcon.vue';
 export { default as BroadcastIcon } from './BroadcastIcon.vue';
 export { default as BulkResolvedIcon } from './BulkResolvedIcon.vue';
+export { default as ChatActiveIcon } from './ChatActiveIcon.vue';
 export { default as ChatIcon } from './ChatIcon.vue';
 export { default as ChatOutlineIcon } from './ChatOutlineIcon.vue';
 export { default as ChatTemplateIcon } from './ChatTemplateIcon.vue';
