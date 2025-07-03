@@ -141,7 +141,7 @@ const grabberTimeoutString = computed({
           </ImageInput>
           <Input v-model="firstAction.label" label="Description" :inputAttrs="{ maxlength: 50 }" />
           <InputCustom
-            v-model="welcomeDialogState.appearDelayWelcomeDialog"
+            v-model="welcomeDialogState.welcomeTimeout"
             label="Appear Delay"
             :inputAttrs="{ maxlength: 50 }"
           >
@@ -149,10 +149,7 @@ const grabberTimeoutString = computed({
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
           </InputCustom>
-          <Checkbox
-            v-model="welcomeDialogState.isAutoExpandWelcomeDialog"
-            label="Make Auto Expand"
-          />
+          <Checkbox v-model="welcomeDialogState.openAtStart" label="Make Auto Expand" />
         </template>
       </WidgetFormLayout>
       <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
@@ -180,13 +177,13 @@ const grabberTimeoutString = computed({
           </OptionalInput>
           <OptionalInput label="Text" v-model="welcomeDialogState.isAttentionGrabberText">
             <TextArea
-              v-model="welcomeDialogState.attentionGrabberTextDescription"
+              v-model="welcomeDialogState.attentionGrabberText"
               label="Text Description"
               :textareaAttrs="{ maxlength: 50 }"
             />
           </OptionalInput>
           <InputCustom
-            v-model="welcomeDialogState.attentionGrabberAppearDelay"
+            v-model="grabberTimeoutString"
             label="Appear Delay"
             :inputAttrs="{ maxlength: 50 }"
           >
@@ -217,9 +214,7 @@ const grabberTimeoutString = computed({
           welcomeDialogState.isAttentionGrabberImage ? welcomeDialogState.attentionGrabberImage : ''
         "
         :title="
-          welcomeDialogState.isAttentionGrabberText
-            ? welcomeDialogState.attentionGrabberTextDescription
-            : ''
+          welcomeDialogState.isAttentionGrabberText ? welcomeDialogState.attentionGrabberText : ''
         "
       />
     </div>
