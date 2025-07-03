@@ -2,14 +2,22 @@
   <div :class="containerClasses()">
     <label v-if="props.label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
-      <input v-bind="inputAttrs" :id="id" type="text" :value="modelValue" @input="onInput" :placeholder="placeholder"
-        :class="computedInputClasses" :disabled="disabled" />
+      <input
+        v-bind="$attrs"
+        :id="id"
+        type="text"
+        :value="modelValue"
+        @input="onInput"
+        :placeholder="placeholder"
+        :class="computedInputClasses"
+        :disabled="disabled"
+      />
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends Record<string, any> = {}">
 import { cva } from 'class-variance-authority';
 import { computed } from 'vue';
 
@@ -21,7 +29,7 @@ interface Props {
   disabled?: boolean;
   error?: boolean; // New prop for error state
   errorMessage?: string; // New prop for error message
-  inputAttrs?: Record<string, any>;
+  // inputAttrs?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -31,7 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
   error: false, // Default to no error
   errorMessage: 'This field has an error', // Default error message
   modelValue: '',
-  inputAttrs: () => ({}),
+  // inputAttrs: () => ({}),
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -51,28 +59,31 @@ const labelClasses = cva('text-sm font-normal text-text-subtitle', {
   },
 });
 
-const inputWrapperClasses = cva('mt-2 flex rounded-lg shadow-[0px_2px_8px_0px_#0A0A0A1A] bg-white', {
-  variants: {
-    disabled: {
-      true: 'bg-gray-50 ring-gray-200',
+const inputWrapperClasses = cva(
+  'mt-2 flex rounded-lg shadow-[0px_2px_8px_0px_#0A0A0A1A] bg-white',
+  {
+    variants: {
+      disabled: {
+        true: 'bg-gray-50 ring-gray-200',
+      },
+      error: {
+        true: 'ring-red-500 focus-within:ring-red-500', // Error ring color
+      },
     },
-    error: {
-      true: 'ring-red-500 focus-within:ring-red-500', // Error ring color
-    },
-  },
-  // Default ring color when not disabled and not in error
-  defaultVariants: {
-    disabled: false,
-    error: false,
-  },
-  compoundVariants: [
-    {
+    // Default ring color when not disabled and not in error
+    defaultVariants: {
       disabled: false,
       error: false,
-      class: 'focus-within:ring-primary', // Default focus ring color
     },
-  ],
-});
+    compoundVariants: [
+      {
+        disabled: false,
+        error: false,
+        class: 'focus-within:ring-primary', // Default focus ring color
+      },
+    ],
+  }
+);
 
 const inputClasses = cva(
   'block w-full border-0 bg-white py-3 px-4 text-text-title placeholder:text-text-placeholder focus:ring-1 ring-primary sm:text-sm sm:leading-6 outline-none rounded-lg placeholder:',

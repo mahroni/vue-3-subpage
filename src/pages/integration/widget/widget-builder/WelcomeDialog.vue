@@ -124,12 +124,12 @@ const grabberTimeoutString = computed({
           <TextArea
             v-model="welcomeDialogState.firstDescriptionWelcomeDialog"
             label="First Description"
-            :textareaAttrs="{ maxlength: 50 }"
+            :maxlength="50"
           />
           <TextArea
             v-model="welcomeDialogState.secondDescriptionWelcomeDialog"
             label="Second Description"
-            :textareaAttrs="{ maxlength: 50 }"
+            :maxlength="50"
           />
           <ImageInput v-model="firstAction.iconUrl" label="Icon" id="welcome-dialog-icon">
             <template #tips>
@@ -139,11 +139,11 @@ const grabberTimeoutString = computed({
               </div>
             </template>
           </ImageInput>
-          <Input v-model="firstAction.label" label="Description" :inputAttrs="{ maxlength: 50 }" />
+          <Input v-model="firstAction.label" label="Description" :maxlength="50" />
           <InputCustom
             v-model="welcomeDialogState.welcomeTimeout"
             label="Appear Delay"
-            :inputAttrs="{ maxlength: 50 }"
+            :maxlength="50"
           >
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
@@ -179,14 +179,10 @@ const grabberTimeoutString = computed({
             <TextArea
               v-model="welcomeDialogState.attentionGrabberText"
               label="Text Description"
-              :textareaAttrs="{ maxlength: 50 }"
+              :maxlength="50"
             />
           </OptionalInput>
-          <InputCustom
-            v-model="grabberTimeoutString"
-            label="Appear Delay"
-            :inputAttrs="{ maxlength: 50 }"
-          >
+          <InputCustom v-model="grabberTimeoutString" label="Appear Delay" :maxlength="50">
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
