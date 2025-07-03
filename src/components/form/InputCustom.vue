@@ -5,7 +5,7 @@
       <div :class="contentWrapperClasses()">
         <slot name="suffix-icon" />
         <input
-          v-bind="inputAttrs"
+          v-bind="$attrs"
           :id="id"
           :type="currentType"
           :class="inputClasses({ disabled })"
@@ -51,7 +51,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" generic="T extends Record<string, any> = {}">
 import { cva } from 'class-variance-authority';
 import { computed, ref } from 'vue';
 
@@ -66,8 +66,7 @@ interface Props {
   error?: boolean;
   errorMessage?: string;
   clearable?: boolean;
-  type?: 'text' | 'password';
-  inputAttrs?: Record<string, any>;
+  type?: 'text' | 'password' | 'number';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -79,7 +78,6 @@ const props = withDefaults(defineProps<Props>(), {
   errorMessage: 'This field has an error',
   clearable: false,
   type: 'text',
-  inputAttrs: () => ({}),
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -88,7 +86,7 @@ const isFocused = ref(false);
 const showPassword = ref(false);
 
 const currentType = computed(() =>
-  props.type === 'password' && !showPassword.value ? 'password' : 'text'
+  props.type === 'password' && !showPassword.value ? 'password' : props.type
 );
 
 const onInput = (event: Event) => {

@@ -41,8 +41,9 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     isWithText: true,
     isWithIcon: true,
     liveChatButtonText: '',
-    iconImage: "https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/img/icon-qiscus-widget-default.svg",
-    borderRadius: '',
+    iconImage:
+      'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/img/icon-qiscus-widget-default.svg',
+    borderRadius: '32',
   });
   // state for welcome dialog
   const welcomeDialogState = reactive<IWelcomeDialogState>({
@@ -51,7 +52,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     firstDescriptionWelcomeDialog: 'Hello There,',
     secondDescriptionWelcomeDialog: 'Welcome to Qiscus',
     descriptionWelcomeDialog: 'Ask for Questions',
-    welcomeTimeout: '',
+    welcomeTimeout: '0',
     openAtStart: false,
     isAttentionGrabberImage: true,
     isAttentionGrabberText: true,
@@ -183,9 +184,9 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   const getWidgetConfig = async (appId: string, channelId: string) => {
     try {
       const { data } = await qiscusApi.getWidgetConfig(appId, channelId);
-      if(data) {
-        console.log(data.data, 'data')
-        const widget : IWidgetVariables = data.data.widget.variables;
+      if (data) {
+        console.log(data.data, 'data');
+        const widget: IWidgetVariables = data.data.widget.variables;
 
         // set state welcome dialog
         welcomeDialogState.isWelcomeDialog = widget.welcomeMessageStatus;
@@ -226,7 +227,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   };
 
   const postWidgetConfig = async (appId: string, channelId: string) => {
-    const payload : IWidgetConfigResponse = {
+    const payload: IWidgetConfigResponse = {
       style: {},
       widget: {
         variables: {
@@ -242,7 +243,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
           attentionGrabberText: welcomeDialogState.attentionGrabberText,
           grabberTimeout: welcomeDialogState.grabberTimeout,
           attentionGrabberImage: welcomeDialogState.attentionGrabberImage,
-          
+
           // login form data
           formGreet: loginFormState.firstDescription,
           formSubtitle: loginFormState.formSubtitle,
@@ -263,30 +264,32 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
           // channel widget data
           channel_widget: {
             live_channel: {
-              badge_url: channelBadgeIcon.value || 'https://d1edrlpyc25xu0.cloudfront.net/zalda-vvq7pksvblaiy7s/image/upload/U5zXXEv54V/file_example_PNG_500kB.png"',
+              badge_url:
+                channelBadgeIcon.value ||
+                'https://d1edrlpyc25xu0.cloudfront.net/zalda-vvq7pksvblaiy7s/image/upload/U5zXXEv54V/file_example_PNG_500kB.png"',
               is_enable: isQiscusLiveChat.value,
-              name: previewLiveChatName.value
+              name: previewLiveChatName.value,
             },
             other_channel: [], //???
             subtitle: previewSubtitle.value,
             title: previewTitle.value,
-          },          
+          },
           isChannelWidgetEnabled: isChannelsEnabled.value,
-          
-          selectedWidgetPage: 'welcome'
-        }
-      }
-    }
+
+          selectedWidgetPage: 'welcome',
+        },
+      },
+    };
     console.log(payload, 'payload');
     try {
       const { data } = await qiscusApi.postWidgetConfig(channelId, payload);
-      if(data) {
-        console.log(data, 'data')
+      if (data) {
+        console.log(data, 'data');
       }
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   // Watch previewLiveChatName for update qiscus live chat channel name
   watch(previewLiveChatName, (newName) => {

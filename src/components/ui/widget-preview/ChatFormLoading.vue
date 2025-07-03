@@ -2,17 +2,11 @@
 import ButtonIcon from '@/components/common/ButtonIcon.vue';
 import { ChevronLeftIcon } from '@/components/icons';
 
-const props = withDefaults(
-  defineProps<{
-    title?: string;
-    color?: string;
-    icon?: string;
-  }>(),
-  {
-    // title: 'Qiscus Customer Care',
-    // icon: CHANNEL_BADGE_URL.qiscus,
-  }
-);
+const props = defineProps<{
+  title?: string;
+  color?: string;
+  icon?: string;
+}>();
 </script>
 
 <template>

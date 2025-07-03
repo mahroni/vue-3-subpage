@@ -6,7 +6,7 @@ import Icon from '../components/icons/Icon.vue';
 
 const meta: Meta<typeof InputCustom> = {
   title: 'Components/InputCustom',
-  component: InputCustom,
+  component: InputCustom as any,
   tags: ['autodocs'],
   argTypes: {
     modelValue: {

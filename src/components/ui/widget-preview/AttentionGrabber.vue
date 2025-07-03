@@ -27,7 +27,7 @@ withDefaults(
       </ButtonIcon>
       <img v-show="imageUrl" :src="imageUrl" alt="" class="h-full w-full object-cover" />
     </div>
-    <div class="p-6 text-left">
+    <div class="p-6 text-left break-words">
       {{ title }}
     </div>
   </div>

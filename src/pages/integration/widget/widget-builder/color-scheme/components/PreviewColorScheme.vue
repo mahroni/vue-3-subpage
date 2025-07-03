@@ -3,6 +3,7 @@ import { ref } from 'vue';
 
 import Button from '@/components/common/Button.vue';
 import { BackIcon, NextIcon } from '@/components/icons';
+import CallToAction from '@/components/ui/widget-preview/CallToAction.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import LoginFormLoading from '@/components/ui/widget-preview/LoginFormLoading.vue';
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
@@ -78,13 +79,7 @@ const goToNext = () => {
         :actions="[]"
       />
 
-      <div
-        class="flex h-16 w-fit items-center justify-center gap-3 rounded-4xl px-6 py-2.5"
-        :style="{ backgroundColor: props.colorValue }"
-      >
-        <div class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
-        <div class="bg-surface-disable h-4.5 w-[80px] animate-pulse rounded-full" />
-      </div>
+      <CallToAction :color="props.colorValue" />
     </div>
 
     <!-- Login Form -->
