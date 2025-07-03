@@ -19,7 +19,7 @@
           </ImageInput>
           <Input
             v-model="chatFormState.customerServiceName"
-            :inputAttrs="{ maxlength: 50 }"
+            :maxlength="50"
             label="Customer Service Name"
             id="customer-service-name"
           />

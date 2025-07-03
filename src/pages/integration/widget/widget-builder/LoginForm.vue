@@ -21,23 +21,15 @@
           <TextArea
             v-model="loginFormState.firstDescription"
             label="First Description"
-            :textareaAttrs="{ maxlength: 50 }"
+            :maxlength="50"
           />
           <TextArea
             v-model="loginFormState.secondDescription"
             label="Second Description"
-            :textareaAttrs="{ maxlength: 50 }"
+            :maxlength="50"
           />
-          <TextArea
-            v-model="loginFormState.formSubtitle"
-            label="Subtitle"
-            :textareaAttrs="{ maxlength: 50 }"
-          />
-          <Input
-            label="Button Form"
-            v-model="loginFormState.buttonText"
-            :inputAttrs="{ maxlength: 50 }"
-          />
+          <TextArea v-model="loginFormState.formSubtitle" label="Subtitle" :maxlength="50" />
+          <Input label="Button Form" v-model="loginFormState.buttonText" :maxlength="50" />
           <RadioInput
             v-model="loginFormState.customerIdentifier"
             label="Phone Number"
