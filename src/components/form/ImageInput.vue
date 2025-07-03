@@ -5,7 +5,7 @@
     <div class="flex gap-4 items-start mt-2">
       <!-- Upload Area -->
       <div @click="triggerFileInput"
-        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-1.5 transition-colors" :class="[
+        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed transition-colors" :class="[
           error
             ? 'border-red-500 bg-red-50'
             : 'border-green-500 hover:border-green-600 hover:bg-green-50',
@@ -30,7 +30,7 @@
         </div>
 
         <!-- Upload icon when no image -->
-        <div v-else class="m-2.5 flex w-fit items-center justify-center rounded-lg bg-green-200 p-[14px]">
+        <div v-else class="flex w-fit items-center justify-center rounded-lg bg-green-200 p-3.5 m-4">
           <div v-if="props.isUploading" class="relative">
             <svg class="h-5 w-5 animate-spin text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 24 24">

@@ -2,16 +2,8 @@
   <div :class="containerClasses()">
     <label v-if="props.label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
-      <input
-        v-bind="inputAttrs"
-        :id="id"
-        type="text"
-        :value="modelValue"
-        @input="onInput"
-        :placeholder="placeholder"
-        :class="computedInputClasses"
-        :disabled="disabled"
-      />
+      <input v-bind="inputAttrs" :id="id" type="text" :value="modelValue" @input="onInput" :placeholder="placeholder"
+        :class="computedInputClasses" :disabled="disabled" />
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
@@ -59,7 +51,7 @@ const labelClasses = cva('text-sm font-normal text-text-subtitle', {
   },
 });
 
-const inputWrapperClasses = cva('mt-2 flex rounded-lg shadow-sm', {
+const inputWrapperClasses = cva('mt-2 flex rounded-lg shadow-[0px_2px_8px_0px_#0A0A0A1A] bg-white', {
   variants: {
     disabled: {
       true: 'bg-gray-50 ring-gray-200',
