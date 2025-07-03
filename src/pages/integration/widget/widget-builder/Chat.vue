@@ -19,6 +19,7 @@
           </ImageInput>
           <Input
             v-model="chatFormState.customerServiceName"
+            :inputAttrs="{ maxlength: 50 }"
             label="Customer Service Name"
             id="customer-service-name"
           />
@@ -27,20 +28,21 @@
     </div>
 
     <!-- PREVIEW -->
-    <div class="flex flex-1 flex-col items-end p-6">
+    <div class="sticky top-20 z-10 flex flex-1 flex-col items-end p-6">
       <ChatFormLoading />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
+
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
 import WIdgetFormLayout from '../form/WIdgetFormLayout.vue';
 
 const isUploading = ref(false);

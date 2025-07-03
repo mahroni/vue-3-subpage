@@ -5,8 +5,7 @@
     <div class="flex gap-4 items-start mt-2">
       <!-- Upload Area -->
       <div @click="triggerFileInput"
-        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-1.5 transition-colors"
-        :class="[
+        class="flex w-fit cursor-pointer items-center rounded-lg border border-dashed p-1.5 transition-colors" :class="[
           error
             ? 'border-red-500 bg-red-50'
             : 'border-green-500 hover:border-green-600 hover:bg-green-50',
@@ -20,12 +19,10 @@
             class="absolute inset-0 flex items-center justify-center rounded-lg bg-white text-[#0a0a0a] opacity-0 shadow-lg transition-all duration-200 group-hover:cursor-pointer group-hover:opacity-60"
             type="button" title="Replace image">
             <div v-if="props.isUploading" class="opacity-100">
-              <svg class="h-5 w-5 animate-spin text-green-600" xmlns="http://www.w3.org/2000/svg"
-                fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                  stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor"
-                  d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
+              <svg class="h-5 w-5 animate-spin text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
               </svg>
             </div>
             <!-- <CameraIcon :size="20" /> -->
@@ -33,15 +30,12 @@
         </div>
 
         <!-- Upload icon when no image -->
-        <div v-else
-          class="m-2.5 flex w-fit items-center justify-center rounded-lg bg-green-200 p-[14px]">
+        <div v-else class="m-2.5 flex w-fit items-center justify-center rounded-lg bg-green-200 p-[14px]">
           <div v-if="props.isUploading" class="relative">
-            <svg class="h-5 w-5 animate-spin text-green-600" xmlns="http://www.w3.org/2000/svg"
-              fill="none" viewBox="0 0 24 24">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor"
-                stroke-width="4"></circle>
-              <path class="opacity-75" fill="currentColor"
-                d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
+            <svg class="h-5 w-5 animate-spin text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"></path>
             </svg>
           </div>
           <Icon v-else name="plus" :size="20" class="text-green-600" />
@@ -53,8 +47,8 @@
     </div>
 
     <!-- Hidden file input -->
-    <input ref="fileInput" type="file" :id="id" :accept="acceptedFormats" @change="handleFileChange"
-      class="hidden" :disabled="props.isUploading" />
+    <input ref="fileInput" type="file" :id="id" :accept="acceptedFormats" @change="handleFileChange" class="hidden"
+      :disabled="props.isUploading" />
   </div>
 </template>
 
@@ -84,7 +78,7 @@ const containerClasses = cva('space-y-1');
 const props = withDefaults(defineProps<Props>(), {
   label: '',
   id: 'image-input',
-  maxSize: 2048,
+  maxSize: 2048, // Default to 2MB
   acceptedFormats: 'image/jpeg,image/jpg,image/png',
   modelValue: null,
   isUploading: false,
@@ -160,8 +154,12 @@ const validateFile = (file: File): string => {
     return `Invalid file format. Please upload ${acceptedTypes.join(', ')} files only.`;
   }
 
+  const fileSize = file.size / 1024; // Convert to KB
+
+  console.log(fileSize)
+
   // Check file size
-  if (file.size > props.maxSize) {
+  if (fileSize > props.maxSize) {
     return `File size exceeds ${props.maxSize}KB limit.`;
   }
 

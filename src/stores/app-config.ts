@@ -5,6 +5,8 @@ export interface AppConfig {
   userToken: string;
   appId: string;
   appVersion: string;
+  sdkUserId: string;
+  userSdkToken: string;
 }
 
 export const useAppConfigStore = defineStore('appConfig', () => {
@@ -12,6 +14,8 @@ export const useAppConfigStore = defineStore('appConfig', () => {
   const userToken = ref<string>('');
   const appId = ref<string>('');
   const appVersion = ref<string>('');
+  const sdkUserId = ref<string>('');
+  const userSdkToken = ref<string>('');
 
   // Getters
   const isConfigured = () => {
@@ -27,11 +31,21 @@ export const useAppConfigStore = defineStore('appConfig', () => {
     };
   };
 
+  const getHeadersSdk = () => {
+    return {
+      qiscus_sdk_app_id: appId.value,
+      qiscus_sdk_user_id: sdkUserId.value,
+      qiscus_sdk_token: userSdkToken.value,
+    };
+  };
+
   // Actions
   const setConfig = (config: AppConfig) => {
     userToken.value = config.userToken;
     appId.value = config.appId;
     appVersion.value = config.appVersion;
+    sdkUserId.value = config.sdkUserId;
+    userSdkToken.value = config.userSdkToken;
   };
 
   const setUserToken = (token: string) => {
@@ -46,10 +60,20 @@ export const useAppConfigStore = defineStore('appConfig', () => {
     appVersion.value = version;
   };
 
+  const setSdkUserId = (id: string) => {
+    sdkUserId.value = id;
+  };
+
+  const setUserSdkToken = (token: string) => {
+    userSdkToken.value = token;
+  };
+
   const clearConfig = () => {
     userToken.value = '';
     appId.value = '';
     appVersion.value = '';
+    sdkUserId.value = '';
+    userSdkToken.value = '';
   };
 
   return {
@@ -61,12 +85,15 @@ export const useAppConfigStore = defineStore('appConfig', () => {
     // Getters
     isConfigured,
     getHeaders,
+    getHeadersSdk,
 
     // Actions
     setConfig,
     setUserToken,
     setAppId,
     setAppVersion,
+    setSdkUserId,
+    setUserSdkToken,
     clearConfig,
   };
 });

@@ -4,6 +4,7 @@
     <div :class="computedInputWrapperClasses">
       <textarea
         ref="textareaRef"
+        v-bind="textareaAttrs"
         :id="id"
         :value="modelValue"
         @input="onInput"
@@ -32,6 +33,7 @@ interface Props {
   errorMessage?: string;
   minHeight?: string;
   maxHeight?: string;
+  textareaAttrs?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -44,6 +46,7 @@ const props = withDefaults(defineProps<Props>(), {
   minHeight: '92px',
   maxHeight: '200px',
   modelValue: '',
+  textareaAttrs: () => ({}),
 });
 
 const emit = defineEmits(['update:modelValue']);

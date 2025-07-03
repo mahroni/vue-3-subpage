@@ -3,8 +3,8 @@ import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 
 import AutoResponder from '@/views/AutoResponder.vue';
 import Home from '@/views/integration/ChannelPage.vue';
-import QiscusCreateChannelView from '@/views/integration/QiscusCreateChannelView.vue';
 import QiscusListChannelView from '@/views/integration/QiscusListChannelView.vue';
+import QiscusCreateChannelView from '@/views/integration/qiscus/QiscusCreateChannelView.vue';
 import QiscusDetailView from '@/views/integration/qiscus/QiscusDetailView.vue';
 
 export function createRouter(appId?: string | number): Router {

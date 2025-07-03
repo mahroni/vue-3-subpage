@@ -6,6 +6,8 @@ const appConfig: QiscusAppConfig = {
   userToken: 'your-user-token-here',
   appId: 'your-app-id-here',
   appVersion: '1.0.0',
+  sdkUserId: 'your-sdk-user-id-here',
+  userSdkToken: 'your-user-sdk-token-here',
 };
 
 // Create app with configuration
@@ -17,6 +19,8 @@ appConfigStore.setConfig({
   userToken: 'new-user-token',
   appId: 'new-app-id',
   appVersion: '2.0.0',
+  sdkUserId: 'sdk-user-id',
+  userSdkToken: 'user-sdk-token',
 });
 
 // Example 4: Update individual values

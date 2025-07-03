@@ -39,14 +39,14 @@ const props = withDefaults(defineProps<Props>(), {
         </ButtonIcon>
 
         <div class="text-surface-primary-blue flex flex-col">
-          <div class="mt-6 text-2xl">{{ props.title }}</div>
-          <div class="text-2xl font-bold">{{ props.subtitle }}</div>
+          <div class="mt-6 text-2xl break-words">{{ props.title }}</div>
+          <div class="text-2xl font-bold break-words">{{ props.subtitle }}</div>
         </div>
       </div>
 
       <!-- Channel List Section -->
       <div class="flex max-h-[350px] flex-col gap-4 overflow-y-auto">
-        <p v-if="props.introduction" class="text-text-title text-sm font-medium">
+        <p v-if="props.introduction" class="text-text-title text-sm font-medium break-words">
           {{ props.introduction }}
         </p>
 
@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<Props>(), {
           :key="action.label"
           class="hover:bg-surface-primary-blue/5 flex cursor-pointer justify-between rounded-xl p-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
         >
-          <div class="flex items-center gap-2">
+          <div class="flex min-w-0 flex-1 items-center gap-2">
             <img
               :src="action.iconUrl"
               alt=""
@@ -66,10 +66,12 @@ const props = withDefaults(defineProps<Props>(), {
               v-if="action.iconUrl"
             />
             <ChatIcon :size="24" v-else />
-            <div class="text-sm font-medium">{{ action.label }}</div>
+            <div class="min-w-0 flex-1 text-start text-sm font-medium break-words">
+              {{ action.label }}
+            </div>
           </div>
 
-          <div>
+          <div class="flex flex-shrink-0 items-center">
             <ChevronRightIcon :size="24" />
           </div>
         </button>

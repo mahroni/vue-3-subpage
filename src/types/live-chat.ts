@@ -1,45 +1,91 @@
+export interface IWidgetVariables {
+  appID: string,
+  attentionGrabberImage: string,
+  attentionGrabberStatus: boolean,
+  attentionGrabberText: string,
+  buttonHasIcon: boolean,
+  buttonHasText: boolean,
+  buttonIcon: string,
+  buttonText: string,
+  "channel_widget": {
+      live_channel: {
+          badge_url?: string,
+          is_enable: boolean,
+          name: string
+      },
+      other_channel: [],
+      subtitle: string,
+      title: string,
+  },
+  customerIdentifierInputType: string,
+  customerServiceAvatar: string,
+  customerServiceName: string,
+  "extra_fields": IAdditionalField[],
+  formGreet: string,
+  formSubtitle: string,
+  grabberImage: boolean,
+  grabberTextStatus: boolean,
+  grabberTimeout: number,
+  isChannelWidgetEnabled: boolean,
+  loginFormButtonLabel: string,
+  openAtStart: boolean,
+  selectedWidgetPage: string,
+  welcomeMessageStatus: boolean,
+  welcomeText: string,
+  welcomeTimeout: string
+}
+
+export interface IWidgetConfigResponse {
+  style: any;
+  widget: IWidgetVariables;
+}
 export interface IActionWelcomeDialog {
   label: string;
   iconUrl: string;
 }
-
 export interface IAdditionalField {
   type: string;
-  title: string;
+  name: string;
   placeholder: string;
   required: boolean;
-  iconField: string;
-  dropdownItems: string[];
-  isRequired: boolean;
+  iconField?: string;
+  options?: string[];
 }
 
 export interface ILoginFormState {
-  firstDescription: string;
-  secondDescription: string;
-  subtitle: string;
-  buttonForm: string;
-  customerIdentifier: string;
-  additionalField: IAdditionalField[];
+  firstDescription: string; //formGreet
+  secondDescription: string; 
+  formSubtitle: string; //formSubtitle
+  buttonText: string; //buttonText
+  customerIdentifier: string; //customerIdentifierInputType
+  extraFields: IAdditionalField[]; //extra_fields
 }
 
 export interface IChatFormState {
-  customerServiceName: string;
-  customerServiceAvatar: string;
+  customerServiceName: string; //customerServiceName
+  customerServiceAvatar: string; //customerServiceAvatar
 }
 
 export interface IWelcomeDialogState {
-  isWelcomeDialog: boolean;
-  isAttentionGrabber: boolean;
-  firstDescriptionWelcomeDialog: string;
+  isWelcomeDialog: boolean; //welcomeDialogStatus
+  isAttentionGrabber: boolean; //attentionGrabberStatus
+  firstDescriptionWelcomeDialog: string; //welcomeText
   secondDescriptionWelcomeDialog: string;
   descriptionWelcomeDialog: string;
-  appearDelayWelcomeDialog: string;
-  isAutoExpandWelcomeDialog: boolean;
-  isAttentionGrabberImage: boolean;
-  isAttentionGrabberText: boolean;
-  attentionGrabberTextDescription: string;
-  attentionGrabberAppearDelay: string;
-  attentionGrabberImage: string;
-  brandIconWelcomeDialog: string;
+  welcomeTimeout: string; //welcomeTimeout
+  openAtStart: boolean; //openAtStart
+  isAttentionGrabberImage: boolean; //grabberImage
+  isAttentionGrabberText: boolean; //grabberTextStatus
+  attentionGrabberText: string; //attentionGrabberText
+  grabberTimeout: number; //grabberTimeout
+  attentionGrabberImage: string; //attentionGrabberImage
+  brandIconWelcomeDialog: string;  
   actionsWelcomeDialog: IActionWelcomeDialog[];
+}
+export interface ICallToActionState {
+  isWithText: boolean;
+  isWithIcon: boolean;
+  liveChatButtonText: string;
+  iconImage: string;
+  borderRadius: string;
 }
