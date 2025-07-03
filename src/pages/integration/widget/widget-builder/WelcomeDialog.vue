@@ -103,7 +103,7 @@ const grabberTimeoutString = computed({
 </script>
 
 <template>
-  <div class="flex w-full items-start justify-between gap-8 self-stretch p-4">
+  <div class="flex w-full items-start justify-between gap-8 self-stretch">
     <div class="flex w-full flex-1 flex-col gap-8">
       <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
