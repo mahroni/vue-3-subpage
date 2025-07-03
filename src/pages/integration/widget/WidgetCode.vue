@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import Banner from '@/components/common/Banner.vue';
+import { useAppConfigStore } from '@/stores/app-config';
+
+const { appId } = useAppConfigStore();
 </script>
 
 <template>
@@ -27,5 +30,16 @@ import Banner from '@/components/common/Banner.vue';
     </a>
   </Banner>
 
-  <div id="iframe-snippet"></div>
+  <pre name="code-snippet" id="code-snippet">
+    <code>
+      &lt;script&gt;
+        document.addEventListener('DOMContentLoaded', function () {
+          var s, t; s = document.createElement('script'); s.type = 'text/javascript';
+          s.src = '/js/qismo-v5.js'; s.async = true;
+          s.onload = s.onreadystatechange = function () { new Qismo({{ appId }}); }
+        t = document.getElementsByTagName('script')[0]; t.parentNode.insertBefore(s, t);
+        });
+      &lt;/script&gt;
+    </code>
+  </pre>
 </template>
