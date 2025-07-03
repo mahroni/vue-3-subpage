@@ -82,6 +82,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             placeholder="Try everything!"
             type="number"
             :maxlength="50"
+            :min="0"
           >
             <template #append-button="{ disabled }">
               <div :class="{ 'cursor-not-allowed opacity-50': disabled }">

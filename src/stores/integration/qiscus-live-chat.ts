@@ -52,7 +52,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     firstDescriptionWelcomeDialog: 'Hello There,',
     secondDescriptionWelcomeDialog: 'Welcome to Qiscus',
     descriptionWelcomeDialog: 'Ask for Questions',
-    welcomeTimeout: '',
+    welcomeTimeout: '0',
     openAtStart: false,
     isAttentionGrabberImage: true,
     isAttentionGrabberText: true,
