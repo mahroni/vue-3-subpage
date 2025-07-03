@@ -14,6 +14,9 @@ import {
 } from '@/components/icons';
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 
+import { useAppConfigStore } from '@/stores/app-config';
+import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
+import { useRoute } from 'vue-router';
 import CallToAction from './widget-builder/CallToAction.vue';
 import Chat from './widget-builder/Chat.vue';
 import LoginForm from './widget-builder/LoginForm.vue';
@@ -36,9 +39,13 @@ const tabs = [
 ] as Tab[];
 
 const activeTab = ref(tabs[0]?.label || '');
+const { postWidgetConfig } = useQiscusLiveChatStore();
+const { appId } = useAppConfigStore();
+const { params } = useRoute();
 
 const isDrawerOpen = ref(false);
-const toggleDrawer = () => {
+const saveAndPreview = async () => {
+  await postWidgetConfig(appId, params.id as string);
   isDrawerOpen.value = !isDrawerOpen.value;
 };
 </script>
@@ -49,7 +56,7 @@ const toggleDrawer = () => {
       class="bg-white-100 sticky top-0 z-50 flex w-full items-center justify-between border-b-[1px] border-gray-300 p-4"
     >
       <RoundedTab :tabs="tabs" v-model="activeTab" />
-      <Button @click="toggleDrawer">Save & Preview</Button>
+      <Button @click="saveAndPreview">Save & Preview</Button>
     </div>
     <div class="p-4">
       <template v-if="activeTab === 'Welcome Dialog'">
@@ -72,7 +79,7 @@ const toggleDrawer = () => {
       </template>
     </div>
   </div>
-  <Drawer :isOpen="isDrawerOpen" @close="toggleDrawer">
+  <Drawer :isOpen="isDrawerOpen" @close="isDrawerOpen = false">
     <div class="flex h-full w-full flex-col items-end justify-end gap-4">
       <WelcomingPage
         imageUrl=""

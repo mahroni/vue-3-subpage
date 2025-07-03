@@ -13,7 +13,7 @@ export interface IWidgetVariables {
           is_enable: boolean,
           name: string
       },
-      other_channel: [],
+      other_channel: any[],
       subtitle: string,
       title: string,
   },
@@ -37,7 +37,9 @@ export interface IWidgetVariables {
 
 export interface IWidgetConfigResponse {
   style: any;
-  widget: IWidgetVariables;
+  widget: {
+    variables: IWidgetVariables;
+  };
 }
 export interface IActionWelcomeDialog {
   label: string;
