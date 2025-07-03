@@ -1,6 +1,40 @@
+<script setup lang="ts">
+import Checkbox from '@/components/common/Checkbox.vue';
+import { Banner } from '@/components/common/common';
+import TextArea from '@/components/form/TextArea.vue';
+import { WarningIcon } from '@/components/icons';
+import Divider from '@/components/ui/Divider.vue';
+import type { IAutoResponder } from '@/types/channels';
+import { computed } from 'vue';
+
+
+const props = withDefaults(defineProps<{ modelValue: IAutoResponder, isBot: boolean }>(), {
+  isBot: false,
+  modelValue: () => ({
+    offline_message: '',
+    online_message: '',
+    send_offline_each_message: false,
+    send_online_if_resolved: false,
+  }),
+});
+
+const emit = defineEmits(['update:modelValue']);
+
+const formData = computed({
+  get() {
+    return props.modelValue;
+  },
+  set(newValue: IAutoResponder) {
+
+    emit('update:modelValue', newValue);
+  }
+});
+
+</script>
+
 <template>
-  <form class="flex flex-col gap-8" @submit.prevent="handleSubmit">
-    <Banner intent="negative" type="outline" v-if="!isBotEnabled">
+  <div class="flex flex-col gap-8">
+    <Banner intent="negative" type="outline" v-if="isBot">
       <div class="flex items-center gap-3">
         <WarningIcon :size="24" class="text-[#EB5757]" />
         <div class="text-sm text-[#0A0A0A]">Auto Responder is not working if the chatbot setting is enabled.</div>
@@ -37,13 +71,13 @@
 
         <div class="text-xs text-[#A0A0A0]">When you set the autoresponder message, it will only be sent once at the
           beginning of each conversation outside office hour.</div>
-        <TextArea v-model="config.online_message" autocomplete="off" :disabled="isBotEnabled" />
+        <TextArea v-model="formData.online_message" autocomplete="off" :disabled="isBot" />
       </div>
 
       <div class="flex items-center gap-2 text-sm font-semibold text-[#565656]">
         <Checkbox
           label="Keep sending every time a customer initiates a chat session even though the room has been resolved"
-          v-model="config.send_online_each_message" />
+          v-model="formData.send_online_if_resolved" />
       </div>
 
       <Divider />
@@ -53,43 +87,12 @@
 
         <div class="text-xs text-[#A0A0A0]">When you set the autoresponder message, it will only be sent once at the
           beginning of each conversation outside office hour.</div>
-        <TextArea v-model="config.offline_message" autocomplete="off" :disabled="isBotEnabled" />
+        <TextArea v-model="formData.offline_message" autocomplete="off" :disabled="isBot" />
       </div>
 
       <div class="flex items-center gap-2 text-sm font-semibold text-[#565656]">
-        <Checkbox label="Sent every time a customer sends a message" v-model="config.send_offline_each_message" />
+        <Checkbox label="Sent every time a customer sends a message" v-model="formData.send_offline_each_message" />
       </div>
-
     </div>
-
-    <div class="flex justify-end gap-4 mt-8">
-      <Button intent="secondary" @click="emit('cancel')">Cancel</Button>
-      <Button type="submit">Save</Button>
-    </div>
-  </form>
+  </div>
 </template>
-
-<script setup lang="ts">
-import Checkbox from '@/components/common/Checkbox.vue';
-import { Banner, Button } from '@/components/common/common';
-import TextArea from '@/components/form/TextArea.vue';
-import { WarningIcon } from '@/components/icons';
-import Divider from '@/components/ui/Divider.vue';
-import { reactive, ref } from 'vue';
-
-const emit = defineEmits(['submit', 'cancel']);
-
-const isBotEnabled = ref(true);
-
-const config = reactive({
-  offline_message: '',
-  online_message: '',
-  send_offline_each_message: false,
-  send_online_each_message: false,
-});
-
-function handleSubmit() {
-  console.log('Submitting Auto Responder Config:', config);
-  // emit('submit', config.value);
-}
-</script>
