@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen flex-col gap-8 px-12 py-8">
     <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
-      <ChevronLeftIcon :size="20" class="text-primary" />
+      <BackIcon :size="20" class="text-primary" />
       Integration
     </router-link>
 
@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 
-import { ChevronLeftIcon } from '@/components/icons';
+import { BackIcon } from '@/components/icons';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 import TableListChannel from '@/pages/integration/qiscus/TableListChannel.vue';
 import { useAppConfigStore } from '@/stores/app-config';

@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="showConfirm">
+  <form @submit.prevent="handleSubmit">
     <div v-if="!isAutoresponderFormOpen" class="flex flex-col gap-8">
       <QiscusBannerDoc />
 
@@ -9,8 +9,8 @@
         </p>
 
         <div class="flex w-140 items-center gap-5">
-          <ImageInput id="widget-image" v-model="imageUrl" :isUploading="uSdkImage.loading.value" @upload="uploadImage"
-            autocomplete="off" />
+          <ImageInput id="widget-image" v-model="channel.badge_url" :isUploading="uSdkImage.loading.value"
+            @upload="uploadImage" autocomplete="off" />
           <div class="flex flex-1 flex-col items-start gap-1">
             <h4 class="text-[#565656] text-sm font-semibold">Channel Badge Icon</h4>
             <p class="text-[#A0A0A0] text-xs">
@@ -21,7 +21,7 @@
         </div>
 
         <div class="w-[552px]">
-          <Input v-model="channelName" :disabled="false" :error="false" errorMessage="This field has an error"
+          <Input v-model="channel.name" :disabled="false" :error="false" errorMessage="This field has an error"
             id="default-input" label="Channel Name" placeholder="Enter your channel name here" />
         </div>
       </div>
@@ -44,14 +44,12 @@
           v1.2.3, Qiscus Chat SDK Flutter v1.2.3, and Qiscus Chat SDK React Native v1.2.3.
         </Banner>
 
-        <Checkbox label="Agree with the term of condition" v-model="isAgreementToc" />
+        <Checkbox label="Agree with the term of condition" v-model="channel.is_secure_toc" />
       </div>
     </div>
 
-    <AutoResponderForm v-else />
-
     <div class="flex justify-end gap-4 mt-8">
-      <Button intent="secondary" @click="router.back()">Cancel</Button>
+      <Button intent="secondary" @click="emit('cancel')">Cancel</Button>
       <Button type="submit" :disabled="isDisabled">Save</Button>
     </div>
   </form>
@@ -67,25 +65,30 @@ import Input from '@/components/form/Input.vue';
 import { useCreateQiscus } from '@/composables/channels/qiscus';
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import { useRouter } from 'vue-router';
-import AutoResponderForm from '../AutoResponderForm.vue';
 import QiscusBannerDoc from './QiscusBannerDoc.vue';
 
 // declare
-const router = useRouter();
 const uQiscus = useCreateQiscus()
 const uSdkImage = useUploadSdkImage();
 const { showAlert } = useSweetAlert();
 
+
+const emit = defineEmits(['submit', 'cancel']);
+
 // state
 const isAutoresponderFormOpen = ref(false);
-const isAgreementToc = ref(false);
-const channelName = ref('');
-const imageUrl = ref<string>('');
+
+const channel = ref({
+  badge_url: '',
+  name: '',
+  is_active: true,
+  is_secure: true,
+  is_secure_toc: false,
+})
 
 // computed
 const isDisabled = computed(() => {
-  return !channelName.value || !isAgreementToc.value || uQiscus.loading.value;
+  return !channel.value.name || !channel.value.is_secure_toc || uQiscus.loading.value;
 });
 
 async function uploadImage(file: File) {
@@ -102,44 +105,8 @@ async function uploadImage(file: File) {
     });
   }
 
-  imageUrl.value = uSdkImage.data.value?.url || '';
+  channel.value.badge_url = uSdkImage.data.value?.url || '';
 }
 
-async function handleSubmit() {
-  const payload = {
-    name: channelName.value,
-    badge_url: imageUrl.value,
-    is_active: true,
-    is_secure: true,
-    is_secure_toc: isAgreementToc.value,
-  };
-
-  await uQiscus.create(payload)
-
-  if (uQiscus.error.value) {
-    return showAlert.error({
-      title: 'Failed',
-      text: 'Failed to create Qiscus channel. Please try again.',
-      confirmButtonText: 'Okay',
-      showCancelButton: false,
-    });
-  }
-
-  router.push({ name: 'qiscus-detail', params: { id: uQiscus.data.value?.id } });
-};
-
-function showConfirm() {
-  showAlert.warning({
-    title: 'Add Channel Auto Responder',
-    text: 'Do you want to set up channel auto <br>responder to this channel?',
-    confirmButtonText: 'Add Channel Auto Responder',
-    cancelButtonText: 'Setup Later',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      isAutoresponderFormOpen.value = true;
-    } else {
-      handleSubmit();
-    }
-  });
-}
+const handleSubmit = async () => emit('submit', channel.value);
 </script>

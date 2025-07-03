@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <form class="flex flex-col gap-8" @submit.prevent="handleSubmit">
     <Banner intent="negative" type="outline" v-if="!isBotEnabled">
       <div class="flex items-center gap-3">
         <WarningIcon :size="24" class="text-[#EB5757]" />
@@ -37,13 +37,13 @@
 
         <div class="text-xs text-[#A0A0A0]">When you set the autoresponder message, it will only be sent once at the
           beginning of each conversation outside office hour.</div>
-        <TextArea v-model="a" autocomplete="off" :disabled="isBotEnabled" />
+        <TextArea v-model="config.online_message" autocomplete="off" :disabled="isBotEnabled" />
       </div>
 
       <div class="flex items-center gap-2 text-sm font-semibold text-[#565656]">
         <Checkbox
           label="Keep sending every time a customer initiates a chat session even though the room has been resolved"
-          v-model="isChecked" />
+          v-model="config.send_online_each_message" />
       </div>
 
       <Divider />
@@ -53,28 +53,43 @@
 
         <div class="text-xs text-[#A0A0A0]">When you set the autoresponder message, it will only be sent once at the
           beginning of each conversation outside office hour.</div>
-        <TextArea v-model="b" autocomplete="off" :disabled="isBotEnabled" />
+        <TextArea v-model="config.offline_message" autocomplete="off" :disabled="isBotEnabled" />
       </div>
 
       <div class="flex items-center gap-2 text-sm font-semibold text-[#565656]">
-        <Checkbox label="Sent every time a customer sends a message" v-model="isChecked2" />
+        <Checkbox label="Sent every time a customer sends a message" v-model="config.send_offline_each_message" />
       </div>
 
     </div>
-  </div>
+
+    <div class="flex justify-end gap-4 mt-8">
+      <Button intent="secondary" @click="emit('cancel')">Cancel</Button>
+      <Button type="submit">Save</Button>
+    </div>
+  </form>
 </template>
 
 <script setup lang="ts">
 import Checkbox from '@/components/common/Checkbox.vue';
-import { Banner } from '@/components/common/common';
+import { Banner, Button } from '@/components/common/common';
 import TextArea from '@/components/form/TextArea.vue';
 import { WarningIcon } from '@/components/icons';
 import Divider from '@/components/ui/Divider.vue';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+
+const emit = defineEmits(['submit', 'cancel']);
 
 const isBotEnabled = ref(true);
-const isChecked = ref(false);
-const isChecked2 = ref(false);
-const a = ref('This is the first description');
-const b = ref('This is the second description');
+
+const config = reactive({
+  offline_message: '',
+  online_message: '',
+  send_offline_each_message: false,
+  send_online_each_message: false,
+});
+
+function handleSubmit() {
+  console.log('Submitting Auto Responder Config:', config);
+  // emit('submit', config.value);
+}
 </script>
