@@ -1,7 +1,7 @@
 <template>
   <div class="text-text-title flex min-h-screen flex-col gap-8 px-12 py-8 text-sm">
     <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
-      <Icon name="chevron-left" :size="20" />
+      <BackIcon :size="20" />
       Integration
     </router-link>
 
@@ -11,7 +11,6 @@
     </div>
     <MainTab :tabs="tabs" v-model="activeTab" />
 
-    <!-- ini pakai v-if -->
     <div v-if="activeTab === 'Overview'">
       <WidgetForm />
     </div>
@@ -31,8 +30,8 @@
 import { ref } from 'vue';
 
 import MainTab from '@/components/common/Tabs/MainTab.vue';
-import { Icon } from '@/components/icons';
 
+import BackIcon from '@/components/icons/BackIcon.vue';
 import WidgetCode from '@/pages/integration/widget/WidgetCode.vue';
 import WidgetForm from '@/pages/integration/widget/WidgetForm.vue';
 import WidgetLiveChat from '@/pages/integration/widget/WidgetLiveChat.vue';

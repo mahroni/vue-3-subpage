@@ -63,11 +63,20 @@ export interface ICreateQiscusChannel {
   is_secure_toc: boolean;
   name: string;
 }
-
-export interface IUpdateConfigQiscusChannel {
+export interface IAutoResponder {
   offline_message: string;
   online_message: string;
+  send_offline_each_message: boolean;
   send_online_if_resolved: boolean;
+}
+
+export interface IWidgetChannel {
+  badge_url: string;
+  name: string;
+  is_active: boolean;
+  is_secure: boolean;
+  is_secure_toc: boolean;
+  configs: IAutoResponder;
 }
 
 export interface IBotChannel {
