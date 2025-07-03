@@ -2,22 +2,14 @@
   <div :class="containerClasses()">
     <label v-if="props.label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
-      <input
-        v-bind="$attrs"
-        :id="id"
-        type="text"
-        :value="modelValue"
-        @input="onInput"
-        :placeholder="placeholder"
-        :class="computedInputClasses"
-        :disabled="disabled"
-      />
+      <input v-bind="$attrs" :id="id" type="text" :value="modelValue" @input="onInput" :placeholder="placeholder"
+        :class="computedInputClasses" :disabled="disabled" />
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
 </template>
 
-<script setup lang="ts" generic="T extends Record<string, any> = {}">
+<script setup lang="ts">
 import { cva } from 'class-variance-authority';
 import { computed } from 'vue';
 

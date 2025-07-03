@@ -9,7 +9,8 @@
       </p>
 
       <div class="flex w-140 items-center gap-5">
-        <ImageInput v-model="channelBadge" id="channel-badge" @error="(e) => (errorMessages = e)" />
+        <ImageInput v-model="channel.badge_url" id="channel-badge" @error="(e) => (errorMessages = e)"
+          :isUploading="uSdkImage.loading.value" @upload="uploadImage" />
         <div class="flex flex-1 flex-col items-start gap-1">
           <h4 class="text-text-subtitle text-sm font-semibold">Channel Badge Icon</h4>
           <p class="text-text-placeholder text-xs font-normal">
@@ -24,7 +25,7 @@
       </Banner>
 
       <div class="w-[552px]">
-        <Input v-model="channelName" :disabled="false" :error="false" errorMessage="This field has an error"
+        <Input v-model="channel.name" :disabled="false" :error="false" errorMessage="This field has an error"
           id="default-input" placeholder="Enter your channel name here" />
       </div>
     </div>
@@ -35,7 +36,7 @@
   </form>
 </template>
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import Banner from '@/components/common/Banner.vue';
@@ -45,14 +46,13 @@ import Input from '@/components/form/Input.vue';
 import { useFetchBot } from "@/composables/channels/bot/useFetchBot";
 import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qiscus';
 import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-const channelId = ref<string>('')
-const channelName = ref<string>('');
-const errorMessages = ref<string>('');
+
 
 const route = useRoute()
 const router = useRouter()
@@ -63,19 +63,27 @@ const uConfig = useFetchConfig()
 const uBot = useFetchBot()
 const { getWidgetConfig } = useQiscusLiveChatStore()
 const { appId } = useAppConfigStore()
+const uSdkImage = useUploadSdkImage();
+
+const errorMessages = ref<string>('');
+
+const channel = reactive({
+  id: '',
+  badge_url: '',
+  name: '',
+});
 
 // computed
-const channelBadge = computed(() => widget.value?.badge_url);
-const isDisabled = computed(() => !channelName.value || !channelBadge.value || loading.value)
+const isDisabled = computed(() => !channel.name || !channel.badge_url || loading.value)
 
-function update() {
-  if (!channelName.value || !channelBadge.value) return;
+async function update() {
+  if (!channel.name || !channel.badge_url) return;
   const params = {
-    badge_url: channelBadge.value,
-    name: channelName.value,
+    badge_url: channel.badge_url,
+    name: channel.name,
   };
 
-  updateChannel(channelId.value, params)
+  await updateChannel(channel.id, params)
 
   if (error.value) return showAlert.error({
     title: 'Error',
@@ -92,24 +100,43 @@ function update() {
   })
 }
 
+
+async function uploadImage(file: File) {
+  await uSdkImage.upload(file);
+
+  if (uSdkImage.error.value) {
+    console.error('Error uploading image:', uSdkImage.error.value);
+
+    return showAlert.error({
+      title: 'Upload Failed',
+      text: 'Failed to upload image. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  }
+
+  channel.badge_url = uSdkImage.data.value?.url || '';
+}
+
 function setData() {
-  channelName.value = widget.value?.name ?? ''
+  channel.name = widget.value?.name ?? ''
+  channel.badge_url = widget.value?.badge_url ?? ''
 }
 
 onMounted(async () => {
   const { id } = route.params;
   if (!id) return
   // Ensure id is string or number, not array
-  channelId.value = (Array.isArray(id) ? id[0] : id) as string;
-  await fetchChannelById(channelId.value)
+  channel.id = (Array.isArray(id) ? id[0] : id) as string;
+  await fetchChannelById(channel.id)
 
   // get additional data
-  await uConfig.fetch(channelId.value, 'qiscus')
+  await uConfig.fetch(channel.id, 'qiscus')
   uBot.fetch()
 
   setData()
 
   // get widget config
-  getWidgetConfig(appId, channelId.value)
+  getWidgetConfig(appId, channel.id)
 })
 </script>
