@@ -71,6 +71,7 @@ export interface IAutoResponder {
 }
 
 export interface IWidgetChannel {
+  id?: string;
   badge_url: string;
   name: string;
   is_active: boolean;
@@ -83,4 +84,9 @@ export interface IBotChannel {
   bot_webhook_url: string;
   is_bot_enabled: boolean;
   is_force_send_bot: boolean;
+}
+
+export interface IUpdateConfig extends IAutoResponder {
+  enabled: boolean;
+  source: string;
 }

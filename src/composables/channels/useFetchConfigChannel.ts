@@ -18,9 +18,11 @@ export const useFetchConfig = () => {
         source,
       };
       const response = await configApi.get(id, params);
-      const dataResponse = response.data as unknown as IResponse<IQiscusChannel>;
+      const dataResponse = response.data as unknown as IResponse<any>;
 
-      data.value = dataResponse.data;
+      const { channel_config } = dataResponse.data;
+
+      data.value = channel_config;
     } catch (err) {
       error.value = err instanceof Error ? err : new Error('An unknown error occurred');
       data.value = null;
