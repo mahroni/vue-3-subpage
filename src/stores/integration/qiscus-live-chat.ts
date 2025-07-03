@@ -13,6 +13,7 @@ import type {
   IChatFormState,
   ILoginFormState,
   IWelcomeDialogState,
+  IWidgetConfigResponse,
   IWidgetVariables,
 } from '@/types/live-chat';
 
@@ -40,7 +41,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     isWithText: true,
     isWithIcon: true,
     liveChatButtonText: '',
-    iconImage: '',
+    iconImage: "https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/img/icon-qiscus-widget-default.svg",
     borderRadius: '',
   });
   // state for welcome dialog
@@ -201,6 +202,10 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
         // welcomeDialogState.brandIconWelcomeDialog = ???
         welcomeDialogState.attentionGrabberImage = widget.attentionGrabberImage;
 
+        // set state call to action
+
+        // set state channel widget
+
         // set state login form
         loginFormState.firstDescription = widget.formGreet;
         // loginFormState.secondDescription = ???;
@@ -212,6 +217,71 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
         // set state chat form
         chatFormState.customerServiceName = widget.customerServiceName;
         chatFormState.customerServiceAvatar = widget.customerServiceAvatar;
+
+        // set state color
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const postWidgetConfig = async (appId: string, channelId: string) => {
+    const payload : IWidgetConfigResponse = {
+      style: {},
+      widget: {
+        variables: {
+          appID: appId,
+          // welcome dialog data
+          welcomeMessageStatus: welcomeDialogState.isWelcomeDialog,
+          attentionGrabberStatus: welcomeDialogState.isAttentionGrabber,
+          welcomeText: welcomeDialogState.firstDescriptionWelcomeDialog,
+          welcomeTimeout: welcomeDialogState.welcomeTimeout,
+          openAtStart: welcomeDialogState.openAtStart,
+          grabberImage: welcomeDialogState.isAttentionGrabberImage,
+          grabberTextStatus: welcomeDialogState.isAttentionGrabberText,
+          attentionGrabberText: welcomeDialogState.attentionGrabberText,
+          grabberTimeout: welcomeDialogState.grabberTimeout,
+          attentionGrabberImage: welcomeDialogState.attentionGrabberImage,
+          
+          // login form data
+          formGreet: loginFormState.firstDescription,
+          formSubtitle: loginFormState.formSubtitle,
+          buttonText: loginFormState.buttonText,
+          customerIdentifierInputType: loginFormState.customerIdentifier,
+          extra_fields: loginFormState.extraFields,
+
+          // chat form data
+          customerServiceName: chatFormState.customerServiceName,
+          customerServiceAvatar: chatFormState.customerServiceAvatar,
+
+          // call to action data
+          buttonHasText: callToActionState.isWithText,
+          buttonHasIcon: callToActionState.isWithIcon,
+          buttonIcon: callToActionState.iconImage,
+          loginFormButtonLabel: callToActionState.liveChatButtonText,
+
+          // channel widget data
+          channel_widget: {
+            live_channel: {
+              badge_url: channelBadgeIcon.value || 'https://d1edrlpyc25xu0.cloudfront.net/zalda-vvq7pksvblaiy7s/image/upload/U5zXXEv54V/file_example_PNG_500kB.png"',
+              is_enable: isQiscusLiveChat.value,
+              name: previewLiveChatName.value
+            },
+            other_channel: [], //???
+            subtitle: previewSubtitle.value,
+            title: previewTitle.value,
+          },          
+          isChannelWidgetEnabled: isChannelsEnabled.value,
+          
+          selectedWidgetPage: 'welcome'
+        }
+      }
+    }
+    console.log(payload, 'payload');
+    try {
+      const { data } = await qiscusApi.postWidgetConfig(channelId, payload);
+      if(data) {
+        console.log(data, 'data')
       }
     } catch (error) {
       console.error(error);
@@ -269,5 +339,6 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     addQiscusLiveChatChannel,
     removeQiscusLiveChatChannel,
     getWidgetConfig,
+    postWidgetConfig,
   };
 });
