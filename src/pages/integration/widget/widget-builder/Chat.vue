@@ -1,39 +1,3 @@
-<template>
-  <div class="flex w-full items-start justify-between gap-8 self-stretch">
-    <div class="flex w-full flex-1 flex-col gap-8">
-      <WIdgetFormLayout label="Chat">
-        <template #inputs>
-          <ImageInput
-            v-model="chatFormState.customerServiceAvatar"
-            :isUploading="isUploading"
-            @upload="uploadImage"
-            label="Customer Service Avatar"
-            id="customer-service-avatar"
-          >
-            <template #tips>
-              <div class="text-sm font-normal text-[#A0A0A0]">
-                We recommend an image of at least 360x360 pixels. You can upload images in JPG,
-                JPEG, or PNG format with a maximum size of 2MB.
-              </div>
-            </template>
-          </ImageInput>
-          <Input
-            v-model="chatFormState.customerServiceName"
-            :maxlength="50"
-            label="Customer Service Name"
-            id="customer-service-name"
-          />
-        </template>
-      </WIdgetFormLayout>
-    </div>
-
-    <!-- PREVIEW -->
-    <div class="sticky top-20 z-10 flex flex-1 flex-col items-end p-6">
-      <ChatFormLoading />
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
@@ -67,3 +31,42 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
   }
 };
 </script>
+
+<template>
+  <div class="flex w-full items-start justify-between gap-8 self-stretch">
+    <div class="flex w-full flex-1 flex-col gap-8">
+      <WIdgetFormLayout label="Chat">
+        <template #inputs>
+          <ImageInput
+            v-model="chatFormState.customerServiceAvatar"
+            :isUploading="isUploading"
+            @upload="uploadImage"
+            label="Customer Service Avatar"
+            id="customer-service-avatar"
+          >
+            <template #tips>
+              <div class="text-sm font-normal text-[#A0A0A0]">
+                We recommend an image of at least 360x360 pixels. You can upload images in JPG,
+                JPEG, or PNG format with a maximum size of 2MB.
+              </div>
+            </template>
+          </ImageInput>
+          <Input
+            v-model="chatFormState.customerServiceName"
+            :maxlength="50"
+            label="Customer Service Name"
+            id="customer-service-name"
+          />
+        </template>
+      </WIdgetFormLayout>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="sticky top-20 z-10 flex flex-1 flex-col items-end p-6">
+      <ChatFormLoading
+        :icon="chatFormState.customerServiceAvatar"
+        :title="chatFormState.customerServiceName"
+      />
+    </div>
+  </div>
+</template>

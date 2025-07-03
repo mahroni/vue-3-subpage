@@ -66,7 +66,7 @@ interface Props {
   error?: boolean;
   errorMessage?: string;
   clearable?: boolean;
-  type?: 'text' | 'password';
+  type?: 'text' | 'password' | 'number';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -86,7 +86,7 @@ const isFocused = ref(false);
 const showPassword = ref(false);
 
 const currentType = computed(() =>
-  props.type === 'password' && !showPassword.value ? 'password' : 'text'
+  props.type === 'password' && !showPassword.value ? 'password' : props.type
 );
 
 const onInput = (event: Event) => {

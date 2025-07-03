@@ -80,7 +80,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             label="Border Radius"
             v-model="callToActionState.borderRadius"
             placeholder="Try everything!"
-            type="text"
+            type="number"
             :maxlength="50"
           >
             <template #append-button="{ disabled }">
