@@ -144,6 +144,7 @@ const grabberTimeoutString = computed({
             v-model="welcomeDialogState.welcomeTimeout"
             label="Appear Delay"
             :maxlength="50"
+            type="number"
           >
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
@@ -182,7 +183,12 @@ const grabberTimeoutString = computed({
               :maxlength="50"
             />
           </OptionalInput>
-          <InputCustom v-model="grabberTimeoutString" label="Appear Delay" :maxlength="50">
+          <InputCustom
+            v-model="grabberTimeoutString"
+            label="Appear Delay"
+            :maxlength="50"
+            type="number"
+          >
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
