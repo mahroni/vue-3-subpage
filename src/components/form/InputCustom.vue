@@ -67,7 +67,6 @@ interface Props {
   errorMessage?: string;
   clearable?: boolean;
   type?: 'text' | 'password';
-  // inputAttrs?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -79,7 +78,6 @@ const props = withDefaults(defineProps<Props>(), {
   errorMessage: 'This field has an error',
   clearable: false,
   type: 'text',
-  // inputAttrs: () => ({}),
 });
 
 const emit = defineEmits(['update:modelValue']);

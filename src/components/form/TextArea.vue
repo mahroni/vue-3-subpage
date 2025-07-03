@@ -33,7 +33,6 @@ interface Props {
   errorMessage?: string;
   minHeight?: string;
   maxHeight?: string;
-  // textareaAttrs?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -46,7 +45,6 @@ const props = withDefaults(defineProps<Props>(), {
   minHeight: '92px',
   maxHeight: '200px',
   modelValue: '',
-  // textareaAttrs: () => ({}),
 });
 
 const emit = defineEmits(['update:modelValue']);
