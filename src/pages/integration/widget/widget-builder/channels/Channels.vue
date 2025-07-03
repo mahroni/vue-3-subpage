@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
@@ -7,14 +6,20 @@ import TextArea from '@/components/form/TextArea.vue';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import ChannelListCard from './components/ChannelListCard.vue';
 import PreviewChannels from './components/PreviewChannels.vue';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
-const isUploadingChannelBadge = ref(false);
+const {loading, data, error, upload} = useUploadSdkImage()
 
-const uploadImage = async (file: File, revertPreview: () => void) => {
-  console.log(file, revertPreview);
+const uploadImage = async (file: File) => {
+  await upload(file);
+  if(data.value) {
+    qiscusLiveChatStore.channelBadgeIcon = data.value.url;
+  } else {
+    console.error(error.value);
+  }
 };
 </script>
 
@@ -68,7 +73,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             label="Live Chat Badge"
             id="live-chat-badge"
             v-model="qiscusLiveChatStore.channelBadgeIcon"
-            :isUploading="isUploadingChannelBadge"
+            :isUploading="loading"
             @upload="uploadImage"
           >
             <template #tips>

@@ -55,8 +55,9 @@ export interface IAdditionalField {
 }
 
 export interface ILoginFormState {
+  brandLogo: string;
   firstDescription: string; //formGreet
-  secondDescription: string; 
+  secondDescription: string;
   formSubtitle: string; //formSubtitle
   buttonText: string; //buttonText
   customerIdentifier: string; //customerIdentifierInputType

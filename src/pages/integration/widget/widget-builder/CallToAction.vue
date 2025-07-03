@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
 
 import Switch from '@/components/common/Switch.vue';
 import ImageInput from '@/components/form/ImageInput.vue';
@@ -9,15 +8,20 @@ import InputCustom from '@/components/form/InputCustom.vue';
 import Divider from '@/components/ui/Divider.vue';
 import CallToAction from '@/components/ui/widget-preview/CallToAction.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
 const { callToActionState } = storeToRefs(useQiscusLiveChatStore());
+const {loading, data, error, upload} = useUploadSdkImage()
 
-const isUploadingIconImage = ref(false);
-
-const uploadImage = async (file: File, revertPreview: () => void) => {
-  console.log(file, revertPreview);
+const uploadImage = async (file: File) => {
+  await upload(file);
+  if(data.value) {
+    callToActionState.value.iconImage = data.value.url;
+  } else {
+    console.error(error.value);
+  }
 };
 </script>
 
@@ -61,7 +65,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
                 label="Icon Image"
                 id="icon-image"
                 v-model="callToActionState.iconImage"
-                :isUploading="isUploadingIconImage"
+                :isUploading="loading"
                 @upload="uploadImage"
               >
                 <template #tips>

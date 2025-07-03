@@ -10,7 +10,7 @@
           </Banner>
         </template>
         <template #inputs>
-          <ImageInput label="Brand Logo" id="login-form-logo">
+          <ImageInput label="Brand Logo" id="login-form-logo" :isUploading="loading" @upload="uploadImage">
             <template #tips>
               <div class="text-sm font-normal text-[#A0A0A0]">
                 We recommend an image of at least 360x360 pixels. You can upload images in JPG,
@@ -137,6 +137,7 @@ import Divider from '@/components/ui/Divider.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import DropdownItemInput from '../form/DropdownItemInput.vue';
 import IconSelectInput from '../form/IconSelectInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
@@ -152,6 +153,7 @@ interface AdditionalField {
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 const { loginFormState } = storeToRefs(useQiscusLiveChatStore());
+const {loading, data, error, upload} = useUploadSdkImage()
 
 const additionalField = reactive<AdditionalField>({
   type: '',
@@ -219,5 +221,14 @@ const deleteField = (index: number) => {
 const handleFieldMenuSelect = (option: any) => {
   // Actions are handled in the option.action function
   console.log('Selected:', option);
+};
+
+const uploadImage = async (file: File) => {
+  await upload(file);
+  if(data.value) {
+    loginFormState.value.brandLogo = data.value.url;
+  } else {
+    console.error(error.value);
+  }
 };
 </script>

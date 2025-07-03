@@ -1,33 +1,23 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
 
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import WIdgetFormLayout from '../form/WIdgetFormLayout.vue';
 
-const isUploading = ref(false);
 const { chatFormState } = storeToRefs(useQiscusLiveChatStore());
+const {loading, data, error, upload} = useUploadSdkImage()
 
-const uploadImage = async (file: File, revertPreview: () => void) => {
-  const formData = new FormData();
-  formData.append('file', file);
-  isUploading.value = true;
-  try {
-    const response = await fetch('/upload', {
-      method: 'POST',
-      body: formData,
-    });
-    const data = await response.json();
-    chatFormState.value.customerServiceAvatar = data.data.imageUrl;
-  } catch (error) {
-    console.error(error);
-    revertPreview();
-  } finally {
-    isUploading.value = false;
+const uploadImage = async (file: File) => {
+  await upload(file);
+  if(data.value) {
+    chatFormState.value.customerServiceAvatar = data.value.url;
+  } else {
+    console.error(error.value);
   }
 };
 </script>
@@ -39,7 +29,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
         <template #inputs>
           <ImageInput
             v-model="chatFormState.customerServiceAvatar"
-            :isUploading="isUploading"
+            :isUploading="loading"
             @upload="uploadImage"
             label="Customer Service Avatar"
             id="customer-service-avatar"
