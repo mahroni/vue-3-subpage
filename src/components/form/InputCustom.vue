@@ -51,7 +51,7 @@
   </div>
 </template>
 
-<script setup lang="ts" generic="T extends Record<string, any> = {}">
+<script setup lang="ts">
 import { cva } from 'class-variance-authority';
 import { computed, ref } from 'vue';
 
