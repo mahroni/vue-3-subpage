@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
 import Switch from '@/components/common/Switch.vue';
@@ -9,7 +10,6 @@ import Divider from '@/components/ui/Divider.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
-import { storeToRefs } from 'pinia';
 
 const { callToActionState } = storeToRefs(useQiscusLiveChatStore());
 
@@ -60,7 +60,8 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
                 id="icon-image"
                 v-model="callToActionState.iconImage"
                 :isUploading="isUploadingIconImage"
-                @upload="uploadImage">
+                @upload="uploadImage"
+              >
                 <template #tips>
                   <div class="text-sm font-normal text-[#A0A0A0]">
                     We recommend an image of at least 360x360 pixels. You can upload images in JPG,
@@ -90,7 +91,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
     </div>
 
     <!-- Preview Section -->
-    <div class="flex flex-1 flex-col items-end gap-4 p-6">
+    <div class="sticky top-20 z-10 flex flex-1 flex-col items-end gap-4 p-6">
       <WelcomingPageLoading />
     </div>
   </div>

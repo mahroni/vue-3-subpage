@@ -2,7 +2,7 @@
   <div :class="containerClasses()">
     <label v-if="props.label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
-      <input :id="id" type="text" :value="modelValue" @input="onInput" :placeholder="placeholder"
+      <input v-bind="inputAttrs" :id="id" type="text" :value="modelValue" @input="onInput" :placeholder="placeholder"
         :class="computedInputClasses" :disabled="disabled" />
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
@@ -21,6 +21,7 @@ interface Props {
   disabled?: boolean;
   error?: boolean; // New prop for error state
   errorMessage?: string; // New prop for error message
+  inputAttrs?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -30,6 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
   error: false, // Default to no error
   errorMessage: 'This field has an error', // Default error message
   modelValue: '',
+  inputAttrs: () => ({}),
 });
 
 const emit = defineEmits(['update:modelValue']);
