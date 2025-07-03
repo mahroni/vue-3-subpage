@@ -3,6 +3,7 @@
     <label v-if="props.label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
       <input
+        v-bind="inputAttrs"
         :id="id"
         type="text"
         :value="modelValue"
@@ -28,6 +29,7 @@ interface Props {
   disabled?: boolean;
   error?: boolean; // New prop for error state
   errorMessage?: string; // New prop for error message
+  inputAttrs?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -37,6 +39,7 @@ const props = withDefaults(defineProps<Props>(), {
   error: false, // Default to no error
   errorMessage: 'This field has an error', // Default error message
   modelValue: '',
+  inputAttrs: () => ({}),
 });
 
 const emit = defineEmits(['update:modelValue']);

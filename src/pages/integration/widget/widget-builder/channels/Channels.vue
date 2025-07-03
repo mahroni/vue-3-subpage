@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import TextArea from '@/components/form/TextArea.vue';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-import { ref } from 'vue';
 import ChannelListCard from './components/ChannelListCard.vue';
 import PreviewChannels from './components/PreviewChannels.vue';
 
@@ -28,6 +29,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             class="w-full"
             label="Welcome Channel Title"
             placeholder="Ask for Question"
+            :inputAttrs="{ maxlength: 50 }"
           />
 
           <Input
@@ -35,12 +37,14 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             class="w-full"
             label="Welcome Channel Subtitle"
             placeholder="In Everythings!"
+            :inputAttrs="{ maxlength: 50 }"
           />
           <TextArea
             v-model="qiscusLiveChatStore.previewIntroduction"
             id="description"
             label="Channel Introduction"
             placeholder="More personalized chat with us on:"
+            :textareaAttrs="{ maxlength: 50 }"
           />
         </template>
       </WidgetFormLayout>
@@ -57,6 +61,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
             class="w-full"
             label="Live Chat Name"
             placeholder="Live Chat"
+            :inputAttrs="{ maxlength: 50 }"
           />
 
           <ImageInput
@@ -80,7 +85,7 @@ const uploadImage = async (file: File, revertPreview: () => void) => {
     </div>
 
     <!-- Preview Section -->
-    <div class="flex flex-1 flex-col items-end gap-4 p-6">
+    <div class="sticky top-20 z-10 flex flex-1 flex-col items-end gap-4 p-6">
       <PreviewChannels />
     </div>
   </div>

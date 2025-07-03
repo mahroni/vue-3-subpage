@@ -56,7 +56,6 @@ const colorValue = ref('#01416C');
 
     <!-- Preview Section -->
     <div class="flex flex-1 flex-col items-end gap-4 p-6">
-      <!-- Navigation Buttons -->
       <PreviewColorScheme :colorValue="colorValue" />
     </div>
   </div>
