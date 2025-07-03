@@ -28,7 +28,7 @@
     </div>
 
     <!-- PREVIEW -->
-    <div class="flex flex-1 flex-col items-end p-6">
+    <div class="sticky top-20 z-10 flex flex-1 flex-col items-end p-6">
       <ChatFormLoading />
     </div>
   </div>

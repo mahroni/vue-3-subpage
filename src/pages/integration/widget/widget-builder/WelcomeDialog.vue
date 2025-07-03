@@ -196,7 +196,10 @@ const grabberTimeoutString = computed({
     </div>
 
     <!-- PREVIEW -->
-    <div v-if="welcomeDialogState.isWelcomeDialog" class="flex flex-1 flex-col items-end p-6">
+    <div
+      v-if="welcomeDialogState.isWelcomeDialog"
+      class="sticky top-20 z-10 flex flex-1 flex-col items-end p-6"
+    >
       <WelcomingPage
         :title="welcomeDialogState.firstDescriptionWelcomeDialog"
         :subtitle="welcomeDialogState.secondDescriptionWelcomeDialog"
@@ -207,7 +210,7 @@ const grabberTimeoutString = computed({
 
     <div
       v-else-if="welcomeDialogState.isAttentionGrabber"
-      class="flex flex-1 flex-col items-end p-6"
+      class="sticky top-20 z-10 flex flex-1 flex-col items-end p-6"
     >
       <AttentionGrabber
         :imageUrl="
