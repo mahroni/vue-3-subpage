@@ -1,7 +1,6 @@
 import type { RouteRecordRaw, Router } from 'vue-router';
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 
-import AutoResponder from '@/views/AutoResponder.vue';
 import Home from '@/views/integration/ChannelPage.vue';
 import QiscusListChannelView from '@/views/integration/QiscusListChannelView.vue';
 import QiscusCreateChannelView from '@/views/integration/qiscus/QiscusCreateChannelView.vue';
@@ -89,11 +88,6 @@ export function createRouter(appId?: string | number): Router {
         window.location.href = `/integration?channel=bot_integration`;
         return false;
       },
-    },
-    {
-      path: '/auto-responder',
-      name: 'auto-responder',
-      component: AutoResponder,
     },
     {
       path: '/home',
