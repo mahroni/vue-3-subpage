@@ -3,19 +3,21 @@ interface Props {
   imageUrl?: string;
   title?: string;
   color?: string;
+  rounded?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   imageUrl: '',
   title: '',
   color: '#01416C',
+  rounded: 32,
 });
 </script>
 
 <template>
   <div
-    :style="{ backgroundColor: props.color }"
-    class="flex h-16 items-center gap-3 rounded-4xl px-6 py-2.5"
+    :style="{ backgroundColor: props.color, borderRadius: `${props.rounded}px` }"
+    class="flex h-16 items-center gap-3 px-6 py-2.5"
   >
     <img
       :src="props.imageUrl"
