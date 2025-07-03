@@ -14,16 +14,18 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/main.ts',
-      name: 'QiscusVueApp',
-      fileName: 'qiscus-vue-app',
-      formats: ['umd', 'es']
+      name: 'QiscusVueApp', 
+      fileName: (format) => `qiscus-vue-app.${format}.js`, 
+      formats: ['es'] 
     },
     rollupOptions: {
-      external: ['vue'],
+      // *** THIS LINE MUST BE REMOVED OR COMMENTED OUT ***
+      // external: ['vue'], 
       output: {
-        globals: {
-          vue: 'Vue'
-        }
+        globals: { 
+          vue: 'Vue' 
+        },
+        inlineDynamicImports: true, 
       }
     }
   },
