@@ -92,7 +92,7 @@ const grabberTimeoutString = computed({
 <template>
   <div class="flex w-full items-start justify-between gap-8 self-stretch">
     <div class="flex w-full flex-1 flex-col gap-8">
-      <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
+      <WidgetFormLayout id="welcome-dialog" label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
           <ImageInput
             label="Brand Icon"
@@ -108,12 +108,13 @@ const grabberTimeoutString = computed({
               </div>
             </template>
           </ImageInput>
-          <TextArea
+          <TextArea id="first-desc-welcome"
             v-model="welcomeDialogState.firstDescriptionWelcomeDialog"
             label="First Description"
             :maxlength="50"
           />
           <TextArea
+            id="second-desc-welcome"
             v-model="welcomeDialogState.secondDescriptionWelcomeDialog"
             label="Second Description"
             :maxlength="50"
@@ -132,7 +133,7 @@ const grabberTimeoutString = computed({
               </div>
             </template>
           </ImageInput>
-          <Input v-model="firstAction.label" label="Description" :maxlength="50" />
+          <Input id="action-welcome" v-model="firstAction.label" label="Description" :maxlength="50" />
           <InputCustom
             v-model="welcomeDialogState.welcomeTimeout"
             label="Appear Delay"
@@ -143,11 +144,11 @@ const grabberTimeoutString = computed({
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
           </InputCustom>
-          <Checkbox v-model="welcomeDialogState.openAtStart" label="Make Auto Expand" />
+          <Checkbox id="auto-expand-checkbox" v-model="welcomeDialogState.openAtStart" label="Make Auto Expand" />
         </template>
       </WidgetFormLayout>
 
-      <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
+      <WidgetFormLayout id="attention-grabber" label="Attention Grabber" v-model="attentionGrabber" isSwitch>
         <template #additional-info>
           <Banner intent="warning" type="solid">
             <div class="flex items-center gap-4">
@@ -159,7 +160,7 @@ const grabberTimeoutString = computed({
           </Banner>
         </template>
         <template #inputs>
-          <OptionalInput label="Image" v-model="welcomeDialogState.isAttentionGrabberImage">
+          <OptionalInput id="attention-image-switch" label="Image" v-model="welcomeDialogState.isAttentionGrabberImage">
             <DragDropInput
               label="Upload Image"
               accept="image/png,image/jpg"
@@ -170,14 +171,16 @@ const grabberTimeoutString = computed({
               @upload="(files) => files[0] && handleImageUpload(files[0], 'attentionGrabberImage')"
             />
           </OptionalInput>
-          <OptionalInput label="Text" v-model="welcomeDialogState.isAttentionGrabberText">
+          <OptionalInput id="attention-grabber-switch" label="Text" v-model="welcomeDialogState.isAttentionGrabberText">
             <TextArea
+              id="attention-grabber-text"
               v-model="welcomeDialogState.attentionGrabberText"
               label="Text Description"
               :maxlength="50"
             />
           </OptionalInput>
           <InputCustom
+            id="grabber-timeout"
             v-model="grabberTimeoutString"
             label="Appear Delay"
             :maxlength="50"

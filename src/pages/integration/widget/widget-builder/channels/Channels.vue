@@ -27,9 +27,10 @@ const uploadImage = async (file: File) => {
   <div class="flex w-full items-start gap-8 self-stretch">
     <!-- Form Section -->
     <div class="flex w-full flex-1 flex-col gap-8">
-      <WidgetFormLayout label="Channels" isSwitch v-model="qiscusLiveChatStore.isChannelsEnabled">
+      <WidgetFormLayout id="channels-switch" label="Channels" isSwitch v-model="qiscusLiveChatStore.isChannelsEnabled">
         <template #inputs>
           <Input
+            id="welcome-channel-title"
             v-model="qiscusLiveChatStore.previewTitle"
             class="w-full"
             label="Welcome Channel Title"
@@ -38,6 +39,7 @@ const uploadImage = async (file: File) => {
           />
 
           <Input
+            id="welcome-channel-subtitle"
             v-model="qiscusLiveChatStore.previewSubtitle"
             class="w-full"
             label="Welcome Channel Subtitle"
@@ -45,8 +47,8 @@ const uploadImage = async (file: File) => {
             :maxlength="50"
           />
           <TextArea
+            id="channel-introduction"
             v-model="qiscusLiveChatStore.previewIntroduction"
-            id="description"
             label="Channel Introduction"
             placeholder="More personalized chat with us on:"
             :maxlength="50"
@@ -59,6 +61,7 @@ const uploadImage = async (file: File) => {
         label="Enable Qiscus Live Chat"
         isSwitch
         v-model="qiscusLiveChatStore.isQiscusLiveChat"
+        id="qiscus-live-chat-switch"
       >
         <template #inputs>
           <Input
@@ -67,6 +70,7 @@ const uploadImage = async (file: File) => {
             label="Live Chat Name"
             placeholder="Live Chat"
             :maxlength="50"
+            id="live-chat-name"
           />
 
           <ImageInput

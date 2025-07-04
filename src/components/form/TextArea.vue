@@ -27,7 +27,7 @@ interface Props {
   modelValue: string;
   label?: string;
   placeholder?: string;
-  id?: string;
+  id: string;
   disabled?: boolean;
   error?: boolean;
   errorMessage?: string;
@@ -38,7 +38,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   label: '',
   placeholder: '',
-  id: 'label',
+  id: '',
   disabled: false,
   error: false,
   errorMessage: 'This field has an error',

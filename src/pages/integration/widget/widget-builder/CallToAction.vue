@@ -43,6 +43,7 @@ const uploadImage = async (file: File) => {
             <div v-if="callToActionState.isWithText" class="flex w-full flex-col items-start gap-4">
               <Divider />
               <Input
+                id="live-chat-button-text"
                 v-model="callToActionState.liveChatButtonText"
                 class="w-full"
                 label="Live Chat Button Text"
@@ -57,7 +58,7 @@ const uploadImage = async (file: File) => {
           >
             <div class="flex w-full items-center justify-between">
               <h3 class="text-text-title text-base font-semibold">Icon on Call to Action</h3>
-              <Switch v-model="callToActionState.isWithIcon" variant="success" />
+              <Switch id="icon-on-cta" v-model="callToActionState.isWithIcon" variant="success" />
             </div>
             <div v-if="callToActionState.isWithIcon" class="flex w-full flex-col items-start gap-4">
               <Divider />

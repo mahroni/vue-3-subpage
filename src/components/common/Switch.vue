@@ -25,6 +25,7 @@ interface SwitchProps {
   variant?: 'default' | 'success' | 'warning' | 'danger';
   ariaLabel?: string;
   ariaDescribedby?: string;
+  id?: string;
 }
 
 const props = withDefaults(defineProps<SwitchProps>(), {
@@ -33,6 +34,7 @@ const props = withDefaults(defineProps<SwitchProps>(), {
   size: 'medium',
   variant: 'default',
   ariaLabel: 'Toggle switch',
+  id: '',
 });
 
 const emit = defineEmits<{

@@ -302,8 +302,8 @@ onMounted(() => {
     </div>
 
     <div class="mt-4 flex flex-col gap-2 text-left">
-      <Checkbox v-model="isChecked2" label="Checkbox" />
-      <Checkbox v-model="isChecked2" label="Checkbox" disabled />
+      <Checkbox id="checkbox-1" v-model="isChecked2" label="Checkbox" />
+      <Checkbox id="checkbox-2" v-model="isChecked2" label="Checkbox" disabled />
     </div>
 
     <div class="mt-4">

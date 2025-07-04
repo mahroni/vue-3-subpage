@@ -8,6 +8,7 @@ const props = defineProps<{
   label: string;
   modelValue?: boolean;
   isSwitch?: boolean;
+  id?: string;
 }>();
 
 const emit = defineEmits<{
@@ -27,7 +28,7 @@ const modelValue = computed({
     <!-- Header Section -->
     <div class="flex w-full items-center justify-between gap-2">
       <label class="text-text-title text-base font-semibold">{{ label }}</label>
-      <Switch v-if="isSwitch" size="large" v-model="modelValue" variant="success" />
+      <Switch :id="id" v-if="isSwitch" size="large" v-model="modelValue" variant="success" />
     </div>
 
     <!-- Divider -->
