@@ -10,6 +10,7 @@ interface ButtonProps {
   to?: string;
   type?: 'button' | 'submit' | 'reset';
   disableAnimation?: boolean;
+  id?: string;
 }
 
 const props = withDefaults(defineProps<ButtonProps>(), {
@@ -19,6 +20,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   shape: 'rounded',
   type: 'button',
   disableAnimation: false,
+  id: '',
 });
 
 const isLink = computed(() => !!props.to);
@@ -163,7 +165,7 @@ const buttonClass = computed(() =>
 </script>
 
 <template>
-  <component :is="componentType" :to="to" :type="isButton ? type : undefined"
+  <component :is="componentType" :id="id" :to="to" :type="isButton ? type : undefined"
     :disabled="isButton ? disabled : undefined" :class="buttonClass" @click="handleClick">
     <slot name="prefixIcon" />
     <slot />

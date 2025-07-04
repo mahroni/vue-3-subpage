@@ -43,7 +43,7 @@
         v1.2.3, Qiscus Chat SDK Flutter v1.2.3, and Qiscus Chat SDK React Native v1.2.3.
       </Banner>
 
-      <Checkbox label="Agree with the term of condition" v-model="formData.is_secure_toc" />
+      <Checkbox id="agree-term-checkbox" label="Agree with the term of condition" v-model="formData.is_secure_toc" />
     </div>
   </div>
 </template>

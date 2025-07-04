@@ -10,7 +10,7 @@
           </Banner>
         </template>
         <template #inputs>
-          <ImageInput label="Brand Logo" id="login-form-logo">
+          <ImageInput label="Brand Logo" id="login-form-logo" :isUploading="loading" @upload="uploadImage">
             <template #tips>
               <div class="text-sm font-normal text-[#A0A0A0]">
                 We recommend an image of at least 360x360 pixels. You can upload images in JPG,
@@ -19,18 +19,21 @@
             </template>
           </ImageInput>
           <TextArea
+            id="first-desc-login"
             v-model="loginFormState.firstDescription"
             label="First Description"
             :maxlength="50"
           />
           <TextArea
+            id="second-desc-login"
             v-model="loginFormState.secondDescription"
             label="Second Description"
             :maxlength="50"
           />
-          <TextArea v-model="loginFormState.formSubtitle" label="Subtitle" :maxlength="50" />
-          <Input label="Button Form" v-model="loginFormState.buttonText" :maxlength="50" />
+          <TextArea id="subtitle-login" v-model="loginFormState.formSubtitle" label="Subtitle" :maxlength="50" />
+          <Input id="button-form-login" label="Button Form" v-model="loginFormState.buttonText" :maxlength="50" />
           <RadioInput
+            id="phone-number-login"
             v-model="loginFormState.customerIdentifier"
             label="Phone Number"
             :options="qiscusLiveChatStore.customerIdentifierOptions"
@@ -45,7 +48,7 @@
       <div class="flex flex-col gap-4 rounded-2xl border border-gray-300 bg-gray-200 p-6">
         <div class="flex w-full items-center justify-between">
           <span class="text-text-title text-base font-semibold">Additional Field</span>
-          <Button intent="flat" size="small" type="button" @click="addAdditionalField">
+          <Button id="add-more-field" intent="flat" size="small" type="button" @click="addAdditionalField">
             <template #prefixIcon>
               <PlusIcon class="h-4 w-4" />
             </template>
@@ -91,20 +94,22 @@
     <template #content>
       <div class="mb-9 flex flex-col gap-2">
         <Select
+          id="field-type"
           label="Field Type"
           :options="qiscusLiveChatStore.fieldTypeOptionsAdditionalField"
           v-model="additionalField.type"
         />
         <div v-if="additionalField.type !== ''" class="flex flex-col gap-6">
-          <Input label="Name" v-model="additionalField.name" />
-          <Input label="Placeholder" v-model="additionalField.placeholder" />
+          <Input id="name-field" label="Name" v-model="additionalField.name" />
+          <Input id="placeholder-field" label="Placeholder" v-model="additionalField.placeholder" />
           <template v-if="additionalField.type === 'dropdown' && additionalField.options">
             <DropdownItemInput v-model="additionalField.options" />
           </template>
           <div class="my-2 flex items-center">
-            <Checkbox label="Set this field to required" v-model="additionalField.required" />
+            <Checkbox id="required-field" label="Set this field to required" v-model="additionalField.required" />
           </div>
           <IconSelectInput
+            id="icon-field"
             v-model="additionalField.iconField"
             :icons="qiscusLiveChatStore.iconsAdditionalField"
           />
@@ -112,8 +117,8 @@
       </div>
     </template>
     <template #footer>
-      <Button intent="secondary" size="small" @click="isOpenModal = false">Cancel</Button>
-      <Button intent="primary" size="small" @click="addAdditionalFieldConfirm"> Add Field </Button>
+      <Button id="cancel-field" intent="secondary" size="small" @click="isOpenModal = false">Cancel</Button>
+      <Button id="add-field" intent="primary" size="small" @click="addAdditionalFieldConfirm"> Add Field </Button>
     </template>
   </Modal>
 </template>
@@ -137,6 +142,7 @@ import Divider from '@/components/ui/Divider.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import DropdownItemInput from '../form/DropdownItemInput.vue';
 import IconSelectInput from '../form/IconSelectInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
@@ -152,6 +158,7 @@ interface AdditionalField {
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 const { loginFormState } = storeToRefs(useQiscusLiveChatStore());
+const {loading, data, error, upload} = useUploadSdkImage()
 
 const additionalField = reactive<AdditionalField>({
   type: '',
@@ -219,5 +226,14 @@ const deleteField = (index: number) => {
 const handleFieldMenuSelect = (option: any) => {
   // Actions are handled in the option.action function
   console.log('Selected:', option);
+};
+
+const uploadImage = async (file: File) => {
+  await upload(file);
+  if(data.value) {
+    loginFormState.value.brandLogo = data.value.url;
+  } else {
+    console.error(error.value);
+  }
 };
 </script>

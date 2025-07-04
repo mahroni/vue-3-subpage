@@ -64,7 +64,7 @@ const labelVariants = cva('text-text-title text-sm font-medium', {
 interface FormCheckboxProps {
   modelValue: boolean;
   label: string;
-  id?: string;
+  id: string;
   disabled?: boolean;
 }
 

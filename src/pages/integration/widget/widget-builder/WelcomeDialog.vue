@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 
 import Banner from '@/components/common/Banner.vue';
 import Checkbox from '@/components/common/Checkbox.vue';
@@ -15,53 +15,40 @@ import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import OptionalInput from '../form/OptionalInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
 
 const { welcomeDialogState } = storeToRefs(useQiscusLiveChatStore());
-const isUploadingAttentionGrabberImage = ref(false);
-const isUploadingBrandIcon = ref(false);
+const brandIconUpload = useUploadSdkImage()
+const actionIconUpload = useUploadSdkImage()
+const attentionGrabberImageUpload = useUploadSdkImage()
 
-// mock upload image
-const uploadImage = async (file: File, revertPreview: () => void) => {
-  const formData = new FormData();
-  formData.append('file', file);
-  isUploadingBrandIcon.value = true;
-  try {
-    const response = await fetch('/upload', {
-      method: 'POST',
-      body: formData,
-    });
-    const data = await response.json();
-    welcomeDialogState.value.brandIconWelcomeDialog = data.data.imageUrl;
-  } catch (error) {
-    console.error(error);
-    revertPreview();
-  } finally {
-    isUploadingBrandIcon.value = false;
+const uploaderInstance = {
+  brandIcon: brandIconUpload,
+  actionIcon: actionIconUpload,
+  attentionGrabberImage: attentionGrabberImageUpload,
+} as const;
+
+const handleImageUpload = async (file: File, target: keyof typeof uploaderInstance) => {
+  const uploader = uploaderInstance[target];
+  
+  await uploader.upload(file);
+  if(uploader.data.value) {
+    const targetHandlers = {
+      brandIcon: () => welcomeDialogState.value.brandIconWelcomeDialog = uploader.data.value!.url,
+      actionIcon: () => firstAction.value.iconUrl = uploader.data.value!.url,
+      attentionGrabberImage: () => welcomeDialogState.value.attentionGrabberImage = uploader.data.value!.url,
+    } as const;
+    
+    const handler = targetHandlers[target];
+    if (handler) {
+      handler();
+    } else {
+      console.error('Invalid target:', target);
+    }
   }
-};
-
-const uploadAttentionGrabberImage = async (files: File[]) => {
-  const file = files[0]; // Take the first file since maxFiles is 1
-  if (!file) return;
-
-  const formData = new FormData();
-  formData.append('file', file);
-  isUploadingAttentionGrabberImage.value = true;
-  try {
-    const response = await fetch('/upload', {
-      method: 'POST',
-      body: formData,
-    });
-    const data = await response.json();
-    welcomeDialogState.value.attentionGrabberImage = data.data.imageUrl;
-  } catch (error) {
-    console.error(error);
-  } finally {
-    isUploadingAttentionGrabberImage.value = false;
-  }
-};
+}
 
 const welcomeDialog = computed({
   get: () => welcomeDialogState.value.isWelcomeDialog,
@@ -105,14 +92,14 @@ const grabberTimeoutString = computed({
 <template>
   <div class="flex w-full items-start justify-between gap-8 self-stretch">
     <div class="flex w-full flex-1 flex-col gap-8">
-      <WidgetFormLayout label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
+      <WidgetFormLayout id="welcome-dialog" label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
         <template #inputs>
           <ImageInput
             label="Brand Icon"
             id="welcome-dialog-image"
             v-model="welcomeDialogState.brandIconWelcomeDialog"
-            :isUploading="isUploadingBrandIcon"
-            @upload="uploadImage"
+            :isUploading="brandIconUpload.loading.value"
+            @upload="(file) => handleImageUpload(file, 'brandIcon')"
           >
             <template #tips>
               <div class="text-sm font-normal text-[#A0A0A0]">
@@ -121,17 +108,24 @@ const grabberTimeoutString = computed({
               </div>
             </template>
           </ImageInput>
-          <TextArea
+          <TextArea id="first-desc-welcome"
             v-model="welcomeDialogState.firstDescriptionWelcomeDialog"
             label="First Description"
             :maxlength="50"
           />
           <TextArea
+            id="second-desc-welcome"
             v-model="welcomeDialogState.secondDescriptionWelcomeDialog"
             label="Second Description"
             :maxlength="50"
           />
-          <ImageInput v-model="firstAction.iconUrl" label="Icon" id="welcome-dialog-icon">
+          <ImageInput 
+            v-model="firstAction.iconUrl" 
+            label="Icon" 
+            id="action-icon" 
+            :isUploading="actionIconUpload.loading.value" 
+            @upload="(file) => handleImageUpload(file, 'actionIcon')"
+          >
             <template #tips>
               <div class="text-sm font-normal text-[#A0A0A0]">
                 We recommend an image of at least 360x360 pixels. You can upload images in JPG,
@@ -139,7 +133,7 @@ const grabberTimeoutString = computed({
               </div>
             </template>
           </ImageInput>
-          <Input v-model="firstAction.label" label="Description" :maxlength="50" />
+          <Input id="action-welcome" v-model="firstAction.label" label="Description" :maxlength="50" />
           <InputCustom
             v-model="welcomeDialogState.welcomeTimeout"
             label="Appear Delay"
@@ -150,10 +144,11 @@ const grabberTimeoutString = computed({
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
           </InputCustom>
-          <Checkbox v-model="welcomeDialogState.openAtStart" label="Make Auto Expand" />
+          <Checkbox id="auto-expand-checkbox" v-model="welcomeDialogState.openAtStart" label="Make Auto Expand" />
         </template>
       </WidgetFormLayout>
-      <WidgetFormLayout label="Attention Grabber" v-model="attentionGrabber" isSwitch>
+
+      <WidgetFormLayout id="attention-grabber" label="Attention Grabber" v-model="attentionGrabber" isSwitch>
         <template #additional-info>
           <Banner intent="warning" type="solid">
             <div class="flex items-center gap-4">
@@ -165,25 +160,27 @@ const grabberTimeoutString = computed({
           </Banner>
         </template>
         <template #inputs>
-          <OptionalInput label="Image" v-model="welcomeDialogState.isAttentionGrabberImage">
+          <OptionalInput id="attention-image-switch" label="Image" v-model="welcomeDialogState.isAttentionGrabberImage">
             <DragDropInput
               label="Upload Image"
               accept="image/png,image/jpg"
               acceptText="PNG or JPG"
-              :maxSize="31457280"
+              :maxSize="1024 * 1024 * 10"
               :maxFiles="1"
-              :isUploading="isUploadingAttentionGrabberImage"
-              @upload="uploadAttentionGrabberImage"
+              :isUploading="attentionGrabberImageUpload.loading.value"
+              @upload="(files) => files[0] && handleImageUpload(files[0], 'attentionGrabberImage')"
             />
           </OptionalInput>
-          <OptionalInput label="Text" v-model="welcomeDialogState.isAttentionGrabberText">
+          <OptionalInput id="attention-grabber-switch" label="Text" v-model="welcomeDialogState.isAttentionGrabberText">
             <TextArea
+              id="attention-grabber-text"
               v-model="welcomeDialogState.attentionGrabberText"
               label="Text Description"
               :maxlength="50"
             />
           </OptionalInput>
           <InputCustom
+            id="grabber-timeout"
             v-model="grabberTimeoutString"
             label="Appear Delay"
             :maxlength="50"

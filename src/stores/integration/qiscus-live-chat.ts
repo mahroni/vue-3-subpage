@@ -1,21 +1,16 @@
 import { defineStore } from 'pinia';
 import { reactive, ref, watch } from 'vue';
 
+
+
 import { qiscusApi } from '@/api/channels';
 import type { IconName } from '@/components/icons/Icon.vue';
-import type {
-  IWidgetChannel,
-  WidgetChannelCreateData,
-  WidgetChannelUpdateData,
-} from '@/pages/integration/widget/widget-builder/channels/channels';
-import type {
-  ICallToActionState,
-  IChatFormState,
-  ILoginFormState,
-  IWelcomeDialogState,
-  IWidgetConfigResponse,
-  IWidgetVariables,
-} from '@/types/live-chat';
+import type { IWidgetChannel, WidgetChannelCreateData, WidgetChannelUpdateData } from '@/pages/integration/widget/widget-builder/channels/channels';
+import type { ICallToActionState, IChatFormState, ILoginFormState, IWelcomeDialogState, IWidgetConfigResponse, IWidgetVariables } from '@/types/live-chat';
+
+
+
+
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
   // STATE
@@ -69,6 +64,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   });
   // state for login form
   const loginFormState = reactive<ILoginFormState>({
+    brandLogo: '',
     firstDescription: 'Hello There,',
     secondDescription: 'Welcome to Qiscus',
     formSubtitle: 'Please fill the details below before chatting with us!',

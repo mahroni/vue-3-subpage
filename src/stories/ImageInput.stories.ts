@@ -1,7 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
 
+
+
 import ImageInput from '../components/form/ImageInput.vue';
+
+
+
+
 
 const meta: Meta<typeof ImageInput> = {
   title: 'Components/Form/ImageInput',
@@ -11,7 +17,7 @@ const meta: Meta<typeof ImageInput> = {
     docs: {
       description: {
         component:
-          'A specialized image input component with preview functionality, file validation, upload handling, and loading states. Features click-to-upload, image preview with hover overlay, circular loading animation, error handling, and preview reversion on upload failure.',
+          'A specialized image input component with file validation, upload handling, and loading states. Features click-to-upload, image preview from modelValue, circular loading animation, and error handling.',
       },
     },
   },
@@ -26,7 +32,7 @@ const meta: Meta<typeof ImageInput> = {
     },
     maxSize: {
       control: { type: 'number' },
-      description: 'Maximum file size in megabytes',
+      description: 'Maximum file size in kilobytes',
     },
     acceptedFormats: {
       control: { type: 'text' },
@@ -60,7 +66,7 @@ export const Default: Story = {
       const isUploading = ref(false);
       const uploadedFileName = ref('');
 
-      const handleImageUpload = async (file: File, revertPreview: () => void) => {
+      const handleImageUpload = async (file: File) => {
         console.log('Uploading:', file.name);
         uploadedFileName.value = file.name;
         isUploading.value = true;
@@ -72,8 +78,7 @@ export const Default: Story = {
           imageUrl.value = URL.createObjectURL(file);
           console.log('Upload successful');
         } catch (error) {
-          console.log('Upload failed, reverting preview');
-          revertPreview();
+          console.log('Upload failed');
         } finally {
           isUploading.value = false;
         }
@@ -121,7 +126,7 @@ export const SmallImage: Story = {
       const imageUrl = ref<string>('');
       const isUploading = ref(false);
 
-      const handleUpload = async (file: File, _revertPreview: () => void) => {
+      const handleUpload = async (file: File) => {
         isUploading.value = true;
         await new Promise((resolve) => setTimeout(resolve, 1500));
         imageUrl.value = URL.createObjectURL(file);
@@ -154,7 +159,7 @@ export const LargeImage: Story = {
       const imageUrl = ref<string>('');
       const isUploading = ref(false);
 
-      const handleUpload = async (file: File, _revertPreview: () => void) => {
+      const handleUpload = async (file: File) => {
         isUploading.value = true;
         await new Promise((resolve) => setTimeout(resolve, 3000)); // Longer for large files
         imageUrl.value = URL.createObjectURL(file);
@@ -188,7 +193,7 @@ export const WebPSupport: Story = {
       const imageUrl = ref<string>('');
       const isUploading = ref(false);
 
-      const handleUpload = async (file: File, _revertPreview: () => void) => {
+      const handleUpload = async (file: File) => {
         isUploading.value = true;
         await new Promise((resolve) => setTimeout(resolve, 2000));
         imageUrl.value = URL.createObjectURL(file);
@@ -220,7 +225,7 @@ export const SimpleUpload: Story = {
       const imageUrl = ref<string>('');
       const isUploading = ref(false);
 
-      const handleUpload = async (file: File, _revertPreview: () => void) => {
+      const handleUpload = async (file: File) => {
         isUploading.value = true;
         await new Promise((resolve) => setTimeout(resolve, 1000));
         imageUrl.value = URL.createObjectURL(file);
@@ -251,7 +256,7 @@ export const PNGOnly: Story = {
       const imageUrl = ref<string>('');
       const isUploading = ref(false);
 
-      const handleUpload = async (file: File, _revertPreview: () => void) => {
+      const handleUpload = async (file: File) => {
         isUploading.value = true;
         await new Promise((resolve) => setTimeout(resolve, 1500));
         imageUrl.value = URL.createObjectURL(file);
@@ -287,7 +292,7 @@ export const Interactive: Story = {
       const successMessage = ref('');
       const currentFile = ref<File | null>(null);
 
-      const handleImageUpload = async (file: File, revertPreview: () => void) => {
+      const handleImageUpload = async (file: File) => {
         errorMessage.value = '';
         successMessage.value = '';
         currentFile.value = file;
@@ -308,7 +313,6 @@ export const Interactive: Story = {
           }, 3000);
         } catch (error) {
           errorMessage.value = 'Upload failed. Please try again.';
-          revertPreview();
           currentFile.value = null;
           setTimeout(() => {
             errorMessage.value = '';
@@ -390,7 +394,7 @@ export const UploadFailure: Story = {
       const isUploading = ref(false);
       const errorMessage = ref('');
 
-      const handleUpload = async (_file: File, revertPreview: () => void) => {
+      const handleUpload = async (_file: File) => {
         isUploading.value = true;
         errorMessage.value = '';
 
@@ -400,8 +404,7 @@ export const UploadFailure: Story = {
             setTimeout(() => reject(new Error('Simulated failure')), 1500);
           });
         } catch (error) {
-          errorMessage.value = 'Upload failed! Preview reverted to original.';
-          revertPreview();
+          errorMessage.value = 'Upload failed! You can try again.';
           setTimeout(() => {
             errorMessage.value = '';
           }, 4000);
@@ -421,7 +424,7 @@ export const UploadFailure: Story = {
         </div>
         
         <div class="text-xs text-gray-500">
-          <p>This demo always fails uploads to show preview reversion functionality.</p>
+          <p>This demo always fails uploads to show error handling.</p>
         </div>
       </div>
     `,
@@ -443,28 +446,28 @@ export const AllVariants: Story = {
       const logoUploading = ref(false);
       const simpleUploading = ref(false);
 
-      const handleAvatarUpload = async (file: File, _revertPreview: () => void) => {
+      const handleAvatarUpload = async (file: File) => {
         avatarUploading.value = true;
         await new Promise((resolve) => setTimeout(resolve, 1500));
         avatarUrl.value = URL.createObjectURL(file);
         avatarUploading.value = false;
       };
 
-      const handleCoverUpload = async (file: File, _revertPreview: () => void) => {
+      const handleCoverUpload = async (file: File) => {
         coverUploading.value = true;
         await new Promise((resolve) => setTimeout(resolve, 2500));
         coverUrl.value = URL.createObjectURL(file);
         coverUploading.value = false;
       };
 
-      const handleLogoUpload = async (file: File, _revertPreview: () => void) => {
+      const handleLogoUpload = async (file: File) => {
         logoUploading.value = true;
         await new Promise((resolve) => setTimeout(resolve, 1800));
         logoUrl.value = URL.createObjectURL(file);
         logoUploading.value = false;
       };
 
-      const handleSimpleUpload = async (file: File, _revertPreview: () => void) => {
+      const handleSimpleUpload = async (file: File) => {
         simpleUploading.value = true;
         await new Promise((resolve) => setTimeout(resolve, 1200));
         simpleUrl.value = URL.createObjectURL(file);

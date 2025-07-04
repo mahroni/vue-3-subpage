@@ -12,8 +12,8 @@
           props.isUploading ? 'cursor-not-allowed opacity-50' : '',
         ]">
         <!-- Show uploaded image preview if available -->
-        <div v-if="previewUrl" class="group relative">
-          <img :src="previewUrl" :alt="fileName"
+        <div v-if="modelValue" class="group relative">
+          <img :src="modelValue" :alt="fileName"
             class="max-h-[68px] min-h-[68px] max-w-[68px] min-w-[68px] rounded-lg object-cover" />
           <button @click.stop="triggerFileInput"
             class="absolute inset-0 flex items-center justify-center rounded-lg bg-white text-[#0a0a0a] opacity-0 shadow-lg transition-all duration-200 group-hover:cursor-pointer group-hover:opacity-60"
@@ -69,7 +69,7 @@ interface Props {
 
 interface Emits {
   (e: 'update:modelValue', value: string | null): void;
-  (e: 'upload', file: File, revertPreview: () => void): void;
+  (e: 'upload', file: File): void;
   (e: 'error', error: string): void;
 }
 
@@ -88,12 +88,8 @@ const emit = defineEmits<Emits>();
 
 // Reactive state
 const fileInput = ref<HTMLInputElement>();
-const previewUrl = ref<string>('');
-const previousPreviewUrl = ref<string>('');
 const fileName = ref<string>('');
-const fileSize = ref<number>(0);
 const error = ref<string>('');
-
 
 // Methods
 const triggerFileInput = () => {
@@ -118,33 +114,11 @@ const handleFileChange = (event: Event) => {
     return;
   }
 
-  // Store previous preview URL
-  previousPreviewUrl.value = previewUrl.value;
-
   // Set file info
   fileName.value = file.name;
-  fileSize.value = file.size;
 
-  // Create preview and emit file for upload
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const dataUrl = e.target?.result as string;
-    previewUrl.value = dataUrl;
-    console.log(dataUrl, 'dataUrl');
-  };
-  reader.readAsDataURL(file);
-
-  // Revert function to restore previous preview
-  const revertPreview = () => {
-    previewUrl.value = previousPreviewUrl.value;
-    fileName.value = previousPreviewUrl.value ? 'Current image' : '';
-    fileSize.value = 0;
-  };
-
-  // Emit the raw file for server upload with revert function
-  console.log(file, 'file');
-  console.log(previewUrl.value, 'previewUrl');
-  emit('upload', file, revertPreview);
+  // Emit the raw file for server upload
+  emit('upload', file);
 };
 
 const validateFile = (file: File): string => {
@@ -156,8 +130,6 @@ const validateFile = (file: File): string => {
 
   const fileSize = file.size / 1024; // Convert to KB
 
-  console.log(fileSize)
-
   // Check file size
   if (fileSize > props.maxSize) {
     return `File size exceeds ${props.maxSize}KB limit.`;
@@ -166,19 +138,14 @@ const validateFile = (file: File): string => {
   return '';
 };
 
-// Watch for changes to modelValue and update preview
+// Watch for changes to modelValue and update fileName
 watch(
   () => props.modelValue,
   (newValue) => {
     if (newValue) {
-      console.log(newValue, 'newValue');
-      previewUrl.value = newValue;
       fileName.value = 'Current image';
-      fileSize.value = 0;
     } else {
-      previewUrl.value = '';
       fileName.value = '';
-      fileSize.value = 0;
     }
   },
   { immediate: true }
