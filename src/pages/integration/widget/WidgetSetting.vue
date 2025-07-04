@@ -3,14 +3,18 @@
     <template #item-id-1="{ item }">
       <div class="flex justify-between gap-8">
         {{ item.content }}
-        <Switch size="medium" />
+        <div>
+          <Switch variant="success" size="medium" v-model="isSecure" @change="onToggleAutoResponder" />
+        </div>
       </div>
-      <Button intent="secondary" class="mt-4">Set Channel Auto Responder</Button>
+      <Button intent="secondary" class="mt-4" @click="handleOpenAutoResponderForm">Set Channel Auto Responder</Button>
     </template>
     <template #item-id-2="{ item }">
       <div class="flex justify-between gap-8">
         <div v-html="item.content"></div>
-        <Switch @change="onToggleEnhanceConversationSecurity" v-model="isSecure" size="medium" />
+        <div>
+          <Switch variant="success" @change="onToggleEnhanceConversationSecurity" v-model="isSecure" size="medium" />
+        </div>
       </div>
     </template>
   </CollapsibleGroup>
@@ -40,6 +44,9 @@ const items = [
   },
 ];
 
+
+const emit = defineEmits(['openAutoResponderForm', 'onChangeAutoResponder']);
+
 const isSecure = ref(channelsStore.detail?.is_secure ?? false);
 
 const onToggleEnhanceConversationSecurity = (e: boolean) => {
@@ -48,5 +55,12 @@ const onToggleEnhanceConversationSecurity = (e: boolean) => {
     is_secure: e,
   };
   channelsStore.updateChannel(params);
+};
+
+const onToggleAutoResponder = (e: boolean) => {
+  emit('onChangeAutoResponder', e);
+};
+const handleOpenAutoResponderForm = () => {
+  emit('openAutoResponderForm', true);
 };
 </script>

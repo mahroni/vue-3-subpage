@@ -29,6 +29,7 @@ export const whatsappApi = {
 export const configApi = {
   get: (id: number | string, params: any) =>
     apiV2.get<any[]>(`/channels/${id}/configs`, { params }),
+  update: (id: number | string, data: any) => apiV2.post<any[]>(`/channels/${id}/configs`, data),
 };
 
 export const botApi = {
