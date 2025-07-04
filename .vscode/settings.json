@@ -7,6 +7,8 @@
     "autodocs",
     "autoresponder",
     "axios",
+    "coex",
+    "mmlite",
     "Omnichannel",
     "Predifined",
     "QCRM",
@@ -15,7 +17,8 @@
     "Swal",
     "Sweetalert",
     "tiktok",
-    "VITE"
+    "VITE",
+    "xsmall"
   ],
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "typescript.suggest.autoImports": true,

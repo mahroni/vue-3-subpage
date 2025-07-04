@@ -16,9 +16,9 @@ const props = defineProps<{
   >
     <div class="flex-1 p-8">
       <QiscusIcon :size="32" />
-      <div class="mt-6 text-2xl">{{ props.title }}</div>
-      <div class="text-2xl font-bold">{{ props.subtitle }}</div>
-      <div class="text-md mt-8">{{ props.description }}</div>
+      <div class="mt-6 text-2xl break-words">{{ props.title }}</div>
+      <div class="text-2xl font-bold break-words">{{ props.subtitle }}</div>
+      <div class="text-md mt-8 break-words">{{ props.description }}</div>
 
       <div class="mt-8 flex w-full flex-col gap-4">
         <div
@@ -52,7 +52,9 @@ const props = defineProps<{
     </div>
 
     <div class="px-8 py-3">
-      <button class="bg-navy-500 w-full rounded-2xl py-4 text-base font-medium text-white">
+      <button
+        class="bg-navy-500 w-full rounded-2xl px-3 py-4 text-base font-medium break-words text-white"
+      >
         {{ props.buttonText || 'Start Chat' }}
       </button>
     </div>

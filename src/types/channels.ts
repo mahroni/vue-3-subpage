@@ -49,17 +49,44 @@ export interface IQiscusChannel {
 }
 
 export interface IUpdateQiscusChannel {
-  app_code: string;
-  badge_url: string;
+  badge_url?: string;
   id: number;
-  is_active: boolean;
-  is_secure: boolean;
-  name: string;
-  secret_key: string | null;
+  is_active?: boolean;
+  is_secure?: boolean;
+  name?: string;
 }
 
-export interface IUpdateConfigQiscusChannel {
+export interface ICreateQiscusChannel {
+  badge_url: string;
+  is_active: boolean;
+  is_secure: boolean;
+  is_secure_toc: boolean;
+  name: string;
+}
+export interface IAutoResponder {
   offline_message: string;
   online_message: string;
+  send_offline_each_message: boolean;
   send_online_if_resolved: boolean;
+}
+
+export interface IWidgetChannel {
+  id?: string;
+  badge_url: string;
+  name: string;
+  is_active: boolean;
+  is_secure: boolean;
+  is_secure_toc: boolean;
+  configs: IAutoResponder;
+}
+
+export interface IBotChannel {
+  bot_webhook_url: string;
+  is_bot_enabled: boolean;
+  is_force_send_bot: boolean;
+}
+
+export interface IUpdateConfig extends IAutoResponder {
+  enabled: boolean;
+  source: string;
 }

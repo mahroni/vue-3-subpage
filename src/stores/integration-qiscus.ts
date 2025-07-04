@@ -4,13 +4,14 @@ import { ref } from 'vue';
 import { qiscusApi } from '@/api/channels';
 import type { IResponse } from '@/types/api';
 
-import type { IQiscusChannel } from '../types/channels';
+import type { IQiscusChannel, IUpdateQiscusChannel } from '../types/channels';
 
 export const useQiscusStore = defineStore('qiscus', () => {
   // State
   const isFetchingChannels = ref(false);
   const channels = ref<IQiscusChannel[]>([]);
   const meta = ref<any>({});
+
   const detail = ref<IQiscusChannel | null>(null);
 
   // Methods
@@ -34,11 +35,11 @@ export const useQiscusStore = defineStore('qiscus', () => {
   const fetchDetailChannel = async (id: number) => {
     const { data } = await qiscusApi.getById(id);
     const data2 = data as any;
-    detail.value = data2.data;
+    detail.value = data2.data.qiscus_channel;
   };
 
-  const updateChannel = async () => {
-    const { data } = await qiscusApi.update(detail.value);
+  const updateChannel = async (payload: IUpdateQiscusChannel) => {
+    const { data } = await qiscusApi.update(payload);
     const data2 = data as any;
     detail.value = data2.data.qiscus_channel;
   };

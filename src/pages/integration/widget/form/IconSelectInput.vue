@@ -1,15 +1,18 @@
 <script setup lang="ts">
-// import { Icon } from '@/components/icons';
+import { Icon } from '@/components/icons';
 import { cva } from 'class-variance-authority';
 
+import type { IconName } from '@/components/icons/Icon.vue';
+
 interface Props {
-  modelValue: string;
+  modelValue: string | undefined;
   icons: Icon[];
+  id: string;
 }
 
 interface Icon {
   name: string;
-  icon: string;
+  icon: IconName;
 }
 
 const props = defineProps<Props>();
@@ -41,17 +44,20 @@ const selectIcon = (iconName: string) => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <label>Icon Field</label>
+    <label :for="id">Icon Field</label>
 
-    <div class="flex flex-wrap gap-3">
+    <div class="flex flex-wrap gap-3" :id="id" :data-testid="id">
       <div
         v-for="icon in props.icons"
         :key="icon.name"
         :class="getIconClasses(icon.name)"
         @click="selectIcon(icon.name)"
         :title="icon.name"
+        :data-value="icon.name"
+        :data-testid="`${id}-${icon.name}`"
+        :id="`${id}-${icon.name}`"
       >
-        <!-- <Icon :name="icon.icon" :alt="icon.name" /> -->
+        <Icon :name="icon.icon" :alt="icon.name" />
       </div>
     </div>
   </div>

@@ -9,9 +9,11 @@ import Input from '@/components/form/Input.vue';
 import TextArea from '@/components/form/TextArea.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import type { IWidgetChannel, WidgetChannelFormData } from '../channels';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
+const {loading, data, error, upload} = useUploadSdkImage()
 
 const channelName = ref<string>('');
 const channelLink = ref<string>('');
@@ -71,6 +73,15 @@ const handleAddChannel = (): void => {
   }
   closeModal();
 };
+
+const uploadImage = async (file: File) => {
+  await upload(file);
+  if(data.value) {
+    channelBadgeIcon.value = data.value.url;
+  } else {
+    console.error(error.value);
+  }
+};
 </script>
 
 <template>
@@ -116,8 +127,8 @@ const handleAddChannel = (): void => {
               id="channel-badge-icon"
               label="Channel Badge Icon"
               v-model="channelBadgeIcon"
-              :showTips="true"
-              tipsText="We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or PNG format with a maximum size of 2MB."
+              :isUploading="loading"
+              @upload="uploadImage"
             />
           </div>
         </div>

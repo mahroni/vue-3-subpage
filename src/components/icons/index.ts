@@ -2,7 +2,7 @@
 export { default as Icon } from './Icon.vue';
 
 // Export the IconName type for external use
-export type { IconName } from './Icon.vue';
+// export type { IconName } from './Icon.vue';
 
 // Individual Icon components (alphabetically sorted)
 export { default as AdditionalInformation } from './AdditionalInformation.vue';
@@ -16,6 +16,7 @@ export { default as BackPaginationIcon } from './BackPaginationIcon.vue';
 export { default as BriefcaseIcon } from './BriefcaseIcon.vue';
 export { default as BroadcastIcon } from './BroadcastIcon.vue';
 export { default as BulkResolvedIcon } from './BulkResolvedIcon.vue';
+export { default as ChatActiveIcon } from './ChatActiveIcon.vue';
 export { default as ChatIcon } from './ChatIcon.vue';
 export { default as ChatOutlineIcon } from './ChatOutlineIcon.vue';
 export { default as ChatTemplateIcon } from './ChatTemplateIcon.vue';
@@ -106,4 +107,3 @@ export { default as WarningIcon } from './WarningIcon.vue';
 export { default as WhatsappBusinessIcon } from './WhatsappBusinessIcon.vue';
 export { default as WindowIcon } from './WindowIcon.vue';
 export { default as WorkFlowIcon } from './WorkFlowIcon.vue';
-

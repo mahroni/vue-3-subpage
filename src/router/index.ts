@@ -1,11 +1,10 @@
 import type { RouteRecordRaw, Router } from 'vue-router';
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 
-import WidgetLayout from '@/pages/integration/widget/WidgetLayout.vue';
-import AutoResponder from '@/views/AutoResponder.vue';
 import Home from '@/views/integration/ChannelPage.vue';
-import QiscusCreateChannelView from '@/views/integration/QiscusCreateChannelView.vue';
 import QiscusListChannelView from '@/views/integration/QiscusListChannelView.vue';
+import QiscusCreateChannelView from '@/views/integration/qiscus/QiscusCreateChannelView.vue';
+import QiscusDetailView from '@/views/integration/qiscus/QiscusDetailView.vue';
 
 export function createRouter(appId?: string | number): Router {
   const routes = [
@@ -42,7 +41,7 @@ export function createRouter(appId?: string | number): Router {
       path: '/facebook',
       name: 'facebook',
       beforeEnter: () => {
-        window.location.href = `/integration?ch=facebook",`;
+        window.location.href = `/integration?ch=facebook`;
         return false;
       },
     },
@@ -50,7 +49,7 @@ export function createRouter(appId?: string | number): Router {
       path: '/line',
       name: 'line',
       beforeEnter: () => {
-        window.location.href = `/integration?ch=line",`;
+        window.location.href = `/integration?ch=line`;
         return false;
       },
     },
@@ -58,7 +57,7 @@ export function createRouter(appId?: string | number): Router {
       path: '/telegram',
       name: 'telegram',
       beforeEnter: () => {
-        window.location.href = `/integration?ch=telegram",`;
+        window.location.href = `/integration?ch=telegram`;
         return false;
       },
     },
@@ -68,9 +67,9 @@ export function createRouter(appId?: string | number): Router {
       component: QiscusListChannelView,
     },
     {
-      path: '/qiscus/:channelId',
-      name: 'QiscusChannelDetail',
-      component: WidgetLayout,
+      path: '/qiscus/:id',
+      name: 'qiscus-detail',
+      component: QiscusDetailView,
     },
     {
       path: '/qiscus/create',
@@ -94,15 +93,10 @@ export function createRouter(appId?: string | number): Router {
       },
     },
     {
-      path: '/auto-responder',
-      name: 'auto-responder',
-      component: AutoResponder,
+      path: '/home',
+      name: 'HomeView',
+      component: () => import('../views/HomeView.vue'),
     },
-    // {
-    //   path: '/home',
-    //   name: 'HomeView',
-    //   component: () => import('../views/HomeView.vue'),
-    // },
     // {
     //   path: '/post',
     //   name: 'PostView',

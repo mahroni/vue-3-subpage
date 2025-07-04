@@ -1,30 +1,17 @@
 <template>
-  <div class="inline-block">
-    <button
-      type="button"
-      role="switch"
-      :disabled="disabled"
-      :aria-checked="modelValue"
-      :aria-label="ariaLabel"
-      :aria-describedby="ariaDescribedby"
-      :class="switchClass"
-      @click="handleToggle"
-      @keydown="handleKeydown"
-    >
-      <span
-        :class="[
-          'absolute top-0.5 left-0.5 rounded-full bg-white shadow-sm transition-transform duration-300',
-          thumbSizeClass,
-          {
-            'translate-x-6': modelValue && size === 'medium',
-            'translate-x-5': modelValue && size === 'small',
-            'translate-x-7': modelValue && size === 'large',
-            'translate-x-0': !modelValue,
-          },
-        ]"
-      ></span>
-    </button>
-  </div>
+  <button type="button" role="switch" :disabled="disabled" :aria-checked="modelValue" :aria-label="ariaLabel"
+    :aria-describedby="ariaDescribedby" :class="switchClass" @click="handleToggle" @keydown="handleKeydown">
+    <span :class="[
+      'absolute top-0.5 left-0.5 rounded-full bg-white shadow-sm transition-transform duration-300',
+      thumbSizeClass,
+      {
+        'translate-x-6': modelValue && size === 'medium',
+        'translate-x-5': modelValue && size === 'small',
+        'translate-x-7': modelValue && size === 'large',
+        'translate-x-0': !modelValue,
+      },
+    ]"></span>
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -38,6 +25,7 @@ interface SwitchProps {
   variant?: 'default' | 'success' | 'warning' | 'danger';
   ariaLabel?: string;
   ariaDescribedby?: string;
+  id?: string;
 }
 
 const props = withDefaults(defineProps<SwitchProps>(), {
@@ -46,6 +34,7 @@ const props = withDefaults(defineProps<SwitchProps>(), {
   size: 'medium',
   variant: 'default',
   ariaLabel: 'Toggle switch',
+  id: '',
 });
 
 const emit = defineEmits<{

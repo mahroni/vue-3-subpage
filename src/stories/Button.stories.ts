@@ -1,12 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-
-
 import Button from '../components/common/Button.vue';
-
-
-
-
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -235,7 +229,7 @@ export const AllVariants: Story = {
 export const Playground: Story = {
   args: {
     intent: 'primary',
-    size: 'large',
+    size: 'small',
     shape: 'rounded',
     disabled: false,
     disableAnimation: false,

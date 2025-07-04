@@ -1,29 +1,20 @@
 <template>
   <div class="flex h-full w-full flex-col">
     <div class="flex items-center justify-between p-4">
-      <!-- Search Input -->
       <InputCustom v-model="searchQuery" placeholder="Search channel name" clearable>
         <template #suffix-icon>
           <SearchIcon :size="24" />
         </template>
       </InputCustom>
 
-      <Button
-        to="/qiscus/create"
-        variant="primary"
-        class="flex items-center gap-2"
-        size="small"
-        no-animation
-      >
+      <Button to="/qiscus/create" variant="primary" class="flex items-center gap-2" size="small" no-animation>
         <PlusIcon :size="24" />
         New Integration
       </Button>
     </div>
 
-    <!-- Table -->
-    <div class="relative flex flex-1 flex-col justify-between overflow-auto px-4 py-2">
+    <div class="relative flex flex-1 flex-col justify-between overflow-auto px-4 py-2 min-h-[776px]">
       <table class="w-full table-fixed">
-        <!-- Table Header -->
         <thead class="sticky -top-2 z-10 bg-white">
           <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
             <th class="max-w-[362px] px-2 py-4 text-left font-normal">Channel Name</th>
@@ -32,73 +23,44 @@
           </tr>
         </thead>
 
-        <!-- Table Body -->
-        <tbody v-if="!channelsStore.loading" class="divide-y divide-gray-100">
-          <tr
-            v-for="channel in props.channels"
-            :key="channel.id"
-            @click.prevent="getDetailChannel(channel)"
-            class="hover:bg-gray-50"
-          >
-            <!-- Channel Name -->
+        <tbody v-if="!loadingList" class="divide-y divide-gray-100">
+          <tr v-for="channel in channels" :key="channel.id" class="hover:bg-gray-50"
+            @click.prevent="getDetailChannel(channel)">
             <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
               <div class="flex items-center gap-2">
-                <Image
-                  :src="channel.badgeUrl"
-                  alt="channel badge"
-                  :width="24"
-                  :height="24"
-                  class="aspect-square rounded-full object-cover"
-                  :fallback-src="CHANNEL_BADGE_URL.qiscus"
-                />
-                <span
-                  class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap"
-                  >{{ channel.name }}</span
-                >
+                <Image :src="channel.badgeUrl" alt="channel badge" :width="24" :height="24"
+                  class="aspect-square rounded-full object-cover" :fallback-src="CHANNEL_BADGE_URL.qiscus" />
+                <span class="text-text-title overflow-hidden text-ellipsis whitespace-nowrap font-medium">{{
+                  channel.name
+                }}</span>
               </div>
             </td>
 
-            <!-- Channel ID -->
             <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
               <div class="flex items-center gap-2">
                 <span class="text-text-title font-semibold">{{ channel.channelId }}</span>
-                <ButtonIcon
-                  title="Copy Channel ID"
-                  @click.stop="copyToClipboard(channel.channelId)"
-                >
+                <ButtonIcon title="Copy Channel ID" @click.stop="copyToClipboard(channel.channelId)">
                   <CopyIcon :size="12" />
                 </ButtonIcon>
               </div>
             </td>
 
-            <!-- Action (Switch) -->
             <td class="border-stroke-regular border-b px-6 py-4 text-right">
-              <Switch
-                v-model="channel.isActive"
-                size="small"
-                variant="success"
-                @click.stop="() => ''"
-                @update:model-value="updateChannelStatus(channel.id, $event)"
-              />
+              <Switch v-model="channel.isActive" size="small" variant="success" @click.stop
+                @update:model-value="updateChannelStatus(channel.id, $event)" />
             </td>
           </tr>
         </tbody>
       </table>
 
-      <div v-if="channelsStore.loading" class="grid h-full place-items-center">
-        <Animate :source="loading" />
+      <div v-if="loadingList" class="grid h-full place-items-center">
+        <Animate :source="loadingAnimationData" />
       </div>
 
-      <!-- Empty State -->
-      <div
-        v-if="props.channels.length === 0 && !channelsStore.loading"
-        class="grid h-full place-items-center"
-      >
-        <EmptyState
-          title="No Results"
+      <div v-if="channels.length === 0 && !loadingList" class="grid h-full place-items-center">
+        <EmptyState title="No Results"
           description="You may want to try using different keywords or checking for the typos to find it."
-          image_url="https://omnichannel.qiscus.com/img/empty-customer.svg"
-        />
+          image_url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
       </div>
 
       <div v-if="isShowPagination" class="flex items-center justify-between px-6 py-4">
@@ -108,24 +70,25 @@
           </span>
         </div>
 
-        <Pagination :meta="channelsStore.meta" @pagination="pagination" />
+        <Pagination :meta="meta" @pagination="pagination" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { type PropType, type Ref, computed, defineAsyncComponent, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
-
-import loading from '@/assets/lottie/loading.json';
-import { Button, ButtonIcon, Image } from '@/components/common/common';
+import loadingAnimationData from '@/assets/lottie/loading.json';
+import { Button, ButtonIcon, Image, Switch } from '@/components/common/common';
 import InputCustom from '@/components/form/InputCustom.vue';
 import { CopyIcon, PlusIcon, SearchIcon } from '@/components/icons';
 import EmptyState from '@/components/ui/EmptyState.vue';
 import Pagination from '@/components/ui/Pagination.vue';
-import { useQiscusStore } from '@/stores/integration-qiscus';
+import { useFetchQiscus, useUpdateQiscus } from '@/composables/channels/qiscus';
+import { useSweetAlert } from '@/composables/useSweetAlert';
+import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
+import { type Ref, computed, defineAsyncComponent, onMounted, ref, toValue, watch } from 'vue';
+import { useRouter } from 'vue-router';
 
 // async component
 const Animate = defineAsyncComponent(() => import('@/components/common/Animate.vue'));
@@ -139,45 +102,63 @@ interface IChannel {
   badgeUrl: string;
 }
 
-// props
-const props = defineProps({
-  channels: {
-    type: Array as PropType<IChannel[]>,
-    required: true,
-  },
-});
+// Example IMeta interface (adjust based on your actual API response structure)
+interface IMeta {
+  page: number;
+  limit: number;
+  total: number;
+  total_page: number;
+  // Add other meta properties if they exist
+}
 
-// emit
-const emit = defineEmits(['updateChannelStatus', 'search', 'pagination']);
+// Helper: Simple debounce function
+const debounce = (func: Function, delay: number) => {
+  let timeout: NodeJS.Timeout;
+  return function (this: any, ...args: any[]) {
+    const context = this;
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func.apply(context, args), delay);
+  };
+};
 
 // declare
-const router = useRouter();
-const channelsStore = useQiscusStore();
-
 const searchQuery = ref('') as Ref<string>;
-const timeout = ref<NodeJS.Timeout | null>(null);
 
-watch(searchQuery, (newVal) => {
-  if (timeout.value) {
-    clearTimeout(timeout.value);
-  }
-  timeout.value = setTimeout(() => {
-    emit('search', newVal);
-  }, 500);
-});
+// Define a type for your parameters for better type safety
+interface FetchParams {
+  search?: string;
+  page?: number;
+  // Add other common query parameters if needed
+}
+const params = ref<FetchParams>({});
+
+const router = useRouter();
+// Assuming useFetchQiscus and useUpdateQiscus return strongly typed data and meta
+const { fetchChannels, data: listData, loading: loadingList, meta } = useFetchQiscus();
+const { showAlert } = useSweetAlert();
+
+// Debounced search handler
+const handleSearch = debounce((newVal: string) => {
+  params.value = { search: newVal };
+  fetchChannels(toValue(params));
+}, 500);
+
+watch(searchQuery, handleSearch);
 
 // computed
 const paginationInfo = computed(() => {
-  const start = (channelsStore.meta.page - 1) * channelsStore.meta.limit + 1;
-  const end = Math.min(
-    channelsStore.meta.page * channelsStore.meta.limit,
-    channelsStore.meta.total
-  );
-  return `${start}-${end} of ${channelsStore.meta.total} items`;
+  // Ensure meta.value is not null/undefined before accessing its properties
+  const newMeta = meta.value as IMeta; // Cast to IMeta for type safety within computed
+  if (!newMeta || newMeta.total === undefined) return '0-0 of 0 items'; // Handle case where meta is not yet loaded
+
+  const start = (newMeta.page - 1) * newMeta.limit + 1;
+  const end = Math.min(newMeta.page * newMeta.limit, newMeta.total);
+  return `${start}-${end} of ${newMeta.total} items`;
 });
 
 const isShowPagination = computed(() => {
-  return channelsStore.meta.total_page > 1 && !channelsStore.loading;
+  // Check if meta.value exists and has relevant properties, and channels array is not empty
+  return meta.value && typeof (meta.value as IMeta).total === 'number' && channels.value.length > 0;
 });
 
 // function
@@ -185,25 +166,109 @@ function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
 }
 
-function updateChannelStatus(id: number, isActive: boolean) {
-  emit('updateChannelStatus', {
-    id,
-    isActive,
+const channels = computed(() =>
+  listData.value.map((channel: IQiscusChannel) => ({
+    id: channel.id,
+    name: channel.name,
+    channelId: channel.id.toString(), // Assuming channel.id is also the channelId for display
+    isActive: channel.is_active,
+    badgeUrl: channel.badge_url ? channel.badge_url : CHANNEL_BADGE_URL.qiscus,
+  })),
+);
+
+async function updateChannelStatus(id: number, is_active: boolean) {
+  const { update, data, error } = useUpdateQiscus();
+
+  try {
+    await update(id, { is_active });
+
+    if (error.value) {
+      // Revert the switch state on the client if API call fails
+      const channelToRevert = channels.value.find(c => c.id === id);
+      if (channelToRevert) {
+        channelToRevert.isActive = !is_active; // Revert to previous state
+      }
+      showAlert.error({
+        title: 'Error',
+        text: `Failed to update channel status. Please try again.`,
+        confirmButtonText: 'Okay',
+        showCancelButton: false,
+      });
+      return;
+    }
+
+    // Update the local listData with the new state from the API response
+    const newData = toValue(data)
+    if (newData) updateExistingListData(newData);
+  } catch (err: any) {
+    // Handle unexpected errors during the update process (e.g., network issues)
+    const channelToRevert = channels.value.find(c => c.id === id);
+    if (channelToRevert) {
+      channelToRevert.isActive = !is_active; // Revert to previous state
+    }
+    showAlert.error({
+      title: 'Error',
+      text: `An unexpected error occurred: ${err.message || 'Please try again.'}`,
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  }
+}
+
+function updateExistingListData(newData: IQiscusChannel) {
+  const fIdx = listData.value.findIndex((ld: IQiscusChannel) => ld.id === newData.id);
+
+  if (fIdx === -1) return;
+  if (!listData.value[fIdx]) return
+
+  listData.value[fIdx].is_active = newData.is_active;
+
+  const status = newData.is_active ? 'Activated' : 'Deactivated';
+  showAlert.success({
+    title: 'Success',
+    text: `${status} channel successfully`,
+    confirmButtonText: 'Okay',
+    showCancelButton: false,
   });
 }
 
+onMounted(async () => {
+  await fetchChannels();
+});
+
 // pagination function
-function pagination(type: 'first' | 'prev' | 'next' | 'last') {
-  if (type === 'next' && channelsStore.meta.page === channelsStore.meta.total_page) return;
-  if (type === 'prev' && channelsStore.meta.page === 1) return;
-  emit('pagination', type);
+async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
+  const currentMeta = meta.value as IMeta; // Cast for type safety
+  let page = currentMeta.page; // Start with current page
+
+  switch (type) {
+    case 'first':
+      page = 1;
+      break;
+    case 'prev':
+      page = Math.max(1, page - 1); // Ensure page doesn't go below 1
+      break;
+    case 'next':
+      page = Math.min(currentMeta.total_page, page + 1); // Ensure page doesn't exceed total_page
+      break;
+    case 'last':
+      page = currentMeta.total_page;
+      break;
+    default:
+      break;
+  }
+  params.value = {
+    ...params.value,
+    page,
+  };
+
+  await fetchChannels(toValue(params));
 }
 
 function getDetailChannel(channel: IChannel) {
-  // Emit an event to parent component to handle channel detail view
   router.push({
-    name: 'QiscusChannelDetail',
-    params: { channelId: channel.id },
+    name: 'qiscus-detail',
+    params: { id: channel.id },
   });
 }
 </script>

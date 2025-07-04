@@ -1,9 +1,10 @@
 <template>
   <div :class="containerClasses()">
-    <label :for="id" :class="computedLabelClasses">{{ label }}</label>
+    <label v-if="label" :for="id" :class="computedLabelClasses">{{ label }}</label>
     <div :class="computedInputWrapperClasses">
       <textarea
         ref="textareaRef"
+        v-bind="$attrs"
         :id="id"
         :value="modelValue"
         @input="onInput"
@@ -26,7 +27,7 @@ interface Props {
   modelValue: string;
   label?: string;
   placeholder?: string;
-  id?: string;
+  id: string;
   disabled?: boolean;
   error?: boolean;
   errorMessage?: string;
@@ -35,9 +36,9 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  label: 'Label',
+  label: '',
   placeholder: '',
-  id: 'label',
+  id: '',
   disabled: false,
   error: false,
   errorMessage: 'This field has an error',

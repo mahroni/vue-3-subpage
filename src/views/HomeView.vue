@@ -12,6 +12,7 @@ import ChannelList from '@/components/ui/widget-preview/ChannelList.vue';
 import ChannelListLoading from '@/components/ui/widget-preview/ChannelListLoading.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
+import LoginFormLoading from '@/components/ui/widget-preview/LoginFormLoading.vue';
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import { useSweetAlert } from '@/composables/useSweetAlert';
@@ -301,8 +302,8 @@ onMounted(() => {
     </div>
 
     <div class="mt-4 flex flex-col gap-2 text-left">
-      <Checkbox v-model="isChecked2" label="Checkbox" />
-      <Checkbox v-model="isChecked2" label="Checkbox" disabled />
+      <Checkbox id="checkbox-1" v-model="isChecked2" label="Checkbox" />
+      <Checkbox id="checkbox-2" v-model="isChecked2" label="Checkbox" disabled />
     </div>
 
     <div class="mt-4">
@@ -450,6 +451,11 @@ onMounted(() => {
       />
       <ChannelListLoading />
       <LoginForm
+        title="Hello there,"
+        subtitle="Welcome to Qiscus!"
+        description="Please fill the details below before chatting with us!"
+      />
+      <LoginFormLoading
         title="Hello there,"
         subtitle="Welcome to Qiscus!"
         description="Please fill the details below before chatting with us!"

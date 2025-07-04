@@ -5,6 +5,7 @@
       <div :class="contentWrapperClasses()">
         <slot name="suffix-icon" />
         <input
+          v-bind="$attrs"
           :id="id"
           :type="currentType"
           :class="inputClasses({ disabled })"
@@ -25,7 +26,7 @@
           @click="onClear"
           :disabled="disabled"
         >
-          <CloseIcon class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
+          <CloseIcon :size="20" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
 
         <button
@@ -34,7 +35,7 @@
           @click="togglePasswordVisibility"
           :disabled="disabled"
         >
-          <EyeIcon :name="passwordIcon" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
+          <EyeIcon class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
       </div>
 
@@ -54,8 +55,7 @@
 import { cva } from 'class-variance-authority';
 import { computed, ref } from 'vue';
 
-import CloseIcon from '@/components/icons/CloseIcon.vue';
-import EyeIcon from '@/components/icons/EyeIcon.vue';
+import { CloseIcon, EyeIcon } from '../icons';
 
 interface Props {
   modelValue: string;
@@ -66,7 +66,7 @@ interface Props {
   error?: boolean;
   errorMessage?: string;
   clearable?: boolean;
-  type?: 'text' | 'password';
+  type?: 'text' | 'password' | 'number';
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -86,9 +86,8 @@ const isFocused = ref(false);
 const showPassword = ref(false);
 
 const currentType = computed(() =>
-  props.type === 'password' && !showPassword.value ? 'password' : 'text'
+  props.type === 'password' && !showPassword.value ? 'password' : props.type
 );
-const passwordIcon = computed(() => (showPassword.value ? 'eye-slash' : 'eye'));
 
 const onInput = (event: Event) => {
   emit('update:modelValue', (event.target as HTMLInputElement).value);
