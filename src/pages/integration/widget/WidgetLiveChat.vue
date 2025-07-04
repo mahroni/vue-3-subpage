@@ -36,7 +36,7 @@ const tabs: Tab[] = [
     label: 'Welcome Dialog',
     icon: ServerIcon,
     component: WelcomeDialog,
-    queryParam: 'welcome_dialog',
+    queryParam: 'welcome',
   },
   {
     label: 'Call to Action',
@@ -45,13 +45,13 @@ const tabs: Tab[] = [
     queryParam: 'cta',
   },
   { label: 'Channels', icon: IntegrationIcon, component: Channels, queryParam: 'channels' },
-  { label: 'Login Form', icon: TableIcon, component: LoginForm, queryParam: 'login_form' },
+  { label: 'Login Form', icon: TableIcon, component: LoginForm, queryParam: 'login' },
   { label: 'Chat', icon: ChatOutlineIcon, component: Chat, queryParam: 'chat' },
   {
     label: 'Color Scheme',
     icon: PalleteIcon,
     component: ColorScheme,
-    queryParam: 'color_scheme',
+    queryParam: 'color',
   },
 ];
 

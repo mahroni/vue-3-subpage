@@ -26,12 +26,12 @@ const tabs: Tab[] = [
   {
     label: 'Live Chat Builder',
     component: WidgetLiveChat,
-    queryParam: 'live_chat_builder',
+    queryParam: 'builder',
   },
   {
     label: 'Code Installation',
     component: WidgetCode,
-    queryParam: 'code_installation',
+    queryParam: 'code',
   },
   {
     label: 'Settings',
