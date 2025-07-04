@@ -22,31 +22,37 @@ import WelcomeDialog from './widget-builder/WelcomeDialog.vue';
 import Channels from './widget-builder/channels/Channels.vue';
 import ColorScheme from './widget-builder/color-scheme/ColorScheme.vue';
 
-// Constants
-const TAB_NAMES = {
-  WELCOME_DIALOG: 'Welcome Dialog',
-  CALL_TO_ACTION: 'Call to Action',
-  CHANNELS: 'Channels',
-  LOGIN_FORM: 'Login Form',
-  CHAT: 'Chat',
-  COLOR_SCHEME: 'Color Scheme',
-} as const;
-
-type TabName = (typeof TAB_NAMES)[keyof typeof TAB_NAMES];
+type TabName = string;
 
 interface Tab {
   label: TabName;
   icon: Component;
   component: Component;
+  queryParam: string;
 }
 
 const tabs: Tab[] = [
-  { label: TAB_NAMES.WELCOME_DIALOG, icon: ServerIcon, component: WelcomeDialog },
-  { label: TAB_NAMES.CALL_TO_ACTION, icon: ToggleLeftIcon, component: CallToAction },
-  { label: TAB_NAMES.CHANNELS, icon: IntegrationIcon, component: Channels },
-  { label: TAB_NAMES.LOGIN_FORM, icon: TableIcon, component: LoginForm },
-  { label: TAB_NAMES.CHAT, icon: ChatOutlineIcon, component: Chat },
-  { label: TAB_NAMES.COLOR_SCHEME, icon: PalleteIcon, component: ColorScheme },
+  {
+    label: 'Welcome Dialog',
+    icon: ServerIcon,
+    component: WelcomeDialog,
+    queryParam: 'welcome_dialog',
+  },
+  {
+    label: 'Call to Action',
+    icon: ToggleLeftIcon,
+    component: CallToAction,
+    queryParam: 'cta',
+  },
+  { label: 'Channels', icon: IntegrationIcon, component: Channels, queryParam: 'channels' },
+  { label: 'Login Form', icon: TableIcon, component: LoginForm, queryParam: 'login_form' },
+  { label: 'Chat', icon: ChatOutlineIcon, component: Chat, queryParam: 'chat' },
+  {
+    label: 'Color Scheme',
+    icon: PalleteIcon,
+    component: ColorScheme,
+    queryParam: 'color_scheme',
+  },
 ];
 
 const route = useRoute();
@@ -57,32 +63,36 @@ const currentTabComponent = computed(() => {
   return tabs.find((tab) => tab.label === activeTab.value)?.component;
 });
 
-const validTabNames = computed(() => tabs.map((tab) => tab.label));
+const validQueryParams = computed(() => tabs.map((tab) => tab.queryParam));
 
 // Initialize activeTab with proper validation
 const getInitialTab = (): TabName => {
-  const tabFromQuery = route.query.subTab as string;
-  const isValidTab = validTabNames.value.includes(tabFromQuery as TabName);
-  return isValidTab ? (tabFromQuery as TabName) : TAB_NAMES.WELCOME_DIALOG;
+  const tabFromQuery = route.query.section as string;
+  const matchedTab = tabs.find((tab) => tab.queryParam === tabFromQuery);
+  return matchedTab ? matchedTab.label : 'Welcome Dialog';
 };
 
 const activeTab = ref<TabName>(getInitialTab());
 
 // URL sync watchers
 watch(activeTab, (newTab) => {
+  const selectedTab = tabs.find((tab) => tab.label === newTab);
   router.replace({
     query: {
       ...route.query,
-      subTab: newTab,
+      section: selectedTab?.queryParam || 'welcome_dialog',
     },
   });
 });
 
 watch(
-  () => route.query.subTab,
-  (newTab) => {
-    if (typeof newTab === 'string' && validTabNames.value.includes(newTab as TabName)) {
-      activeTab.value = newTab as TabName;
+  () => route.query.section,
+  (newQueryParam) => {
+    if (typeof newQueryParam === 'string' && validQueryParams.value.includes(newQueryParam)) {
+      const matchedTab = tabs.find((tab) => tab.queryParam === newQueryParam);
+      if (matchedTab) {
+        activeTab.value = matchedTab.label;
+      }
     }
   }
 );

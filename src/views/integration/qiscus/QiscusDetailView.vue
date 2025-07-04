@@ -9,47 +9,77 @@ import WidgetForm from '@/pages/integration/widget/WidgetForm.vue';
 import WidgetLiveChat from '@/pages/integration/widget/WidgetLiveChat.vue';
 import WidgetSettings from '@/pages/integration/widget/WidgetSetting.vue';
 
-// Constants
-const TAB_NAMES = {
-  OVERVIEW: 'Overview',
-  LIVE_CHAT_BUILDER: 'Live Chat Builder',
-  CODE_INSTALLATION: 'Code Installation',
-  SETTINGS: 'Settings',
-} as const;
+type TabName = string;
 
-type TabName = (typeof TAB_NAMES)[keyof typeof TAB_NAMES];
+interface Tab {
+  label: TabName;
+  component: any;
+  queryParam: string;
+}
+
+const tabs: Tab[] = [
+  {
+    label: 'Overview',
+    component: WidgetForm,
+    queryParam: 'overview',
+  },
+  {
+    label: 'Live Chat Builder',
+    component: WidgetLiveChat,
+    queryParam: 'live_chat_builder',
+  },
+  {
+    label: 'Code Installation',
+    component: WidgetCode,
+    queryParam: 'code_installation',
+  },
+  {
+    label: 'Settings',
+    component: WidgetSettings,
+    queryParam: 'settings',
+  },
+];
 
 const route = useRoute();
 const router = useRouter();
 
 // Computed properties
-const validTabNames = computed(() => Object.values(TAB_NAMES));
+const validQueryParams = computed(() => tabs.map((tab) => tab.queryParam));
+const tabLabels = computed(() => tabs.map((tab) => tab.label));
+
+const currentTabComponent = computed(() => {
+  return tabs.find((tab) => tab.label === activeTab.value)?.component;
+});
 
 // Initialize activeTab with proper validation
 const getInitialTab = (): TabName => {
-  const tabFromQuery = route.query.tab as string;
-  const isValidTab = validTabNames.value.includes(tabFromQuery as TabName);
-  return isValidTab ? (tabFromQuery as TabName) : TAB_NAMES.OVERVIEW;
+  const tabFromQuery = route.query.sub as string;
+  const matchedTab = tabs.find((tab) => tab.queryParam === tabFromQuery);
+  return matchedTab ? matchedTab.label : 'Overview';
 };
 
 const activeTab = ref<TabName>(getInitialTab());
 
 // URL sync watchers
 watch(activeTab, (newTab) => {
+  const selectedTab = tabs.find((tab) => tab.label === newTab);
   router.replace({
     path: route.path,
     query: {
       ...route.query,
-      tab: newTab,
+      sub: selectedTab?.queryParam || 'overview',
     },
   });
 });
 
 watch(
-  () => route.query.tab,
-  (newTab) => {
-    if (typeof newTab === 'string' && validTabNames.value.includes(newTab as TabName)) {
-      activeTab.value = newTab as TabName;
+  () => route.query.sub,
+  (newQueryParam) => {
+    if (typeof newQueryParam === 'string' && validQueryParams.value.includes(newQueryParam)) {
+      const matchedTab = tabs.find((tab) => tab.queryParam === newQueryParam);
+      if (matchedTab) {
+        activeTab.value = matchedTab.label;
+      }
     }
   }
 );
@@ -66,19 +96,12 @@ watch(
       <img src="https://omnichannel.qiscus.com/img/qiscus_badge.svg" alt="Qiscus Logo" />
       <h2 class="text-text-title text-xl font-semibold">New Integration - Qiscus Live Chat</h2>
     </div>
-    <MainTab :tabs="validTabNames" v-model="activeTab" />
 
-    <div v-if="activeTab === TAB_NAMES.OVERVIEW">
-      <WidgetForm />
-    </div>
-    <div v-if="activeTab === TAB_NAMES.LIVE_CHAT_BUILDER">
-      <WidgetLiveChat />
-    </div>
-    <div v-if="activeTab === TAB_NAMES.CODE_INSTALLATION">
-      <WidgetCode />
-    </div>
-    <div v-if="activeTab === TAB_NAMES.SETTINGS">
-      <WidgetSettings />
+    <MainTab :tabs="tabLabels" v-model="activeTab" />
+
+    <div class="mt-4">
+      <!-- Dynamic component rendering -->
+      <component :is="currentTabComponent" v-if="currentTabComponent" />
     </div>
   </div>
 </template>
