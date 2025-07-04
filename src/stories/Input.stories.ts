@@ -6,7 +6,7 @@ import Input from '../components/form/Input.vue';
 
 const meta: Meta<typeof Input> = {
   title: 'Components/Form/Input',
-  component: Input as any,
+  component: Input,
   tags: ['autodocs'],
   argTypes: {
     modelValue: {

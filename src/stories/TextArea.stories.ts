@@ -5,7 +5,7 @@ import TextArea from '../components/form/TextArea.vue';
 
 const meta: Meta<typeof TextArea> = {
   title: 'Components/Form/TextArea',
-  component: TextArea as any,
+  component: TextArea,
   parameters: {
     layout: 'centered',
     docs: {
