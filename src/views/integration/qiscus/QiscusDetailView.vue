@@ -1,9 +1,51 @@
+<template>
+  <div class="text-text-title flex min-h-screen flex-col gap-8 px-12 py-8 text-sm">
+    <div class="flex items-center justify-between">
+      <router-link to="/qiscus" class="text-primary flex items-center gap-2 font-semibold">
+        <BackIcon :size="20" />
+        Integration
+      </router-link>
+
+      <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
+        <HomeIcon :size="20" />
+        Integration
+      </router-link>
+    </div>
+
+    <div class="flex flex-col gap-8 w-11/12 mx-auto">
+      <div class="flex gap-3">
+        <img src="https://omnichannel.qiscus.com/img/qiscus_badge.svg" alt="Qiscus Logo" />
+        <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
+      </div>
+
+      <div v-if="!isAutoresponderFormOpen" class="flex flex-col gap-8">
+        <MainTab :tabs="tabLabels" v-model="activeTab" />
+
+        <div class="mt-4">
+          <!-- Dynamic component rendering -->
+          <component :is="currentTabComponent" v-if="currentTabComponent" v-model="settingData"
+            @open-auto-responder-form="handleOpenAutoResponderForm" />
+        </div>
+      </div>
+
+      <form @submit.prevent="handleSubmitAutoResponder" v-if="isAutoresponderFormOpen">
+        <AutoResponderForm v-model="channel.configs" :is-bot="isBot" />
+
+        <div class="mt-8 flex justify-end gap-4">
+          <Button intent="secondary" @click="handleCancelAutoResponder">Cancel</Button>
+          <Button type="submit">Save Changes</Button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import Button from '@/components/common/Button.vue';
 import MainTab from '@/components/common/Tabs/MainTab.vue';
+import { HomeIcon } from '@/components/icons';
 import BackIcon from '@/components/icons/BackIcon.vue';
 import { useFetchBot } from '@/composables/channels/bot';
 import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qiscus';
@@ -79,11 +121,17 @@ const channel = reactive<IWidgetChannel>({
   is_secure: true,
   is_secure_toc: false,
   configs: {
+    is_enabled: false,
     offline_message: '',
     online_message: '',
     send_offline_each_message: false,
     send_online_if_resolved: false,
   },
+});
+
+const settingData = ref({
+  is_enabled: false,
+  is_secure: false,
 });
 
 const { fetchChannelById, data: widget } = useFetchQiscusDetail();
@@ -114,10 +162,30 @@ watch(
   }
 );
 
+watch(
+  () => settingData.value,
+  (newVal, oldVal) => {
+    if (newVal) {
+      console.log('settingData changed:', newVal.is_enabled, newVal.is_secure);
+
+      if (newVal.is_enabled !== oldVal.is_enabled) {
+        handleChangeAutoResponder(newVal.is_enabled);
+      }
+
+      if (newVal.is_secure !== widget.value?.is_secure) {
+        // handleChangeSecure(newVal.is_secure);
+      }
+    }
+  },
+);
+
 function setData() {
   channel.name = widget.value?.name ?? '';
   channel.badge_url = widget.value?.badge_url ?? '';
   channel.configs = (uConfig.data.value as any) ?? {};
+
+  settingData.value.is_secure = widget.value?.is_secure ?? false;
+  settingData.value.is_enabled = channel.configs.is_enabled ?? false;
 }
 
 const uQiscus = useUpdateQiscus();
@@ -158,6 +226,16 @@ async function handleChangeAutoResponder(e: boolean) {
     source: 'qiscus',
   });
 
+  if (widget.value) {
+    widget.value = {
+      ...widget.value,
+      configs: {
+        ...widget.value.configs,
+        is_enabled: e,
+      },
+    };
+  }
+
   if (useConfig.error.value) {
     return showAlert.error({
       title: 'Failed',
@@ -192,40 +270,3 @@ onMounted(async () => {
   setData();
 });
 </script>
-
-<template>
-  <div class="text-text-title flex min-h-screen flex-col gap-8 px-12 py-8 text-sm">
-    <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
-      <BackIcon :size="20" />
-      Integration
-    </router-link>
-
-    <div class="flex gap-3">
-      <img src="https://omnichannel.qiscus.com/img/qiscus_badge.svg" alt="Qiscus Logo" />
-      <h2 class="text-text-title text-xl font-semibold">New Integration - Qiscus Live Chat</h2>
-    </div>
-
-    <div v-if="!isAutoresponderFormOpen" class="flex flex-col gap-8">
-      <MainTab :tabs="tabLabels" v-model="activeTab" />
-
-      <div class="mt-4">
-        <!-- Dynamic component rendering -->
-        <component
-          :is="currentTabComponent"
-          v-if="currentTabComponent"
-          @open-auto-responder-form="handleOpenAutoResponderForm"
-          @on-change-auto-responder="handleChangeAutoResponder"
-        />
-      </div>
-    </div>
-
-    <form @submit.prevent="handleSubmitAutoResponder" v-if="isAutoresponderFormOpen">
-      <AutoResponderForm v-model="channel.configs" :is-bot="isBot" />
-
-      <div class="mt-8 flex justify-end gap-4">
-        <Button intent="secondary" @click="handleCancelAutoResponder">Cancel</Button>
-        <Button type="submit">Save Changes</Button>
-      </div>
-    </form>
-  </div>
-</template>

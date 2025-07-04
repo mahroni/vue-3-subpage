@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-full w-full flex-col">
     <div class="flex items-center justify-between p-4">
-      <InputCustom v-model="searchQuery" placeholder="Search channel name" clearable>
+      <InputCustom v-model="searchQuery" placeholder="Search channel name" class="min-w-[340px]" clearable>
         <template #suffix-icon>
           <SearchIcon :size="24" />
         </template>
@@ -32,7 +32,7 @@
                   class="aspect-square rounded-full object-cover" :fallback-src="CHANNEL_BADGE_URL.qiscus" />
                 <span class="text-text-title overflow-hidden text-ellipsis whitespace-nowrap font-medium">{{
                   channel.name
-                }}</span>
+                  }}</span>
               </div>
             </td>
 

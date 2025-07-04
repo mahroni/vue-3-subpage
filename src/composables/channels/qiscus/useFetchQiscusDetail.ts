@@ -2,11 +2,11 @@ import { ref } from 'vue';
 
 import { qiscusApi } from '@/api/channels';
 import type { IResponse } from '@/types/api';
-import type { IQiscusChannel } from '@/types/channels';
+import type { IWidgetChannel } from '@/types/channels';
 
 export const useFetchQiscusDetail = () => {
   const loading = ref(false);
-  const data = ref<IQiscusChannel | null>(null);
+  const data = ref<IWidgetChannel | null>(null);
   const error = ref<Error | null>(null);
 
   const fetchChannelById = async (id: number | string) => {

@@ -71,12 +71,12 @@ const formData = computed({
 
         <div class="text-xs text-[#A0A0A0]">When you set the autoresponder message, it will only be sent once at the
           beginning of each conversation outside office hour.</div>
-        <TextArea v-model="formData.online_message" autocomplete="off" :disabled="isBot" />
+        <TextArea id="text-area-online-message" v-model="formData.online_message" autocomplete="off"
+          :disabled="isBot" />
       </div>
 
       <div class="flex items-center gap-2 text-sm font-semibold text-[#565656]">
-        <Checkbox
-          id="send-online-checkbox"
+        <Checkbox id="send-online-checkbox"
           label="Keep sending every time a customer initiates a chat session even though the room has been resolved"
           v-model="formData.send_online_if_resolved" />
       </div>
@@ -88,11 +88,13 @@ const formData = computed({
 
         <div class="text-xs text-[#A0A0A0]">When you set the autoresponder message, it will only be sent once at the
           beginning of each conversation outside office hour.</div>
-        <TextArea v-model="formData.offline_message" autocomplete="off" :disabled="isBot" />
+        <TextArea id="text-area-offline-message" v-model="formData.offline_message" autocomplete="off"
+          :disabled="isBot" />
       </div>
 
       <div class="flex items-center gap-2 text-sm font-semibold text-[#565656]">
-        <Checkbox id="send-offline-checkbox" label="Sent every time a customer sends a message" v-model="formData.send_offline_each_message" />
+        <Checkbox id="send-offline-checkbox" label="Sent every time a customer sends a message"
+          v-model="formData.send_offline_each_message" />
       </div>
     </div>
   </div>
