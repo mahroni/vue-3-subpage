@@ -67,6 +67,11 @@ interface Tab {
   queryParam: string;
 }
 
+// params.id as a props on router
+const props = defineProps<{
+  id: string | number;
+}>();
+
 const tabs: Tab[] = [
   {
     label: 'Overview',
@@ -254,10 +259,7 @@ async function handleChangeAutoResponder(e: boolean) {
 }
 
 onMounted(async () => {
-  const { id } = route.params;
-  if (!id) return;
-  // Ensure id is string or number, not array
-  channel.id = (Array.isArray(id) ? id[0] : id) as string;
+  channel.id = props.id ? String(props.id) : '';
   await fetchChannelById(channel.id);
 
   await uConfig.fetch(channel.id, 'qiscus');
