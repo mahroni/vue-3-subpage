@@ -113,12 +113,12 @@ const channels = [
   },
   {
     type: 'qiscus',
-    name: 'Qiscus Widget',
+    name: 'Qiscus Live Chat',
     group: 'live_chat',
     icon: 'https://omnichannel.qiscus.com/img/qiscus_badge.svg',
     status: 'popular',
     description:
-      'Engage customers in real time through a customizable and visually appealing live chat widget on your website.',
+      'Engage customers in real time through a customizable and visually appealing Qiscus Live Chat on your website.',
   },
   {
     type: 'custom_channel',
