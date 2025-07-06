@@ -74,7 +74,7 @@ async function handleSubmit() {
     });
   }
 
-  router.push({ name: 'qiscus-detail', params: { id: uQiscus.data.value?.id } });
+  router.replace({ name: 'qiscus-detail', params: { id: uQiscus.data.value?.id } });
 }
 
 function handleCancelAutoResponder() {
@@ -86,12 +86,12 @@ function handleCancelAutoResponder() {
 <template>
   <div class="flex flex-col gap-8 px-12 py-8">
     <div class="flex items-center justify-between">
-      <router-link to="/qiscus" class="text-primary flex items-center gap-2 font-semibold">
+      <router-link to="/qiscus" replace class="text-primary flex items-center gap-2 font-semibold">
         <BackIcon :size="20" />
         Qiscus Live Chat List
       </router-link>
 
-      <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
+      <router-link to="/" replace class="text-primary flex items-center gap-2 font-semibold">
         <HomeIcon :size="20" />
         Integration
       </router-link>
@@ -109,7 +109,7 @@ function handleCancelAutoResponder() {
         <CreateNewForm v-model="channel" />
 
         <div class="flex justify-end gap-4 mt-8">
-          <Button intent="secondary" @click="router.back()">Back</Button>
+          <Button intent="secondary" to="/qiscus" replace>Back</Button>
           <Button type="submit">Next</Button>
         </div>
       </form>

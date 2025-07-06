@@ -146,7 +146,7 @@ const uBot = useFetchBot();
 // URL sync watchers
 watch(activeTab, (newTab) => {
   const selectedTab = tabs.find((tab) => tab.label === newTab);
-  router.replace({
+  router.push({
     path: route.path,
     query: {
       ...route.query,
