@@ -9,12 +9,16 @@
         </transition>
       </router-view>
     </main>
+    <transition name="fade">
+      <MainLoading v-if="loading" />
+    </transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue';
+import { onMounted, ref, watchEffect } from 'vue';
 import { RouterView } from 'vue-router';
+import MainLoading from './components/ui/MainLoading.vue';
 import { navigationDirection } from './router'; // Import the reactive navigationDirection
 
 // Define reactive variables for transition classes
@@ -48,9 +52,30 @@ watchEffect(() => {
 
   console.log('App.vue: Navigation direction updated to:', navigationDirection.value);
 });
+
+
+const loading = ref(false);
+onMounted(() => {
+  loading.value = true;
+
+  // Simulate loading for load plan and etc...
+  setTimeout(() => {
+    loading.value = false;
+  }, 3000);
+});
 </script>
 
-<style>
-/* You can add global styles here if needed */
-/* Ensure Tailwind CSS is properly configured in your project for these classes to work */
+
+<style scoped>
+/* Transition for Backdrop Fade */
+.fade-fade-enter-active,
+.fade-fade-leave-active {
+  /* Option 1: Increase duration for a more gentle fade */
+  transition: opacity 0.2s ease-in-out;
+}
+
+.fade-fade-enter-from,
+.fade-fade-leave-to {
+  opacity: 0;
+}
 </style>

@@ -44,10 +44,11 @@ function confirmSubmit(payload: any) {
     text: 'Do you want to set up channel auto <br>responder to this channel?',
     confirmButtonText: 'Add Channel Auto Responder',
     cancelButtonText: 'Setup Later',
-  }).then((result) => {
+  }).then((result: any) => {
+    console.log('result', result);
     if (result.isConfirmed) {
       isAutoresponderFormOpen.value = true;
-    } else {
+    } else if (result.dismiss === 'cancel') {
       handleSubmit();
     }
   });

@@ -9,24 +9,13 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Page transition styles */
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.3s ease;
+.fade-fade-enter-active,
+.fade-fade-leave-active {
+  /* Option 1: Increase duration for a more gentle fade */
+  transition: opacity 0.2s ease-in-out;
 }
 
-.page-enter-from {
+.fade-fade-enter-from,
+.fade-fade-leave-to {
   opacity: 0;
-  transform: translateX(20px);
-}
-
-.page-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
-}
-
-.page-enter-to,
-.page-leave-from {
-  opacity: 1;
-  transform: translateX(0);
 }
