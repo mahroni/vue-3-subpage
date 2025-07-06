@@ -1,6 +1,7 @@
 import type { RouteRecordRaw, Router } from 'vue-router';
 import { createRouter as createVueRouter, createWebHistory } from 'vue-router';
 
+import NotFound from '@/views/NotFound.vue';
 import Home from '@/views/integration/ChannelPage.vue';
 import QiscusListChannelView from '@/views/integration/QiscusListChannelView.vue';
 import QiscusCreateChannelView from '@/views/integration/qiscus/QiscusCreateChannelView.vue';
@@ -92,16 +93,22 @@ export function createRouter(appId?: string | number): Router {
         return false;
       },
     },
-    {
-      path: '/home',
-      name: 'HomeView',
-      component: () => import('../views/HomeView.vue'),
-    },
+    // {
+    //   path: '/home',
+    //   name: 'HomeView',
+    //   component: () => import('../views/HomeView.vue'),
+    // },
     // {
     //   path: '/post',
     //   name: 'PostView',
     //   component: () => import('../views/PostView.vue'),
     // },
+
+    {
+      path: '/:pathMatch(.*)*', // This matches anything
+      name: 'NotFound',
+      component: NotFound,
+    },
   ];
 
   // Use the provided appId or fall back to window.vueAppBaseId
