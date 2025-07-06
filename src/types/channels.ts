@@ -64,6 +64,7 @@ export interface ICreateQiscusChannel {
   name: string;
 }
 export interface IAutoResponder {
+  is_enabled?: boolean;
   offline_message: string;
   online_message: string;
   send_offline_each_message: boolean;

@@ -25,12 +25,12 @@
       </Banner>
 
       <div class="w-[552px]">
-        <Input v-model="channel.name" :disabled="false" :error="false" errorMessage="This field has an error"
-          id="default-input" placeholder="Enter your channel name here" />
+        <Input label="Channel Name" v-model="channel.name" :disabled="false" :error="false"
+          errorMessage="This field has an error" id="default-input" placeholder="Enter your channel name here" />
       </div>
     </div>
     <div class="flex justify-end gap-4">
-      <Button intent="secondary" @click="router.back()">Cancel</Button>
+      <Button intent="secondary" @click="router.back()">Back</Button>
       <Button type="submit" :disabled="isDisabled">Save</Button>
     </div>
   </form>
