@@ -14,7 +14,7 @@ const checkboxWrapperVariants = cva('flex items-center space-x-2 cursor-pointer 
 });
 
 const checkboxInputVariants = cva(
-  'appearance-none h-6 w-6 border-2 rounded-md focus:outline-none ',
+  'appearance-none h-5 w-5 border-2 rounded-sm focus:outline-none ',
   {
     variants: {
       checked: {
@@ -50,7 +50,7 @@ const checkboxIconVariants = cva('h-4 w-4 ', {
   },
 });
 
-const labelVariants = cva('text-text-title text-sm font-medium', {
+const labelVariants = cva('text-text-subtitle text-sm font-medium', {
   variants: {
     disabled: {
       true: 'text-[#A0A0A0]',

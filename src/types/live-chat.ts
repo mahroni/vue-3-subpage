@@ -1,38 +1,38 @@
 export interface IWidgetVariables {
-  appID: string,
-  attentionGrabberImage: string,
-  attentionGrabberStatus: boolean,
-  attentionGrabberText: string,
-  buttonHasIcon: boolean,
-  buttonHasText: boolean,
-  buttonIcon: string,
-  buttonText: string,
-  "channel_widget": {
-      live_channel: {
-          badge_url?: string,
-          is_enable: boolean,
-          name: string
-      },
-      other_channel: any[],
-      subtitle: string,
-      title: string,
-  },
-  customerIdentifierInputType: string,
-  customerServiceAvatar: string,
-  customerServiceName: string,
-  "extra_fields": IAdditionalField[],
-  formGreet: string,
-  formSubtitle: string,
-  grabberImage: boolean,
-  grabberTextStatus: boolean,
-  grabberTimeout: number,
-  isChannelWidgetEnabled: boolean,
-  loginFormButtonLabel: string,
-  openAtStart: boolean,
-  selectedWidgetPage: string,
-  welcomeMessageStatus: boolean,
-  welcomeText: string,
-  welcomeTimeout: string
+  appID: string;
+  attentionGrabberImage: string;
+  attentionGrabberStatus: boolean;
+  attentionGrabberText: string;
+  buttonHasIcon: boolean;
+  buttonHasText: boolean;
+  buttonIcon: string;
+  buttonText: string;
+  channel_widget: {
+    live_channel: {
+      badge_url?: string;
+      is_enable: boolean;
+      name: string;
+    };
+    other_channel: any[];
+    subtitle: string;
+    title: string;
+  };
+  customerIdentifierInputType: string;
+  customerServiceAvatar: string;
+  customerServiceName: string;
+  extra_fields: IAdditionalField[];
+  formGreet: string;
+  formSubtitle: string;
+  grabberImage: boolean;
+  grabberTextStatus: boolean;
+  grabberTimeout: number;
+  isChannelWidgetEnabled: boolean;
+  loginFormButtonLabel: string;
+  openAtStart: boolean;
+  selectedWidgetPage: string;
+  welcomeMessageStatus: boolean;
+  welcomeText: string;
+  welcomeTimeout: string;
 }
 
 export interface IWidgetConfigResponse {
@@ -80,9 +80,9 @@ export interface IWelcomeDialogState {
   isAttentionGrabberImage: boolean; //grabberImage
   isAttentionGrabberText: boolean; //grabberTextStatus
   attentionGrabberText: string; //attentionGrabberText
-  grabberTimeout: number; //grabberTimeout
+  grabberTimeout: number | null; //grabberTimeout
   attentionGrabberImage: string; //attentionGrabberImage
-  brandIconWelcomeDialog: string;  
+  brandIconWelcomeDialog: string;
   actionsWelcomeDialog: IActionWelcomeDialog[];
 }
 export interface ICallToActionState {

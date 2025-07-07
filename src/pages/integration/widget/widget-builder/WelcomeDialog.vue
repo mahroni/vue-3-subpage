@@ -83,7 +83,7 @@ const firstAction = computed(() => {
 
 // Convert between string and number for input binding
 const grabberTimeoutString = computed({
-  get: () => welcomeDialogState.value.grabberTimeout.toString(),
+  get: () => welcomeDialogState.value.grabberTimeout?.toString() ?? '',
   set: (value: string) => {
     welcomeDialogState.value.grabberTimeout = parseInt(value) || 0;
   },
@@ -183,7 +183,6 @@ const grabberTimeoutString = computed({
             v-model="welcomeDialogState.isAttentionGrabberImage"
           >
             <DragDropInput
-              label="Upload Image"
               accept="image/png,image/jpg"
               acceptText="PNG or JPG"
               :maxSize="1024 * 1024 * 10"
@@ -223,7 +222,7 @@ const grabberTimeoutString = computed({
     <!-- PREVIEW -->
     <div
       v-if="welcomeDialogState.isWelcomeDialog"
-      class="sticky top-20 z-10 flex flex-1 flex-col items-end p-6"
+      class="sticky top-20 z-10 flex flex-1 flex-col items-end gap-4 p-6"
     >
       <WelcomingPage
         :title="welcomeDialogState.firstDescriptionWelcomeDialog"
@@ -231,11 +230,12 @@ const grabberTimeoutString = computed({
         :imageUrl="welcomeDialogState.brandIconWelcomeDialog"
         :actions="welcomeDialogState.actionsWelcomeDialog"
       />
+      <div class="bg-surface-disable h-16 w-16 rounded-full" />
     </div>
 
     <div
       v-else-if="welcomeDialogState.isAttentionGrabber"
-      class="sticky top-20 z-10 flex flex-1 flex-col items-end p-6"
+      class="sticky top-20 z-10 flex flex-1 flex-col items-end gap-4 p-6"
     >
       <AttentionGrabber
         :imageUrl="
@@ -245,6 +245,7 @@ const grabberTimeoutString = computed({
           welcomeDialogState.isAttentionGrabberText ? welcomeDialogState.attentionGrabberText : ''
         "
       />
+      <div class="bg-surface-disable h-16 w-41 rounded-full" />
     </div>
 
     <div v-else class="flex flex-1 flex-col items-end p-6">

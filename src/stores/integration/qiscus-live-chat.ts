@@ -56,8 +56,8 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     openAtStart: false,
     isAttentionGrabberImage: true,
     isAttentionGrabberText: true,
-    attentionGrabberText: '',
-    grabberTimeout: 0,
+    attentionGrabberText: 'Hello, there is Promo!',
+    grabberTimeout: null,
     attentionGrabberImage: '',
     brandIconWelcomeDialog: '',
     actionsWelcomeDialog: [
@@ -242,7 +242,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
           grabberImage: welcomeDialogState.isAttentionGrabberImage,
           grabberTextStatus: welcomeDialogState.isAttentionGrabberText,
           attentionGrabberText: welcomeDialogState.attentionGrabberText,
-          grabberTimeout: welcomeDialogState.grabberTimeout,
+          grabberTimeout: welcomeDialogState.grabberTimeout ?? 0,
           attentionGrabberImage: welcomeDialogState.attentionGrabberImage,
 
           // login form data
