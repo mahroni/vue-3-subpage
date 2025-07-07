@@ -40,7 +40,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   const callToActionState = reactive<ICallToActionState>({
     isWithText: true,
     isWithIcon: true,
-    liveChatButtonText: '',
+    liveChatButtonText: 'Talk To Us',
     iconImage:
       'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/img/icon-qiscus-widget-default.svg',
     borderRadius: '32',
