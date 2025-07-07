@@ -2,7 +2,7 @@
 import { useRouter } from 'vue-router';
 
 import { Button } from '@/components/common/common';
-import { BackIcon } from '@/components/icons';
+import { BackIcon, HomeIcon } from '@/components/icons';
 import { useCreateQiscus } from '@/composables/channels/qiscus';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import AutoResponderForm from '@/pages/integration/AutoResponderForm.vue';
@@ -44,10 +44,11 @@ function confirmSubmit(payload: any) {
     text: 'Do you want to set up channel auto <br>responder to this channel?',
     confirmButtonText: 'Add Channel Auto Responder',
     cancelButtonText: 'Setup Later',
-  }).then((result) => {
+  }).then((result: any) => {
+    console.log('result', result);
     if (result.isConfirmed) {
       isAutoresponderFormOpen.value = true;
-    } else {
+    } else if (result.dismiss === 'cancel') {
       handleSubmit();
     }
   });
@@ -74,7 +75,7 @@ async function handleSubmit() {
     });
   }
 
-  router.push({ name: 'qiscus-detail', params: { id: uQiscus.data.value?.id } });
+  router.replace({ name: 'qiscus-detail', params: { id: uQiscus.data.value?.id } });
 }
 
 function handleCancelAutoResponder() {
@@ -85,34 +86,43 @@ function handleCancelAutoResponder() {
 
 <template>
   <div class="flex flex-col gap-8 px-12 py-8">
-    <button @click="router.back()" class="text-primary flex cursor-pointer items-center gap-2 font-semibold">
-      <BackIcon :size="20" />
-      Qiscus Live Chat List
-    </button>
+    <div class="flex items-center justify-between">
+      <router-link to="/qiscus" replace class="text-primary flex items-center gap-2 font-semibold">
+        <BackIcon :size="20" />
+        Qiscus Live Chat List
+      </router-link>
 
-    <!-- Header -->
-    <div class="flex items-center gap-3">
-      <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
-      <h2 class="text-[#0A0A0A] text-xl font-semibold">New Integration - Qiscus Live Chat</h2>
+      <router-link to="/" replace class="text-primary flex items-center gap-2 font-semibold">
+        <HomeIcon :size="20" />
+        Integration
+      </router-link>
     </div>
 
-    <!-- Form section -->
-    <form @submit.prevent="confirmSubmit" v-if="!isAutoresponderFormOpen">
-      <CreateNewForm v-model="channel" />
-
-      <div class="flex justify-end gap-4 mt-8">
-        <Button intent="secondary" @click="router.back()">Cancel</Button>
-        <Button type="submit">Save</Button>
+    <div class="flex flex-col gap-8 w-11/12 mx-auto">
+      <!-- Header -->
+      <div class="flex items-center gap-3">
+        <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
+        <h2 class="text-[#0A0A0A] text-xl font-semibold">New Integration - Qiscus Live Chat</h2>
       </div>
-    </form>
 
-    <form @submit.prevent="handleSubmit" v-if="isAutoresponderFormOpen">
-      <AutoResponderForm v-model="channel.configs" :is-bot="isBot" />
+      <!-- Form section -->
+      <form @submit.prevent="confirmSubmit" v-if="!isAutoresponderFormOpen">
+        <CreateNewForm v-model="channel" />
 
-      <div class="flex justify-end gap-4 mt-8">
-        <Button intent="secondary" @click="handleCancelAutoResponder">Cancel</Button>
-        <Button type="submit">Save</Button>
-      </div>
-    </form>
+        <div class="flex justify-end gap-4 mt-8">
+          <Button intent="secondary" to="/qiscus" replace>Back</Button>
+          <Button type="submit">Next</Button>
+        </div>
+      </form>
+
+      <form @submit.prevent="handleSubmit" v-if="isAutoresponderFormOpen">
+        <AutoResponderForm v-model="channel.configs" :is-bot="isBot" />
+
+        <div class="flex justify-end gap-4 mt-8">
+          <Button intent="secondary" @click="handleCancelAutoResponder">Back</Button>
+          <Button type="submit">Save Changes</Button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>

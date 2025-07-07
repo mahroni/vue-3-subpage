@@ -2,11 +2,11 @@ import { ref } from 'vue';
 
 import { configApi } from '@/api/channels';
 import type { IResponse } from '@/types/api';
-import type { IQiscusChannel } from '@/types/channels';
+import type { IAutoResponder } from '@/types/channels';
 
 export const useFetchConfig = () => {
   const loading = ref(false);
-  const data = ref<IQiscusChannel | null>(null);
+  const data = ref<IAutoResponder | null>(null);
   const error = ref<Error | null>(null);
 
   const fetch = async (id: number | string, source: string) => {

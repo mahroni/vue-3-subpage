@@ -77,8 +77,8 @@ const formData = computed({
           conversation outside office hour.
         </div>
         <TextArea
+          id="text-area-online-message"
           v-model="formData.online_message"
-          id="online_message"
           autocomplete="off"
           :disabled="isBot"
         />
@@ -102,8 +102,8 @@ const formData = computed({
           conversation outside office hour.
         </div>
         <TextArea
+          id="text-area-offline-message"
           v-model="formData.offline_message"
-          id="offline_message"
           autocomplete="off"
           :disabled="isBot"
         />

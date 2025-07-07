@@ -4,7 +4,7 @@ import { computed } from 'vue';
 
 interface ButtonProps {
   intent?: 'primary' | 'secondary' | 'danger' | 'flat';
-  size?: 'small' | 'large';
+  size?: 'xsmall' | 'small' | 'large'; // Added xsmall to interface
   disabled?: boolean;
   shape?: 'rounded' | 'rectangular';
   to?: string;
@@ -23,14 +23,7 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   id: '',
 });
 
-const isLink = computed(() => !!props.to);
-const isButton = computed(() => !isLink.value);
-const componentType = computed(() => {
-  if (props.to) {
-    return 'router-link';
-  }
-  return 'button';
-});
+const componentType = computed(() => (props.to && !props.disabled ? 'router-link' : 'button'));
 
 const handleClick = (event: MouseEvent) => {
   if (props.disabled) {
@@ -39,13 +32,13 @@ const handleClick = (event: MouseEvent) => {
 };
 
 const buttonClass = computed(() =>
-  cva('font-semibold transition-all duration-200 ease-out transform flex gap-2 items-center', {
+  cva('font-semibold flex gap-2 items-center', { // Removed base transitions here
     variants: {
       intent: {
-        primary: 'bg-primary text-white shadow-sm hover:shadow-md',
-        secondary: 'bg-transparent border border-primary text-primary shadow-sm hover:shadow-md',
-        danger: 'bg-transparent border border-red-600 text-red-600 shadow-sm hover:shadow-md',
-        flat: 'bg-transparent text-primary hover:bg-slate-50',
+        primary: 'bg-primary text-white shadow-sm',
+        secondary: 'bg-transparent border border-primary text-primary shadow-sm',
+        danger: 'bg-transparent border border-red-600 text-red-600 shadow-sm',
+        flat: 'bg-transparent text-primary',
       },
       size: {
         xsmall: 'py-1 px-2 text-xs',
@@ -53,7 +46,7 @@ const buttonClass = computed(() =>
         large: 'py-4 px-8 text-lg',
       },
       disabled: {
-        true: '!cursor-not-allowed !transform-none !shadow-none',
+        true: '!cursor-not-allowed !pointer-events-none', // Consolidated disabled cursor/events
         false: 'cursor-pointer',
       },
       shape: {
@@ -61,36 +54,34 @@ const buttonClass = computed(() =>
         rectangular: 'rounded-lg',
       },
       animation: {
-        true: 'transition-all duration-200 ease-out transform active:scale-98',
-        false: 'transition-none transform-none',
+        true: 'transition-all duration-200 ease-out transform active:scale-98 hover:shadow-md', // Added transitions and default hover shadow here
+        false: '', // No animation class if false
       },
     },
     compoundVariants: [
-      // Disabled states
+      // Disabled states - specific color/border adjustments
       {
         intent: 'primary',
         disabled: true,
-        class:
-          '!bg-gray-300 !text-gray-500 !border-none !shadow-none hover:!bg-gray-300 hover:!text-gray-500',
+        class: '!bg-gray-300 !text-gray-500 !border-none',
       },
       {
         intent: 'secondary',
         disabled: true,
-        class:
-          '!text-gray-400 !border-gray-300 !shadow-none hover:!text-gray-400 hover:!border-gray-300',
+        class: '!text-gray-400 !border-gray-300',
       },
       {
         intent: 'danger',
         disabled: true,
-        class:
-          '!text-red-300 !border-red-300 !shadow-none hover:!text-red-300 hover:!border-red-300',
+        class: '!text-red-300 !border-red-300',
       },
       {
         intent: 'flat',
         disabled: true,
-        class: '!text-gray-400 hover:!bg-transparent',
+        class: '!text-gray-400',
       },
-      // Hover states (only when animation is enabled)
+
+      // Hover states (only when animation is enabled and not disabled)
       {
         intent: 'primary',
         disabled: false,
@@ -113,38 +104,12 @@ const buttonClass = computed(() =>
         intent: 'flat',
         disabled: false,
         animation: true,
-        class: 'hover:no-underline transition-none hover:underline',
+        class: 'hover:bg-slate-50', // Reverted to original hover for flat
       },
-      // No active effects when animations are disabled
+      // No active/hover effects when animations are disabled
       {
         animation: false,
-        class: '!active:scale-100',
-      },
-      // No hover effects when animations are disabled
-      {
-        intent: 'primary',
-        animation: false,
-        class: '!hover:bg-primary !hover:scale-100 !hover:shadow-sm',
-      },
-      {
-        intent: 'secondary',
-        animation: false,
-        class: '!hover:bg-transparent !hover:scale-100 !hover:shadow-sm',
-      },
-      {
-        intent: 'danger',
-        animation: false,
-        class: '!hover:bg-transparent !hover:scale-100 !hover:shadow-sm',
-      },
-      {
-        intent: 'flat',
-        animation: false,
-        class: '!hover:bg-transparent !hover:underline',
-      },
-      // Disabled pointer events
-      {
-        disabled: true,
-        class: '!pointer-events-none',
+        class: '!active:scale-100 !shadow-sm hover:!shadow-sm', // Ensure no active scale and shadow remains fixed
       },
     ],
     defaultVariants: {
@@ -165,8 +130,9 @@ const buttonClass = computed(() =>
 </script>
 
 <template>
-  <component :is="componentType" :id="id" :to="to" :type="isButton ? type : undefined"
-    :disabled="isButton ? disabled : undefined" :class="buttonClass" @click="handleClick">
+  <component :is="componentType" :id="id" :to="props.to && !props.disabled ? to : undefined"
+    :type="componentType === 'button' ? type : undefined" :disabled="componentType === 'button' ? disabled : undefined"
+    :class="buttonClass" @click="handleClick">
     <slot name="prefixIcon" />
     <slot />
     <slot name="suffixIcon" />
