@@ -32,7 +32,8 @@ const handleClick = (event: MouseEvent) => {
 };
 
 const buttonClass = computed(() =>
-  cva('font-semibold flex gap-2 items-center', { // Removed base transitions here
+  cva('font-semibold flex gap-2 items-center', {
+    // Removed base transitions here
     variants: {
       intent: {
         primary: 'bg-primary text-white shadow-sm',
@@ -109,7 +110,7 @@ const buttonClass = computed(() =>
       // No active/hover effects when animations are disabled
       {
         animation: false,
-        class: '!active:scale-100 !shadow-sm hover:!shadow-sm', // Ensure no active scale and shadow remains fixed
+        class: '!active:scale-100 ', // Ensure no active scale and shadow remains fixed
       },
     ],
     defaultVariants: {
@@ -130,9 +131,15 @@ const buttonClass = computed(() =>
 </script>
 
 <template>
-  <component :is="componentType" :id="id" :to="props.to && !props.disabled ? to : undefined"
-    :type="componentType === 'button' ? type : undefined" :disabled="componentType === 'button' ? disabled : undefined"
-    :class="buttonClass" @click="handleClick">
+  <component
+    :is="componentType"
+    :id="id"
+    :to="props.to && !props.disabled ? to : undefined"
+    :type="componentType === 'button' ? type : undefined"
+    :disabled="componentType === 'button' ? disabled : undefined"
+    :class="buttonClass"
+    @click="handleClick"
+  >
     <slot name="prefixIcon" />
     <slot />
     <slot name="suffixIcon" />

@@ -66,9 +66,9 @@ onUnmounted(() => {
         <Button
           intent="flat"
           size="small"
-          class="text-text-disable gap-2 no-underline"
-          disableAnimation
+          class="text-text-primary gap-2 !px-0"
           @click="isModalOpen = true"
+          disableAnimation
         >
           <Icon name="plus" :size="18" class="" />
           <span class="text-xs font-semibold"> Add More Channel </span>
@@ -84,7 +84,7 @@ onUnmounted(() => {
           :key="channel.id"
           class="flex w-full items-center gap-4"
         >
-          <div class="flex w-full items-center gap-2">
+          <div class="flex w-full items-center gap-4">
             <!-- Icon & Name -->
             <div class="flex flex-1 items-center gap-3">
               <img
@@ -104,7 +104,12 @@ onUnmounted(() => {
 
             <!-- More Button with Dropdown -->
             <div class="dropdown-container relative">
-              <Button intent="flat" size="small" class="" @click="toggleDropdown(channel.id)">
+              <Button
+                intent="flat"
+                class="!px-0"
+                disableAnimation
+                @click="toggleDropdown(channel.id)"
+              >
                 <Icon name="more" :size="24" class="text-icon-black" />
               </Button>
 
