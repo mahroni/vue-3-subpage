@@ -1,18 +1,12 @@
 <template>
   <teleport to="body">
     <transition name="drawer-backdrop-fade">
-      <div
-        v-if="isOpen"
-        class="bg-opacity-50 fixed inset-0 z-[998] bg-[#0A0A0A99]"
-        @click="closeDrawer"
-      ></div>
+      <div v-if="isOpen" class="bg-opacity-50 fixed inset-0 z-[998] bg-[#0A0A0A99]" @click="closeDrawer"></div>
     </transition>
 
     <transition name="drawer-slide">
-      <div
-        v-if="isOpen"
-        class="fixed top-0 right-0 z-[999] flex h-full w-[456px] max-w-full flex-col rounded-l-2xl bg-white shadow-xl"
-      >
+      <div v-if="isOpen"
+        class="fixed top-0 right-0 z-[999] flex h-full w-[456px] max-w-full flex-col rounded-l-2xl bg-white shadow-xl">
         <div class="flex items-center justify-between border-b border-gray-200 p-4">
           <slot name="header">
             <h2 class="text-xl font-semibold text-[#0A0A0A]">Preview Your Qiscus Live Chat</h2>
@@ -81,12 +75,7 @@ watch(
 .drawer-backdrop-fade-enter-active,
 .drawer-backdrop-fade-leave-active {
   /* Option 1: Increase duration for a more gentle fade */
-  transition: opacity 0.4s ease-in-out;
-  /* Increased from 0.3s to 0.4s */
-
-  /* Option 2 (Alternative/Combine): Use a custom cubic-bezier for a more "elastic" or pronounced fade-in/out */
-  /* transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Common smooth ease-in-out */
-  /* transition: opacity 0.5s cubic-bezier(0.65, 0, 0.35, 1); /* Slightly slower end for fade-out */
+  transition: opacity 0.2s ease-in-out;
 }
 
 .drawer-backdrop-fade-enter-from,
@@ -97,8 +86,7 @@ watch(
 /* Transition for Drawer Content Slide */
 .drawer-slide-enter-active,
 .drawer-slide-leave-active {
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Smoother ease-out and slightly longer duration */
+  transition: transform 0.2s ease-out;
 }
 
 .drawer-slide-enter-from,
