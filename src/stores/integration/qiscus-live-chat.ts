@@ -1,16 +1,21 @@
 import { defineStore } from 'pinia';
 import { reactive, ref, watch } from 'vue';
 
-
-
 import { qiscusApi } from '@/api/channels';
 import type { IconName } from '@/components/icons/Icon.vue';
-import type { IWidgetChannel, WidgetChannelCreateData, WidgetChannelUpdateData } from '@/pages/integration/widget/widget-builder/channels/channels';
-import type { ICallToActionState, IChatFormState, ILoginFormState, IWelcomeDialogState, IWidgetConfigResponse, IWidgetVariables } from '@/types/live-chat';
-
-
-
-
+import type {
+  IWidgetChannel,
+  WidgetChannelCreateData,
+  WidgetChannelUpdateData,
+} from '@/pages/integration/widget/widget-builder/channels/channels';
+import type {
+  ICallToActionState,
+  IChatFormState,
+  ILoginFormState,
+  IWelcomeDialogState,
+  IWidgetConfigResponse,
+  IWidgetVariables,
+} from '@/types/live-chat';
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
   // STATE
@@ -45,9 +50,9 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     isWelcomeDialog: true,
     isAttentionGrabber: false,
     firstDescriptionWelcomeDialog: 'Hello There,',
-    secondDescriptionWelcomeDialog: 'Welcome to Qiscus',
+    secondDescriptionWelcomeDialog: 'Welcome to Qiscus!',
     descriptionWelcomeDialog: 'Ask for Questions',
-    welcomeTimeout: '0',
+    welcomeTimeout: '',
     openAtStart: false,
     isAttentionGrabberImage: true,
     isAttentionGrabberText: true,

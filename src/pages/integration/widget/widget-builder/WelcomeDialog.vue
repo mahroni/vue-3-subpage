@@ -13,16 +13,16 @@ import { WarningIcon } from '@/components/icons';
 import AttentionGrabber from '@/components/ui/widget-preview/AttentionGrabber.vue';
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import OptionalInput from '../form/OptionalInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
 
 const { welcomeDialogState } = storeToRefs(useQiscusLiveChatStore());
-const brandIconUpload = useUploadSdkImage()
-const actionIconUpload = useUploadSdkImage()
-const attentionGrabberImageUpload = useUploadSdkImage()
+const brandIconUpload = useUploadSdkImage();
+const actionIconUpload = useUploadSdkImage();
+const attentionGrabberImageUpload = useUploadSdkImage();
 
 const uploaderInstance = {
   brandIcon: brandIconUpload,
@@ -32,15 +32,16 @@ const uploaderInstance = {
 
 const handleImageUpload = async (file: File, target: keyof typeof uploaderInstance) => {
   const uploader = uploaderInstance[target];
-  
+
   await uploader.upload(file);
-  if(uploader.data.value) {
+  if (uploader.data.value) {
     const targetHandlers = {
-      brandIcon: () => welcomeDialogState.value.brandIconWelcomeDialog = uploader.data.value!.url,
-      actionIcon: () => firstAction.value.iconUrl = uploader.data.value!.url,
-      attentionGrabberImage: () => welcomeDialogState.value.attentionGrabberImage = uploader.data.value!.url,
+      brandIcon: () => (welcomeDialogState.value.brandIconWelcomeDialog = uploader.data.value!.url),
+      actionIcon: () => (firstAction.value.iconUrl = uploader.data.value!.url),
+      attentionGrabberImage: () =>
+        (welcomeDialogState.value.attentionGrabberImage = uploader.data.value!.url),
     } as const;
-    
+
     const handler = targetHandlers[target];
     if (handler) {
       handler();
@@ -48,7 +49,7 @@ const handleImageUpload = async (file: File, target: keyof typeof uploaderInstan
       console.error('Invalid target:', target);
     }
   }
-}
+};
 
 const welcomeDialog = computed({
   get: () => welcomeDialogState.value.isWelcomeDialog,
@@ -108,22 +109,23 @@ const grabberTimeoutString = computed({
               </div>
             </template>
           </ImageInput>
-          <TextArea id="first-desc-welcome"
+          <TextArea
+            id="first-desc-welcome"
             v-model="welcomeDialogState.firstDescriptionWelcomeDialog"
-            label="First Description"
+            label="Greeting Title"
             :maxlength="50"
           />
           <TextArea
             id="second-desc-welcome"
             v-model="welcomeDialogState.secondDescriptionWelcomeDialog"
-            label="Second Description"
+            label="Welcome Message"
             :maxlength="50"
           />
-          <ImageInput 
-            v-model="firstAction.iconUrl" 
-            label="Icon" 
-            id="action-icon" 
-            :isUploading="actionIconUpload.loading.value" 
+          <ImageInput
+            v-model="firstAction.iconUrl"
+            label="Icon"
+            id="action-icon"
+            :isUploading="actionIconUpload.loading.value"
             @upload="(file) => handleImageUpload(file, 'actionIcon')"
           >
             <template #tips>
@@ -133,22 +135,37 @@ const grabberTimeoutString = computed({
               </div>
             </template>
           </ImageInput>
-          <Input id="action-welcome" v-model="firstAction.label" label="Description" :maxlength="50" />
+          <Input
+            id="action-welcome"
+            v-model="firstAction.label"
+            label="Description"
+            :maxlength="50"
+          />
           <InputCustom
             v-model="welcomeDialogState.welcomeTimeout"
             label="Appear Delay"
             :maxlength="50"
             type="number"
+            placeholder="0"
           >
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>
             </template>
           </InputCustom>
-          <Checkbox id="auto-expand-checkbox" v-model="welcomeDialogState.openAtStart" label="Make Auto Expand" />
+          <Checkbox
+            id="auto-expand-checkbox"
+            v-model="welcomeDialogState.openAtStart"
+            label="Make Auto Expand"
+          />
         </template>
       </WidgetFormLayout>
 
-      <WidgetFormLayout id="attention-grabber" label="Attention Grabber" v-model="attentionGrabber" isSwitch>
+      <WidgetFormLayout
+        id="attention-grabber"
+        label="Attention Grabber"
+        v-model="attentionGrabber"
+        isSwitch
+      >
         <template #additional-info>
           <Banner intent="warning" type="solid">
             <div class="flex items-center gap-4">
@@ -160,7 +177,11 @@ const grabberTimeoutString = computed({
           </Banner>
         </template>
         <template #inputs>
-          <OptionalInput id="attention-image-switch" label="Image" v-model="welcomeDialogState.isAttentionGrabberImage">
+          <OptionalInput
+            id="attention-image-switch"
+            label="Image"
+            v-model="welcomeDialogState.isAttentionGrabberImage"
+          >
             <DragDropInput
               label="Upload Image"
               accept="image/png,image/jpg"
@@ -171,7 +192,11 @@ const grabberTimeoutString = computed({
               @upload="(files) => files[0] && handleImageUpload(files[0], 'attentionGrabberImage')"
             />
           </OptionalInput>
-          <OptionalInput id="attention-grabber-switch" label="Text" v-model="welcomeDialogState.isAttentionGrabberText">
+          <OptionalInput
+            id="attention-grabber-switch"
+            label="Text"
+            v-model="welcomeDialogState.isAttentionGrabberText"
+          >
             <TextArea
               id="attention-grabber-text"
               v-model="welcomeDialogState.attentionGrabberText"
@@ -185,6 +210,7 @@ const grabberTimeoutString = computed({
             label="Appear Delay"
             :maxlength="50"
             type="number"
+            placeholder="0"
           >
             <template #append-button>
               <div class="text-text-title text-sm font-medium">Seconds</div>

@@ -1,16 +1,26 @@
 <template>
-  <button type="button" role="switch" :disabled="disabled" :aria-checked="modelValue" :aria-label="ariaLabel"
-    :aria-describedby="ariaDescribedby" :class="switchClass" @click="handleToggle" @keydown="handleKeydown">
-    <span :class="[
-      'absolute top-0.5 left-0.5 rounded-full bg-white shadow-sm transition-transform duration-300',
-      thumbSizeClass,
-      {
-        'translate-x-6': modelValue && size === 'medium',
-        'translate-x-5': modelValue && size === 'small',
-        'translate-x-7': modelValue && size === 'large',
-        'translate-x-0': !modelValue,
-      },
-    ]"></span>
+  <button
+    type="button"
+    role="switch"
+    :disabled="disabled"
+    :aria-checked="modelValue"
+    :aria-label="ariaLabel"
+    :aria-describedby="ariaDescribedby"
+    :class="switchClass"
+    @click="handleToggle"
+    @keydown="handleKeydown"
+  >
+    <span
+      :class="[
+        'absolute top-0.5 left-0.5 rounded-full bg-white shadow-sm transition-transform duration-300',
+        thumbSizeClass,
+        {
+          'translate-x-5': modelValue && (size === 'medium' || size === 'small'),
+          'translate-x-7': modelValue && size === 'large',
+          'translate-x-0': !modelValue,
+        },
+      ]"
+    ></span>
   </button>
 </template>
 
@@ -77,7 +87,7 @@ const switchClass = computed(() =>
       variants: {
         size: {
           small: 'w-10 h-5',
-          medium: 'w-12 h-6',
+          medium: 'w-11 h-6',
           large: 'w-14 h-7',
         },
         variant: {
