@@ -1,19 +1,32 @@
 <template>
   <div class="flex h-full w-full flex-col">
     <div class="flex items-center justify-between p-4">
-      <InputCustom v-model="searchQuery" placeholder="Search channel name" class="min-w-[340px]" clearable>
+      <InputCustom
+        v-model="searchQuery"
+        placeholder="Search channel name"
+        class="min-w-[340px]"
+        clearable
+      >
         <template #suffix-icon>
           <SearchIcon :size="24" />
         </template>
       </InputCustom>
 
-      <Button to="/qiscus/create" variant="primary" class="flex items-center gap-2" size="small" no-animation>
+      <Button
+        to="/qiscus/create"
+        variant="primary"
+        class="flex items-center gap-2"
+        size="small"
+        no-animation
+      >
         <PlusIcon :size="24" />
         New Integration
       </Button>
     </div>
 
-    <div class="relative flex flex-1 flex-col justify-between overflow-auto px-4 py-2 min-h-[776px]">
+    <div
+      class="relative flex min-h-[776px] flex-1 flex-col justify-between overflow-auto px-4 py-2"
+    >
       <table class="w-full table-fixed">
         <thead class="sticky -top-2 z-10 bg-white">
           <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
@@ -24,30 +37,49 @@
         </thead>
 
         <tbody v-if="!loadingList" class="divide-y divide-gray-100">
-          <tr v-for="channel in channels" :key="channel.id" class="hover:bg-gray-50"
-            @click.prevent="getDetailChannel(channel)">
+          <tr
+            v-for="channel in channels"
+            :key="channel.id"
+            class="hover:bg-gray-50"
+            @click.prevent="getDetailChannel(channel)"
+          >
             <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
               <div class="flex items-center gap-2">
-                <Image :src="channel.badgeUrl" alt="channel badge" :width="24" :height="24"
-                  class="aspect-square rounded-full object-cover" :fallback-src="CHANNEL_BADGE_URL.qiscus" />
-                <span class="text-text-title overflow-hidden text-ellipsis whitespace-nowrap font-medium">{{
-                  channel.name
-                  }}</span>
+                <Image
+                  :src="channel.badgeUrl"
+                  alt="channel badge"
+                  :width="24"
+                  :height="24"
+                  class="aspect-square rounded-full object-cover"
+                  :fallback-src="CHANNEL_BADGE_URL.qiscus"
+                />
+                <span
+                  class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap"
+                  >{{ channel.name }}</span
+                >
               </div>
             </td>
 
             <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
               <div class="flex items-center gap-2">
                 <span class="text-text-title font-semibold">{{ channel.channelId }}</span>
-                <ButtonIcon title="Copy Channel ID" @click.stop="copyToClipboard(channel.channelId)">
+                <ButtonIcon
+                  title="Copy Channel ID"
+                  @click.stop="copyToClipboard(channel.channelId)"
+                >
                   <CopyIcon :size="12" />
                 </ButtonIcon>
               </div>
             </td>
 
             <td class="border-stroke-regular border-b px-6 py-4 text-right">
-              <Switch v-model="channel.isActive" size="small" variant="success" @click.stop
-                @update:model-value="updateChannelStatus(channel.id, $event)" />
+              <Switch
+                v-model="channel.isActive"
+                size="small"
+                variant="success"
+                @click.stop
+                @update:model-value="updateChannelStatus(channel.id, $event)"
+              />
             </td>
           </tr>
         </tbody>
@@ -58,9 +90,11 @@
       </div>
 
       <div v-if="channels.length === 0 && !loadingList" class="grid h-full place-items-center">
-        <EmptyState title="No Results"
+        <EmptyState
+          title="No Results"
           description="You may want to try using different keywords or checking for the typos to find it."
-          image_url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
+          image_url="https://omnichannel.qiscus.com/img/empty-customer.svg"
+        />
       </div>
 
       <div v-if="isShowPagination" class="flex items-center justify-between px-6 py-4">
@@ -77,6 +111,9 @@
 </template>
 
 <script setup lang="ts">
+import { type Ref, computed, defineAsyncComponent, onMounted, ref, toValue, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
 import loadingAnimationData from '@/assets/lottie/loading.json';
 import { Button, ButtonIcon, Image, Switch } from '@/components/common/common';
 import InputCustom from '@/components/form/InputCustom.vue';
@@ -87,8 +124,6 @@ import { useFetchQiscus, useUpdateQiscus } from '@/composables/channels/qiscus';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import type { IQiscusChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { type Ref, computed, defineAsyncComponent, onMounted, ref, toValue, watch } from 'vue';
-import { useRouter } from 'vue-router';
 
 // async component
 const Animate = defineAsyncComponent(() => import('@/components/common/Animate.vue'));
@@ -173,7 +208,7 @@ const channels = computed(() =>
     channelId: channel.id.toString(), // Assuming channel.id is also the channelId for display
     isActive: channel.is_active,
     badgeUrl: channel.badge_url ? channel.badge_url : CHANNEL_BADGE_URL.qiscus,
-  })),
+  }))
 );
 
 async function updateChannelStatus(id: number, is_active: boolean) {
@@ -184,7 +219,7 @@ async function updateChannelStatus(id: number, is_active: boolean) {
 
     if (error.value) {
       // Revert the switch state on the client if API call fails
-      const channelToRevert = channels.value.find(c => c.id === id);
+      const channelToRevert = channels.value.find((c) => c.id === id);
       if (channelToRevert) {
         channelToRevert.isActive = !is_active; // Revert to previous state
       }
@@ -198,11 +233,11 @@ async function updateChannelStatus(id: number, is_active: boolean) {
     }
 
     // Update the local listData with the new state from the API response
-    const newData = toValue(data)
+    const newData = toValue(data);
     if (newData) updateExistingListData(newData);
   } catch (err: any) {
     // Handle unexpected errors during the update process (e.g., network issues)
-    const channelToRevert = channels.value.find(c => c.id === id);
+    const channelToRevert = channels.value.find((c) => c.id === id);
     if (channelToRevert) {
       channelToRevert.isActive = !is_active; // Revert to previous state
     }
@@ -219,7 +254,7 @@ function updateExistingListData(newData: IQiscusChannel) {
   const fIdx = listData.value.findIndex((ld: IQiscusChannel) => ld.id === newData.id);
 
   if (fIdx === -1) return;
-  if (!listData.value[fIdx]) return
+  if (!listData.value[fIdx]) return;
 
   listData.value[fIdx].is_active = newData.is_active;
 
@@ -267,7 +302,7 @@ async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
 
 function getDetailChannel(channel: IChannel) {
   router.push({
-    name: 'qiscus-detail',
+    name: 'qiscusDetail',
     params: { id: channel.id },
   });
 }
