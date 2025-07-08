@@ -28,7 +28,7 @@ const modelValue = computed({
     <!-- Header Section -->
     <div class="flex w-full items-center justify-between gap-2">
       <label class="text-text-title text-base font-semibold">{{ label }}</label>
-      <Switch :id="id" v-if="isSwitch" size="large" v-model="modelValue" variant="success" />
+      <Switch :id="id" v-if="isSwitch" v-model="modelValue" variant="success" />
     </div>
 
     <!-- Divider -->

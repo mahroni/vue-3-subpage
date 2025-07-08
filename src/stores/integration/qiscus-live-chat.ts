@@ -1,16 +1,21 @@
 import { defineStore } from 'pinia';
 import { reactive, ref, watch } from 'vue';
 
-
-
 import { qiscusApi } from '@/api/channels';
 import type { IconName } from '@/components/icons/Icon.vue';
-import type { IWidgetChannel, WidgetChannelCreateData, WidgetChannelUpdateData } from '@/pages/integration/widget/widget-builder/channels/channels';
-import type { ICallToActionState, IChatFormState, ILoginFormState, IWelcomeDialogState, IWidgetConfigResponse, IWidgetVariables } from '@/types/live-chat';
-
-
-
-
+import type {
+  IWidgetChannel,
+  WidgetChannelCreateData,
+  WidgetChannelUpdateData,
+} from '@/pages/integration/widget/widget-builder/channels/channels';
+import type {
+  ICallToActionState,
+  IChatFormState,
+  ILoginFormState,
+  IWelcomeDialogState,
+  IWidgetConfigResponse,
+  IWidgetVariables,
+} from '@/types/live-chat';
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
   // STATE
@@ -35,7 +40,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   const callToActionState = reactive<ICallToActionState>({
     isWithText: true,
     isWithIcon: true,
-    liveChatButtonText: '',
+    liveChatButtonText: 'Talk To Us',
     iconImage:
       'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/img/icon-qiscus-widget-default.svg',
     borderRadius: '32',
@@ -45,14 +50,14 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     isWelcomeDialog: true,
     isAttentionGrabber: false,
     firstDescriptionWelcomeDialog: 'Hello There,',
-    secondDescriptionWelcomeDialog: 'Welcome to Qiscus',
+    secondDescriptionWelcomeDialog: 'Welcome to Qiscus!',
     descriptionWelcomeDialog: 'Ask for Questions',
-    welcomeTimeout: '0',
+    welcomeTimeout: '',
     openAtStart: false,
     isAttentionGrabberImage: true,
     isAttentionGrabberText: true,
-    attentionGrabberText: '',
-    grabberTimeout: 0,
+    attentionGrabberText: 'Hello, there is Promo!',
+    grabberTimeout: null,
     attentionGrabberImage: '',
     brandIconWelcomeDialog: '',
     actionsWelcomeDialog: [
@@ -68,8 +73,8 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     firstDescription: 'Hello There,',
     secondDescription: 'Welcome to Qiscus',
     formSubtitle: 'Please fill the details below before chatting with us!',
-    buttonText: '',
-    customerIdentifier: '',
+    buttonText: 'Start Chat',
+    customerIdentifier: 'email',
     extraFields: [],
   });
 
@@ -237,7 +242,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
           grabberImage: welcomeDialogState.isAttentionGrabberImage,
           grabberTextStatus: welcomeDialogState.isAttentionGrabberText,
           attentionGrabberText: welcomeDialogState.attentionGrabberText,
-          grabberTimeout: welcomeDialogState.grabberTimeout,
+          grabberTimeout: welcomeDialogState.grabberTimeout ?? 0,
           attentionGrabberImage: welcomeDialogState.attentionGrabberImage,
 
           // login form data

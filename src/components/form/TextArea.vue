@@ -82,7 +82,7 @@ const labelClasses = cva('text-sm font-normal text-text-subtitle', {
   },
 });
 
-const inputWrapperClasses = cva('mt-2 flex rounded-lg shadow-sm', {
+const inputWrapperClasses = cva('mt-2 flex rounded-lg shadow-small', {
   variants: {
     disabled: {
       true: 'bg-gray-50 ring-gray-200',

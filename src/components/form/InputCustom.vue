@@ -114,7 +114,7 @@ const labelClasses = cva('text-sm font-normal text-text-subtitle', {
 });
 
 const wrapperClasses = cva(
-  'relative flex flex-row overflow-hidden rounded-lg border border-gray-300 shadow-sm mt-2',
+  'relative mt-2 flex flex-row overflow-hidden rounded-lg border border-gray-300 shadow-small',
   {
     variants: {
       isFocused: {

@@ -1,128 +1,3 @@
-<template>
-  <div class="flex w-full items-start justify-between gap-8 self-stretch">
-    <div class="flex flex-1 flex-col gap-8">
-      <WidgetFormLayout label="Login Form">
-        <template #additional-info>
-          <Banner intent="positive" type="outline">
-            Figma ipsum component variant main layer. Slice figjam select select pencil. Share mask
-            draft edit invite subtract rotate variant. Create subtract hand auto pen object.
-            Community figjam flatten.
-          </Banner>
-        </template>
-        <template #inputs>
-          <ImageInput label="Brand Logo" id="login-form-logo" :isUploading="loading" @upload="uploadImage">
-            <template #tips>
-              <div class="text-sm font-normal text-[#A0A0A0]">
-                We recommend an image of at least 360x360 pixels. You can upload images in JPG,
-                JPEG, or PNG format with a maximum size of 2MB.
-              </div>
-            </template>
-          </ImageInput>
-          <TextArea
-            id="first-desc-login"
-            v-model="loginFormState.firstDescription"
-            label="First Description"
-            :maxlength="50"
-          />
-          <TextArea
-            id="second-desc-login"
-            v-model="loginFormState.secondDescription"
-            label="Second Description"
-            :maxlength="50"
-          />
-          <TextArea id="subtitle-login" v-model="loginFormState.formSubtitle" label="Subtitle" :maxlength="50" />
-          <Input id="button-form-login" label="Button Form" v-model="loginFormState.buttonText" :maxlength="50" />
-          <RadioInput
-            id="phone-number-login"
-            v-model="loginFormState.customerIdentifier"
-            label="Phone Number"
-            :options="qiscusLiveChatStore.customerIdentifierOptions"
-          />
-          <Banner intent="positive" type="outline">
-            If you use phone number to login, we won't be able to send chat history and notes to the
-            customer's email after the room is resolved.
-          </Banner>
-        </template>
-      </WidgetFormLayout>
-
-      <div class="flex flex-col gap-4 rounded-2xl border border-gray-300 bg-gray-200 p-6">
-        <div class="flex w-full items-center justify-between">
-          <span class="text-text-title text-base font-semibold">Additional Field</span>
-          <Button id="add-more-field" intent="flat" size="small" type="button" @click="addAdditionalField">
-            <template #prefixIcon>
-              <PlusIcon class="h-4 w-4" />
-            </template>
-            <span>Add More Field</span>
-          </Button>
-        </div>
-        <Divider v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields" />
-        <ul
-          class="flex flex-col gap-6"
-          v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields"
-        >
-          <li
-            v-for="(field, index) in loginFormState.extraFields"
-            :key="field.name"
-            class="flex items-center justify-between"
-          >
-            <span class="text-text-title text-sm font-medium">{{ field.name }}</span>
-            <DropdownMenu :options="getFieldOptions(index)" @select="handleFieldMenuSelect" />
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- PREVIEW -->
-    <div class="bg-white-100 sticky top-20 z-50 flex flex-1 flex-col items-end p-6">
-      <LoginForm
-        :title="loginFormState.firstDescription"
-        :subtitle="loginFormState.secondDescription"
-        :description="loginFormState.formSubtitle"
-        :buttonText="loginFormState.buttonText"
-      />
-    </div>
-  </div>
-
-  <!-- Add Additional Field Modal -->
-  <Modal
-    :isOpen="isOpenModal"
-    @close="isOpenModal = false"
-    confirmText="Add Field"
-    @confirm="addAdditionalFieldConfirm"
-  >
-    <template #title> Add Additional Field </template>
-    <template #content>
-      <div class="mb-9 flex flex-col gap-2">
-        <Select
-          id="field-type"
-          label="Field Type"
-          :options="qiscusLiveChatStore.fieldTypeOptionsAdditionalField"
-          v-model="additionalField.type"
-        />
-        <div v-if="additionalField.type !== ''" class="flex flex-col gap-6">
-          <Input id="name-field" label="Name" v-model="additionalField.name" />
-          <Input id="placeholder-field" label="Placeholder" v-model="additionalField.placeholder" />
-          <template v-if="additionalField.type === 'dropdown' && additionalField.options">
-            <DropdownItemInput v-model="additionalField.options" />
-          </template>
-          <div class="my-2 flex items-center">
-            <Checkbox id="required-field" label="Set this field to required" v-model="additionalField.required" />
-          </div>
-          <IconSelectInput
-            id="icon-field"
-            v-model="additionalField.iconField"
-            :icons="qiscusLiveChatStore.iconsAdditionalField"
-          />
-        </div>
-      </div>
-    </template>
-    <template #footer>
-      <Button id="cancel-field" intent="secondary" size="small" @click="isOpenModal = false">Cancel</Button>
-      <Button id="add-field" intent="primary" size="small" @click="addAdditionalFieldConfirm"> Add Field </Button>
-    </template>
-  </Modal>
-</template>
-
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { reactive, ref } from 'vue';
@@ -140,9 +15,9 @@ import TextArea from '@/components/form/TextArea.vue';
 import { PlusIcon } from '@/components/icons';
 import Divider from '@/components/ui/Divider.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import DropdownItemInput from '../form/DropdownItemInput.vue';
 import IconSelectInput from '../form/IconSelectInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
@@ -158,7 +33,7 @@ interface AdditionalField {
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 const { loginFormState } = storeToRefs(useQiscusLiveChatStore());
-const {loading, data, error, upload} = useUploadSdkImage()
+const { loading, data, error, upload } = useUploadSdkImage();
 
 const additionalField = reactive<AdditionalField>({
   type: '',
@@ -230,10 +105,169 @@ const handleFieldMenuSelect = (option: any) => {
 
 const uploadImage = async (file: File) => {
   await upload(file);
-  if(data.value) {
+  if (data.value) {
     loginFormState.value.brandLogo = data.value.url;
   } else {
     console.error(error.value);
   }
 };
 </script>
+
+<template>
+  <div class="flex w-full items-start justify-between gap-8 self-stretch">
+    <div class="flex flex-1 flex-col gap-8">
+      <WidgetFormLayout label="Login Form">
+        <template #additional-info>
+          <Banner intent="positive" type="outline">
+            Figma ipsum component variant main layer. Slice figjam select select pencil. Share mask
+            draft edit invite subtract rotate variant. Create subtract hand auto pen object.
+            Community figjam flatten.
+          </Banner>
+        </template>
+        <template #inputs>
+          <ImageInput
+            label="Brand Icon"
+            id="login-form-icon"
+            :isUploading="loading"
+            @upload="uploadImage"
+          >
+            <template #tips>
+              <div class="text-sm font-normal text-[#A0A0A0]">
+                We recommend an image of at least 360x360 pixels. You can upload images in JPG,
+                JPEG, or PNG format with a maximum size of 2MB.
+              </div>
+            </template>
+          </ImageInput>
+          <TextArea
+            id="first-desc-login"
+            v-model="loginFormState.firstDescription"
+            label="First Descriptions"
+            :maxlength="50"
+          />
+          <TextArea
+            id="second-desc-login"
+            v-model="loginFormState.secondDescription"
+            label="Second Descriptions"
+            :maxlength="50"
+          />
+          <TextArea
+            id="subtitle-login"
+            v-model="loginFormState.formSubtitle"
+            label="Subtitle"
+            :maxlength="50"
+          />
+          <Input
+            id="button-form-login"
+            label="Button Form"
+            v-model="loginFormState.buttonText"
+            :maxlength="50"
+          />
+          <RadioInput
+            id="phone-number-login"
+            v-model="loginFormState.customerIdentifier"
+            label="Choose Customer Identifier"
+            :options="qiscusLiveChatStore.customerIdentifierOptions"
+          />
+          <Banner
+            v-if="loginFormState.customerIdentifier === 'phone'"
+            intent="positive"
+            type="outline"
+          >
+            If you use phone number to login, we won't be able to send chat history and notes to the
+            customer's email after the room is resolved.
+          </Banner>
+        </template>
+      </WidgetFormLayout>
+
+      <div class="flex flex-col gap-4 rounded-2xl border border-gray-300 bg-gray-200 p-6">
+        <div class="flex w-full items-center justify-between">
+          <span class="text-text-title text-base font-semibold">Additional Field</span>
+          <Button
+            id="add-more-field"
+            intent="flat"
+            type="button"
+            class="!px-0"
+            disableAnimation
+            @click="addAdditionalField"
+          >
+            <template #prefixIcon>
+              <PlusIcon class="h-4 w-4" />
+            </template>
+            <span class="text-xs font-semibold">Add More Field</span>
+          </Button>
+        </div>
+        <Divider v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields" />
+        <ul
+          class="flex flex-col gap-6"
+          v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields"
+        >
+          <li
+            v-for="(field, index) in loginFormState.extraFields"
+            :key="field.name"
+            class="flex items-center justify-between"
+          >
+            <span class="text-text-title text-sm font-medium">{{ field.name }}</span>
+            <DropdownMenu :options="getFieldOptions(index)" @select="handleFieldMenuSelect" />
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="bg-white-100 sticky top-20 z-50 flex flex-1 flex-col items-end p-6">
+      <LoginForm
+        :title="loginFormState.firstDescription"
+        :subtitle="loginFormState.secondDescription"
+        :description="loginFormState.formSubtitle"
+        :buttonText="loginFormState.buttonText"
+      />
+    </div>
+  </div>
+
+  <!-- Add Additional Field Modal -->
+  <Modal
+    :isOpen="isOpenModal"
+    @close="isOpenModal = false"
+    confirmText="Add Field"
+    @confirm="addAdditionalFieldConfirm"
+  >
+    <template #title> Add Additional Field </template>
+    <template #content>
+      <div class="mb-9 flex flex-col gap-2">
+        <Select
+          id="field-type"
+          label="Field Type"
+          :options="qiscusLiveChatStore.fieldTypeOptionsAdditionalField"
+          v-model="additionalField.type"
+        />
+        <div v-if="additionalField.type !== ''" class="flex flex-col gap-6">
+          <Input id="name-field" label="Name" v-model="additionalField.name" />
+          <Input id="placeholder-field" label="Placeholder" v-model="additionalField.placeholder" />
+          <template v-if="additionalField.type === 'dropdown' && additionalField.options">
+            <DropdownItemInput v-model="additionalField.options" />
+          </template>
+          <div class="my-2 flex items-center">
+            <Checkbox
+              id="required-field"
+              label="Set this field to required"
+              v-model="additionalField.required"
+            />
+          </div>
+          <IconSelectInput
+            id="icon-field"
+            v-model="additionalField.iconField"
+            :icons="qiscusLiveChatStore.iconsAdditionalField"
+          />
+        </div>
+      </div>
+    </template>
+    <template #footer>
+      <Button id="cancel-field" intent="secondary" size="small" @click="isOpenModal = false"
+        >Cancel</Button
+      >
+      <Button id="add-field" intent="primary" size="small" @click="addAdditionalFieldConfirm">
+        Add Field
+      </Button>
+    </template>
+  </Modal>
+</template>

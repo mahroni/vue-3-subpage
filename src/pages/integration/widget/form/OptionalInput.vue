@@ -1,16 +1,3 @@
-<template>
-  <div class="bg-white-100 flex w-full flex-col gap-4 rounded-2xl border-[1px] border-gray-300 p-6">
-    <div class="flex w-full items-center justify-between gap-2">
-      <label class="text-text-subtitle text-base font-semibold">{{ label }}</label>
-      <Switch :id="id" size="large" v-model="modelValue" variant="success" />
-    </div>
-    <Divider v-if="modelValue" />
-    <div v-if="modelValue">
-      <slot />
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { computed } from 'vue';
 
@@ -32,3 +19,18 @@ const modelValue = computed({
   set: (value: boolean) => emit('update:modelValue', value),
 });
 </script>
+
+<template>
+  <div
+    class="bg-surface-primary-white border-stroke-regular flex w-full flex-col gap-4 rounded-lg border p-4"
+  >
+    <div class="flex w-full items-center justify-between gap-4">
+      <label class="text-text-title text-base font-semibold">{{ label }}</label>
+      <Switch :id="id" v-model="modelValue" variant="success" />
+    </div>
+    <Divider v-if="modelValue" />
+    <div v-if="modelValue">
+      <slot />
+    </div>
+  </div>
+</template>
