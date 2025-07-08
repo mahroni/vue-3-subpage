@@ -126,7 +126,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   ]);
   // state for chat form
   const chatFormState = reactive<IChatFormState>({
-    customerServiceName: '',
+    customerServiceName: 'Qiscus Customer Care',
     customerServiceAvatar: '',
   });
 

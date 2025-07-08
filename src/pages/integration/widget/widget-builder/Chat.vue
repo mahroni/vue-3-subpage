@@ -4,17 +4,17 @@ import { storeToRefs } from 'pinia';
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import WIdgetFormLayout from '../form/WIdgetFormLayout.vue';
 
 const { chatFormState } = storeToRefs(useQiscusLiveChatStore());
-const {loading, data, error, upload} = useUploadSdkImage()
+const { loading, data, error, upload } = useUploadSdkImage();
 
 const uploadImage = async (file: File) => {
   await upload(file);
-  if(data.value) {
+  if (data.value) {
     chatFormState.value.customerServiceAvatar = data.value.url;
   } else {
     console.error(error.value);
@@ -52,11 +52,12 @@ const uploadImage = async (file: File) => {
     </div>
 
     <!-- PREVIEW -->
-    <div class="sticky top-20 z-10 flex flex-1 flex-col items-end p-6">
+    <div class="sticky top-20 z-10 flex flex-1 flex-col items-end gap-4 p-6">
       <ChatFormLoading
         :icon="chatFormState.customerServiceAvatar"
         :title="chatFormState.customerServiceName"
       />
+      <div class="bg-surface-disable h-16 w-16 rounded-full" />
     </div>
   </div>
 </template>

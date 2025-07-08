@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Icon } from '@/components/icons';
 import { cva } from 'class-variance-authority';
 
+import { Icon } from '@/components/icons';
 import type { IconName } from '@/components/icons/Icon.vue';
 
 interface Props {
@@ -23,7 +23,7 @@ const iconClasses = cva(
   {
     variants: {
       selected: {
-        true: 'border-primary',
+        true: 'border-primary shadow-medium',
         false: 'border-gray-300 hover:border-gray-400',
       },
     },
@@ -44,7 +44,7 @@ const selectIcon = (iconName: string) => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <label :for="id">Icon Field</label>
+    <label :for="id" class="text-text-subtitle text-sm font-normal">Icon Field</label>
 
     <div class="flex flex-wrap gap-3" :id="id" :data-testid="id">
       <div

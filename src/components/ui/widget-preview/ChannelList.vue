@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
 <template>
   <div class="flex w-[360px] flex-col rounded-4xl bg-white shadow-[0px_8px_32px_0px_#0A0A0A1F]">
     <!-- Main Section -->
-    <div class="flex flex-col gap-8 p-8">
+    <div class="flex flex-col gap-8 px-8 pt-8">
       <!-- Header Section -->
       <div class="flex flex-col gap-6">
         <ButtonIcon>
@@ -43,46 +43,44 @@ const props = withDefaults(defineProps<Props>(), {
           <div class="text-2xl font-bold break-words">{{ props.subtitle }}</div>
         </div>
       </div>
-
-      <!-- Channel List Section -->
-      <div class="flex max-h-[350px] flex-col gap-4 overflow-y-auto">
-        <p v-if="props.introduction" class="text-text-title text-sm font-medium break-words">
-          {{ props.introduction }}
-        </p>
-
-        <!-- Channel List Item -->
-        <button
-          v-for="action in props.channels"
-          :key="action.label"
-          class="hover:bg-surface-primary-blue/5 flex cursor-pointer justify-between rounded-xl p-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
-        >
-          <div class="flex min-w-0 flex-1 items-center gap-2">
-            <img
-              :src="action.iconUrl"
-              alt=""
-              class="h-6 w-6"
-              width="24"
-              height="24"
-              v-if="action.iconUrl"
-            />
-            <ChatIcon :size="24" v-else />
-            <div class="min-w-0 flex-1 text-start text-sm font-medium break-words">
-              {{ action.label }}
-            </div>
+      <p v-if="props.introduction" class="text-text-title text-sm font-medium break-words">
+        {{ props.introduction }}
+      </p>
+    </div>
+    <!-- Channel List Section -->
+    <div class="hide-scrollbar mt-4 flex max-h-[350px] flex-col gap-4 overflow-y-auto px-8">
+      <!-- Channel List Item -->
+      <button
+        v-for="action in props.channels"
+        :key="action.label"
+        class="hover:bg-surface-primary-blue/5 flex cursor-pointer justify-between rounded-xl p-4 px-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
+      >
+        <div class="flex min-w-0 flex-1 items-center gap-2">
+          <img
+            :src="action.iconUrl"
+            alt=""
+            class="h-6 w-6"
+            width="24"
+            height="24"
+            v-if="action.iconUrl"
+          />
+          <ChatIcon :size="24" v-else />
+          <div class="min-w-0 flex-1 text-start text-sm font-medium break-words">
+            {{ action.label }}
           </div>
+        </div>
 
-          <div class="flex flex-shrink-0 items-center">
-            <ChevronRightIcon :size="24" />
-          </div>
-        </button>
+        <div class="flex flex-shrink-0 items-center">
+          <ChevronRightIcon :size="24" />
+        </div>
+      </button>
 
-        <!-- Skeleton Loading -->
-        <div
-          v-for="i in 2"
-          :key="i"
-          class="bg-surface-disable h-14 min-h-14 w-full animate-pulse rounded-xl"
-        ></div>
-      </div>
+      <!-- Skeleton Loading -->
+      <div
+        v-for="i in 2"
+        :key="i"
+        class="bg-surface-disable h-14 min-h-14 w-full animate-pulse rounded-xl"
+      ></div>
     </div>
 
     <!-- Footer Section (Powered by Qiscus) -->
