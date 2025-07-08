@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between">
       <router-link to="/qiscus" class="text-primary flex items-center gap-2 font-semibold">
         <BackIcon :size="20" />
-        Integration
+        Qiscus Live Chat List
       </router-link>
 
       <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
@@ -12,7 +12,7 @@
       </router-link>
     </div>
 
-    <div class="flex flex-col gap-8 w-11/12 mx-auto">
+    <div class="mx-auto flex w-11/12 flex-col gap-8">
       <div class="flex gap-3">
         <img src="https://omnichannel.qiscus.com/img/qiscus_badge.svg" alt="Qiscus Logo" />
         <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
@@ -23,8 +23,12 @@
 
         <div class="mt-4">
           <!-- Dynamic component rendering -->
-          <component :is="currentTabComponent" v-if="currentTabComponent" v-model="settingData"
-            @open-auto-responder-form="handleOpenAutoResponderForm" />
+          <component
+            :is="currentTabComponent"
+            v-if="currentTabComponent"
+            v-model="settingData"
+            @open-auto-responder-form="handleOpenAutoResponderForm"
+          />
         </div>
       </div>
 
@@ -181,7 +185,7 @@ watch(
         // handleChangeSecure(newVal.is_secure);
       }
     }
-  },
+  }
 );
 
 function setData() {
