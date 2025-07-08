@@ -37,7 +37,7 @@ const buttonClass = computed(() =>
     variants: {
       intent: {
         primary: 'bg-primary text-white shadow-sm',
-        secondary: 'bg-transparent border border-primary text-primary shadow-sm',
+        secondary: 'bg-transparent border border-primary text-primary ',
         danger: 'bg-transparent border border-red-600 text-red-600 shadow-sm',
         flat: 'bg-transparent text-primary',
       },

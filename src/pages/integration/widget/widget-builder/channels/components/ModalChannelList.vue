@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 
 import Banner from '@/components/common/Banner.vue';
 import Button from '@/components/common/Button.vue';
@@ -30,6 +30,11 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void;
   (e: 'close'): void;
 }>();
+
+// Form Validation
+const isFormValid = computed(() => {
+  return channelName.value.trim() !== '' && channelLink.value.trim() !== '';
+});
 
 // Watch for editing channel changes
 watch(
@@ -143,7 +148,7 @@ const uploadImage = async (file: File) => {
     </template>
     <template #footer>
       <Button intent="secondary" size="small" @click="closeModal">Cancel</Button>
-      <Button intent="primary" size="small" @click="handleAddChannel">
+      <Button :disabled="!isFormValid" intent="primary" size="small" @click="handleAddChannel">
         {{ editingChannel ? 'Update Channel' : 'Add Channel' }}
       </Button>
     </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { reactive, ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 
 import Banner from '@/components/common/Banner.vue';
 import Button from '@/components/common/Button.vue';
@@ -40,11 +40,25 @@ const additionalField = reactive<AdditionalField>({
   name: '',
   placeholder: '',
   required: false,
-  iconField: undefined,
+  iconField: 'Date',
   options: [],
 });
 
 const isOpenModal = ref(false);
+
+// Form validation untuk additional field
+const isAdditionalFieldValid = computed(() => {
+  if (!additionalField.type) return false;
+  if (!additionalField.name.trim()) return false;
+  if (!additionalField.placeholder.trim()) return false;
+
+  // Jika tipe dropdown, pastikan ada minimal 1 option
+  if (additionalField.type === 'dropdown') {
+    return additionalField.options && additionalField.options.length > 0;
+  }
+
+  return true;
+});
 
 const addAdditionalField = () => {
   isOpenModal.value = true;
@@ -214,13 +228,14 @@ const uploadImage = async (file: File) => {
     </div>
 
     <!-- PREVIEW -->
-    <div class="bg-white-100 sticky top-20 z-50 flex flex-1 flex-col items-end p-6">
+    <div class="bg-white-100 sticky top-20 z-50 flex flex-1 flex-col items-end gap-4 p-6">
       <LoginForm
         :title="loginFormState.firstDescription"
         :subtitle="loginFormState.secondDescription"
         :description="loginFormState.formSubtitle"
         :buttonText="loginFormState.buttonText"
       />
+      <div class="bg-surface-disable h-16 w-16 rounded-full" />
     </div>
   </div>
 
@@ -241,8 +256,18 @@ const uploadImage = async (file: File) => {
           v-model="additionalField.type"
         />
         <div v-if="additionalField.type !== ''" class="flex flex-col gap-6">
-          <Input id="name-field" label="Name" v-model="additionalField.name" />
-          <Input id="placeholder-field" label="Placeholder" v-model="additionalField.placeholder" />
+          <Input
+            id="name-field"
+            label="Title"
+            placeholder="e,g: Address, Number Phone"
+            v-model="additionalField.name"
+          />
+          <Input
+            id="placeholder-field"
+            label="Placeholder"
+            placeholder="e,g: Type your address here"
+            v-model="additionalField.placeholder"
+          />
           <template v-if="additionalField.type === 'dropdown' && additionalField.options">
             <DropdownItemInput v-model="additionalField.options" />
           </template>
@@ -265,7 +290,13 @@ const uploadImage = async (file: File) => {
       <Button id="cancel-field" intent="secondary" size="small" @click="isOpenModal = false"
         >Cancel</Button
       >
-      <Button id="add-field" intent="primary" size="small" @click="addAdditionalFieldConfirm">
+      <Button
+        :disabled="!isAdditionalFieldValid"
+        id="add-field"
+        intent="primary"
+        size="small"
+        @click="addAdditionalFieldConfirm"
+      >
         Add Field
       </Button>
     </template>
