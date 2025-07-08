@@ -89,7 +89,10 @@
         <Animate :source="loadingAnimationData" />
       </div>
 
-      <div v-if="channels.length === 0 && !loadingList" class="grid h-full place-items-center">
+      <div
+        v-if="channels.length === 0 && !loadingList"
+        class="absolute inset-0 flex items-center justify-center"
+      >
         <EmptyState
           title="No Results"
           description="You may want to try using different keywords or checking for the typos to find it."
