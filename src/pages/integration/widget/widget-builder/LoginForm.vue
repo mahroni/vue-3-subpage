@@ -10,7 +10,12 @@
           </Banner>
         </template>
         <template #inputs>
-          <ImageInput label="Brand Logo" id="login-form-logo" :isUploading="loading" @upload="uploadImage">
+          <ImageInput
+            label="Brand Icon"
+            id="login-form-icon"
+            :isUploading="loading"
+            @upload="uploadImage"
+          >
             <template #tips>
               <div class="text-sm font-normal text-[#A0A0A0]">
                 We recommend an image of at least 360x360 pixels. You can upload images in JPG,
@@ -21,21 +26,31 @@
           <TextArea
             id="first-desc-login"
             v-model="loginFormState.firstDescription"
-            label="First Description"
+            label="First Descriptions"
             :maxlength="50"
           />
           <TextArea
             id="second-desc-login"
             v-model="loginFormState.secondDescription"
-            label="Second Description"
+            label="Second Descriptions"
             :maxlength="50"
           />
-          <TextArea id="subtitle-login" v-model="loginFormState.formSubtitle" label="Subtitle" :maxlength="50" />
-          <Input id="button-form-login" label="Button Form" v-model="loginFormState.buttonText" :maxlength="50" />
+          <TextArea
+            id="subtitle-login"
+            v-model="loginFormState.formSubtitle"
+            label="Subtitle"
+            :maxlength="50"
+          />
+          <Input
+            id="button-form-login"
+            label="Button Form"
+            v-model="loginFormState.buttonText"
+            :maxlength="50"
+          />
           <RadioInput
             id="phone-number-login"
             v-model="loginFormState.customerIdentifier"
-            label="Phone Number"
+            label="Choose Customer Identifier"
             :options="qiscusLiveChatStore.customerIdentifierOptions"
           />
           <Banner intent="positive" type="outline">
@@ -48,11 +63,18 @@
       <div class="flex flex-col gap-4 rounded-2xl border border-gray-300 bg-gray-200 p-6">
         <div class="flex w-full items-center justify-between">
           <span class="text-text-title text-base font-semibold">Additional Field</span>
-          <Button id="add-more-field" intent="flat" size="small" type="button" @click="addAdditionalField">
+          <Button
+            id="add-more-field"
+            intent="flat"
+            type="button"
+            class="!px-0"
+            disableAnimation
+            @click="addAdditionalField"
+          >
             <template #prefixIcon>
               <PlusIcon class="h-4 w-4" />
             </template>
-            <span>Add More Field</span>
+            <span class="text-xs font-semibold">Add More Field</span>
           </Button>
         </div>
         <Divider v-if="loginFormState.extraFields?.length > 0 && loginFormState.extraFields" />
@@ -106,7 +128,11 @@
             <DropdownItemInput v-model="additionalField.options" />
           </template>
           <div class="my-2 flex items-center">
-            <Checkbox id="required-field" label="Set this field to required" v-model="additionalField.required" />
+            <Checkbox
+              id="required-field"
+              label="Set this field to required"
+              v-model="additionalField.required"
+            />
           </div>
           <IconSelectInput
             id="icon-field"
@@ -117,8 +143,12 @@
       </div>
     </template>
     <template #footer>
-      <Button id="cancel-field" intent="secondary" size="small" @click="isOpenModal = false">Cancel</Button>
-      <Button id="add-field" intent="primary" size="small" @click="addAdditionalFieldConfirm"> Add Field </Button>
+      <Button id="cancel-field" intent="secondary" size="small" @click="isOpenModal = false"
+        >Cancel</Button
+      >
+      <Button id="add-field" intent="primary" size="small" @click="addAdditionalFieldConfirm">
+        Add Field
+      </Button>
     </template>
   </Modal>
 </template>
@@ -140,9 +170,9 @@ import TextArea from '@/components/form/TextArea.vue';
 import { PlusIcon } from '@/components/icons';
 import Divider from '@/components/ui/Divider.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import DropdownItemInput from '../form/DropdownItemInput.vue';
 import IconSelectInput from '../form/IconSelectInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
@@ -158,7 +188,7 @@ interface AdditionalField {
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 const { loginFormState } = storeToRefs(useQiscusLiveChatStore());
-const {loading, data, error, upload} = useUploadSdkImage()
+const { loading, data, error, upload } = useUploadSdkImage();
 
 const additionalField = reactive<AdditionalField>({
   type: '',
@@ -230,7 +260,7 @@ const handleFieldMenuSelect = (option: any) => {
 
 const uploadImage = async (file: File) => {
   await upload(file);
-  if(data.value) {
+  if (data.value) {
     loginFormState.value.brandLogo = data.value.url;
   } else {
     console.error(error.value);
