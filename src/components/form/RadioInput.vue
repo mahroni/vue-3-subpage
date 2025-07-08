@@ -1,30 +1,3 @@
-<template>
-  <div :class="containerClasses()">
-    <label v-if="label" :class="computedLabelClasses">
-      {{ label }}
-    </label>
-    <div class="mt-4 flex flex-col gap-4">
-      <div v-for="option in options" :key="getOptionValue(option)" class="flex items-center">
-        <input
-          :id="`${id}-${getOptionValue(option)}`"
-          :name="name || id"
-          :value="getOptionValue(option)"
-          :checked="modelValue === getOptionValue(option)"
-          type="radio"
-          class="h-4 w-4 border-gray-300 text-blue-600 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-          @change="handleChange"
-        />
-        <label
-          :for="`${id}-${getOptionValue(option)}`"
-          class="ml-2 cursor-pointer text-sm text-gray-700 disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {{ getOptionLabel(option) }}
-        </label>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { cva } from 'class-variance-authority';
 import { computed } from 'vue';
@@ -69,6 +42,15 @@ const labelClasses = cva('text-sm font-normal text-[#A0A0A0]', {
 
 const emit = defineEmits<Emits>();
 
+const isChecked = (option: RadioOption | string | number): boolean => {
+  return props.modelValue === getOptionValue(option);
+};
+
+const selectOption = (value: string | number) => {
+  emit('update:modelValue', value);
+  emit('change', value);
+};
+
 const getOptionValue = (option: RadioOption | string | number): string | number => {
   if (typeof option === 'object' && option !== null) {
     return option.value;
@@ -93,3 +75,43 @@ const handleChange = (event: Event) => {
 
 const computedLabelClasses = computed(() => labelClasses({ disabled: props.disabled }));
 </script>
+
+<template>
+  <div :class="containerClasses()">
+    <label v-if="label" :class="computedLabelClasses">
+      {{ label }}
+    </label>
+    <div class="mt-4 flex flex-col gap-4">
+      <div v-for="option in options" :key="getOptionValue(option)" class="flex items-center">
+        <div class="relative">
+          <input
+            :id="`${id}-${getOptionValue(option)}`"
+            :name="name || id"
+            :value="getOptionValue(option)"
+            :checked="isChecked(option)"
+            type="radio"
+            class="sr-only"
+            @change="handleChange"
+          />
+          <div
+            class="border-button-primary flex h-4.5 w-4.5 cursor-pointer items-center justify-center rounded-full border-2 transition-colors"
+            :class="[isChecked(option) ? 'bg-button-primary' : 'bg-white']"
+            @click="selectOption(getOptionValue(option))"
+          >
+            <div v-if="isChecked(option)" class="h-2 w-2 rounded-full bg-white" />
+          </div>
+        </div>
+        <label
+          :for="`${id}-${getOptionValue(option)}`"
+          class="ml-3 cursor-pointer text-sm disabled:cursor-not-allowed disabled:opacity-50"
+          :class="[
+            isChecked(option) ? 'text-text-title font-medium' : 'text-text-subtitle font-normal',
+          ]"
+          @click="selectOption(getOptionValue(option))"
+        >
+          {{ getOptionLabel(option) }}
+        </label>
+      </div>
+    </div>
+  </div>
+</template>

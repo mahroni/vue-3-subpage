@@ -74,7 +74,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     secondDescription: 'Welcome to Qiscus',
     formSubtitle: 'Please fill the details below before chatting with us!',
     buttonText: 'Start Chat',
-    customerIdentifier: '',
+    customerIdentifier: 'email',
     extraFields: [],
   });
 
