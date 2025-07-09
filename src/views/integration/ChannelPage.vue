@@ -13,6 +13,7 @@
           href="//drive.google.com/drive/folders/1JxTfQEkWK2v0MlViZ_YYTNOLDDo6dZPH"
           target="_blank"
           rel="noopener noreferrer"
+          class="text-notification-link text-sm font-semibold underline"
           >this link</a
         >.
       </p>
