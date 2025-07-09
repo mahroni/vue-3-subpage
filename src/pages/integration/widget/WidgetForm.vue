@@ -21,8 +21,8 @@
           <div class="flex flex-1 flex-col items-start gap-1">
             <h4 class="text-text-subtitle text-sm font-semibold">Channel Badge Icon</h4>
             <p class="text-text-placeholder text-xs font-normal">
-              Upload an image that will be used as your Channel Badge icon. We recommend you to
-              upload image 100px x 100px (square image) for better result.
+              We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG,
+              or PNG format with a maximum size of 2MB.
             </p>
           </div>
         </div>
