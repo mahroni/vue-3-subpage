@@ -1,13 +1,42 @@
 <script setup lang="ts">
-import { QiscusIcon, SignIcon } from '@/components/icons';
-import UserIcon from '@/components/icons/UserIcon.vue';
+import {
+  BriefcaseIcon,
+  DateIcon,
+  GlobeIcon,
+  PhoneIcon,
+  PinIcon,
+  QiscusIcon,
+  SignIcon,
+  UserIcon,
+} from '@/components/icons';
 
 const props = defineProps<{
   title: string;
   subtitle: string;
   description: string;
   buttonText?: string;
+  fields?: {
+    id: string;
+    icon: string;
+    type: string;
+    label: string;
+    placeholder: string;
+  }[];
 }>();
+
+// Buat registry dari semua icon yang tersedia
+const iconRegistry: Record<string, any> = {
+  Date: DateIcon,
+  Location: PinIcon,
+  Phone: PhoneIcon,
+  Briefcase: BriefcaseIcon,
+  Globe: GlobeIcon,
+};
+
+// Fungsi untuk mendapatkan komponen icon berdasarkan nama
+const getIconComponent = (iconName: string) => {
+  return iconRegistry[iconName] || null;
+};
 </script>
 
 <template>
@@ -45,6 +74,32 @@ const props = defineProps<{
             type="text"
             class="w-full outline-none placeholder:text-[#A0A0A0]"
             placeholder="Type your email address"
+            disabled
+          />
+        </div>
+
+        <div
+          v-for="field in fields"
+          :key="field.id"
+          class="flex w-full items-center gap-3 rounded-2xl px-3 py-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
+        >
+          <div class="rounded-lg bg-[#F5F5F5] p-[7px]">
+            <component
+              v-if="getIconComponent(field.icon)"
+              :is="getIconComponent(field.icon)"
+              :size="18"
+            />
+            <div
+              v-else
+              class="flex h-[18px] w-[18px] items-center justify-center rounded bg-gray-300 text-xs"
+            >
+              ?
+            </div>
+          </div>
+          <input
+            :type="field.type"
+            class="w-full outline-none placeholder:text-[#A0A0A0]"
+            :placeholder="field.placeholder"
             disabled
           />
         </div>

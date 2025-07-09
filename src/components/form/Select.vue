@@ -4,41 +4,78 @@
       {{ label }}
     </label>
     <div :class="computedSelectWrapperClasses">
-      <select
+      <!-- Custom Select Button -->
+      <button
         :id="id"
-        :value="selectedValue"
-        @change="handleChange"
+        type="button"
+        @click="toggleDropdown"
         :class="computedSelectClasses"
         :disabled="disabled"
+        @blur="handleBlur"
       >
-        <option value="" disabled selected>{{ placeholder }}</option>
-        <option
-          v-for="option in options"
-          :key="option.value"
-          :value="option.value"
-          class="text-gray-900"
+        <span class="block truncate text-left">
+          {{ selectedOption?.text || placeholder }}
+        </span>
+        <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+          <ChevronDownIcon
+            :class="
+              [
+                'h-5 w-5 text-gray-400 transition-transform duration-200',
+                isOpen ? 'rotate-180' : '',
+              ].join(' ')
+            "
+          />
+        </span>
+      </button>
+
+      <!-- Custom Dropdown -->
+      <Transition
+        enter-active-class="transition ease-out duration-100"
+        enter-from-class="transform opacity-0 scale-95"
+        enter-to-class="transform opacity-100 scale-100"
+        leave-active-class="transition ease-in duration-75"
+        leave-from-class="transform opacity-100 scale-100"
+        leave-to-class="transform opacity-0 scale-95"
+      >
+        <div
+          v-if="isOpen"
+          class="bg-surface-primary-white shadow-small absolute z-[1999] mt-1 max-h-60 w-full overflow-auto rounded-lg p-3"
         >
-          {{ option.text }}
-        </option>
-      </select>
-      <div
-        class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"
-      >
-        <ChevronDownIcon class="h-5 w-5" />
-      </div>
+          <div
+            v-for="option in options"
+            :key="option.value"
+            @click="selectOption(option)"
+            class="relative cursor-pointer py-2 pr-9 pl-3 select-none hover:bg-gray-50"
+          >
+            <span
+              :class="[
+                'block truncate text-sm font-medium',
+                selectedValue === option.value ? 'text-text-primary' : 'text-text-title',
+              ]"
+            >
+              {{ option.text }}
+            </span>
+
+            <!-- Check icon for selected option -->
+            <span
+              v-if="selectedValue === option.value"
+              class="text-icon-green absolute inset-y-0 right-0 flex items-center pr-4"
+            >
+              <CheckIcon class="h-5 w-5" />
+            </span>
+          </div>
+        </div>
+      </Transition>
     </div>
     <p v-if="error" class="text-danger mt-2 text-sm font-normal">{{ errorMessage }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-// Assuming this path is correct
 import { cva } from 'class-variance-authority';
-import { computed, toRefs } from 'vue';
+import { computed, nextTick, ref, toRefs } from 'vue';
 
-import { ChevronDownIcon } from '@/components/icons';
-
-// Import cva
+import { CheckIcon, ChevronDownIcon } from '@/components/icons';
 
 interface SelectOption {
   value: string | number;
@@ -90,6 +127,7 @@ const emit = defineEmits<{
 }>();
 
 const { modelValue } = toRefs(props);
+const isOpen = ref(false);
 
 const selectedValue = computed<string | number>({
   get: () => modelValue.value,
@@ -98,9 +136,27 @@ const selectedValue = computed<string | number>({
   },
 });
 
-const handleChange = (event: Event) => {
-  const target = event.target as HTMLSelectElement;
-  selectedValue.value = target.value;
+const selectedOption = computed(() => {
+  return props.options.find((option) => option.value === selectedValue.value);
+});
+
+const toggleDropdown = () => {
+  if (!props.disabled) {
+    isOpen.value = !isOpen.value;
+  }
+};
+
+const selectOption = (option: SelectOption) => {
+  selectedValue.value = option.value;
+  isOpen.value = false;
+};
+
+const handleBlur = async () => {
+  // Add small delay to allow click events to fire first
+  await nextTick();
+  setTimeout(() => {
+    isOpen.value = false;
+  }, 150);
 };
 
 // CVA classes for styling
@@ -119,12 +175,12 @@ const selectWrapperClasses = cva('relative', {
 });
 
 const selectClasses = cva(
-  'block w-full border rounded-md shadow-sm sm:text-sm appearance-none px-4 py-3',
+  'relative w-full cursor-default rounded-md border py-3 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 sm:text-sm',
   {
     variants: {
       disabled: {
         true: 'cursor-not-allowed !text-[#A0A0A0] !bg-surface-disable',
-        false: 'bg-white text-gray-900',
+        false: 'bg-white text-gray-900 cursor-pointer',
       },
       error: {
         true: '!ring-1 !ring-danger focus:!ring-danger border-danger',
