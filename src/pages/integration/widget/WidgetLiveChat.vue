@@ -33,7 +33,7 @@ interface Tab {
 
 const tabs: Tab[] = [
   {
-    label: 'Welcome Dialog',
+    label: 'Welcome Dialogue',
     icon: ServerIcon,
     component: WelcomeDialog,
     queryParam: 'welcome',
@@ -69,7 +69,7 @@ const validQueryParams = computed(() => tabs.map((tab) => tab.queryParam));
 const getInitialTab = (): TabName => {
   const tabFromQuery = route.query.section as string;
   const matchedTab = tabs.find((tab) => tab.queryParam === tabFromQuery);
-  return matchedTab ? matchedTab.label : 'Welcome Dialog';
+  return matchedTab ? matchedTab.label : 'Welcome Dialogue';
 };
 
 const activeTab = ref<TabName>(getInitialTab());
@@ -134,7 +134,8 @@ if (!params.id) {
 <template>
   <div class="bg-white-100 flex w-full flex-col rounded-2xl border-[1px] border-gray-300">
     <div
-      class="bg-white-100 sticky top-0 z-50 flex w-full items-center justify-between border-b-[1px] border-gray-300 p-4 rounded-t-2xl">
+      class="bg-white-100 sticky top-0 z-50 flex w-full items-center justify-between rounded-t-2xl border-b-[1px] border-gray-300 p-4"
+    >
       <RoundedTab :tabs="tabs" v-model="activeTab" />
       <Button @click="saveAndPreview" :loading="isLoading" :disabled="isLoading">
         Save & Preview

@@ -93,7 +93,12 @@ const grabberTimeoutString = computed({
 <template>
   <div class="flex w-full items-start justify-between gap-8 self-stretch">
     <div class="flex w-full flex-1 flex-col gap-8">
-      <WidgetFormLayout id="welcome-dialog" label="Welcome Dialog" v-model="welcomeDialog" isSwitch>
+      <WidgetFormLayout
+        id="welcome-dialog"
+        label="Welcome Dialogue"
+        v-model="welcomeDialog"
+        isSwitch
+      >
         <template #inputs>
           <ImageInput
             label="Brand Icon"
