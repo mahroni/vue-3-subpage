@@ -19,6 +19,18 @@ import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 import OptionalInput from '../form/OptionalInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
 
+// File upload constants
+export const FILE_SIZE_LIMITS = {
+  IMAGE_STANDARD: 2 * 1024 * 1024, // 2MB
+  IMAGE_LARGE: 10 * 1024 * 1024, // 10MB
+  IMAGE_EXTRA_LARGE: 30 * 1024 * 1024, // 30MB
+} as const;
+
+export const ACCEPTED_IMAGE_TYPES = {
+  COMMON: 'image/png,image/jpg,image/jpeg',
+  PNG_JPG: 'image/png,image/jpg',
+} as const;
+
 const { welcomeDialogState } = storeToRefs(useQiscusLiveChatStore());
 const brandIconUpload = useUploadSdkImage();
 const actionIconUpload = useUploadSdkImage();
@@ -188,9 +200,9 @@ const grabberTimeoutString = computed({
             v-model="welcomeDialogState.isAttentionGrabberImage"
           >
             <DragDropInput
-              accept="image/png,image/jpg"
+              :accept="ACCEPTED_IMAGE_TYPES.PNG_JPG"
               acceptText="PNG or JPG"
-              :maxSize="1024 * 1024 * 10"
+              :maxSize="FILE_SIZE_LIMITS.IMAGE_EXTRA_LARGE"
               :maxFiles="1"
               :isUploading="attentionGrabberImageUpload.loading.value"
               @upload="(files) => files[0] && handleImageUpload(files[0], 'attentionGrabberImage')"
