@@ -28,26 +28,7 @@
             title="Replace image"
           >
             <div v-if="props.isUploading" class="opacity-100">
-              <svg
-                class="h-5 w-5 animate-spin text-green-600"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  class="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
-                <path
-                  class="opacity-75"
-                  fill="currentColor"
-                  d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"
-                ></path>
-              </svg>
+              <SpinnerIcon :size="20" class="animate-spin text-green-600" />
             </div>
             <!-- <CameraIcon :size="20" /> -->
           </button>
@@ -59,26 +40,7 @@
           class="m-4 flex w-fit items-center justify-center rounded-lg bg-green-200 p-3.5"
         >
           <div v-if="props.isUploading" class="relative">
-            <svg
-              class="h-5 w-5 animate-spin text-green-600"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                class="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                stroke-width="4"
-              ></circle>
-              <path
-                class="opacity-75"
-                fill="currentColor"
-                d="m12 2a10 10 0 0 1 10 10h-2a8 8 0 0 0-8-8v-2z"
-              ></path>
-            </svg>
+            <SpinnerIcon :size="20" class="animate-spin text-green-600" />
           </div>
           <Icon v-else name="plus" :size="20" class="text-green-600" />
         </div>
@@ -105,7 +67,7 @@
 import { cva } from 'class-variance-authority';
 import { ref, watch } from 'vue';
 
-import { Icon } from '@/components/icons';
+import { Icon, SpinnerIcon } from '@/components/icons';
 
 interface Props {
   id: string;
