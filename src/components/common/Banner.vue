@@ -6,6 +6,7 @@ import Icon from '../icons/Icon.vue';
 interface BannerProps {
   intent?: 'positive' | 'negative' | 'warning';
   type?: 'solid' | 'outline';
+  size?: 'small' | 'medium';
   closeable?: boolean;
 }
 
@@ -16,6 +17,7 @@ const emit = defineEmits<{
 const props = withDefaults(defineProps<BannerProps>(), {
   intent: 'positive',
   type: 'solid',
+  size: 'medium',
   closeable: false,
 });
 
@@ -29,6 +31,10 @@ const bannerClasses = cva('rounded-lg p-4', {
     type: {
       solid: 'border-none',
       outline: 'border border-success',
+    },
+    size: {
+      small: 'py-2 px-4',
+      medium: 'p-4',
     },
   },
   compoundVariants: [
@@ -55,6 +61,7 @@ const bannerClasses = cva('rounded-lg p-4', {
 })({
   intent: props.intent,
   type: props.type,
+  size: props.size,
 });
 
 const handleClose = () => {

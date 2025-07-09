@@ -9,26 +9,29 @@
         Build your Qiscus Live Chat based on your need using our builder.
       </p>
 
-      <div class="flex w-140 items-center gap-5">
-        <ImageInput
-          v-model="channel.badge_url"
-          id="channel-badge"
-          @error="(e) => (errorMessages = e)"
-          :isUploading="uSdkImage.loading.value"
-          @upload="uploadImage"
-        />
-        <div class="flex flex-1 flex-col items-start gap-1">
-          <h4 class="text-text-subtitle text-sm font-semibold">Channel Badge Icon</h4>
-          <p class="text-text-placeholder text-xs font-normal">
-            We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG, or
-            PNG format with a maximum size of 2MB.
-          </p>
+      <div class="flex w-140 flex-col gap-2">
+        <div class="flex items-center gap-5">
+          <ImageInput
+            v-model="channel.badge_url"
+            id="channel-badge"
+            @error="(e) => (errorMessages = e)"
+            :isUploading="uSdkImage.loading.value"
+            @upload="uploadImage"
+          />
+          <div class="flex flex-1 flex-col items-start gap-1">
+            <h4 class="text-text-subtitle text-sm font-semibold">Channel Badge Icon</h4>
+            <p class="text-text-placeholder text-xs font-normal">
+              We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG,
+              or PNG format with a maximum size of 2MB.
+            </p>
+          </div>
         </div>
+        <Banner v-if="errorMessages" intent="negative" size="small">
+          <p>
+            {{ errorMessages }}
+          </p>
+        </Banner>
       </div>
-
-      <Banner v-if="errorMessages" intent="negative" closeable>
-        {{ errorMessages }}
-      </Banner>
 
       <div class="w-[552px]">
         <Input
@@ -127,6 +130,8 @@ async function uploadImage(file: File) {
   }
 
   channel.badge_url = uSdkImage.data.value?.url || '';
+  // Clear error message when upload is successful
+  errorMessages.value = '';
 }
 
 function setData() {

@@ -11,8 +11,8 @@
         :src="CHANNEL_BADGE_URL.qiscus"
         alt="Qiscus Logo"
         loading="lazy"
-        width="20"
-        height="20"
+        width="24"
+        height="24"
       />
       <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>

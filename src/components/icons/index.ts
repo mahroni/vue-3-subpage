@@ -91,6 +91,7 @@ export { default as ServerIcon } from './ServerIcon.vue';
 export { default as SettingIcon } from './SettingIcon.vue';
 export { default as ShopIcon } from './ShopIcon.vue';
 export { default as SignIcon } from './SignIcon.vue';
+export { default as SpinnerIcon } from './SpinnerIcon.vue';
 export { default as SquareIcon } from './SquareIcon.vue';
 export { default as SubmitTicketIcon } from './SubmitTicketIcon.vue';
 export { default as SubscriptionIcon } from './SubscriptionIcon.vue';

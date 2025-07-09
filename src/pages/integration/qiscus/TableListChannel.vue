@@ -67,7 +67,7 @@
                   title="Copy Channel ID"
                   @click.stop="copyToClipboard(channel.channelId)"
                 >
-                  <CopyIcon :size="12" />
+                  <CopyIcon :size="16" />
                 </ButtonIcon>
               </div>
             </td>
