@@ -8,7 +8,7 @@
     <!-- Header -->
     <div class="flex items-center gap-2">
       <ChatIcon :size="20" />
-      <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat test</h2>
+      <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>
 
     <div class="bg-surface-highlight rounded-lg p-4 text-sm font-medium">
