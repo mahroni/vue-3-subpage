@@ -114,7 +114,7 @@ const switchClass = computed(() =>
         {
           variant: 'default',
           state: 'unchecked',
-          class: 'bg-gray-300',
+          class: 'bg-black-500',
         },
         {
           variant: 'success',
@@ -124,7 +124,7 @@ const switchClass = computed(() =>
         {
           variant: 'success',
           state: 'unchecked',
-          class: 'bg-gray-300',
+          class: 'bg-black-500',
         },
         {
           variant: 'warning',
@@ -134,7 +134,7 @@ const switchClass = computed(() =>
         {
           variant: 'warning',
           state: 'unchecked',
-          class: 'bg-gray-300',
+          class: 'bg-black-500',
         },
         {
           variant: 'danger',
@@ -144,7 +144,7 @@ const switchClass = computed(() =>
         {
           variant: 'danger',
           state: 'unchecked',
-          class: 'bg-gray-300',
+          class: 'bg-black-500',
         },
         {
           disabled: true,
