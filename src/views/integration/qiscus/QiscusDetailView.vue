@@ -256,7 +256,7 @@ async function handleChangeAutoResponder(e: boolean) {
 
   showAlert.success({
     title: 'Success',
-    text: 'Auto responder updated successfully.',
+    text: 'Success activating channel auto responder',
     confirmButtonText: 'Okay',
     showCancelButton: false,
   });
