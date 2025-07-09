@@ -1,9 +1,9 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-import Home from '@/views/integration/ChannelPage.vue';
-import QiscusListChannelView from '@/views/integration/QiscusListChannelView.vue';
-import QiscusCreateChannelView from '@/views/integration/qiscus/QiscusCreateChannelView.vue';
-import QiscusDetailView from '@/views/integration/qiscus/QiscusDetailView.vue';
+import ChannelView from '@/views/integration/ChannelView.vue';
+import WidgetChannel from '@/views/integration/widget/WidgetChannelView.vue';
+import WidgetCreateChannelView from '@/views/integration/widget/WidgetCreateChannelView.vue';
+import WidgetDetailView from '@/views/integration/widget/WidgetDetailView.vue';
 
 // Ensure RouteRecordRaw is imported
 
@@ -13,7 +13,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: ChannelView,
   },
   {
     path: '/whatsapp',
@@ -73,23 +73,23 @@ export const integrationRoutes: RouteRecordRaw[] = [
     path: '/qiscus',
     name: 'qiscus',
     // This is an internal Vue Router redirect, staying within the SPA.
-    redirect: { name: 'qiscusList' },
+    redirect: { name: 'qiscus-list' },
     children: [
       {
         path: '', // Full path: /qiscus
-        name: 'qiscusList',
-        component: QiscusListChannelView,
+        name: 'qiscus-list',
+        component: WidgetChannel,
       },
       {
         path: ':id', // Full path: /qiscus/:id
-        name: 'qiscusDetail',
-        component: QiscusDetailView,
+        name: 'qiscus-detail',
+        component: WidgetDetailView,
         props: true, // Pass route params as props to the component
       },
       {
         path: 'create', // Full path: /qiscus/create
-        name: 'qiscusCreate',
-        component: QiscusCreateChannelView,
+        name: 'qiscus-create',
+        component: WidgetCreateChannelView,
       },
     ],
   },

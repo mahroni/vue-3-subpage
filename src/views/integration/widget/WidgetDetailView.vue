@@ -23,12 +23,8 @@
 
         <div class="mt-4">
           <!-- Dynamic component rendering -->
-          <component
-            :is="currentTabComponent"
-            v-if="currentTabComponent"
-            v-model="settingData"
-            @open-auto-responder-form="handleOpenAutoResponderForm"
-          />
+          <component :is="currentTabComponent" v-if="currentTabComponent" v-model="settingData"
+            @open-auto-responder-form="handleOpenAutoResponderForm" />
         </div>
       </div>
 
@@ -56,7 +52,7 @@ import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qi
 import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
 import { useUpdateConfig } from '@/composables/channels/useUpdateConfigChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import AutoResponderForm from '@/pages/integration/AutoResponderForm.vue';
+import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
 import WidgetCode from '@/pages/integration/widget/WidgetCode.vue';
 import WidgetForm from '@/pages/integration/widget/WidgetForm.vue';
 import WidgetLiveChat from '@/pages/integration/widget/WidgetLiveChat.vue';

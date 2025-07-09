@@ -6,8 +6,8 @@ import { Button } from '@/components/common/common';
 import { BackIcon, HomeIcon } from '@/components/icons';
 import { useCreateQiscus } from '@/composables/channels/qiscus';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import AutoResponderForm from '@/pages/integration/AutoResponderForm.vue';
-import CreateNewForm from '@/pages/integration/qiscus/CreateNewForm.vue';
+import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
+import CreateWidgetForm from '@/features/widget/components/forms/CreateWidgetForm.vue';
 import type { IWidgetChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
@@ -80,7 +80,7 @@ async function handleSubmit() {
     });
   }
 
-  router.replace({ name: 'qiscusDetail', params: { id: uQiscus.data.value?.id } });
+  router.replace({ name: 'qiscus-detail', params: { id: uQiscus.data.value?.id } });
 }
 
 function handleCancelAutoResponder() {
@@ -105,19 +105,13 @@ function handleCancelAutoResponder() {
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <!-- Header -->
       <div class="flex items-center gap-3">
-        <img
-          :src="CHANNEL_BADGE_URL.qiscus"
-          alt="Qiscus Logo"
-          class="h-6 w-6"
-          width="24"
-          height="24"
-        />
+        <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
         <h2 class="text-xl font-semibold text-[#0A0A0A]">New Integration - Qiscus Live Chat</h2>
       </div>
 
       <!-- Form section -->
       <form @submit.prevent="confirmSubmit" v-if="!isAutoresponderFormOpen">
-        <CreateNewForm v-model="channel" />
+        <CreateWidgetForm v-model="channel" />
 
         <div class="mt-8 flex justify-end gap-4">
           <Button intent="secondary" to="/qiscus" replace>Back</Button>
