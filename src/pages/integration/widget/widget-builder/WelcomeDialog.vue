@@ -20,13 +20,13 @@ import OptionalInput from '../form/OptionalInput.vue';
 import WidgetFormLayout from '../form/WIdgetFormLayout.vue';
 
 // File upload constants
-export const FILE_SIZE_LIMITS = {
+const FILE_SIZE_LIMITS = {
   IMAGE_STANDARD: 2 * 1024 * 1024, // 2MB
   IMAGE_LARGE: 10 * 1024 * 1024, // 10MB
   IMAGE_EXTRA_LARGE: 30 * 1024 * 1024, // 30MB
 } as const;
 
-export const ACCEPTED_IMAGE_TYPES = {
+const ACCEPTED_IMAGE_TYPES = {
   COMMON: 'image/png,image/jpg,image/jpeg',
   PNG_JPG: 'image/png,image/jpg',
 } as const;
