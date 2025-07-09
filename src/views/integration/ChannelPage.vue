@@ -70,7 +70,7 @@ const channels = [
   {
     type: 'instagram',
     name: 'Instagram',
-    group: null,
+    group: 'business_messaging',
     icon: 'https://omnichannel.qiscus.com/img/instagram_badge.svg',
     status: '',
     description:
@@ -88,7 +88,7 @@ const channels = [
   {
     type: 'facebook',
     name: 'Facebook',
-    group: null,
+    group: 'business_messaging',
     icon: 'https://omnichannel.qiscus.com/img/messenger_badge.svg',
     status: '',
     description:
@@ -97,7 +97,7 @@ const channels = [
   {
     type: 'line',
     name: 'LINE',
-    group: null,
+    group: 'business_messaging',
     icon: 'https://omnichannel.qiscus.com/img/line_badge.svg',
     status: '',
     description: 'Connect your LINE Account to manage chats easily from your omnichannel inbox.',
@@ -105,7 +105,7 @@ const channels = [
   {
     type: 'telegram',
     name: 'Telegram',
-    group: null,
+    group: 'business_messaging',
     icon: 'https://omnichannel.qiscus.com/img/telegram_badge.svg',
     status: '',
     description:

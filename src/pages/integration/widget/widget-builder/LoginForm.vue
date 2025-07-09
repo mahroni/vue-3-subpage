@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, watch } from 'vue';
 
 import Banner from '@/components/common/Banner.vue';
 import Button from '@/components/common/Button.vue';
@@ -46,13 +46,13 @@ const additionalField = reactive<AdditionalField>({
 
 const isOpenModal = ref(false);
 
-// Form validation untuk additional field
+// Form validation for additional field
 const isAdditionalFieldValid = computed(() => {
   if (!additionalField.type) return false;
   if (!additionalField.name.trim()) return false;
   if (!additionalField.placeholder.trim()) return false;
 
-  // Jika tipe dropdown, pastikan ada minimal 1 option
+  // If type dropdown, make sure there is at least 1 option
   if (additionalField.type === 'dropdown') {
     return additionalField.options && additionalField.options.length > 0;
   }
@@ -125,6 +125,16 @@ const uploadImage = async (file: File) => {
     console.error(error.value);
   }
 };
+
+watch(
+  () => additionalField.iconField,
+  (newIcon, oldIcon) => {
+    if (newIcon !== oldIcon) {
+      console.log('User selected icon:', newIcon);
+      // console.log('Previous icon:', oldIcon);
+    }
+  }
+);
 </script>
 
 <template>
@@ -234,6 +244,15 @@ const uploadImage = async (file: File) => {
         :subtitle="loginFormState.secondDescription"
         :description="loginFormState.formSubtitle"
         :buttonText="loginFormState.buttonText"
+        :fields="
+          loginFormState.extraFields.map((field) => ({
+            id: field.name,
+            icon: field.iconField || '',
+            type: field.type === 'dropdown' ? 'select' : field.type,
+            label: field.name,
+            placeholder: field.placeholder,
+          }))
+        "
       />
       <div class="bg-surface-disable h-16 w-16 rounded-full" />
     </div>
