@@ -19,7 +19,7 @@ const isBot = ref(false);
 const isAutoresponderFormOpen = ref(false);
 
 const channel = ref<IWidgetChannel>({
-  badge_url: '',
+  badge_url: CHANNEL_BADGE_URL.qiscus,
   name: '',
   is_active: true,
   is_secure: true,
