@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { Button } from '@/components/common/common';
@@ -30,6 +30,11 @@ const channel = ref<IWidgetChannel>({
     send_offline_each_message: false,
     send_online_if_resolved: false,
   },
+});
+
+// Add computed property for form validation
+const isFormValid = computed(() => {
+  return channel.value.name.trim() !== '' && channel.value.is_secure_toc === true;
 });
 
 function confirmSubmit(payload: any) {
@@ -116,7 +121,7 @@ function handleCancelAutoResponder() {
 
         <div class="mt-8 flex justify-end gap-4">
           <Button intent="secondary" to="/qiscus" replace>Back</Button>
-          <Button type="submit">Next</Button>
+          <Button type="submit" :disabled="!isFormValid">Next</Button>
         </div>
       </form>
 
