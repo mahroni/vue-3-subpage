@@ -16,10 +16,11 @@ import { PlusIcon } from '@/components/icons';
 import Divider from '@/components/ui/Divider.vue';
 import LoginForm from '@/components/ui/widget-preview/LoginForm.vue';
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
-import DropdownItemInput from '@/pages/integration/widget/form/DropdownItemInput.vue';
-import IconSelectInput from '@/pages/integration/widget/form/IconSelectInput.vue';
-import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
+import WidgetFormLayout from '@/features/widget-builder/components/layout/WidgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
+
+import DropdownItemInput from './components/form/DropdownItemInput.vue';
+import IconSelectInput from './components/form/IconSelectInput.vue';
 
 interface AdditionalField {
   type: string;

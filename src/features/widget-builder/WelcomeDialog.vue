@@ -14,9 +14,10 @@ import AttentionGrabber from '@/components/ui/widget-preview/AttentionGrabber.vu
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
-import OptionalInput from '@/pages/integration/widget/form/OptionalInput.vue';
-import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
+import WidgetFormLayout from '@/features/widget-builder/components/layout/WidgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
+
+import OptionalInput from './components/form/OptionalInput.vue';
 
 // File upload constants
 const FILE_SIZE_LIMITS = {
