@@ -10,7 +10,9 @@
       </router-view>
     </main>
     <transition name="fade">
-      <MainLoading v-if="loading" />
+      <div v-if="loading">
+        <MainLoading />
+      </div>
     </transition>
   </div>
 </template>
@@ -49,8 +51,6 @@ watchEffect(() => {
   // For simplicity, keeping them consistent here.
   enterActiveClass.value = 'transition-all duration-100 ease-out';
   leaveActiveClass.value = 'transition-all duration-100 ease-in';
-
-  console.log('App.vue: Navigation direction updated to:', navigationDirection.value);
 });
 
 

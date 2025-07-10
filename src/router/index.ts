@@ -60,14 +60,14 @@ export function createRouter(appId?: string | number): Router {
   if (typeof window !== 'undefined') {
     router.options.history.listen((_to, _from, info) => {
       navigationDirection.value = info.direction as 'back' | 'forward' | 'replace' | 'initial';
-      console.log('History listen direction:', info.direction);
+      // console.log('History listen direction:', info.direction);
     });
   }
 
-  router.beforeEach((_to, _from, next) => {
-    console.log('BeforeEach - current navigation direction:', navigationDirection.value);
-    next();
-  });
+  // router.beforeEach((_to, _from, next) => {
+  //   console.log('BeforeEach - current navigation direction:', navigationDirection.value);
+  //   next();
+  // });
 
   return router;
 }

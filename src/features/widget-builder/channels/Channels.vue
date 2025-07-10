@@ -1,21 +1,20 @@
 <script setup lang="ts">
-
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import TextArea from '@/components/form/TextArea.vue';
-import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
+import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
+import WidgetFormLayout from '@/features/widget-builder/components/layout/WidgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import ChannelListCard from './components/ChannelListCard.vue';
 import PreviewChannels from './components/PreviewChannels.vue';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
-const {loading, data, error, upload} = useUploadSdkImage()
+const { loading, data, error, upload } = useUploadSdkImage();
 
 const uploadImage = async (file: File) => {
   await upload(file);
-  if(data.value) {
+  if (data.value) {
     qiscusLiveChatStore.channelBadgeIcon = data.value.url;
   } else {
     console.error(error.value);
@@ -27,7 +26,12 @@ const uploadImage = async (file: File) => {
   <div class="flex w-full items-start gap-8 self-stretch">
     <!-- Form Section -->
     <div class="flex w-full flex-1 flex-col gap-8">
-      <WidgetFormLayout id="channels-switch" label="Channels" isSwitch v-model="qiscusLiveChatStore.isChannelsEnabled">
+      <WidgetFormLayout
+        id="channels-switch"
+        label="Channels"
+        isSwitch
+        v-model="qiscusLiveChatStore.isChannelsEnabled"
+      >
         <template #inputs>
           <Input
             id="welcome-channel-title"

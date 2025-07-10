@@ -7,7 +7,7 @@ import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue'
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-import WIdgetFormLayout from '../form/WIdgetFormLayout.vue';
+import WIdgetFormLayout from './components/layout/WidgetFormLayout.vue';
 
 const { chatFormState } = storeToRefs(useQiscusLiveChatStore());
 const { loading, data, error, upload } = useUploadSdkImage();

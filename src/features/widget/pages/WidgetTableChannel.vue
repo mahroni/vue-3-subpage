@@ -269,7 +269,7 @@ async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
 
 function getDetailChannel(channel: IChannel) {
   router.push({
-    name: 'qiscusDetail',
+    name: 'qiscus-detail',
     params: { id: channel.id },
   });
 }

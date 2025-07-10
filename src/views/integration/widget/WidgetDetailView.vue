@@ -56,10 +56,10 @@ import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qi
 import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
 import { useUpdateConfig } from '@/composables/channels/useUpdateConfigChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import AutoResponderForm from '@/pages/integration/AutoResponderForm.vue';
+import WidgetLiveChat from '@/features/widget-builder/pages/WidgetLiveChat.vue';
+import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
 import WidgetCode from '@/pages/integration/widget/WidgetCode.vue';
 import WidgetForm from '@/pages/integration/widget/WidgetForm.vue';
-import WidgetLiveChat from '@/pages/integration/widget/WidgetLiveChat.vue';
 import WidgetSettings from '@/pages/integration/widget/WidgetSetting.vue';
 import type { IWidgetChannel } from '@/types/channels';
 

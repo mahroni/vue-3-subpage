@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 import Banner from '@/components/common/Banner.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
-import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
+import WidgetFormLayout from '@/features/widget-builder/components/layout/WidgetFormLayout.vue';
 
 import PreviewColorScheme from './components/PreviewColorScheme.vue';
 

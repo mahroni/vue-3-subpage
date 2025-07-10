@@ -7,13 +7,12 @@ import type {
   IWidgetChannel,
   WidgetChannelCreateData,
   WidgetChannelUpdateData,
-} from '@/pages/integration/widget/widget-builder/channels/channels';
+} from '@/features/widget-builder/channels/channels';
 import type {
   ICallToActionState,
   IChatFormState,
   ILoginFormState,
   IWelcomeDialogState,
-  IWidgetConfigResponse,
   IWidgetVariables,
 } from '@/types/live-chat';
 
@@ -58,7 +57,8 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     isAttentionGrabberText: true,
     attentionGrabberText: 'Hello, there is Promo!',
     grabberTimeout: null,
-    attentionGrabberImage: '',
+    attentionGrabberImage:
+      'https://d1edrlpyc25xu0.cloudfront.net/zalda-vvq7pksvblaiy7s/image/upload/U5zXXEv54V/file_example_PNG_500kB.png',
     brandIconWelcomeDialog: '',
     actionsWelcomeDialog: [
       {
@@ -127,7 +127,8 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   // state for chat form
   const chatFormState = reactive<IChatFormState>({
     customerServiceName: 'Qiscus Customer Care',
-    customerServiceAvatar: '',
+    customerServiceAvatar:
+      'https://d1edrlpyc25xu0.cloudfront.net/zalda-vvq7pksvblaiy7s/image/upload/U5zXXEv54V/file_example_PNG_500kB.png',
   });
 
   // GETTERS
@@ -228,7 +229,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   };
 
   const postWidgetConfig = async (appId: string, channelId: string) => {
-    const payload: IWidgetConfigResponse = {
+    const payload: any = {
       style: {},
       widget: {
         variables: {
@@ -237,6 +238,8 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
           welcomeMessageStatus: welcomeDialogState.isWelcomeDialog,
           attentionGrabberStatus: welcomeDialogState.isAttentionGrabber,
           welcomeText: welcomeDialogState.firstDescriptionWelcomeDialog,
+          firstDescriptionWelcomeDialog: welcomeDialogState.firstDescriptionWelcomeDialog,
+          secondDescriptionWelcomeDialog: welcomeDialogState.secondDescriptionWelcomeDialog,
           welcomeTimeout: welcomeDialogState.welcomeTimeout,
           openAtStart: welcomeDialogState.openAtStart,
           grabberImage: welcomeDialogState.isAttentionGrabberImage,
