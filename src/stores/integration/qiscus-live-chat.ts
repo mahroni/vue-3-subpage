@@ -7,7 +7,7 @@ import type {
   IWidgetChannel,
   WidgetChannelCreateData,
   WidgetChannelUpdateData,
-} from '@/pages/integration/widget/widget-builder/channels/channels';
+} from '@/features/widget-builder/channels/channels';
 import type {
   ICallToActionState,
   IChatFormState,

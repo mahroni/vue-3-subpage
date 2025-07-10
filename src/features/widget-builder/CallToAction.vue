@@ -7,10 +7,9 @@ import InputCustom from '@/components/form/InputCustom.vue';
 import CallToAction from '@/components/ui/widget-preview/CallToAction.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
+import OptionalInput from '@/pages/integration/widget/form/OptionalInput.vue';
 import WidgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
-
-import OptionalInput from '../form/OptionalInput.vue';
 
 const { callToActionState } = storeToRefs(useQiscusLiveChatStore());
 const { loading, data, error, upload } = useUploadSdkImage();

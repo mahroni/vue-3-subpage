@@ -12,15 +12,14 @@ import {
   TableIcon,
   ToggleLeftIcon,
 } from '@/components/icons';
+import CallToAction from '@/features/widget-builder/CallToAction.vue';
+import Chat from '@/features/widget-builder/Chat.vue';
+import LoginForm from '@/features/widget-builder/LoginForm.vue';
+import WelcomeDialog from '@/features/widget-builder/WelcomeDialog.vue';
+import Channels from '@/features/widget-builder/channels/Channels.vue';
+import ColorScheme from '@/features/widget-builder/color-scheme/ColorScheme.vue';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
-
-import CallToAction from './widget-builder/CallToAction.vue';
-import Chat from './widget-builder/Chat.vue';
-import LoginForm from './widget-builder/LoginForm.vue';
-import WelcomeDialog from './widget-builder/WelcomeDialog.vue';
-import Channels from './widget-builder/channels/Channels.vue';
-import ColorScheme from './widget-builder/color-scheme/ColorScheme.vue';
 
 type TabName = string;
 

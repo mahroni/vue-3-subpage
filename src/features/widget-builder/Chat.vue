@@ -5,9 +5,8 @@ import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
+import WIdgetFormLayout from '@/pages/integration/widget/form/WIdgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
-
-import WIdgetFormLayout from '../form/WIdgetFormLayout.vue';
 
 const { chatFormState } = storeToRefs(useQiscusLiveChatStore());
 const { loading, data, error, upload } = useUploadSdkImage();
