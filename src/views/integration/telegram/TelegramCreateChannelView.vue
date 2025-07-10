@@ -5,12 +5,15 @@ import MainTab from '@/components/common/Tabs/MainTab.vue';
 import { BackIcon, HomeIcon } from '@/components/icons';
 import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import CreateTelegramForm from '@/features/telegram/components/form/CreateTelegramForm.vue';
 import CollapsibleGroup from '@/components/common/CollapsibleGroup.vue';
 import type { IAutoResponder } from '@/types/channels';
 import { useSweetAlert } from '@/composables/useSweetAlert';
+import { useRouter } from 'vue-router';
+
 const { showAlert } = useSweetAlert();
+const router = useRouter()
 
 const activeTab = ref<string>('Overview');
 const isBot = ref(false);
@@ -81,6 +84,13 @@ function handleSubmit() {
     showCancelButton: false,
   });
 }
+
+onMounted(() => {
+  // fetched
+  router.replace({
+    'name': 'telegram-create'
+  })
+})
 </script>
 
 <template>
@@ -147,6 +157,11 @@ function handleSubmit() {
             <div class="mt-8 flex justify-end gap-4">
               <!-- <Button intent="secondary" to="/" replace>Back</Button> -->
               <Button type="submit">Next</Button>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <Button intent="danger">Delete Channel</Button>
+              <Button type="submit">Save Changes</Button>
             </div>
           </form>
         </template>

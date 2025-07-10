@@ -5,11 +5,12 @@ import MainTab from '@/components/common/Tabs/MainTab.vue';
 import { BackIcon, HomeIcon } from '@/components/icons';
 import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import CreateTelegramForm from '@/features/telegram/components/form/CreateTelegramForm.vue';
 import CollapsibleGroup from '@/components/common/CollapsibleGroup.vue';
 import type { IAutoResponder } from '@/types/channels';
 import { useSweetAlert } from '@/composables/useSweetAlert';
+
 const { showAlert } = useSweetAlert();
 
 const activeTab = ref<string>('Overview');
@@ -47,15 +48,17 @@ const items = [
   },
 ]
 
-function handleOpenAutoResponderForm() {
-  isAutoresponderFormOpen.value = true
+// --- UI State Change Functions ---
+function openAutoResponderForm() {
+  isAutoresponderFormOpen.value = true;
 }
 
-function handleCancelAutoResponder() {
-  isAutoresponderFormOpen.value = false
+function closeAutoResponderForm() {
+  isAutoresponderFormOpen.value = false;
 }
 
-function confirmSubmit() {
+// --- Composable / API Interaction Functions ---
+function initiateChannelSetupConfirmation() {
   showAlert
     .warning({
       title: 'Add Channel Auto Responder',
@@ -66,21 +69,37 @@ function confirmSubmit() {
     .then((result: any) => {
       console.log('result', result);
       if (result.isConfirmed) {
-        isAutoresponderFormOpen.value = true;
+        openAutoResponderForm(); // Call UI state change function
       } else if (result.dismiss === 'cancel') {
-        handleSubmit();
+        submitChannelConfiguration(); // Call API interaction function
       }
     });
 }
 
-function handleSubmit() {
+function submitChannelConfiguration() {
+  // This is where you'd typically make an API call to save the channel data.
+  // For now, it just shows a success message.
   return showAlert.success({
     title: 'Success',
-    text: 'Failed to create Telegram channel. Please try again.',
+    text: 'Failed to create Telegram channel. Please try again.', // Consider changing this text for a success message
     confirmButtonText: 'Okay',
     showCancelButton: false,
   });
 }
+
+function toggleTelegramIntegration(status: boolean) {
+  console.log('toggle Telegram integration status', status);
+  // Here, you would typically make an API call to update the Telegram integration status
+}
+
+function toggleAutoResponder(status: boolean) {
+  console.log('toggle auto responder status', status);
+  // Here, you would typically make an API call to update the auto responder status
+}
+
+onMounted(() => {
+  // fetched
+})
 </script>
 
 <template>
@@ -98,7 +117,6 @@ function handleSubmit() {
     </div>
 
     <div class="mx-auto flex w-11/12 flex-col gap-8">
-      <!-- Header -->
       <div class="flex items-center gap-3">
         <img :src="CHANNEL_BADGE_URL.telegram" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
         <h2 class="text-xl font-semibold text-[#0A0A0A]">Telegram</h2>
@@ -122,7 +140,8 @@ function handleSubmit() {
               <div class="flex justify-between gap-8 text-[#565656] text-sm">
                 <div v-html="item.content"></div>
                 <div>
-                  <Switch variant="success" v-model="isEnableTelegram" size="medium" />
+                  <Switch variant="success" v-model="isEnableTelegram" @change="toggleTelegramIntegration"
+                    size="medium" />
                 </div>
               </div>
             </template>
@@ -130,23 +149,28 @@ function handleSubmit() {
               <div class="flex justify-between gap-8 text-[#565656] text-sm">
                 {{ item.content }}
                 <div>
-                  <Switch variant="success" size="medium" v-model="isEnableAutoResponder" />
+                  <Switch variant="success" size="medium" v-model="isEnableAutoResponder"
+                    @change="toggleAutoResponder" />
                 </div>
               </div>
-              <Button intent="secondary" class="mt-4" @click="handleOpenAutoResponderForm">Set Channel Auto
+              <Button intent="secondary" class="mt-4" @click="openAutoResponderForm">Set Channel Auto
                 Responder</Button>
             </template>
           </CollapsibleGroup>
         </template>
 
         <template v-if="activeTab == 'Overview'">
-          <!-- Form section -->
-          <form v-if="!isAutoresponderFormOpen" @submit.prevent="confirmSubmit" class="flex flex-col gap-8">
+          <form v-if="!isAutoresponderFormOpen" @submit.prevent="initiateChannelSetupConfirmation"
+            class="flex flex-col gap-8">
             <CreateTelegramForm v-model="channel" />
 
             <div class="mt-8 flex justify-end gap-4">
-              <!-- <Button intent="secondary" to="/" replace>Back</Button> -->
               <Button type="submit">Next</Button>
+            </div>
+
+            <div class="mt-8 flex justify-between">
+              <Button intent="danger">Delete Channel</Button>
+              <Button type="submit">Save Changes</Button>
             </div>
           </form>
         </template>
@@ -157,7 +181,7 @@ function handleSubmit() {
         <AutoResponderForm v-model="configs" :is-bot="isBot" />
 
         <div class="mt-8 flex justify-end gap-4">
-          <Button intent="secondary" @click="handleCancelAutoResponder">Back</Button>
+          <Button intent="secondary" @click="closeAutoResponderForm">Back</Button>
           <Button type="submit">Save Changes</Button>
         </div>
       </form>
