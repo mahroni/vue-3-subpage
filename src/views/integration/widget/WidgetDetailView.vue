@@ -226,12 +226,12 @@ function handleOpenAutoResponderForm(isOpen: boolean = true) {
 }
 
 const useConfig = useUpdateConfig();
-async function handleChangeAutoResponder(e: boolean) {
+async function handleChangeAutoResponder(isEnabled: boolean) {
   if (!channel.id) return;
 
   useConfig.update(channel.id as string, {
     ...channel.configs,
-    enabled: e,
+    enabled: isEnabled,
     source: 'qiscus',
   });
 
@@ -240,7 +240,7 @@ async function handleChangeAutoResponder(e: boolean) {
       ...widget.value,
       configs: {
         ...widget.value.configs,
-        is_enabled: e,
+        is_enabled: isEnabled,
       },
     };
   }
@@ -256,7 +256,9 @@ async function handleChangeAutoResponder(e: boolean) {
 
   showAlert.success({
     title: 'Success',
-    text: 'Auto responder updated successfully.',
+    text: isEnabled
+      ? 'Success activating channel auto responder'
+      : 'Success deactivating channel auto responder',
     confirmButtonText: 'Okay',
     showCancelButton: false,
   });
