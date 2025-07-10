@@ -19,7 +19,7 @@ const isBot = ref(false);
 const isAutoresponderFormOpen = ref(false);
 
 const channel = ref<IWidgetChannel>({
-  badge_url: CHANNEL_BADGE_URL.qiscus,
+  badge_url: '',
   name: '',
   is_active: true,
   is_secure: true,
@@ -65,6 +65,11 @@ async function handleSubmit() {
 
   const payload: any = { ...channel.value };
 
+  // Add fallback for badge_url if empty or null
+  if (!payload.badge_url || payload.badge_url.trim() === '') {
+    payload.badge_url = CHANNEL_BADGE_URL.qiscus;
+  }
+
   if (payload.configs.offline_message === '' && payload.configs.online_message === '') {
     delete payload.configs;
   }
@@ -105,7 +110,13 @@ function handleCancelAutoResponder() {
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <!-- Header -->
       <div class="flex items-center gap-3">
-        <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
+        <img
+          :src="CHANNEL_BADGE_URL.qiscus"
+          alt="Qiscus Logo"
+          class="h-6 w-6"
+          width="24"
+          height="24"
+        />
         <h2 class="text-xl font-semibold text-[#0A0A0A]">New Integration - Qiscus Live Chat</h2>
       </div>
 
