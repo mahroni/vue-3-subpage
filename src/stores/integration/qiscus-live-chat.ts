@@ -8,6 +8,7 @@ import type {
   WidgetChannelCreateData,
   WidgetChannelUpdateData,
 } from '@/features/widget-builder/channels/channels';
+import type { IWidgetConfigPayload } from '@/types/channels';
 import type {
   ICallToActionState,
   IChatFormState,
@@ -234,7 +235,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   };
 
   const postWidgetConfig = async (appId: string, channelId: string) => {
-    const payload: any = {
+    const payload: IWidgetConfigPayload = {
       style: {},
       widget: {
         variables: {
