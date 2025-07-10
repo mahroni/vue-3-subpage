@@ -254,7 +254,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
           grabberTimeout: welcomeDialogState.grabberTimeout ?? 0,
           attentionGrabberImage: welcomeDialogState.attentionGrabberImage,
           brandIconWelcomeDialog: welcomeDialogState.brandIconWelcomeDialog, //=> new data
-          actionsWelcomeDialog: welcomeDialogState.actionsWelcomeDialog, //=> new data
+          // actionsWelcomeDialog: welcomeDialogState.actionsWelcomeDialog, //=> new data
 
           // login form data
           formGreet: loginFormState.firstDescription,
@@ -290,9 +290,9 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
                 channelState.channelBadgeIcon ||
                 'https://d1edrlpyc25xu0.cloudfront.net/zalda-vvq7pksvblaiy7s/image/upload/U5zXXEv54V/file_example_PNG_500kB.png"',
             },
-            other_channel: [], //? don't know what to do with this
+            other_channel: channelList.value,
           },
-          colorWidget: colorWidgetState, //=> new data
+          colorWidget: colorWidgetState.value, //=> new data
           selectedWidgetPage: 'welcome',
         },
       },
