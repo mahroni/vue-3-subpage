@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 
 import Button from '@/components/common/Button.vue';
@@ -7,10 +8,9 @@ import CallToAction from '@/components/ui/widget-preview/CallToAction.vue';
 import ChatFormLoading from '@/components/ui/widget-preview/ChatFormLoading.vue';
 import LoginFormLoading from '@/components/ui/widget-preview/LoginFormLoading.vue';
 import WelcomingPage from '@/components/ui/widget-preview/WelcomingPage.vue';
+import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
-const props = defineProps<{
-  colorValue: string;
-}>();
+const { colorWidgetState } = storeToRefs(useQiscusLiveChatStore());
 
 const carouselContainer = ref<HTMLElement>();
 const currentIndex = ref(0);
@@ -74,12 +74,12 @@ const goToNext = () => {
       <WelcomingPage
         title="Hello there!"
         subtitle="Welcome to Qiscus!"
-        :textColor="props.colorValue"
+        :textColor="colorWidgetState"
         :imageUrl="''"
         :actions="[]"
       />
 
-      <CallToAction :color="props.colorValue" />
+      <CallToAction :color="colorWidgetState" />
     </div>
 
     <!-- Login Form -->
@@ -88,7 +88,7 @@ const goToNext = () => {
         title="Hello there,"
         subtitle="Welcome to Qiscus!"
         description="Please fill the details below before chatting with us!"
-        :color="props.colorValue"
+        :color="colorWidgetState"
       />
 
       <div class="bg-surface-disable h-16 w-16 rounded-full" />
@@ -101,7 +101,7 @@ const goToNext = () => {
           <div class="flex justify-end">
             <div
               class="rounded-t-[24px] rounded-br-[4px] rounded-bl-[24px] p-4 text-sm text-white"
-              :style="{ backgroundColor: props.colorValue }"
+              :style="{ backgroundColor: colorWidgetState }"
             >
               Hello there, Im Qiscus Folks!
             </div>
