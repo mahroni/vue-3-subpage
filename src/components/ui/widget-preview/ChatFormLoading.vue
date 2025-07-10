@@ -22,7 +22,12 @@ const props = defineProps<{
         <div v-else class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
         <img v-if="props.icon" :src="props.icon" width="32" height="32" />
         <div v-else class="bg-surface-disable h-8 w-8 animate-pulse rounded-full" />
-        <div v-if="props.title" class="text-sm font-medium text-[#0A0A0A]">{{ props.title }}</div>
+        <div
+          v-if="props.title"
+          class="min-w-0 flex-1 text-sm font-medium break-words text-[#0A0A0A]"
+        >
+          {{ props.title }}
+        </div>
         <div v-else class="bg-surface-disable h-4.5 w-[148px] animate-pulse rounded-full" />
       </div>
 
