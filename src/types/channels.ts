@@ -104,6 +104,8 @@ export interface IWidgetConfigPayload {
       welcomeMessageStatus: boolean;
       attentionGrabberStatus: boolean;
       welcomeText: string;
+      brandIconWelcomeDialog: string;
+      descriptionWelcomeDialog: string;
       firstDescriptionWelcomeDialog: string;
       secondDescriptionWelcomeDialog: string;
       welcomeTimeout: string;
@@ -117,9 +119,12 @@ export interface IWidgetConfigPayload {
       // Login form data
       formGreet: string;
       formSubtitle: string;
+      firstDescription: string;
+      secondDescription: string;
       buttonText: string;
       customerIdentifierInputType: string;
       extra_fields: IAdditionalField[];
+      brandLogo: string;
 
       // Chat form data
       customerServiceName: string;
@@ -130,6 +135,7 @@ export interface IWidgetConfigPayload {
       buttonHasIcon: boolean;
       buttonIcon: string;
       loginFormButtonLabel: string;
+      borderRadius: string;
 
       // Channel widget data
       channel_widget: {
@@ -138,6 +144,7 @@ export interface IWidgetConfigPayload {
           is_enable: boolean;
           name: string;
         };
+        introduction: string;
         other_channel: any[];
         subtitle: string;
         title: string;
@@ -145,6 +152,7 @@ export interface IWidgetConfigPayload {
       isChannelWidgetEnabled: boolean;
 
       selectedWidgetPage: string;
+      colorWidget: string;
     };
   };
 }
