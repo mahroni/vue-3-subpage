@@ -16,7 +16,7 @@ import { z } from 'zod';
 export const createApiResponseSchema = <T extends z.ZodRawShape>(dataSchema: z.ZodObject<T>) => {
   return z.object({
     data: dataSchema,
-    status: z.number(),
+    status: z.number().optional(),
   });
 };
 
