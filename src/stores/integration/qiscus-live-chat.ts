@@ -193,7 +193,6 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     try {
       const { data } = await qiscusApi.getWidgetConfig(appId, channelId);
       if (data) {
-        console.log(data.data, 'data');
         const widget: IWidgetVariables = data.data.widget.variables;
 
         // set state welcome dialog

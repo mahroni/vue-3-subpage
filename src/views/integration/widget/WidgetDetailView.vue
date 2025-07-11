@@ -56,7 +56,7 @@ import { useSweetAlert } from '@/composables/useSweetAlert';
 import WidgetLiveChat from '@/features/widget-builder/pages/WidgetLiveChat.vue';
 import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
 import WidgetCode from '@/pages/integration/widget/WidgetCode.vue';
-import WidgetForm from '@/pages/integration/widget/WidgetForm.vue';
+import WidgetOverview from '@/pages/integration/widget/WidgetOverview.vue';
 import WidgetSettings from '@/pages/integration/widget/WidgetSetting.vue';
 import type { IWidgetChannel } from '@/types/channels';
 
@@ -76,7 +76,7 @@ const props = defineProps<{
 const tabs: Tab[] = [
   {
     label: 'Overview',
-    component: WidgetForm,
+    component: WidgetOverview,
     queryParam: 'overview',
   },
   {
