@@ -1,11 +1,15 @@
 import { ref } from 'vue';
+import { z } from 'zod';
 
 import { qiscusApi } from '@/api/channels';
-import type { IPagination2, IResponse } from '@/types/api';
-import type { IQiscusChannel } from '@/types/channels';
+import type { MetaPagination } from '@/types/schemas/common';
+import {
+  type QiscusChannelList,
+  QiscusChannelResponseSchema,
+} from '@/types/schemas/qiscus-list-channel';
 import { filterFilledObj } from '@/utils/helper/object';
 
-const initMeta: IPagination2 = {
+const initMeta: MetaPagination = {
   page: 0,
   limit: 0,
   total_page: 0,
@@ -14,8 +18,8 @@ const initMeta: IPagination2 = {
 
 export const useFetchQiscus = () => {
   const loading = ref(false);
-  const data = ref<IQiscusChannel[]>([]);
-  const meta = ref<IPagination2>({ ...initMeta });
+  const data = ref<QiscusChannelList>([]);
+  const meta = ref<MetaPagination>({ ...initMeta });
   const error = ref<Error | null>(null);
 
   const fetchChannels = async (params?: any) => {
@@ -25,12 +29,24 @@ export const useFetchQiscus = () => {
 
       const newParams = _getParams(params);
       const response = await qiscusApi.get(newParams);
-      const dataResponse = response.data as unknown as IResponse<IQiscusChannel[]>;
 
-      data.value = dataResponse.data;
-      meta.value = dataResponse.meta as unknown as IPagination2;
+      const validatedResponse = QiscusChannelResponseSchema.parse(response.data);
+
+      data.value = validatedResponse.data;
+      meta.value = validatedResponse.meta;
     } catch (err) {
-      error.value = err instanceof Error ? err : new Error('An unknown error occurred');
+      // Log all errors for debugging
+      console.error('Error fetching Qiscus channel detail:', err);
+
+      // Handle Zod validation errors
+      if (err instanceof z.ZodError) {
+        console.error('Validation error:', err.issues);
+        error.value = new Error(
+          `Validation failed: ${err.issues.map((e) => e.message).join(', ')}`
+        );
+      } else {
+        error.value = err instanceof Error ? err : new Error('An unknown error occurred');
+      }
       data.value = [];
       meta.value = { ...initMeta };
     } finally {
@@ -38,7 +54,7 @@ export const useFetchQiscus = () => {
     }
   };
 
-  function _getParams(params: IPagination2) {
+  function _getParams(params: MetaPagination) {
     return filterFilledObj(params);
   }
 

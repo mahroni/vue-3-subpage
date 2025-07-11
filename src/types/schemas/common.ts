@@ -40,6 +40,14 @@ export const createApiResponseSchemaGeneric = <T extends z.ZodTypeAny>(dataSchem
   });
 };
 
+// Schema for meta pagination
+export const MetaPaginationSchema = z.object({
+  limit: z.number(),
+  page: z.number(),
+  total: z.number(),
+  total_page: z.number(),
+});
+
 /**
  * Creates an extended API response schema with additional common fields
  *
@@ -53,21 +61,16 @@ export const createApiResponseSchemaGeneric = <T extends z.ZodTypeAny>(dataSchem
  * const extendedResponseSchema = createApiResponseSchemaExtended(userListSchema);
  * ```
  */
-export const createApiResponseSchemaExtended = <T extends z.ZodTypeAny>(dataSchema: T) => {
+export const createApiResponseSchemaPagination = <T extends z.ZodTypeAny>(dataSchema: T) => {
   return z.object({
     data: dataSchema,
+    meta: MetaPaginationSchema,
     status: z.number(),
-    message: z.string().optional(),
-    meta: z
-      .object({
-        page: z.number().optional(),
-        per_page: z.number().optional(),
-        total: z.number().optional(),
-      })
-      .optional(),
   });
 };
 
+// Extract type from schema for use as interface
+export type MetaPagination = z.infer<typeof MetaPaginationSchema>;
 /**
  * Generic type for basic API responses
  *
