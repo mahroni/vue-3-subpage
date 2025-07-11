@@ -10,6 +10,11 @@ export const QiscusChannelSchema = z.object({
   name: z.string(),
   secret_key: z.string(),
   widget_version: z.string(),
+  configs: z
+    .object({
+      is_enabled: z.boolean(),
+    })
+    .optional(),
 });
 
 export const QiscusDetailResponseSchema = z.object({
