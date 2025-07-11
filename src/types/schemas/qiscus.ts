@@ -1,5 +1,7 @@
 import z from 'zod';
 
+import { createApiResponseSchema } from './common';
+
 // Zod schema for Qiscus channel detail response
 export const QiscusChannelSchema = z.object({
   app_code: z.string(),
@@ -17,13 +19,13 @@ export const QiscusChannelSchema = z.object({
     .optional(),
 });
 
-export const QiscusDetailResponseSchema = z.object({
-  data: z.object({
-    qiscus_channel: QiscusChannelSchema,
-  }),
-  status: z.number(),
+export const QiscusDetailDataSchema = z.object({
+  qiscus_channel: QiscusChannelSchema,
 });
+
+export const QiscusDetailResponseSchema = createApiResponseSchema(QiscusDetailDataSchema);
 
 // TypeScript types derived from Zod schemas
 export type QiscusChannel = z.infer<typeof QiscusChannelSchema>;
+export type QiscusDetailData = z.infer<typeof QiscusDetailDataSchema>;
 export type QiscusDetailResponse = z.infer<typeof QiscusDetailResponseSchema>;
