@@ -20,16 +20,13 @@
 
       <div v-if="!isAutoresponderFormOpen" class="flex flex-col gap-8">
         <MainTab :tabs="tabLabels" v-model="activeTab" />
-
-        <div class="mt-4">
-          <!-- Dynamic component rendering -->
-          <component
-            :is="currentTabComponent"
-            v-if="currentTabComponent"
-            v-model="settingData"
-            @open-auto-responder-form="handleOpenAutoResponderForm"
-          />
-        </div>
+        <!-- Dynamic component rendering -->
+        <component
+          :is="currentTabComponent"
+          v-if="currentTabComponent"
+          v-model="settingData"
+          @open-auto-responder-form="handleOpenAutoResponderForm"
+        />
       </div>
 
       <form @submit.prevent="handleSubmitAutoResponder" v-if="isAutoresponderFormOpen">

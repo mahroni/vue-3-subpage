@@ -7,6 +7,7 @@ import '@/assets/css/sweet-alert-custom.css';
 import App from './App.vue';
 import './assets/css/style.css';
 import './assets/css/tailwind.css';
+import prismPlugin from './plugins/prism';
 import { createRouter } from './router';
 import { useAppConfigStore } from './stores/app-config';
 
@@ -21,6 +22,7 @@ export interface QiscusAppConfig {
 export function createOmnichannelApp(container: string | Element, config: QiscusAppConfig) {
   const app = createApp(App);
   const pinia = createPinia();
+  app.use(prismPlugin);
 
   app.use(pinia);
 

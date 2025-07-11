@@ -1,8 +1,29 @@
 <script setup lang="ts">
 import Banner from '@/components/common/Banner.vue';
+import CodeSnippet from '@/pages/integration/qiscus/CodeSnippet.vue';
 import { useAppConfigStore } from '@/stores/app-config';
 
+const BASE_URL = import.meta.env.VITE_BASE_URL || '/';
+
 const { appId } = useAppConfigStore();
+
+const jsCode = `
+      document.addEventListener('DOMContentLoaded', function () {
+        var s, t; s = document.createElement('script'); s.type = 'text/javascript';
+        s.src = '${BASE_URL}/js/qismo-v5.js'; s.async = true;
+        s.onload = s.onreadystatechange = function () {
+          new Qismo('${appId}', {
+            staging: true,
+            options: {
+              channel_id: 557,
+              qismoIframeUrl: '${BASE_URL}', baseUrl: '${BASE_URL}',
+              mobileBreakPoint:400,
+              extra_fields: [],
+            }
+          });
+        }
+        t = document.getElementsByTagName('script')[0]; t.parentNode.insertBefore(s, t);
+      })`;
 </script>
 
 <template>
@@ -11,7 +32,7 @@ const { appId } = useAppConfigStore();
       Copy the code below and paste it into the &lt;body&gt; tag of your website to install the
       Qiscus Live Chat.
     </div>
-    <a href="javascript:void(0);" class="text-primary flex items-center gap-2">
+    <!-- <a href="javascript:void(0);" class="text-primary flex items-center gap-2">
       Copy Code
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -27,19 +48,8 @@ const { appId } = useAppConfigStore();
           fill="#27B199"
         />
       </svg>
-    </a>
+    </a> -->
   </Banner>
 
-  <pre name="code-snippet" id="code-snippet">
-    <code>
-      &lt;script&gt;
-        document.addEventListener('DOMContentLoaded', function () {
-          var s, t; s = document.createElement('script'); s.type = 'text/javascript';
-          s.src = '/js/qismo-v5.js'; s.async = true;
-          s.onload = s.onreadystatechange = function () { new Qismo({{ appId }}); }
-        t = document.getElementsByTagName('script')[0]; t.parentNode.insertBefore(s, t);
-        });
-      &lt;/script&gt;
-    </code>
-  </pre>
+  <CodeSnippet :code="jsCode" language="javascript" show-line-numbers />
 </template>
