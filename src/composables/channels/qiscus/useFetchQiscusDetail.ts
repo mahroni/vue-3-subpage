@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { readonly, ref } from 'vue';
 import { z } from 'zod';
 
 import { qiscusApi } from '@/api/channels';
@@ -16,14 +16,15 @@ export const useFetchQiscusDetail = () => {
 
       const response = await qiscusApi.getById(id);
 
-      // Validasi response dengan Zod (menggunakan parse seperti pendekatan Anda)
+      // Validate the response using Zod schema
       const validatedResponse = QiscusDetailResponseSchema.parse(response.data);
-
       data.value = validatedResponse.data.qiscus_channel;
     } catch (err) {
+      // Log all errors for debugging
+      console.error('Error fetching Qiscus channel detail:', err);
+
+      // Handle Zod validation errors
       if (err instanceof z.ZodError) {
-        // Handle Zod validation errors
-        console.error('Validation Error:', err.issues);
         error.value = new Error(
           `Validation failed: ${err.issues.map((e) => e.message).join(', ')}`
         );
@@ -37,9 +38,10 @@ export const useFetchQiscusDetail = () => {
   };
 
   return {
-    loading,
-    data,
-    error,
+    // Expose readonly refs to prevent external mutation
+    loading: readonly(loading),
+    data: readonly(data),
+    error: readonly(error),
     fetchChannelById,
   };
 };
