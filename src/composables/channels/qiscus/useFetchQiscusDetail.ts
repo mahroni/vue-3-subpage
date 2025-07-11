@@ -1,4 +1,4 @@
-import { readonly, ref } from 'vue';
+import { ref } from 'vue';
 import { z } from 'zod';
 
 import { qiscusApi } from '@/api/channels';
@@ -38,10 +38,9 @@ export const useFetchQiscusDetail = () => {
   };
 
   return {
-    // Expose readonly refs to prevent external mutation
-    loading: readonly(loading),
-    data: readonly(data),
-    error: readonly(error),
+    loading,
+    data,
+    error,
     fetchChannelById,
   };
 };
