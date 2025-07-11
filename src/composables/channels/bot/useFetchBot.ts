@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { z } from 'zod';
 
 import { botApi } from '@/api/channels';
-import { type BotData, botResponseSchema } from '@/types/schemas/bot';
+import { type BotData, BotResponseSchema } from '@/types/schemas/bot';
 
 export const useFetchBot = () => {
   const loading = ref(false);
@@ -17,7 +17,7 @@ export const useFetchBot = () => {
       const response = await botApi.get();
 
       // Validate the response using Zod schema
-      const validatedResponse = botResponseSchema.parse(response.data);
+      const validatedResponse = BotResponseSchema.parse(response.data);
       data.value = validatedResponse.data;
     } catch (err) {
       // Log all errors for debugging
