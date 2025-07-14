@@ -22,6 +22,7 @@
         <MainTab :tabs="tabLabels" v-model="activeTab" />
         <!-- Dynamic component rendering -->
         <component
+          :channel-id="props.id"
           :is="currentTabComponent"
           v-if="currentTabComponent"
           v-model="settingData"
