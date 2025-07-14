@@ -24,6 +24,9 @@ const isBot = ref(false);
 const channel = ref<IWidgetChannel>({
   badge_url: '',
   name: '',
+  is_active: true,
+  is_secure: true,
+  is_secure_toc: false,
   configs: {
     offline_message: '',
     online_message: '',
