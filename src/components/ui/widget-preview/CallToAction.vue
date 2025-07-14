@@ -2,6 +2,7 @@
 interface Props {
   imageUrl?: string;
   title?: string;
+  isUsingTitle?: boolean;
   color?: string;
   rounded?: number;
 }
@@ -9,6 +10,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   imageUrl: '',
   title: '',
+  isUsingTitle: false,
   color: '#01416C',
   rounded: 32,
 });
@@ -29,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
     />
     <div v-else class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
     <span
-      v-if="props.title"
+      v-if="props.title && props.isUsingTitle"
       class="text-surface-primary-white text-base font-semibold break-words"
       >{{ props.title }}</span
     >
