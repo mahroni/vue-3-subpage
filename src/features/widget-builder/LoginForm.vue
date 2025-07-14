@@ -45,6 +45,9 @@ const additionalField = reactive<AdditionalField>({
 });
 
 const isOpenModal = ref(false);
+// Add these new reactive variables
+const isEditMode = ref(false);
+const editingIndex = ref<number | null>(null);
 
 // Form validation for additional field
 const isAdditionalFieldValid = computed(() => {
@@ -61,6 +64,9 @@ const isAdditionalFieldValid = computed(() => {
 });
 
 const addAdditionalField = () => {
+  // Reset to add mode
+  isEditMode.value = false;
+  editingIndex.value = null;
   isOpenModal.value = true;
 };
 
@@ -71,10 +77,20 @@ const resetAdditionalField = () => {
   additionalField.required = false;
   additionalField.iconField = '';
   additionalField.options = [];
+  // Reset edit mode
+  isEditMode.value = false;
+  editingIndex.value = null;
 };
 
+// Update this function to handle both add and edit
 const addAdditionalFieldConfirm = () => {
-  loginFormState.value.extraFields.push({ ...additionalField });
+  if (isEditMode.value && editingIndex.value !== null) {
+    // Edit mode: replace the existing field
+    loginFormState.value.extraFields[editingIndex.value] = { ...additionalField };
+  } else {
+    // Add mode: push new field
+    loginFormState.value.extraFields.push({ ...additionalField });
+  }
   resetAdditionalField();
   isOpenModal.value = false;
 };
@@ -98,14 +114,24 @@ const getFieldOptions = (index: number) => {
   ];
 };
 
+// Update editField to set edit mode
 const editField = (field: AdditionalField) => {
-  isOpenModal.value = true;
-  additionalField.type = field.type;
-  additionalField.name = field.name;
-  additionalField.placeholder = field.placeholder;
-  additionalField.required = field.required;
-  additionalField.iconField = field.iconField;
-  additionalField.options = field.options ? [...field.options] : [];
+  // Find the index of the field being edited
+  const index = loginFormState.value.extraFields.findIndex(
+    (f) => f.name === field.name && f.type === field.type && f.placeholder === field.placeholder
+  );
+
+  if (index !== -1) {
+    isEditMode.value = true;
+    editingIndex.value = index;
+    isOpenModal.value = true;
+    additionalField.type = field.type;
+    additionalField.name = field.name;
+    additionalField.placeholder = field.placeholder;
+    additionalField.required = field.required;
+    additionalField.iconField = field.iconField || '';
+    additionalField.options = field.options ? [...field.options] : [];
+  }
 };
 
 const deleteField = (index: number) => {
@@ -238,7 +264,7 @@ watch(
     </div>
 
     <!-- PREVIEW -->
-    <div class="bg-white-100 sticky top-20 z-50 flex flex-1 flex-col items-end gap-4 p-6">
+    <div class="bg-white-100 sticky top-20 z-40 flex flex-1 flex-col items-end gap-4 p-6">
       <LoginForm
         :title="loginFormState.firstDescription"
         :subtitle="loginFormState.secondDescription"
@@ -258,14 +284,16 @@ watch(
     </div>
   </div>
 
-  <!-- Add Additional Field Modal -->
+  <!-- Update the Modal title and confirmText based on mode -->
   <Modal
     :isOpen="isOpenModal"
     @close="isOpenModal = false"
-    confirmText="Add Field"
+    :confirmText="isEditMode ? 'Update Field' : 'Add Field'"
     @confirm="addAdditionalFieldConfirm"
   >
-    <template #title> Add Additional Field </template>
+    <template #title>
+      {{ isEditMode ? 'Edit Additional Field' : 'Add Additional Field' }}
+    </template>
     <template #content>
       <div class="mb-9 flex flex-col gap-2">
         <Select
@@ -306,9 +334,9 @@ watch(
       </div>
     </template>
     <template #footer>
-      <Button id="cancel-field" intent="secondary" size="small" @click="isOpenModal = false"
-        >Cancel</Button
-      >
+      <Button id="cancel-field" intent="secondary" size="small" @click="isOpenModal = false">
+        Cancel
+      </Button>
       <Button
         :disabled="!isAdditionalFieldValid"
         id="add-field"
@@ -316,7 +344,7 @@ watch(
         size="small"
         @click="addAdditionalFieldConfirm"
       >
-        Add Field
+        {{ isEditMode ? 'Update Field' : 'Add Field' }}
       </Button>
     </template>
   </Modal>

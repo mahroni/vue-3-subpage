@@ -8,16 +8,16 @@ import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { ref } from 'vue';
 import CreateTelegramForm from '@/features/telegram/components/form/CreateTelegramForm.vue';
 import CollapsibleGroup from '@/components/common/CollapsibleGroup.vue';
-import type { IAutoResponder } from '@/types/channels';
+import type { IAutoResponder, IWidgetChannel } from '@/types/channels';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 const { showAlert } = useSweetAlert();
 
 const activeTab = ref<string>('Overview');
 const isBot = ref(false);
-const channel = ref({
-  username: '',
+
+const channel = ref<IWidgetChannel>({
+  badge_url: '',
   name: '',
-  token: '',
   configs: {
     offline_message: '',
     online_message: '',
@@ -25,6 +25,7 @@ const channel = ref({
     send_online_if_resolved: false,
   },
 })
+
 const configs = ref<IAutoResponder>({ ...channel.value.configs })
 const isEnableTelegram = ref(false)
 const isEnableAutoResponder = ref(false)
@@ -73,13 +74,32 @@ function confirmSubmit() {
     });
 }
 
-function handleSubmit() {
-  return showAlert.success({
-    title: 'Success',
-    text: 'Failed to create Telegram channel. Please try again.',
-    confirmButtonText: 'Okay',
-    showCancelButton: false,
-  });
+async function handleSubmit() {
+  isAutoresponderFormOpen.value = false;
+
+  const payload: any = { ...channel.value };
+
+  // Add fallback for badge_url if empty or null
+  if (!payload.badge_url || payload.badge_url.trim() === '') {
+    payload.badge_url = CHANNEL_BADGE_URL.qiscus;
+  }
+
+  if (payload.configs.offline_message === '' && payload.configs.online_message === '') {
+    delete payload.configs;
+  }
+
+  await uQiscus.create(payload);
+
+  if (uQiscus.error.value) {
+    return showAlert.error({
+      title: 'Failed',
+      text: 'Failed to create Qiscus channel. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  }
+
+  router.replace({ name: 'qiscus-detail', params: { id: uQiscus.data.value?.id } });
 }
 </script>
 
@@ -100,8 +120,8 @@ function handleSubmit() {
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <!-- Header -->
       <div class="flex items-center gap-3">
-        <img :src="CHANNEL_BADGE_URL.telegram" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
-        <h2 class="text-xl font-semibold text-[#0A0A0A]">Telegram</h2>
+        <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
+        <h2 class="text-xl font-semibold text-[#0A0A0A]">New Integration - Qiscus Live Chat</h2>
       </div>
 
       <Banner>

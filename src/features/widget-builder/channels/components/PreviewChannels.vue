@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 
-import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
-import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import ChannelList from '@/components/ui/widget-preview/ChannelList.vue';
 import ChannelListLoading from '@/components/ui/widget-preview/ChannelListLoading.vue';
+import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
+import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
+const { channelState } = storeToRefs(qiscusLiveChatStore);
 
 const channelPreviewData = computed(() => {
   return qiscusLiveChatStore.channelList
@@ -21,10 +23,10 @@ const channelPreviewData = computed(() => {
 <template>
   <div class="flex flex-col items-end gap-4">
     <ChannelList
-      v-if="qiscusLiveChatStore.isChannelsEnabled"
-      :title="qiscusLiveChatStore.previewTitle"
-      :subtitle="qiscusLiveChatStore.previewSubtitle"
-      :introduction="qiscusLiveChatStore.previewIntroduction"
+      v-if="channelState.isChannelsEnabled"
+      :title="channelState.previewTitle"
+      :subtitle="channelState.previewSubtitle"
+      :introduction="channelState.previewIntroduction"
       :channels="channelPreviewData"
       :imageUrl="''"
     />

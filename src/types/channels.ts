@@ -1,3 +1,5 @@
+import type { IAdditionalField } from './live-chat';
+
 export interface IWhatsappChannel {
   allocate_wa_call_webhook_url: string | null;
   badge_url: string;
@@ -90,4 +92,67 @@ export interface IBotChannel {
 export interface IUpdateConfig extends IAutoResponder {
   enabled: boolean;
   source: string;
+}
+
+export interface IWidgetConfigPayload {
+  style: Record<string, any>;
+  widget: {
+    variables: {
+      appID: string;
+
+      // Welcome dialog data
+      welcomeMessageStatus: boolean;
+      attentionGrabberStatus: boolean;
+      welcomeText: string;
+      brandIconWelcomeDialog: string;
+      descriptionWelcomeDialog: string;
+      firstDescriptionWelcomeDialog: string;
+      secondDescriptionWelcomeDialog: string;
+      welcomeTimeout: string;
+      openAtStart: boolean;
+      grabberImage: boolean;
+      grabberTextStatus: boolean;
+      attentionGrabberText: string;
+      grabberTimeout: number;
+      attentionGrabberImage: string;
+
+      // Login form data
+      formGreet: string;
+      formSubtitle: string;
+      firstDescription: string;
+      secondDescription: string;
+      buttonText: string;
+      customerIdentifierInputType: string;
+      extra_fields: IAdditionalField[];
+      brandLogo: string;
+
+      // Chat form data
+      customerServiceName: string;
+      customerServiceAvatar: string;
+
+      // Call to action data
+      buttonHasText: boolean;
+      buttonHasIcon: boolean;
+      buttonIcon: string;
+      loginFormButtonLabel: string;
+      borderRadius: string;
+
+      // Channel widget data
+      channel_widget: {
+        live_channel: {
+          badge_url: string;
+          is_enable: boolean;
+          name: string;
+        };
+        introduction: string;
+        other_channel: any[];
+        subtitle: string;
+        title: string;
+      };
+      isChannelWidgetEnabled: boolean;
+
+      selectedWidgetPage: string;
+      colorWidget: string;
+    };
+  };
 }

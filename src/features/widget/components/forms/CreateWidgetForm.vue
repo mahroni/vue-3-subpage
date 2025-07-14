@@ -2,14 +2,21 @@
   <div class="flex flex-col gap-8">
     <WidgetBannerDoc />
 
-    <div class="flex flex-col items-start justify-center gap-8 rounded-xl border border-[#ECECEC] bg-[#FAFAFA] p-6">
+    <div
+      class="flex flex-col items-start justify-center gap-8 rounded-xl border border-[#ECECEC] bg-[#FAFAFA] p-6"
+    >
       <p class="text-xs text-[#A0A0A0]">
         Build your Qiscus Live Chat based on your need using our builder.
       </p>
 
       <div class="flex w-140 items-center gap-5">
-        <ImageInput id="widget-image" v-model="formData.badge_url" :isUploading="uSdkImage.loading.value"
-          @upload="uploadImage" autocomplete="off" />
+        <ImageInput
+          id="widget-image"
+          v-model="formData.badge_url"
+          :isUploading="uSdkImage.loading.value"
+          @upload="uploadImage"
+          autocomplete="off"
+        />
         <div class="flex flex-1 flex-col items-start gap-1">
           <h4 class="text-sm font-semibold text-[#565656]">Channel Badge Icon</h4>
           <p class="text-xs text-[#A0A0A0]">
@@ -20,13 +27,22 @@
       </div>
 
       <div class="w-[552px]">
-        <Input v-model="formData.name" :disabled="false" :error="false" errorMessage="This field has an error"
-          id="default-input" label="Channel Name" placeholder="Enter your channel name here" />
+        <Input
+          v-model="formData.name"
+          :disabled="false"
+          :error="false"
+          errorMessage="This field has an error"
+          id="default-input"
+          label="Channel Name"
+          placeholder="Enter your channel name here"
+        />
       </div>
     </div>
 
     <!-- Term Section -->
-    <div class="shadow-medium flex flex-col items-start justify-center gap-4 rounded-lg bg-white p-6">
+    <div
+      class="shadow-medium flex flex-col items-start justify-center gap-4 rounded-lg bg-white p-6"
+    >
       <div class="flex flex-col items-start gap-2 text-sm">
         <h5 class="font-semibold text-[#0A0A0A]">Term of condition</h5>
         <p class="text-[#A0A0A0]">
@@ -44,7 +60,11 @@
         v1.2.3.
       </Banner>
 
-      <Checkbox id="agree-term-checkbox" label="Agree with the term of condition" v-model="formData.is_secure_toc" />
+      <Checkbox
+        id="agree-term-checkbox"
+        label="Agree with the term of condition"
+        v-model="formData.is_secure_toc"
+      />
     </div>
   </div>
 </template>
@@ -59,8 +79,8 @@ import Input from '@/components/form/Input.vue';
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import type { IWidgetChannel } from '@/types/channels';
-import WidgetBannerDoc from '../ui/WidgetBannerDoc.vue';
 
+import WidgetBannerDoc from '../ui/WidgetBannerDoc.vue';
 
 // declare
 const uSdkImage = useUploadSdkImage();

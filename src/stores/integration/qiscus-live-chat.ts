@@ -8,6 +8,7 @@ import type {
   WidgetChannelCreateData,
   WidgetChannelUpdateData,
 } from '@/features/widget-builder/channels/channels';
+import type { IWidgetConfigPayload } from '@/types/channels';
 import type {
   ICallToActionState,
   IChatFormState,
@@ -17,17 +18,6 @@ import type {
 } from '@/types/live-chat';
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
-  // STATE
-  const isChannelsEnabled = ref<boolean>(false);
-  const isQiscusLiveChat = ref<boolean>(false);
-  const previewTitle = ref<string>('Ask for Question');
-  const previewSubtitle = ref<string>('In Everythings!');
-  const previewIntroduction = ref<string>('More personalized chat with us on:');
-  const previewLiveChatName = ref<string>('Live Chat');
-  const channelName = ref<string>('');
-  const channelLink = ref<string>('');
-  const channelBadgeIcon = ref<string>('');
-
   const channelList = ref<IWidgetChannel[]>([
     { id: 1, icon: 'whatsapp', name: 'Whatsapp', enabled: true, link: '' },
     { id: 2, icon: 'facebook', name: 'Facebook', enabled: false, link: '' },
@@ -35,6 +25,22 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     { id: 4, icon: 'telegram', name: 'Telegram', enabled: false, link: '' },
     { id: 6, icon: 'tiktok', name: 'Tiktok', enabled: true, link: '' },
   ]);
+
+  const colorWidgetState = ref<string>('#01416C');
+
+  // state for Channel Widget
+  const channelState = reactive({
+    isChannelsEnabled: false,
+    isQiscusLiveChat: false,
+    previewTitle: 'Ask for Question',
+    previewSubtitle: 'In Everythings!',
+    previewIntroduction: 'More personalized chat with us on:',
+    previewLiveChatName: 'Live Chat',
+    channelName: '',
+    channelLink: '',
+    channelBadgeIcon: '',
+  });
+
   // state for call to action
   const callToActionState = reactive<ICallToActionState>({
     isWithText: true,
@@ -167,7 +173,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
       const qiscusChannel: IWidgetChannel = {
         id: newId,
         icon: 'qiscus',
-        name: previewLiveChatName.value || 'Live Chat',
+        name: channelState.previewLiveChatName || 'Live Chat',
         enabled: true,
         link: '',
       };
@@ -229,7 +235,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   };
 
   const postWidgetConfig = async (appId: string, channelId: string) => {
-    const payload: any = {
+    const payload: IWidgetConfigPayload = {
       style: {},
       widget: {
         variables: {
@@ -238,8 +244,9 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
           welcomeMessageStatus: welcomeDialogState.isWelcomeDialog,
           attentionGrabberStatus: welcomeDialogState.isAttentionGrabber,
           welcomeText: welcomeDialogState.firstDescriptionWelcomeDialog,
-          firstDescriptionWelcomeDialog: welcomeDialogState.firstDescriptionWelcomeDialog,
-          secondDescriptionWelcomeDialog: welcomeDialogState.secondDescriptionWelcomeDialog,
+          firstDescriptionWelcomeDialog: welcomeDialogState.firstDescriptionWelcomeDialog, //=> new data
+          secondDescriptionWelcomeDialog: welcomeDialogState.secondDescriptionWelcomeDialog, //=> new data
+          descriptionWelcomeDialog: welcomeDialogState.descriptionWelcomeDialog, //=> new data
           welcomeTimeout: welcomeDialogState.welcomeTimeout,
           openAtStart: welcomeDialogState.openAtStart,
           grabberImage: welcomeDialogState.isAttentionGrabberImage,
@@ -247,13 +254,18 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
           attentionGrabberText: welcomeDialogState.attentionGrabberText,
           grabberTimeout: welcomeDialogState.grabberTimeout ?? 0,
           attentionGrabberImage: welcomeDialogState.attentionGrabberImage,
+          brandIconWelcomeDialog: welcomeDialogState.brandIconWelcomeDialog, //=> new data
+          // actionsWelcomeDialog: welcomeDialogState.actionsWelcomeDialog, //=> new data
 
           // login form data
           formGreet: loginFormState.firstDescription,
+          firstDescription: loginFormState.firstDescription, //=> new data
+          secondDescription: loginFormState.secondDescription, //=> new data
           formSubtitle: loginFormState.formSubtitle,
           buttonText: loginFormState.buttonText,
           customerIdentifierInputType: loginFormState.customerIdentifier,
           extra_fields: loginFormState.extraFields,
+          brandLogo: loginFormState.brandLogo, //=> new data
 
           // chat form data
           customerServiceName: chatFormState.customerServiceName,
@@ -264,22 +276,24 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
           buttonHasIcon: callToActionState.isWithIcon,
           buttonIcon: callToActionState.iconImage,
           loginFormButtonLabel: callToActionState.liveChatButtonText,
+          borderRadius: callToActionState.borderRadius, //=> new data
 
           // channel widget data
+          isChannelWidgetEnabled: channelState.isChannelsEnabled,
           channel_widget: {
+            title: channelState.previewTitle,
+            subtitle: channelState.previewSubtitle,
+            introduction: channelState.previewIntroduction, //=> new data
             live_channel: {
+              name: channelState.previewLiveChatName,
+              is_enable: channelState.isQiscusLiveChat,
               badge_url:
-                channelBadgeIcon.value ||
+                channelState.channelBadgeIcon ||
                 'https://d1edrlpyc25xu0.cloudfront.net/zalda-vvq7pksvblaiy7s/image/upload/U5zXXEv54V/file_example_PNG_500kB.png"',
-              is_enable: isQiscusLiveChat.value,
-              name: previewLiveChatName.value,
             },
-            other_channel: [], //???
-            subtitle: previewSubtitle.value,
-            title: previewTitle.value,
+            other_channel: channelList.value,
           },
-          isChannelWidgetEnabled: isChannelsEnabled.value,
-
+          colorWidget: colorWidgetState.value, //=> new data
           selectedWidgetPage: 'welcome',
         },
       },
@@ -296,36 +310,37 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   };
 
   // Watch previewLiveChatName for update qiscus live chat channel name
-  watch(previewLiveChatName, (newName) => {
-    const qiscusChannel = channelList.value.find((channel) => channel.icon === 'qiscus');
-    if (qiscusChannel) {
-      qiscusChannel.name = newName || 'Live Chat';
+  watch(
+    () => channelState.previewLiveChatName,
+    (newName) => {
+      const qiscusChannel = channelList.value.find((channel) => channel.icon === 'qiscus');
+      if (qiscusChannel) {
+        qiscusChannel.name = newName || 'Live Chat';
+      }
     }
-  });
+  );
 
   // Watch isQiscusLiveChat for automatically add/remove channel
-  watch(isQiscusLiveChat, (newValue, oldValue) => {
-    if (newValue && !oldValue) {
-      // When enabled, add qiscus live chat channel
-      addQiscusLiveChatChannel();
-    } else if (!newValue && oldValue) {
-      // When disabled, remove qiscus live chat channel
-      removeQiscusLiveChatChannel();
+  watch(
+    () => channelState.isQiscusLiveChat,
+    (newValue: boolean, oldValue: boolean) => {
+      if (newValue && !oldValue) {
+        // When enabled, add qiscus live chat channel
+        addQiscusLiveChatChannel();
+      } else if (!newValue && oldValue) {
+        // When disabled, remove qiscus live chat channel
+        removeQiscusLiveChatChannel();
+      }
     }
-  });
+  );
 
   return {
-    // State
-    isChannelsEnabled,
-    isQiscusLiveChat,
-    previewTitle,
-    previewSubtitle,
-    previewIntroduction,
-    previewLiveChatName,
-    channelName,
-    channelLink,
-    channelBadgeIcon,
+    // state for color widget
+    colorWidgetState,
+    // state for list channel widget
     channelList,
+    // state for channel widget
+    channelState,
     // state for call to action
     callToActionState,
     // state for welcome dialog

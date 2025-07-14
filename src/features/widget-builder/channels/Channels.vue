@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
 import TextArea from '@/components/form/TextArea.vue';
@@ -9,13 +11,13 @@ import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 import ChannelListCard from './components/ChannelListCard.vue';
 import PreviewChannels from './components/PreviewChannels.vue';
 
-const qiscusLiveChatStore = useQiscusLiveChatStore();
+const { channelState } = storeToRefs(useQiscusLiveChatStore());
 const { loading, data, error, upload } = useUploadSdkImage();
 
 const uploadImage = async (file: File) => {
   await upload(file);
   if (data.value) {
-    qiscusLiveChatStore.channelBadgeIcon = data.value.url;
+    channelState.value.channelBadgeIcon = data.value.url;
   } else {
     console.error(error.value);
   }
@@ -30,12 +32,12 @@ const uploadImage = async (file: File) => {
         id="channels-switch"
         label="Channels"
         isSwitch
-        v-model="qiscusLiveChatStore.isChannelsEnabled"
+        v-model="channelState.isChannelsEnabled"
       >
         <template #inputs>
           <Input
             id="welcome-channel-title"
-            v-model="qiscusLiveChatStore.previewTitle"
+            v-model="channelState.previewTitle"
             class="w-full"
             label="Welcome Channel Title"
             placeholder="Ask for Question"
@@ -44,7 +46,7 @@ const uploadImage = async (file: File) => {
 
           <Input
             id="welcome-channel-subtitle"
-            v-model="qiscusLiveChatStore.previewSubtitle"
+            v-model="channelState.previewSubtitle"
             class="w-full"
             label="Welcome Channel Subtitle"
             placeholder="In Everythings!"
@@ -52,7 +54,7 @@ const uploadImage = async (file: File) => {
           />
           <TextArea
             id="channel-introduction"
-            v-model="qiscusLiveChatStore.previewIntroduction"
+            v-model="channelState.previewIntroduction"
             label="Channel Introduction"
             placeholder="More personalized chat with us on:"
             :maxlength="50"
@@ -61,15 +63,15 @@ const uploadImage = async (file: File) => {
       </WidgetFormLayout>
 
       <WidgetFormLayout
-        v-if="qiscusLiveChatStore.isChannelsEnabled"
+        v-if="channelState.isChannelsEnabled"
         label="Enable Qiscus Live Chat"
         isSwitch
-        v-model="qiscusLiveChatStore.isQiscusLiveChat"
+        v-model="channelState.isQiscusLiveChat"
         id="qiscus-live-chat-switch"
       >
         <template #inputs>
           <Input
-            v-model="qiscusLiveChatStore.previewLiveChatName"
+            v-model="channelState.previewLiveChatName"
             class="w-full"
             label="Live Chat Name"
             placeholder="Live Chat"
@@ -80,7 +82,7 @@ const uploadImage = async (file: File) => {
           <ImageInput
             label="Live Chat Badge"
             id="live-chat-badge"
-            v-model="qiscusLiveChatStore.channelBadgeIcon"
+            v-model="channelState.channelBadgeIcon"
             :isUploading="loading"
             @upload="uploadImage"
           >
@@ -94,7 +96,7 @@ const uploadImage = async (file: File) => {
         </template>
       </WidgetFormLayout>
 
-      <ChannelListCard v-if="qiscusLiveChatStore.isChannelsEnabled" />
+      <ChannelListCard v-if="channelState.isChannelsEnabled" />
     </div>
 
     <!-- Preview Section -->
