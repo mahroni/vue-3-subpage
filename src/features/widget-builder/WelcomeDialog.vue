@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 
 import Banner from '@/components/common/Banner.vue';
 import Checkbox from '@/components/common/Checkbox.vue';
@@ -100,6 +100,25 @@ const grabberTimeoutString = computed({
     welcomeDialogState.value.grabberTimeout = parseInt(value) || 0;
   },
 });
+
+/**
+ * Watcher to automatically turn off attention grabber when both text and image options are disabled
+ * This ensures that if user turns off both isAttentionGrabberText and isAttentionGrabberImage,
+ * the main attention grabber toggle will automatically be turned off as well
+ */
+watch(
+  [
+    () => welcomeDialogState.value.isAttentionGrabberText,
+    () => welcomeDialogState.value.isAttentionGrabberImage,
+  ],
+  ([isTextEnabled, isImageEnabled]) => {
+    // If both text and image are disabled, turn off the main attention grabber
+    if (!isTextEnabled && !isImageEnabled && welcomeDialogState.value.isAttentionGrabber) {
+      welcomeDialogState.value.isAttentionGrabber = false;
+    }
+  },
+  { immediate: false }
+);
 </script>
 
 <template>
