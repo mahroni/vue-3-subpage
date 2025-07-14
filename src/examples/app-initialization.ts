@@ -3,6 +3,11 @@ import { useAppConfigStore } from '../stores/app-config';
 
 // Example 1: Initialize with configuration
 const appConfig: QiscusAppConfig = {
+  baseUrl: 'https://your-base-url.com',
+  widget: {
+    iframeUrl: 'https://your-iframe-url.com', // Optional, can be omitted if not using widget
+    env: 'production', // Optional, can be 'production', 'staging', or 'development'
+  },
   userToken: 'your-user-token-here',
   appId: 'your-app-id-here',
   appVersion: '1.0.0',
