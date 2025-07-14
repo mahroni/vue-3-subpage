@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createApiResponseSchemaPagination } from '../common';
+import { createApiResponseSchema, createApiResponseSchemaPagination } from '../../common';
 
 export const TelegramChannelSchema = z.object({
   badge_url: z.string().nullable(),
@@ -11,10 +11,20 @@ export const TelegramChannelSchema = z.object({
   webhook_url: z.string().nullable(),
 });
 
+// ----- Validation for fetch telegram channel -----
 export const TelegramChannelListSchema = z.array(TelegramChannelSchema);
 
 export const TelegramChannelResponseSchema =
   createApiResponseSchemaPagination(TelegramChannelListSchema);
+
+// ----- Validation for update telegram channel -----
+export const TelegramChannelUpdateSchema = z.object({
+  telegram_channel: TelegramChannelSchema,
+});
+
+export const TelegramChannelUpdateResponseSchema = createApiResponseSchema(
+  TelegramChannelUpdateSchema
+);
 
 export type TelegramChannel = z.infer<typeof TelegramChannelSchema>;
 export type TelegramChannelList = z.infer<typeof TelegramChannelListSchema>;

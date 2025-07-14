@@ -7,13 +7,19 @@ import MainTab from '@/components/common/Tabs/MainTab.vue';
 import { Button, Switch } from '@/components/common/common';
 import { BackIcon, HomeIcon } from '@/components/icons';
 import { useFetchTelegram } from '@/composables/channels/telegram/useFetchTelegram';
+import { useUpdateTelegram } from '@/composables/channels/telegram/useUpdateTelegram';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import CreateTelegramForm from '@/features/telegram/components/form/CreateTelegramForm.vue';
 import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
-import type { IAutoResponder } from '@/types/channels';
+import type { IAutoResponder, IUpdateTelegramChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
 const { fetchTelegram, data: telegramData } = useFetchTelegram();
+const {
+  updateTelegram,
+  loading: updateTelegramLoading,
+  error: updateTelegramError,
+} = useUpdateTelegram();
 
 const { showAlert } = useSweetAlert();
 
@@ -103,15 +109,39 @@ function initiateChannelSetupConfirmation() {
     });
 }
 
-function submitChannelConfiguration() {
-  // This is where you'd typically make an API call to save the channel data.
-  // For now, it just shows a success message.
-  return showAlert.success({
-    title: 'Success',
-    text: 'Failed to create Telegram channel. Please try again.', // Consider changing this text for a success message
-    confirmButtonText: 'Okay',
-    showCancelButton: false,
-  });
+async function submitChannelConfiguration() {
+  const payload: IUpdateTelegramChannel = {
+    name: channel.value.name,
+    is_active: isEnableTelegram.value,
+  };
+
+  try {
+    await updateTelegram(currentChannel.value?.id, payload);
+
+    if (updateTelegramError.value) {
+      showAlert.error({
+        title: 'Error',
+        text: 'Failed to update Telegram. Please try again.',
+        confirmButtonText: 'Okay',
+        showCancelButton: false,
+      });
+      return;
+    }
+
+    showAlert.success({
+      title: 'Success',
+      text: 'Telegram has been updated.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  } catch (error) {
+    showAlert.error({
+      title: 'Error',
+      text: 'Failed to update Telegram. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  }
 }
 
 function toggleTelegramIntegration(status: boolean) {
@@ -232,7 +262,7 @@ onMounted(async () => {
 
         <div class="mt-8 flex justify-end gap-4">
           <Button intent="secondary" @click="closeAutoResponderForm">Back</Button>
-          <Button type="submit">Save Changes</Button>
+          <Button type="submit" :disabled="updateTelegramLoading">Save Changes</Button>
         </div>
       </form>
     </div>

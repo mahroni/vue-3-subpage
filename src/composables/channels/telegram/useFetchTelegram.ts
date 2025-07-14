@@ -6,7 +6,7 @@ import type { IPagination2 } from '@/types/api';
 import {
   type TelegramChannel,
   TelegramChannelResponseSchema,
-} from '@/types/schemas/channels/telegram-list-channel';
+} from '@/types/schemas/channels/telegram/telegram-list-channel';
 import type { MetaPagination } from '@/types/schemas/common';
 import { filterFilledObj } from '@/utils/helper/object';
 
