@@ -25,6 +25,10 @@ export const whatsappApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/wa', { params }),
   getById: (id: number) => apiV2.get<any>(`/wa/${id}`),
 };
+export const telegramApi = {
+  get: (params: IParams) => apiV3.get<any[]>('/admin/channel/telegram', { params }),
+  // getById: (id: number) => apiV2.get<any>(`/wa/${id}`),
+};
 
 export const configApi = {
   get: (id: number | string, params: any) =>
