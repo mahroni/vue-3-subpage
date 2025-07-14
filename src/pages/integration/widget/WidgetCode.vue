@@ -3,33 +3,43 @@ import Banner from '@/components/common/Banner.vue';
 import CodeSnippet from '@/pages/integration/qiscus/CodeSnippet.vue';
 import { useAppConfigStore } from '@/stores/app-config';
 
-const BASE_URL = import.meta.env.VITE_BASE_URL || '/';
+// params.channelId as a props on router
+const props = defineProps<{
+  channelId: string | number;
+}>();
+const isStaging = import.meta.env.VITE_WIDGET_ENV === 'staging';
+const isLatest = import.meta.env.VITE_WIDGET_ENV === 'latest';
+const baseUrl = import.meta.env.VITE_BASE_URL || '';
+const iframeUrl = import.meta.env.VITE_IFRAME_URL || '';
 
 const { appId } = useAppConfigStore();
 
 const jsCode = `
       document.addEventListener('DOMContentLoaded', function () {
         var s, t; s = document.createElement('script'); s.type = 'text/javascript';
-        s.src = '${BASE_URL}/js/qismo-v5.js'; s.async = true;
+        s.src = '${baseUrl}/js/qismo-v5.js'; s.async = true;
         s.onload = s.onreadystatechange = function () {
           new Qismo('${appId}', {
-            staging: true,
             options: {
-              channel_id: 557,
-              qismoIframeUrl: '${BASE_URL}', baseUrl: '${BASE_URL}',
-              mobileBreakPoint:400,
+              channel_id: ${props.channelId},
+              mobileBreakPoint: 400,
               extra_fields: [],
-            }
+              ${baseUrl ? `baseUrl: '${baseUrl}',` : ''}
+              ${iframeUrl ? `qismoIframeUrl: '${iframeUrl}',` : ''}
+              ${isLatest ? `appVersion: 'latest',` : ''}
+            },
+            ${isStaging ? `staging: true,` : ''}
           });
         }
         t = document.getElementsByTagName('script')[0]; t.parentNode.insertBefore(s, t);
-      })`;
+      })
+  `;
 </script>
 
 <template>
   <Banner intent="positive" type="outline">
     <div>
-      Copy the code below and paste it into the &lt;body&gt; tag of your website to install the
+      Copy the code below and paste it into the &lt;script&gt; tag of your website to install the
       Qiscus Live Chat.
     </div>
     <!-- <a href="javascript:void(0);" class="text-primary flex items-center gap-2">
