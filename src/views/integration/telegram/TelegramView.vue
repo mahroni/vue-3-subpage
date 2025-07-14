@@ -6,6 +6,7 @@ import CollapsibleGroup from '@/components/common/CollapsibleGroup.vue';
 import MainTab from '@/components/common/Tabs/MainTab.vue';
 import { Button, Switch } from '@/components/common/common';
 import { BackIcon, HomeIcon } from '@/components/icons';
+import { useDeleteTelegram } from '@/composables/channels/telegram/useDeleteTelegram';
 import { useFetchTelegram } from '@/composables/channels/telegram/useFetchTelegram';
 import { useUpdateTelegram } from '@/composables/channels/telegram/useUpdateTelegram';
 import { useSweetAlert } from '@/composables/useSweetAlert';
@@ -20,6 +21,7 @@ const {
   loading: updateTelegramLoading,
   error: updateTelegramError,
 } = useUpdateTelegram();
+const { deleteTelegram } = useDeleteTelegram();
 
 const { showAlert } = useSweetAlert();
 
@@ -68,6 +70,23 @@ function openAutoResponderForm() {
 function closeAutoResponderForm() {
   isAutoresponderFormOpen.value = false;
 }
+// --- Data Reset Functions ---
+function resetChannelData() {
+  channel.value = {
+    username: '',
+    name: '',
+    token: '',
+    configs: {
+      offline_message: '',
+      online_message: '',
+      send_offline_each_message: false,
+      send_online_if_resolved: false,
+    },
+  };
+
+  isEnableTelegram.value = false;
+  // isEnableAutoResponder.value = false;
+}
 
 // --- Data Population Functions ---
 function populateChannelData() {
@@ -87,6 +106,9 @@ function populateChannelData() {
 
     // Set the integration status based on fetched data
     isEnableTelegram.value = currentChannel.value.is_active || false;
+  } else {
+    // Reset form values when no channel exists (empty response)
+    resetChannelData();
   }
 }
 
@@ -105,6 +127,40 @@ function initiateChannelSetupConfirmation() {
         openAutoResponderForm(); // Call UI state change function
       } else if (result.dismiss === 'cancel') {
         submitChannelConfiguration(); // Call API interaction function
+      }
+    });
+}
+
+function handleDeleteChannel() {
+  showAlert
+    .warning({
+      title: 'Delete Channel',
+      text: 'This channel will disappear from the Integration menu if you delete it. In addition, all ongoing conversations associated with this channel will be deleted for all agents',
+      confirmButtonText: 'Let me think again',
+      cancelButtonText: 'Yes, delete it!',
+    })
+    .then(async (result: any) => {
+      if (result.dismiss === 'cancel') {
+        try {
+          await deleteTelegram(currentChannel.value?.id);
+          showAlert.success({
+            title: 'Success',
+            text: 'Delete channel has been succeeded.',
+            confirmButtonText: 'Okay',
+            showCancelButton: false,
+          });
+
+          await fetchTelegram();
+          populateChannelData();
+        } catch (error) {
+          console.error('Error deleting channel:', error);
+          showAlert.error({
+            title: 'Error',
+            text: 'Failed to delete channel. Please try again.',
+            confirmButtonText: 'Okay',
+            showCancelButton: false,
+          });
+        }
       }
     });
 }
@@ -250,7 +306,7 @@ onMounted(async () => {
             </div>
 
             <div class="mt-8 flex justify-between">
-              <Button intent="danger">Delete Channel</Button>
+              <Button intent="danger" @click="handleDeleteChannel">Delete Channel</Button>
               <Button type="submit">Save Changes</Button>
             </div>
           </form>
