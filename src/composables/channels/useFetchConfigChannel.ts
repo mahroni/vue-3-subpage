@@ -24,10 +24,11 @@ export const useFetchConfig = () => {
       data.value = validatedResponse.data.channel_config;
     } catch (err) {
       // Log all errors for debugging
-      console.error('Error fetching Qiscus channel detail:', err);
+      console.error('Error fetching:', err);
 
       // Handle Zod validation errors
       if (err instanceof z.ZodError) {
+        console.error('Validation error:', err.issues);
         error.value = new Error(
           `Validation failed: ${err.issues.map((e) => e.message).join(', ')}`
         );

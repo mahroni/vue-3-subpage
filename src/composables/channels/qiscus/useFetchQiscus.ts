@@ -36,7 +36,7 @@ export const useFetchQiscus = () => {
       meta.value = validatedResponse.meta;
     } catch (err) {
       // Log all errors for debugging
-      console.error('Error fetching Qiscus channel detail:', err);
+      console.error('Error fetching:', err);
 
       // Handle Zod validation errors
       if (err instanceof z.ZodError) {
