@@ -33,7 +33,7 @@ const bannerClasses = cva('rounded-lg p-4', {
       outline: 'border border-success',
     },
     size: {
-      small: 'py-2 px-4',
+      small: 'py-2 px-4 text-xs font-medium',
       medium: 'p-4',
     },
   },

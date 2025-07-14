@@ -9,21 +9,29 @@
         Build your Qiscus Live Chat based on your need using our builder.
       </p>
 
-      <div class="flex w-140 items-center gap-5">
-        <ImageInput
-          id="widget-image"
-          v-model="formData.badge_url"
-          :isUploading="uSdkImage.loading.value"
-          @upload="uploadImage"
-          autocomplete="off"
-        />
-        <div class="flex flex-1 flex-col items-start gap-1">
-          <h4 class="text-sm font-semibold text-[#565656]">Channel Badge Icon</h4>
-          <p class="text-xs text-[#A0A0A0]">
-            Upload an image that will be used as your Channel Badge icon. We recommend you to upload
-            image 100px x 100px (square image) for better result.
-          </p>
+      <div class="flex w-140 flex-col gap-2">
+        <div class="flex items-center gap-5">
+          <ImageInput
+            id="widget-image"
+            v-model="formData.badge_url"
+            @error="(e) => (errorImageMessages = e)"
+            :isUploading="uSdkImage.loading.value"
+            @upload="uploadImage"
+            autocomplete="off"
+          />
+          <div class="flex flex-1 flex-col items-start gap-1">
+            <h4 class="text-sm font-semibold text-[#565656]">Channel Badge Icon</h4>
+            <p class="text-xs text-[#A0A0A0]">
+              We recommend an image of at least 360x360 pixels. You can upload images in JPG, JPEG,
+              or PNG format with a maximum size of 2MB.
+            </p>
+          </div>
         </div>
+        <Banner v-if="errorImageMessages" intent="negative" size="small">
+          <p>
+            {{ errorImageMessages }}
+          </p>
+        </Banner>
       </div>
 
       <div class="w-[552px]">
@@ -70,7 +78,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 import Checkbox from '@/components/common/Checkbox.vue';
 import { Banner } from '@/components/common/common';
@@ -104,6 +112,8 @@ const props = withDefaults(defineProps<{ modelValue: IWidgetChannel }>(), {
 
 const emit = defineEmits(['update:modelValue']);
 
+const errorImageMessages = ref<string>('');
+
 const formData = computed({
   get() {
     return props.modelValue;
@@ -128,5 +138,6 @@ async function uploadImage(file: File) {
   }
 
   formData.value.badge_url = uSdkImage.data.value?.url || '';
+  errorImageMessages.value = '';
 }
 </script>
