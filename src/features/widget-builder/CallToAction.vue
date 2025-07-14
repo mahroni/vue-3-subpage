@@ -97,6 +97,7 @@ const uploadImage = async (file: File) => {
       <CallToAction
         :imageUrl="callToActionState.iconImage"
         :title="callToActionState.liveChatButtonText"
+        :isUsingTitle="callToActionState.isWithText"
         :rounded="Number(callToActionState.borderRadius)"
       />
     </div>

@@ -156,3 +156,10 @@ export interface IWidgetConfigPayload {
     };
   };
 }
+
+// ===============> Telegram Channel <===============
+
+export interface IUpdateTelegramChannel {
+  name: string;
+  is_active: boolean;
+}

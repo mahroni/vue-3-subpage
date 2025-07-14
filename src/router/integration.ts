@@ -1,6 +1,8 @@
 import type { RouteRecordRaw } from 'vue-router';
 
 import ChannelView from '@/views/integration/ChannelView.vue';
+import TelegramCreateChannelView from '@/views/integration/telegram/TelegramCreateChannelView.vue';
+import TelegramView from '@/views/integration/telegram/TelegramView.vue';
 import WidgetChannel from '@/views/integration/widget/WidgetChannelView.vue';
 import WidgetCreateChannelView from '@/views/integration/widget/WidgetCreateChannelView.vue';
 import WidgetDetailView from '@/views/integration/widget/WidgetDetailView.vue';
@@ -60,14 +62,31 @@ export const integrationRoutes: RouteRecordRaw[] = [
       return false;
     },
   },
+  // {
+  //   path: '/telegram',
+  //   name: 'telegram',
+  //   component: () => TelegramView, // This route is a placeholder for custom channel integration
+  // beforeEnter: () => {
+  //   window.location.href = `/integration?ch=telegram`;
+  //   return false;
+  // },
+  // },
   {
     path: '/telegram',
     name: 'telegram',
-    component: () => null, // This route is a placeholder for custom channel integration
-    beforeEnter: () => {
-      window.location.href = `/integration?ch=telegram`;
-      return false;
-    },
+    redirect: { name: 'telegram-detail' },
+    children: [
+      {
+        path: '',
+        name: 'telegram-detail',
+        component: TelegramView,
+      },
+      {
+        path: 'create',
+        name: 'telegram-create',
+        component: TelegramCreateChannelView,
+      },
+    ],
   },
   {
     path: '/qiscus',

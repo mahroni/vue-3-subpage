@@ -1,36 +1,37 @@
 import { ref } from 'vue';
 import { z } from 'zod';
 
-import { qiscusApi } from '@/api/channels';
+import { telegramApi } from '@/api/channels';
+import type { IPagination2 } from '@/types/api';
 import {
-  type QiscusChannelList,
-  QiscusChannelResponseSchema,
-} from '@/types/schemas/channels/qiscus-list-channel';
+  type TelegramChannel,
+  TelegramChannelResponseSchema,
+} from '@/types/schemas/channels/telegram/telegram-list-channel';
 import type { MetaPagination } from '@/types/schemas/common';
 import { filterFilledObj } from '@/utils/helper/object';
 
-const initMeta: MetaPagination = {
+const initMeta: IPagination2 = {
   page: 0,
   limit: 0,
   total_page: 0,
   total: 0,
 };
 
-export const useFetchQiscus = () => {
+export const useFetchTelegram = () => {
   const loading = ref(false);
-  const data = ref<QiscusChannelList>([]);
+  const data = ref<TelegramChannel[]>([]);
   const meta = ref<MetaPagination>({ ...initMeta });
   const error = ref<Error | null>(null);
 
-  const fetchChannels = async (params?: any) => {
+  const fetchTelegram = async (params?: any) => {
     try {
       loading.value = true;
       error.value = null;
 
       const newParams = _getParams(params);
-      const response = await qiscusApi.get(newParams);
+      const response = await telegramApi.get(newParams);
 
-      const validatedResponse = QiscusChannelResponseSchema.parse(response.data);
+      const validatedResponse = TelegramChannelResponseSchema.parse(response.data);
 
       data.value = validatedResponse.data;
       meta.value = validatedResponse.meta;
@@ -54,7 +55,7 @@ export const useFetchQiscus = () => {
     }
   };
 
-  function _getParams(params: MetaPagination) {
+  function _getParams(params: IPagination2) {
     return filterFilledObj(params);
   }
 
@@ -63,6 +64,6 @@ export const useFetchQiscus = () => {
     data,
     meta,
     error,
-    fetchChannels,
+    fetchTelegram,
   };
 };
