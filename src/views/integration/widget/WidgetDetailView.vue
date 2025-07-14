@@ -20,16 +20,13 @@
 
       <div v-if="!isAutoresponderFormOpen" class="flex flex-col gap-8">
         <MainTab :tabs="tabLabels" v-model="activeTab" />
-
-        <div class="mt-4">
-          <!-- Dynamic component rendering -->
-          <component
-            :is="currentTabComponent"
-            v-if="currentTabComponent"
-            v-model="settingData"
-            @open-auto-responder-form="handleOpenAutoResponderForm"
-          />
-        </div>
+        <!-- Dynamic component rendering -->
+        <component
+          :is="currentTabComponent"
+          v-if="currentTabComponent"
+          v-model="settingData"
+          @open-auto-responder-form="handleOpenAutoResponderForm"
+        />
       </div>
 
       <form @submit.prevent="handleSubmitAutoResponder" v-if="isAutoresponderFormOpen">
@@ -59,7 +56,7 @@ import { useSweetAlert } from '@/composables/useSweetAlert';
 import WidgetLiveChat from '@/features/widget-builder/pages/WidgetLiveChat.vue';
 import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
 import WidgetCode from '@/pages/integration/widget/WidgetCode.vue';
-import WidgetForm from '@/pages/integration/widget/WidgetForm.vue';
+import WidgetOverview from '@/pages/integration/widget/WidgetOverview.vue';
 import WidgetSettings from '@/pages/integration/widget/WidgetSetting.vue';
 import type { IWidgetChannel } from '@/types/channels';
 
@@ -79,7 +76,7 @@ const props = defineProps<{
 const tabs: Tab[] = [
   {
     label: 'Overview',
-    component: WidgetForm,
+    component: WidgetOverview,
     queryParam: 'overview',
   },
   {
