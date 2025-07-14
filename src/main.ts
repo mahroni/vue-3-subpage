@@ -11,12 +11,18 @@ import prismPlugin from './plugins/prism';
 import { createRouter } from './router';
 import { useAppConfigStore } from './stores/app-config';
 
+export interface WidgetConfig {
+  iframeUrl: string;
+  env: 'production' | 'staging' | 'development';
+}
 export interface QiscusAppConfig {
+  baseUrl: string;
   userToken: string;
   appId: string;
   appVersion: string;
   sdkUserId: string;
   userSdkToken: string;
+  widget?: WidgetConfig;
 }
 
 export function createOmnichannelApp(container: string | Element, config: QiscusAppConfig) {
@@ -47,10 +53,15 @@ export function createOmnichannelApp(container: string | Element, config: Qiscus
 // Auto-mount if #app exists (for development)
 if (document.querySelector('#app')) {
   createOmnichannelApp('#app', {
+    baseUrl: import.meta.env.VITE_BASE_URL,
     userToken: import.meta.env.VITE_QISCUS_USER_TOKEN,
     appId: import.meta.env.VITE_QISCUS_APP_ID,
     appVersion: import.meta.env.VITE_QISCUS_APP_VERSION,
     sdkUserId: import.meta.env.VITE_QISCUS_SDK_USER_ID || '',
     userSdkToken: import.meta.env.VITE_QISCUS_USER_SDK_TOKEN || '',
+    widget: {
+      iframeUrl: import.meta.env.VITE_IFRAME_URL,
+      env: import.meta.env.VITE_WIDGET_ENV || 'production',
+    },
   });
 }
