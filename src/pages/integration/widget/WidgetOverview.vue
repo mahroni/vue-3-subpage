@@ -12,8 +12,8 @@
       <div class="flex w-140 flex-col gap-2">
         <div class="flex items-center gap-5">
           <ImageInput
-            v-model="channel.badge_url"
             id="channel-badge"
+            v-model="channel.badge_url"
             @error="(e) => (errorMessages = e)"
             :isUploading="uSdkImage.loading.value"
             @upload="uploadImage"
@@ -46,7 +46,7 @@
       </div>
     </div>
     <div class="flex justify-end gap-4">
-      <Button intent="secondary" @click="router.back()">Back</Button>
+      <Button intent="secondary" @click="router.push('/qiscus')">Back</Button>
       <Button type="submit" :disabled="isDisabled">Save</Button>
     </div>
   </form>
@@ -109,7 +109,7 @@ async function update() {
 
   showAlert.success({
     title: 'Success',
-    text: `Update channel successfully`,
+    text: 'Qiscus Live Chat has been updated.',
     confirmButtonText: 'Okay',
     showCancelButton: false,
   });
