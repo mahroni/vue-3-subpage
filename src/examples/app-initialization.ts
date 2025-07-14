@@ -6,7 +6,7 @@ const appConfig: QiscusAppConfig = {
   baseUrl: 'https://your-base-url.com',
   widget: {
     iframeUrl: 'https://your-iframe-url.com', // Optional, can be omitted if not using widget
-    env: 'production', // Optional, can be 'production', 'staging', or 'development'
+    env: 'production', // Optional, can be 'production', 'latest', or 'staging'
   },
   userToken: 'your-user-token-here',
   appId: 'your-app-id-here',

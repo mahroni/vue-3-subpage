@@ -13,7 +13,7 @@ import { useAppConfigStore } from './stores/app-config';
 
 export interface WidgetConfig {
   iframeUrl: string;
-  env: 'production' | 'staging' | 'development';
+  env: 'production' | 'latest' | 'staging';
 }
 export interface QiscusAppConfig {
   baseUrl: string;
