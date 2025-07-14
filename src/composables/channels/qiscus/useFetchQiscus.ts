@@ -2,11 +2,11 @@ import { ref } from 'vue';
 import { z } from 'zod';
 
 import { qiscusApi } from '@/api/channels';
-import type { MetaPagination } from '@/types/schemas/common';
 import {
   type QiscusChannelList,
   QiscusChannelResponseSchema,
-} from '@/types/schemas/qiscus-list-channel';
+} from '@/types/schemas/channels/qiscus-list-channel';
+import type { MetaPagination } from '@/types/schemas/common';
 import { filterFilledObj } from '@/utils/helper/object';
 
 const initMeta: MetaPagination = {

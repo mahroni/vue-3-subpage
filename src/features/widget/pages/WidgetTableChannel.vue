@@ -125,7 +125,7 @@ import EmptyState from '@/components/ui/EmptyState.vue';
 import Pagination from '@/components/ui/Pagination.vue';
 import { useFetchQiscus, useUpdateQiscus } from '@/composables/channels/qiscus';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import type { QiscusChannel } from '@/types/schemas/qiscus-list-channel';
+import type { QiscusChannel } from '@/types/schemas/channels/qiscus-list-channel';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
 // async component
