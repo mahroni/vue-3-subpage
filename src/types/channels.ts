@@ -163,3 +163,7 @@ export interface IUpdateTelegramChannel {
   name: string;
   is_active: boolean;
 }
+export interface ICreateTelegramChannel {
+  bot_token: string;
+  configs: string | null;
+}

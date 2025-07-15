@@ -31,6 +31,7 @@ export const telegramApi = {
     apiV2.post<any[]>(`/telegram/connect/${channelId}/update`, data),
   delete: (channelId: number | undefined) =>
     apiV2.post<any[]>(`/telegram/connect/${channelId}/delete`),
+  create: (data: any) => apiV2.post<any[]>(`/telegram/connect`, data),
 };
 
 export const configApi = {
