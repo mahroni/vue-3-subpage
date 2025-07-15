@@ -115,7 +115,7 @@ function populateChannelData() {
     // Map the fetched telegram data to the channel ref structure
     channel.value = {
       username: currentChannel.value.username || '',
-      name: currentChannel.value.username || '', // Use username as name if name is not available
+      name: currentChannel.value.name || '',
       token: currentChannel.value.bot_token || '',
       configs: {
         offline_message: '',
