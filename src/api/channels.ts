@@ -1,7 +1,13 @@
 import type { IParams } from '@/types/api';
 import type { ICreateQiscusChannel, IUpdateTelegramChannel } from '@/types/channels';
 
+
+
 import apiV1, { apiV2, apiV3 } from './../utils/axios';
+
+
+
+
 
 // API v1 examples
 export const channelsApi = {
@@ -24,6 +30,7 @@ export const qiscusApi = {
 export const whatsappApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/wa', { params }),
   getById: (id: number) => apiV2.get<any>(`/wa/${id}`),
+  update: (data: any) => apiV2.post<any>(`/wa/connect/${data.id}/update`, data),
 };
 export const telegramApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/telegram', { params }),
@@ -40,4 +47,12 @@ export const configApi = {
 export const botApi = {
   get: () => apiV1.get<any[]>('/app/bot'),
   changeStatus: (params: any) => apiV1.post<any[]>('/app/bot/activation', { params }),
+};
+
+export const featureApi = {
+  get: () => apiV2.get<any[]>('/features'),
+};
+
+export const planApi = {
+  get: () => apiV1.get<any[]>('/admin/my_plan'),
 };
