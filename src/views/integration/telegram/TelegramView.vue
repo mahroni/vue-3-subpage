@@ -47,16 +47,16 @@ const isAutoresponderFormOpen = ref(false);
 const items = [
   {
     id: '1',
-    title: 'Enable Telegram Integration',
+    title: 'Enable Bot Integration',
     content:
-      'Enabling Telegram Integration allows the bot to communicate seamlessly in a chat room, even if the feature is turned off. When activated, the bot can still send messages, ensuring that key updates and notifications are delivered without interruption.',
+      'Turning on bot integration lets the bot chat smoothly in a room, even if the toggle is off. When you enable this feature, the bot can still send messages, making sure important updates and notifications get through without any breaks.',
     initiallyOpen: true,
   },
   {
     id: '2',
-    title: 'Auto Responder',
+    title: 'Enable Bot On Disable Chat',
     content:
-      'Auto Responder is a system that automatically sends messages only to this channel according to the customer service operating hours. Admin can set the auto responder message when services are both during and outside the office hour.',
+      'Allow bot to send messages when the bot toggle button is disabled in a chat room. If you set the toggle to enabled, you allow sending messages from bot to room even though the bot toggle in the room is disabled.',
   },
 ];
 
@@ -178,25 +178,16 @@ onMounted(async () => {
 
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <div class="flex items-center gap-3">
-        <img
-          :src="CHANNEL_BADGE_URL.telegram"
-          alt="Telegram Logo"
-          class="h-6 w-6"
-          width="24"
-          height="24"
-        />
+        <img :src="CHANNEL_BADGE_URL.telegram" alt="Telegram Logo" class="h-6 w-6" width="24" height="24" />
         <h2 class="text-xl font-semibold text-[#0A0A0A]">Telegram</h2>
       </div>
 
       <Banner>
         <p class="text-sm font-medium text-[#0A0A0A]">
           To integrate the Qiscus Omnichannel Chat with Telegram, you can check this
-          <a
-            class="text-notification-link font-semibold underline"
+          <a class="text-notification-link font-semibold underline"
             href="https://documentation.qiscus.com/omnichannel-chat/application#telegram"
-            target="_blank"
-            >Documentation</a
-          >.
+            target="_blank">Documentation</a>.
         </p>
       </Banner>
 
@@ -209,12 +200,8 @@ onMounted(async () => {
               <div class="flex justify-between gap-8 text-sm text-[#565656]">
                 <div v-html="item.content"></div>
                 <div>
-                  <Switch
-                    variant="success"
-                    v-model="isEnableTelegram"
-                    @change="toggleTelegramIntegration"
-                    size="medium"
-                  />
+                  <Switch variant="success" v-model="isEnableTelegram" @change="toggleTelegramIntegration"
+                    size="medium" />
                 </div>
               </div>
             </template>
@@ -222,27 +209,18 @@ onMounted(async () => {
               <div class="flex justify-between gap-8 text-sm text-[#565656]">
                 {{ item.content }}
                 <div>
-                  <Switch
-                    variant="success"
-                    size="medium"
-                    v-model="isEnableAutoResponder"
-                    @change="toggleAutoResponder"
-                  />
+                  <Switch variant="success" size="medium" v-model="isEnableAutoResponder"
+                    @change="toggleAutoResponder" />
                 </div>
               </div>
-              <Button intent="secondary" class="mt-4" @click="openAutoResponderForm"
-                >Set Channel Auto Responder</Button
-              >
+              <Button intent="secondary" class="mt-4" @click="openAutoResponderForm">Set Channel Auto Responder</Button>
             </template>
           </CollapsibleGroup>
         </template>
 
         <template v-if="activeTab == 'Overview'">
-          <form
-            v-if="!isAutoresponderFormOpen"
-            @submit.prevent="initiateChannelSetupConfirmation"
-            class="flex flex-col gap-8"
-          >
+          <form v-if="!isAutoresponderFormOpen" @submit.prevent="initiateChannelSetupConfirmation"
+            class="flex flex-col gap-8">
             <CreateTelegramForm v-model="channel" />
 
             <div class="mt-8 flex justify-end gap-4">

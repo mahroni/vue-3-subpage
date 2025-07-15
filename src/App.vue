@@ -64,18 +64,3 @@ onMounted(() => {
   }, 3000);
 });
 </script>
-
-
-<style scoped>
-/* Transition for Backdrop Fade */
-.fade-fade-enter-active,
-.fade-fade-leave-active {
-  /* Option 1: Increase duration for a more gentle fade */
-  transition: opacity 0.2s ease-in-out;
-}
-
-.fade-fade-enter-from,
-.fade-fade-leave-to {
-  opacity: 0;
-}
-</style>
