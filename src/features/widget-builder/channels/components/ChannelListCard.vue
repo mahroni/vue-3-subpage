@@ -91,12 +91,14 @@ onUnmounted(() => {
             <!-- Icon & Name -->
             <div class="flex flex-1 items-center gap-3">
               <img
-                :src="CHANNEL_BADGE_URL[channel.icon as keyof typeof CHANNEL_BADGE_URL]"
+                v-if="channel.icon"
+                :src="
+                  channel.icon || CHANNEL_BADGE_URL[channel.icon as keyof typeof CHANNEL_BADGE_URL]
+                "
                 alt=""
                 class="h-6 w-6"
                 width="24"
                 height="24"
-                v-if="channel.icon"
               />
               <ChatIcon :size="24" v-else />
               <h4 class="text-text-title text-sm font-medium">{{ channel.name }}</h4>
@@ -119,7 +121,7 @@ onUnmounted(() => {
               <!-- Dropdown Menu -->
               <div
                 v-if="activeDropdown === channel.id"
-                class="bg-surface-primary-white shadow-small absolute top-0 right-15 z-10 flex w-[161px] flex-col items-start rounded-lg px-3 py-1"
+                class="bg-surface-primary-white shadow-small absolute top-0 right-8 z-10 flex w-[161px] flex-col items-start rounded-lg px-3 py-1"
               >
                 <button
                   @click="editChannel(channel.id)"

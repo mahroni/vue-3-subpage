@@ -36,25 +36,15 @@ const isFormValid = computed(() => {
   return channelName.value.trim() !== '' && channelLink.value.trim() !== '';
 });
 
-// Watch for editing channel changes
-watch(
-  () => props.editingChannel,
-  (newChannel) => {
-    if (newChannel) {
-      channelName.value = newChannel.name || '';
-      channelLink.value = newChannel.link || '';
-      channelBadgeIcon.value = newChannel.icon || '';
-    } else {
-      // Reset form when not editing
-      channelName.value = '';
-      channelLink.value = '';
-      channelBadgeIcon.value = '';
-    }
-  },
-  { immediate: true }
-);
+const resetForm = (): void => {
+  // Reset all form fields to empty state
+  channelName.value = '';
+  channelLink.value = '';
+  channelBadgeIcon.value = '';
+};
 
 const closeModal = () => {
+  resetForm();
   emit('update:modelValue', false);
   emit('close');
 };
@@ -87,6 +77,22 @@ const uploadImage = async (file: File) => {
     console.error(error.value);
   }
 };
+
+// Watch for editing channel changes
+watch(
+  () => props.editingChannel,
+  (newChannel) => {
+    if (newChannel) {
+      channelName.value = newChannel.name || '';
+      channelLink.value = newChannel.link || '';
+      channelBadgeIcon.value = newChannel.icon || '';
+    } else {
+      // Reset form when not editing
+      resetForm();
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
