@@ -18,6 +18,7 @@ import LoginForm from '@/features/widget-builder/LoginForm.vue';
 import WelcomeDialog from '@/features/widget-builder/WelcomeDialog.vue';
 import Channels from '@/features/widget-builder/channels/Channels.vue';
 import ColorScheme from '@/features/widget-builder/color-scheme/ColorScheme.vue';
+import WidgetPreview from '@/features/widget-builder/pages/WidgetPreview.vue';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
@@ -96,6 +97,10 @@ watch(
   }
 );
 
+const props = defineProps<{
+  channelId: string | number;
+}>();
+
 // Store integration
 const { postWidgetConfig } = useQiscusLiveChatStore();
 const { appId } = useAppConfigStore();
@@ -128,6 +133,36 @@ const params = useRoute().params;
 if (!params.id) {
   throw new Error('Channel ID is required');
 }
+
+const selectorsToRemove = [
+  '#qismo-widget',
+  'iframe#qcw-welcome-iframe',
+  'iframe#qcw-attention-grabber-iframe',
+  'iframe#qcw-login-form-iframe',
+  'iframe#qcw-channel-form-iframe',
+];
+
+const oncloseDrawer = () => {
+  isDrawerOpen.value = false;
+
+  selectorsToRemove.forEach((selector) => {
+    const element = document.querySelector(selector);
+    // if (element && element instanceof HTMLElement && element.id === 'qismo-widget') {
+    //   element.style.display = 'none';
+    // } else {
+    element?.remove();
+    // }
+  });
+};
+
+// watch(isDrawerOpen, (newValue) => {
+//   if (newValue) {
+//     const element = document.querySelector('#qismo-widget');
+//     if (element && element instanceof HTMLElement) {
+//       element.style.display = 'block';
+//     }
+//   }
+// });
 </script>
 
 <template>
@@ -147,8 +182,8 @@ if (!params.id) {
     </div>
   </div>
 
-  <Drawer :isOpen="isDrawerOpen" @close="isDrawerOpen = false">
+  <Drawer :isOpen="isDrawerOpen" @close="oncloseDrawer">
     <!-- Preview content should come from store/props -->
-    <WidgetPreview />
+    <WidgetPreview v-if="isDrawerOpen" :channel-id="props.channelId" />
   </Drawer>
 </template>

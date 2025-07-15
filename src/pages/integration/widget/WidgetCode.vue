@@ -11,7 +11,6 @@ const isStaging = import.meta.env.VITE_WIDGET_ENV === 'staging';
 const isLatest = import.meta.env.VITE_WIDGET_ENV === 'latest';
 const baseUrl = import.meta.env.VITE_BASE_URL || '';
 const iframeUrl = import.meta.env.VITE_IFRAME_URL || '';
-
 const { appId } = useAppConfigStore();
 
 const jsCode = `

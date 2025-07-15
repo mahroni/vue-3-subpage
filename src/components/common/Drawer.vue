@@ -1,12 +1,18 @@
 <template>
   <teleport to="body">
     <transition name="drawer-backdrop-fade">
-      <div v-if="isOpen" class="bg-opacity-50 fixed inset-0 z-[998] bg-[#0A0A0A99]" @click="closeDrawer"></div>
+      <div
+        v-if="isOpen"
+        class="bg-opacity-50 fixed inset-0 z-[998] bg-[#0A0A0A99]"
+        @click="closeDrawer"
+      ></div>
     </transition>
 
     <transition name="drawer-slide">
-      <div v-if="isOpen"
-        class="fixed top-0 right-0 z-[999] flex h-full w-[456px] max-w-full flex-col rounded-l-2xl bg-white shadow-xl">
+      <div
+        v-if="isOpen"
+        class="fixed top-0 right-0 z-[999] flex h-full w-[408px] max-w-full flex-col rounded-l-2xl bg-white shadow-xl"
+      >
         <div class="flex items-center justify-between border-b border-gray-200 p-4">
           <slot name="header">
             <h2 class="text-xl font-semibold text-[#0A0A0A]">Preview Your Qiscus Live Chat</h2>
