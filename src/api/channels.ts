@@ -24,6 +24,7 @@ export const qiscusApi = {
 export const whatsappApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/wa', { params }),
   getById: (id: number) => apiV2.get<any>(`/wa/${id}`),
+  update: (data: any) => apiV2.post<any>(`/wa/connect/${data.id}/update`, data),
 };
 
 export const configApi = {
@@ -35,4 +36,8 @@ export const configApi = {
 export const botApi = {
   get: () => apiV1.get<any[]>('/app/bot'),
   changeStatus: (params: any) => apiV1.post<any[]>('/app/bot/activation', { params }),
+};
+
+export const featureApi = {
+  get: () => apiV2.get<any[]>('/features'),
 };

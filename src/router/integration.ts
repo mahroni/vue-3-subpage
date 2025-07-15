@@ -1,6 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router';
 
 import ChannelView from '@/views/integration/ChannelView.vue';
+import WhatsappChannelView from '@/views/integration/whatsapp/WhatsappChannelView.vue';
 import WidgetChannel from '@/views/integration/widget/WidgetChannelView.vue';
 import WidgetCreateChannelView from '@/views/integration/widget/WidgetCreateChannelView.vue';
 import WidgetDetailView from '@/views/integration/widget/WidgetDetailView.vue';
@@ -18,11 +19,33 @@ export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/whatsapp',
     name: 'whatsapp',
-    component: () => null, // This route is a placeholder for custom channel integration
-    beforeEnter: () => {
-      window.location.href = `/integration?ch=whatsapp`;
-      return false; // Crucial: tells Vue Router to stop its internal navigation
-    },
+    redirect: { name: 'whatsapp-list' },
+    children: [
+      {
+        path: '', // Full path: /qiscus
+        name: 'whatsapp-list',
+        component: WhatsappChannelView,
+      },
+      // wip
+      {
+        path: ':id', // Full path: /qiscus/:id
+        name: 'whatsapp-detail',
+        component: () => null,
+        beforeEnter: () => {
+          window.location.href = `/integration?ch=whatsapp&id=`;
+          return false;
+        },
+      },
+      {
+        path: 'create', // Full path: /qiscus/create
+        name: 'whatsapp-new',
+        component: () => null,
+        beforeEnter: () => {
+          window.location.href = `/integration?ch=whatsapp`;
+          return false;
+        },
+      },
+    ],
   },
   {
     path: '/instagram',
