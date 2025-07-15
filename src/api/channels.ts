@@ -1,7 +1,13 @@
 import type { IParams } from '@/types/api';
 import type { ICreateQiscusChannel } from '@/types/channels';
 
+
+
 import apiV1, { apiV2, apiV3 } from './../utils/axios';
+
+
+
+
 
 // API v1 examples
 export const channelsApi = {
@@ -40,4 +46,8 @@ export const botApi = {
 
 export const featureApi = {
   get: () => apiV2.get<any[]>('/features'),
+};
+
+export const planApi = {
+  get: () => apiV1.get<any[]>('/admin/my_plan'),
 };
