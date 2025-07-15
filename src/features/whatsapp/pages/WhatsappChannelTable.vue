@@ -158,7 +158,7 @@ const getDetailChannel = (channel: { id: number }) => {
 };
 
 const handleNewIntegration = () => {
-  if (planData.value && channels.value.length > planData.value.max_wa_channel) {
+  if (planData.value && channels.value.length < planData.value.max_wa_channel) {
     router.push({
       name: 'whatsapp-new',
     })
