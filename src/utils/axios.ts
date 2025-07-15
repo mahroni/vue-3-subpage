@@ -1,5 +1,5 @@
-import axios from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios from 'axios';
 
 import { useAppConfigStore } from '../stores/app-config';
 
@@ -46,7 +46,7 @@ export const createAxiosInstance = (
       // Log request in development
       if (import.meta.env.DEV) {
         console.log(`🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`);
-        console.log('📋 Headers:', config.headers);
+        // console.log('📋 Headers:', config.headers);
       }
 
       return config;
