@@ -4,7 +4,7 @@ import MainTab from '@/components/common/Tabs/MainTab.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
 import { BackIcon, CopyIcon, HomeIcon } from '@/components/icons';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 
 const activeTab = ref<string>('Overview');
@@ -32,6 +32,11 @@ const items = [
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
 }
+
+
+onMounted(() => {
+
+})
 </script>
 
 <template>

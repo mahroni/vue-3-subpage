@@ -9,7 +9,7 @@ export interface AppConfig {
   userSdkToken: string;
 }
 
-export const useAppConfigStore = defineStore('appConfig', () => {
+export const useAppConfigStore = defineStore('app', () => {
   // State
   const userToken = ref<string>('');
   const appId = ref<string>('');
@@ -48,26 +48,6 @@ export const useAppConfigStore = defineStore('appConfig', () => {
     userSdkToken.value = config.userSdkToken;
   };
 
-  const setUserToken = (token: string) => {
-    userToken.value = token;
-  };
-
-  const setAppId = (id: string) => {
-    appId.value = id;
-  };
-
-  const setAppVersion = (version: string) => {
-    appVersion.value = version;
-  };
-
-  const setSdkUserId = (id: string) => {
-    sdkUserId.value = id;
-  };
-
-  const setUserSdkToken = (token: string) => {
-    userSdkToken.value = token;
-  };
-
   const clearConfig = () => {
     userToken.value = '';
     appId.value = '';
@@ -89,11 +69,6 @@ export const useAppConfigStore = defineStore('appConfig', () => {
 
     // Actions
     setConfig,
-    setUserToken,
-    setAppId,
-    setAppVersion,
-    setSdkUserId,
-    setUserSdkToken,
     clearConfig,
   };
 });
