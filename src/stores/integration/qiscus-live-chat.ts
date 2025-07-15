@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref } from 'vue';
 
 import { qiscusApi } from '@/api/channels';
 import type { IconName } from '@/components/icons/Icon.vue';
@@ -18,20 +18,14 @@ import type {
 } from '@/types/live-chat';
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
-  const channelList = ref<IWidgetChannel[]>([
-    { id: 1, icon: 'whatsapp', name: 'Whatsapp', enabled: true, link: '' },
-    { id: 2, icon: 'facebook', name: 'Facebook', enabled: false, link: '' },
-    { id: 3, icon: 'line', name: 'Line', enabled: false, link: '' },
-    { id: 4, icon: 'telegram', name: 'Telegram', enabled: false, link: '' },
-    { id: 6, icon: 'tiktok', name: 'Tiktok', enabled: true, link: '' },
-  ]);
+  const channelList = ref<IWidgetChannel[]>([]);
 
   const colorWidgetState = ref<string>('#01416C');
 
   // state for Channel Widget
   const channelState = reactive({
     isChannelsEnabled: false,
-    isQiscusLiveChat: false,
+    isQiscusLiveChat: true,
     previewTitle: 'Ask for Question',
     previewSubtitle: 'In Everythings!',
     previewIntroduction: 'More personalized chat with us on:',
@@ -164,31 +158,6 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     }
   };
 
-  const addQiscusLiveChatChannel = () => {
-    // check if qiscus live chat channel already exists
-    const existingChannel = channelList.value.find((channel) => channel.icon === 'qiscus');
-
-    if (!existingChannel) {
-      const newId = Math.max(...channelList.value.map((item) => item.id), 0) + 1;
-      const qiscusChannel: IWidgetChannel = {
-        id: newId,
-        icon: 'qiscus',
-        name: channelState.previewLiveChatName || 'Live Chat',
-        enabled: true,
-        link: '',
-      };
-      channelList.value.push(qiscusChannel);
-    }
-  };
-
-  const removeQiscusLiveChatChannel = () => {
-    // remove channel with icon qiscus
-    const index = channelList.value.findIndex((channel) => channel.icon === 'qiscus');
-    if (index !== -1) {
-      channelList.value.splice(index, 1);
-    }
-  };
-
   const getWidgetConfig = async (appId: string, channelId: string) => {
     try {
       const { data } = await qiscusApi.getWidgetConfig(appId, channelId);
@@ -308,31 +277,6 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     }
   };
 
-  // Watch previewLiveChatName for update qiscus live chat channel name
-  watch(
-    () => channelState.previewLiveChatName,
-    (newName) => {
-      const qiscusChannel = channelList.value.find((channel) => channel.icon === 'qiscus');
-      if (qiscusChannel) {
-        qiscusChannel.name = newName || 'Live Chat';
-      }
-    }
-  );
-
-  // Watch isQiscusLiveChat for automatically add/remove channel
-  watch(
-    () => channelState.isQiscusLiveChat,
-    (newValue: boolean, oldValue: boolean) => {
-      if (newValue && !oldValue) {
-        // When enabled, add qiscus live chat channel
-        addQiscusLiveChatChannel();
-      } else if (!newValue && oldValue) {
-        // When disabled, remove qiscus live chat channel
-        removeQiscusLiveChatChannel();
-      }
-    }
-  );
-
   return {
     // state for color widget
     colorWidgetState,
@@ -357,8 +301,6 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     addChannel,
     removeChannel,
     updateChannel,
-    addQiscusLiveChatChannel,
-    removeQiscusLiveChatChannel,
     getWidgetConfig,
     postWidgetConfig,
   };

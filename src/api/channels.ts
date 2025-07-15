@@ -1,5 +1,5 @@
 import type { IParams } from '@/types/api';
-import type { ICreateQiscusChannel } from '@/types/channels';
+import type { ICreateQiscusChannel, IUpdateTelegramChannel } from '@/types/channels';
 
 
 
@@ -31,6 +31,11 @@ export const whatsappApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/wa', { params }),
   getById: (id: number) => apiV2.get<any>(`/wa/${id}`),
   update: (data: any) => apiV2.post<any>(`/wa/connect/${data.id}/update`, data),
+};
+export const telegramApi = {
+  get: (params: IParams) => apiV3.get<any[]>('/admin/channel/telegram', { params }),
+  update: (channelId: number | undefined, data: IUpdateTelegramChannel) =>
+    apiV2.post<any[]>(`/telegram/connect/${channelId}/update`, data),
 };
 
 export const configApi = {

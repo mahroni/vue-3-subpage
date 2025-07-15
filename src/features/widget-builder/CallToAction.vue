@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
+import { nextTick, watch } from 'vue';
 
 import ImageInput from '@/components/form/ImageInput.vue';
 import Input from '@/components/form/Input.vue';
@@ -7,6 +8,7 @@ import InputCustom from '@/components/form/InputCustom.vue';
 import CallToAction from '@/components/ui/widget-preview/CallToAction.vue';
 import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLoading.vue';
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
+import { useSweetAlert } from '@/composables/useSweetAlert';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
 import OptionalInput from './components/form/OptionalInput.vue';
@@ -14,6 +16,11 @@ import WidgetFormLayout from './components/layout/WidgetFormLayout.vue';
 
 const { callToActionState } = storeToRefs(useQiscusLiveChatStore());
 const { loading, data, error, upload } = useUploadSdkImage();
+const { showAlert } = useSweetAlert();
+
+// Previous values to track changes
+let previousIsWithText = callToActionState.value.isWithText;
+let previousIsWithIcon = callToActionState.value.isWithIcon;
 
 const uploadImage = async (file: File) => {
   await upload(file);
@@ -23,6 +30,59 @@ const uploadImage = async (file: File) => {
     console.error(error.value);
   }
 };
+
+/**
+ * Validates that at least one of isWithText or isWithIcon is enabled
+ * If both are disabled, shows alert and reverts the change
+ */
+const validateCallToActionSettings = (changedProperty: 'isWithText' | 'isWithIcon') => {
+  const { isWithText, isWithIcon } = callToActionState.value;
+
+  // If both are disabled, show alert and revert the change
+  if (!isWithText && !isWithIcon) {
+    showAlert.error({
+      title: 'The setting cannot be disabled.',
+      text: 'You need to activate at least one additional setting before you can disable the Call to Action Button.',
+      confirmButtonText: 'OK',
+      showCancelButton: false,
+    });
+
+    // Revert the change based on which property was modified
+    nextTick(() => {
+      if (changedProperty === 'isWithText') {
+        callToActionState.value.isWithText = previousIsWithText;
+      } else {
+        callToActionState.value.isWithIcon = previousIsWithIcon;
+      }
+    });
+
+    return;
+  }
+
+  // Update previous values if validation passes
+  previousIsWithText = isWithText;
+  previousIsWithIcon = isWithIcon;
+};
+
+// Watch for changes in isWithText
+watch(
+  () => callToActionState.value.isWithText,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      validateCallToActionSettings('isWithText');
+    }
+  }
+);
+
+// Watch for changes in isWithIcon
+watch(
+  () => callToActionState.value.isWithIcon,
+  (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+      validateCallToActionSettings('isWithIcon');
+    }
+  }
+);
 </script>
 
 <template>
@@ -74,7 +134,7 @@ const uploadImage = async (file: File) => {
             id="border-radius-input"
             label="Border Radius"
             v-model="callToActionState.borderRadius"
-            placeholder="Try everything!"
+            placeholder="Type your radius border, ex: 16 or 32"
             type="number"
             :maxlength="50"
             :min="0"
@@ -97,6 +157,7 @@ const uploadImage = async (file: File) => {
       <CallToAction
         :imageUrl="callToActionState.iconImage"
         :title="callToActionState.liveChatButtonText"
+        :isUsingTitle="callToActionState.isWithText"
         :rounded="Number(callToActionState.borderRadius)"
       />
     </div>

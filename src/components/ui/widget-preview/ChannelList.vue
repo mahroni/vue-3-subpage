@@ -8,6 +8,8 @@ interface Props {
   title: string;
   subtitle: string;
   introduction: string;
+  previewLiveChatName?: string;
+  enableQiscusLiveChat?: boolean;
   channels: {
     label: string;
     iconUrl: string;
@@ -19,6 +21,8 @@ const props = withDefaults(defineProps<Props>(), {
   title: 'Hello there,',
   subtitle: 'Welcome to Qiscus!',
   introduction: 'Welcome to Qiscus!',
+  previewLiveChatName: 'Qiscus Live Chat',
+  enableQiscusLiveChat: false,
   channels: () => [
     {
       label: 'Live Chat',
@@ -49,6 +53,23 @@ const props = withDefaults(defineProps<Props>(), {
     </div>
     <!-- Channel List Section -->
     <div class="hide-scrollbar mt-4 flex max-h-[350px] flex-col gap-4 overflow-y-auto px-8">
+      <!-- Qiscus Live Chat -->
+      <button
+        v-if="props.enableQiscusLiveChat"
+        class="hover:bg-surface-primary-blue/5 flex cursor-pointer justify-between rounded-xl p-4 px-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
+      >
+        <div class="flex min-w-0 flex-1 items-center gap-2">
+          <img :src="CHANNEL_BADGE_URL.qiscus" alt="" class="h-6 w-6" width="24" height="24" />
+          <div class="min-w-0 flex-1 text-start text-sm font-medium break-words">
+            {{ props.previewLiveChatName }}
+          </div>
+        </div>
+
+        <div class="flex flex-shrink-0 items-center">
+          <ChevronRightIcon :size="24" />
+        </div>
+      </button>
+
       <!-- Channel List Item -->
       <button
         v-for="action in props.channels"
