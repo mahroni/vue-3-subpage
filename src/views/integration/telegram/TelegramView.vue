@@ -77,6 +77,20 @@ function openAutoResponderForm() {
 function closeAutoResponderForm() {
   isAutoresponderFormOpen.value = false;
 }
+
+// --- Utility Functions ---
+function hasConfigValues(): boolean {
+  return (
+    configs.value.offline_message.trim() !== '' ||
+    configs.value.online_message.trim() !== '' ||
+    configs.value.send_offline_each_message === true ||
+    configs.value.send_online_if_resolved === true
+  );
+}
+
+// --- Computed Properties ---
+const isConfigEmpty = computed(() => !hasConfigValues());
+
 // --- Data Reset Functions ---
 function resetChannelData() {
   channel.value = {
@@ -94,6 +108,7 @@ function resetChannelData() {
   isEnableTelegram.value = false;
   // isEnableAutoResponder.value = false;
 }
+
 // --- Data Population Functions ---
 function populateChannelData() {
   if (currentChannel.value) {
@@ -121,7 +136,14 @@ function populateChannelData() {
 async function createTelegramChannel() {
   const payload = {
     bot_token: channel.value.token,
-    configs: null,
+    configs: hasConfigValues()
+      ? {
+          offline_message: configs.value.offline_message,
+          online_message: configs.value.online_message,
+          send_online_if_resolved: configs.value.send_online_if_resolved,
+          send_offline_each_message: configs.value.send_offline_each_message,
+        }
+      : null,
   };
 
   try {
@@ -146,6 +168,8 @@ async function createTelegramChannel() {
 
     await fetchTelegram();
     populateChannelData();
+
+    closeAutoResponderForm();
   } catch (error) {
     showAlert.error({
       title: 'Error',
@@ -361,13 +385,16 @@ onMounted(async () => {
           <form v-if="!isAutoresponderFormOpen" @submit.prevent="" class="flex flex-col gap-8">
             <CreateTelegramForm v-model="channel" />
 
-            <div class="mt-8 flex justify-end gap-4">
-              <Button type="submit" @click="handleCreateChannel" :disabled="createTelegramLoading"
+            <div v-if="!channel.name && !channel.username" class="mt-8 flex justify-end gap-4">
+              <Button
+                type="submit"
+                @click="handleCreateChannel"
+                :disabled="createTelegramLoading || !channel.token"
                 >Next</Button
               >
             </div>
 
-            <div class="mt-8 flex justify-between">
+            <div v-else class="mt-8 flex justify-between">
               <Button intent="danger" @click="handleDeleteChannel" :disabled="deleteTelegramLoading"
                 >Delete Channel</Button
               >
@@ -384,7 +411,9 @@ onMounted(async () => {
 
         <div class="mt-8 flex justify-end gap-4">
           <Button intent="secondary" @click="closeAutoResponderForm">Back</Button>
-          <Button type="submit">Save Changes</Button>
+          <Button type="submit" @click="createTelegramChannel" :disabled="isConfigEmpty">
+            Save Changes
+          </Button>
         </div>
       </form>
     </div>

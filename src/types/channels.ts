@@ -165,5 +165,10 @@ export interface IUpdateTelegramChannel {
 }
 export interface ICreateTelegramChannel {
   bot_token: string;
-  configs: string | null;
+  configs: {
+    offline_message: string;
+    online_message: string;
+    send_offline_each_message: boolean;
+    send_online_if_resolved: boolean;
+  } | null;
 }
