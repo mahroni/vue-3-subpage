@@ -1,13 +1,7 @@
 import type { IParams } from '@/types/api';
 import type { ICreateQiscusChannel, IUpdateTelegramChannel } from '@/types/channels';
 
-
-
 import apiV1, { apiV2, apiV3 } from './../utils/axios';
-
-
-
-
 
 // API v1 examples
 export const channelsApi = {
