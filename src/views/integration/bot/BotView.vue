@@ -3,14 +3,28 @@ import { Banner, Button, CollapsibleGroup, Switch } from '@/components/common/co
 import MainTab from '@/components/common/Tabs/MainTab.vue';
 import InputCustom from '@/components/form/InputCustom.vue';
 import { BackIcon, CopyIcon, HomeIcon } from '@/components/icons';
+import { useFetchBot } from '@/composables/channels/bot';
+import { useSweetAlert } from '@/composables/useSweetAlert';
+import { useAppConfigStore } from '@/stores/app-config';
+import { useAppDetailStore } from '@/stores/app-detail';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { onMounted, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { onMounted, reactive, ref, watch } from 'vue';
 
 
 const activeTab = ref<string>('Overview');
-const agentId = ref<string>('asdasd')
 const isEnableBot = ref<boolean>(false)
 const isEnableBotChat = ref<boolean>(false)
+
+const data = reactive({
+  agent_id: '',
+  is_enable: false,
+  is_enable_chat: false,
+  app_id: '',
+  secret_key: '',
+  bot_url: '',
+  webhook_url: ''
+})
 
 
 const items = [
@@ -33,9 +47,37 @@ function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
 }
 
+const { showAlert } = useSweetAlert()
+const { detail } = storeToRefs(useAppDetailStore())
 
-onMounted(() => {
+watch(
+  () => detail.value,
+  (newVal) => {
+    data.app_id = newVal.app_code
+    data.secret_key = newVal.secret_key || ''
+  },
+  { immediate: true }
+);
 
+const bot = useFetchBot()
+const appConfig = (useAppConfigStore())
+onMounted(async () => {
+  await bot.fetch()
+  if (bot.error.value) {
+    showAlert.error({
+      title: 'Error',
+      text: `Something went wrong.`,
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  }
+
+  data.agent_id = String(appConfig.userId) || ''
+
+  data.webhook_url = bot.data.value?.bot_webhook_url ?? ''
+  data.is_enable = bot.data.value?.is_bot_enabled ?? false
+  data.is_enable_chat = bot.data.value?.is_force_send_bot ?? false
+  data.bot_url = `${appConfig.baseUrl}/${appConfig.appId}/bot`
 })
 </script>
 
@@ -98,23 +140,23 @@ onMounted(() => {
             </div>
 
             <div class="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
-              <InputCustom v-model="agentId" label="Agent ID" disabled>
+              <InputCustom v-model="data.agent_id" label="Agent ID" disabled>
                 <template #append-button>
-                  <button class="flex gap-2 text-primary cursor-pointer" @click="copyToClipboard(agentId)">
+                  <button class="flex gap-2 text-primary cursor-pointer" @click="copyToClipboard(data.agent_id)">
                     Copy
                     <CopyIcon :size="18" />
                   </button>
                 </template>
               </InputCustom>
-              <InputCustom v-model="agentId" label="App ID" disabled>
+              <InputCustom v-model="data.app_id" label="App ID" disabled>
                 <template #append-button>
-                  <button class="flex gap-2 text-primary cursor-pointer" @click="copyToClipboard(agentId)">
+                  <button class="flex gap-2 text-primary cursor-pointer" @click="copyToClipboard(data.app_id)">
                     Copy
                     <CopyIcon :size="18" />
                   </button>
                 </template>
               </InputCustom>
-              <InputCustom v-model="agentId" label="Qiscus Secret Key" type="password" disabled></InputCustom>
+              <InputCustom v-model="data.secret_key" label="Qiscus Secret Key" type="password" disabled></InputCustom>
             </div>
           </div>
 
@@ -128,9 +170,9 @@ onMounted(() => {
                 make. Please note that the base url for this request is in the section below.</p>
             </div>
             <div class="mt-4">
-              <InputCustom v-model="agentId" disabled>
+              <InputCustom v-model="data.bot_url" disabled>
                 <template #append-button>
-                  <button class="flex gap-2 text-primary cursor-pointer" @click="copyToClipboard(agentId)">
+                  <button class="flex gap-2 text-primary cursor-pointer" @click="copyToClipboard(data.bot_url)">
                     Copy
                     <CopyIcon :size="18" />
                   </button>
@@ -153,7 +195,7 @@ onMounted(() => {
             </div>
 
             <div class="mt-4">
-              <InputCustom v-model="agentId">
+              <InputCustom v-model="data.webhook_url">
               </InputCustom>
             </div>
           </div>
@@ -188,18 +230,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-<style scoped>
-/* Define the transition properties for both entering and leaving */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
-  /* Adjust duration and easing as needed */
-}
-
-/* Starting state for entering, and ending state for leaving */
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

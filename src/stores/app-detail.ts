@@ -5,9 +5,31 @@ import z from 'zod';
 import { appApi } from '@/api/app';
 import { AppResponseSchema, type AppSchemaType } from '@/types/schemas/app';
 
-export const useAppDetailStore = defineStore('app:detail', () => {
-  const detail = ref<AppSchemaType | null>(null);
-  const error = ref<Error | null>(null);
+const defaultData = {
+  app_code: '',
+  bot_webhook_url: '',
+  created_at: '',
+  id: 0,
+  is_active: false,
+  is_bot_enabled: false,
+  is_sessional: false,
+  name: '',
+  paid_channel_approved: null,
+  secret_key: '',
+  use_2fa: false,
+  user: null,
+};
+
+const defaultAccountSecurity = {
+  expiration_day: 0,
+  expired_on: 0,
+  id: 0,
+  last_password_update: '',
+};
+
+export const useAppDetailStore = defineStore('appDetail', () => {
+  const detail = ref<AppSchemaType>({ ...defaultData, user: defaultAccountSecurity });
+  const error = ref<Error | null>();
 
   const fetch = async () => {
     try {
