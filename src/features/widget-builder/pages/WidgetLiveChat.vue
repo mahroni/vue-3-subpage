@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { type Component, computed, ref, watch } from 'vue';
+import { type Component, computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import RoundedTab from '@/components/common/Tabs/RoundedTab.vue';
@@ -102,7 +102,7 @@ const props = defineProps<{
 }>();
 
 // Store integration
-const { postWidgetConfig } = useQiscusLiveChatStore();
+const { postWidgetConfig, getWidgetConfig } = useQiscusLiveChatStore();
 const { appId } = useAppConfigStore();
 
 // Drawer state
@@ -134,35 +134,13 @@ if (!params.id) {
   throw new Error('Channel ID is required');
 }
 
-const selectorsToRemove = [
-  '#qismo-widget',
-  'iframe#qcw-welcome-iframe',
-  'iframe#qcw-attention-grabber-iframe',
-  'iframe#qcw-login-form-iframe',
-  'iframe#qcw-channel-form-iframe',
-];
-
-const oncloseDrawer = () => {
-  isDrawerOpen.value = false;
-
-  selectorsToRemove.forEach((selector) => {
-    const element = document.querySelector(selector);
-    // if (element && element instanceof HTMLElement && element.id === 'qismo-widget') {
-    //   element.style.display = 'none';
-    // } else {
-    element?.remove();
-    // }
-  });
-};
-
-// watch(isDrawerOpen, (newValue) => {
-//   if (newValue) {
-//     const element = document.querySelector('#qismo-widget');
-//     if (element && element instanceof HTMLElement) {
-//       element.style.display = 'block';
-//     }
-//   }
-// });
+onMounted(async () => {
+  const { id } = params;
+  if (!id) return;
+  // Ensure id is string or number, not array
+  const channelId = (Array.isArray(id) ? id[0] : id) as string;
+  getWidgetConfig(appId, channelId);
+});
 </script>
 
 <template>
@@ -182,7 +160,7 @@ const oncloseDrawer = () => {
     </div>
   </div>
 
-  <Drawer :isOpen="isDrawerOpen" @close="oncloseDrawer">
+  <Drawer :isOpen="isDrawerOpen" @close="isDrawerOpen = false">
     <!-- Preview content should come from store/props -->
     <WidgetPreview v-if="isDrawerOpen" :channel-id="props.channelId" />
   </Drawer>

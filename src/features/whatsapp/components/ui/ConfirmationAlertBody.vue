@@ -1,10 +1,9 @@
 <template>
   <div>
-    <span style="color: #565656; font-family: Inter; font-weight: 400;">
+    <span class="text-text-subtitle">
       You will be charged an additional fee if you want to add a new Whatsapp integration.
     </span>
-    <div
-      style="background: #FFF2D1;color: #0A0A0A;font-size: 14px;padding: 10px 8px;border-radius: 6px; margin-top: 30px;">
+    <div class="bg-[#FFF2D1] text-text-title px-2 py-3 rounded-md mt-8 text-sm">
       <div class="flex items-center" style="padding: 0 15px;">
         <svg width="24" height="24" viewBox="0 0 24 24" style="margin-right: 15px; width: 100px; height: 100px;"
           fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,8 +13,7 @@
           <path d="M12 9V13" stroke="#EB5757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           <path d="M12 17H12.01" stroke="#EB5757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <span
-          style="font-weight: 400;font-size: 12px;line-height: 19.6px;letter-spacing: -0.006em; text-align: left; margin-left: 10px;">
+        <span class="text-xs tracking-tighter ml-[10px] leading-5 text-left">
           For each addition of WABA number or WABA ID will incur a fee of minimum IDR 250,000 or USD 17 per month.
           Please contact your account manager or
           <a class="panel-info__link" style="color: #27B199" href="https://www.qiscus.com/contact"
