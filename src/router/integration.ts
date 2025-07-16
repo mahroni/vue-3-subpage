@@ -12,6 +12,10 @@ import WidgetChannel from '@/views/integration/widget/WidgetChannelView.vue';
 import WidgetCreateChannelView from '@/views/integration/widget/WidgetCreateChannelView.vue';
 import WidgetDetailView from '@/views/integration/widget/WidgetDetailView.vue';
 
+
+
+
+
 // Ensure RouteRecordRaw is imported
 
 // This array explicitly defines your integration routes.
@@ -65,7 +69,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
       },
       {
         path: 'create',
-        name: 'instagram-create',
+        name: 'instagram-new',
         component: () => null,
         beforeEnter: () => {
           window.location.href = `/integration?ch=instagram`;
@@ -86,11 +90,32 @@ export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/tiktok',
     name: 'tiktok',
-    component: () => null, // This route is a placeholder for custom channel integration
-    beforeEnter: () => {
-      window.location.href = `/integration?ch=tiktok`;
-      return false;
-    },
+    redirect: { name: 'tiktok-list' },
+    children: [
+      {
+        path: '',
+        name: 'tiktok-list',
+        component: () => import('@/views/integration/tiktok/TiktokChannelView.vue'),
+      },
+      {
+        path: 'create',
+        name: 'tiktok-new',
+        component: () => null,
+        beforeEnter: () => {
+          window.location.href = `/integration?ch=tiktok`;
+          return false;
+        },
+      },
+      {
+        path: ':id',
+        name: 'tiktok-detail',
+        component: () => null,
+        beforeEnter: (to) => {
+          window.location.href = `/integration?ch=tiktok&id=${to.params.id}`;
+          return false;
+        },
+      }
+    ],
   },
   {
     path: '/facebook',
@@ -104,7 +129,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
       },
       {
         path: 'create',
-        name: 'facebook-create',
+        name: 'facebook-new',
         component: () => null,
         beforeEnter: () => {
           window.location.href = `/integration?ch=facebook`;

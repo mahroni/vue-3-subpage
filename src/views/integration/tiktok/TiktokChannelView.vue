@@ -7,25 +7,23 @@
 
         <!-- Header -->
         <div class="flex items-center gap-2">
-            <img :src="CHANNEL_BADGE_URL.facebook" alt="Qiscus Logo" loading="lazy" width="24" height="24" />
-            <h2 class="text-text-title text-xl font-semibold">Facebook Messenger</h2>
+            <img :src="CHANNEL_BADGE_URL.tiktok" alt="Qiscus Logo" loading="lazy" width="24" height="24" />
+            <h2 class="text-text-title text-xl font-semibold">Tiktok</h2>
         </div>
 
         <!-- Banner documentation -->
-        <FacebookBannerDoc />
+        <TiktokBannerDoc />
 
         <!-- Table section -->
          <div class="shadow-large flex flex-1 items-center justify-between overflow-hidden rounded-2xl">
-            <FbChannelTable />
+            <TiktokChannelTable />
          </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { BackIcon } from '@/components/icons';
-import FacebookBannerDoc from '@/features/facebook/components/ui/FacebookBannerDoc.vue';
-import FbChannelTable from '@/features/facebook/pages/FbChannelTable.vue';
+import TiktokBannerDoc from '@/features/tiktok/components/ui/TiktokBannerDoc.vue';
+import TiktokChannelTable from '@/features/tiktok/pages/TiktokChannelTable.vue';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-
-
 </script>
