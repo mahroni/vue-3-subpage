@@ -114,7 +114,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
           window.location.href = `/integration?ch=tiktok&id=${to.params.id}`;
           return false;
         },
-      }
+      },
     ],
   },
   {
@@ -150,11 +150,32 @@ export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/line',
     name: 'line',
-    component: () => null, // This route is a placeholder for custom channel integration
-    beforeEnter: () => {
-      window.location.href = `/integration?ch=line`;
-      return false;
-    },
+    redirect: { name: 'line-list' },
+    children: [
+      {
+        path: '',
+        name: 'line-list',
+        component: () => import('@/views/integration/line/LineChannelView.vue'),
+      },
+      {
+        path: 'create',
+        name: 'line-new',
+        component: () => null,
+        beforeEnter: () => {
+          window.location.href = `/integration?ch=line`;
+          return false;
+        },
+      },
+      {
+        path: ':id',
+        name: 'line-detail',
+        component: () => null,
+        beforeEnter: (to) => {
+          window.location.href = `/integration?ch=line&id=${to.params.id}`;
+          return false;
+        },
+      },
+    ],
   },
   // {
   //   path: '/telegram',
