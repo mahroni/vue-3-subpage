@@ -11,7 +11,7 @@
       </Button>
     </div>
 
-    <div class="relative flex flex-1 flex-col justify-between overflow-auto px-4 py-2">
+    <div class="relative flex flex-1 flex-col min-h-[776px] justify-between overflow-auto px-4 py-2">
       <table class="w-full table-fixed">
         <thead class="sticky -top-2 z-10 bg-white">
           <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
