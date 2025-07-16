@@ -21,15 +21,15 @@ const channelBadgeIcon = ref<string>('');
 
 // props
 const props = defineProps<{
-  modelValue: boolean;
-  editingChannel?: IWidgetChannel | null;
+  isOpen: boolean;
 }>();
 
 // emits
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: boolean): void;
   (e: 'close'): void;
 }>();
+
+const modelValue = defineModel<IWidgetChannel | null>({ required: false, default: null });
 
 // Form Validation
 const isFormValid = computed(() => {
@@ -45,7 +45,7 @@ const resetForm = (): void => {
 
 const closeModal = () => {
   resetForm();
-  emit('update:modelValue', false);
+  modelValue.value = null;
   emit('close');
 };
 
@@ -56,9 +56,9 @@ const handleAddChannel = (): void => {
     icon: channelBadgeIcon.value,
   };
 
-  if (props.editingChannel) {
+  if (modelValue.value) {
     // Update existing channel - TypeScript akan infer type yang benar
-    qiscusLiveChatStore.updateChannel(props.editingChannel.id, formData);
+    qiscusLiveChatStore.updateChannel(modelValue.value.id, formData);
   } else {
     // Add new channel - TypeScript akan infer type yang benar
     qiscusLiveChatStore.addChannel({
@@ -80,7 +80,7 @@ const uploadImage = async (file: File) => {
 
 // Watch for editing channel changes
 watch(
-  () => props.editingChannel,
+  () => modelValue.value,
   (newChannel) => {
     if (newChannel) {
       channelName.value = newChannel.name || '';
@@ -96,8 +96,8 @@ watch(
 </script>
 
 <template>
-  <Modal :isOpen="modelValue" @close="closeModal" width="w-[592px]">
-    <template #title>{{ editingChannel ? 'Edit Channel' : 'Add Channel' }}</template>
+  <Modal :isOpen="props.isOpen" @close="closeModal" width="w-[592px]">
+    <template #title>{{ modelValue ? 'Edit Channel' : 'Add Channel' }}</template>
     <template #content>
       <div class="flex flex-col gap-6 pb-6">
         <Banner :closeable="false" intent="positive" type="solid">
@@ -155,7 +155,7 @@ watch(
     <template #footer>
       <Button intent="secondary" size="small" @click="closeModal">Cancel</Button>
       <Button :disabled="!isFormValid" intent="primary" size="small" @click="handleAddChannel">
-        {{ editingChannel ? 'Update Channel' : 'Add Channel' }}
+        {{ modelValue ? 'Update Channel' : 'Add Channel' }}
       </Button>
     </template>
   </Modal>

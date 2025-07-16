@@ -15,7 +15,7 @@ import ModalChannelList from './ModalChannelList.vue';
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 const isModalOpen = ref(false);
 const activeDropdown = ref<number | null>(null);
-const editingChannel = ref<IWidgetChannel | null>(null);
+const editingChannelData = ref<IWidgetChannel | null>(null);
 
 const toggleDropdown = (channelId: number) => {
   activeDropdown.value = activeDropdown.value === channelId ? null : channelId;
@@ -28,7 +28,7 @@ const closeDropdown = () => {
 const editChannel = (channelId: number) => {
   const channel = qiscusLiveChatStore.channelList.find((ch) => ch.id === channelId);
   if (channel) {
-    editingChannel.value = { ...channel };
+    editingChannelData.value = { ...channel };
     isModalOpen.value = true;
   }
   closeDropdown();
@@ -145,8 +145,8 @@ onUnmounted(() => {
 
   <!-- Modal Add Channel -->
   <ModalChannelList
-    v-model="isModalOpen"
-    :editingChannel="editingChannel"
-    @close="editingChannel = null"
+    :isOpen="isModalOpen"
+    v-model="editingChannelData"
+    @close="isModalOpen = false"
   />
 </template>
