@@ -1,7 +1,10 @@
 import type { RouteRecordRaw } from 'vue-router';
 
+
+
 import ChannelView from '@/views/integration/ChannelView.vue';
 import BotView from '@/views/integration/bot/BotView.vue';
+import FbChannelView from '@/views/integration/facebook/FbChannelView.vue';
 import InstagramChannelView from '@/views/integration/instagram/InstagramChannelView.vue';
 import TelegramCreateChannelView from '@/views/integration/telegram/TelegramCreateChannelView.vue';
 import TelegramView from '@/views/integration/telegram/TelegramView.vue';
@@ -93,11 +96,32 @@ export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/facebook',
     name: 'facebook',
-    component: () => null, // This route is a placeholder for custom channel integration
-    beforeEnter: () => {
-      window.location.href = `/integration?ch=facebook`;
-      return false;
-    },
+    redirect: { name: 'facebook-list' },
+    children: [
+      {
+        path: '',
+        name: 'facebook-list',
+        component: FbChannelView,
+      },
+      {
+        path: 'create',
+        name: 'facebook-create',
+        component: () => null,
+        beforeEnter: () => {
+          window.location.href = `/integration?ch=facebook`;
+          return false;
+        },
+      },
+      {
+        path: ':id',
+        name: 'facebook-detail',
+        component: () => null,
+        beforeEnter: (to) => {
+          window.location.href = `/integration?ch=facebook&id=${to.params.id}`;
+          return false;
+        },
+      },
+    ],
   },
   {
     path: '/line',
