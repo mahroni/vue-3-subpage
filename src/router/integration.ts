@@ -1,7 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-
-
 import ChannelView from '@/views/integration/ChannelView.vue';
 import BotView from '@/views/integration/bot/BotView.vue';
 import InstagramChannelView from '@/views/integration/instagram/InstagramChannelView.vue';
@@ -130,7 +128,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         component: TelegramView,
       },
       {
-        path: 'create',
+        path: 'create', // Full path: /telegram/create
         name: 'telegram-create',
         component: TelegramCreateChannelView,
       },
