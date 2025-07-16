@@ -10,30 +10,43 @@ import { useCreateTelegram } from '@/composables/channels/telegram/useCreateTele
 import { useDeleteTelegram } from '@/composables/channels/telegram/useDeleteTelegram';
 import { useFetchTelegram } from '@/composables/channels/telegram/useFetchTelegram';
 import { useUpdateTelegram } from '@/composables/channels/telegram/useUpdateTelegram';
+import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
+import { useUpdateConfig } from '@/composables/channels/useUpdateConfigChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import CreateTelegramForm from '@/features/telegram/components/form/CreateTelegramForm.vue';
 import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
 import type { IAutoResponder, IUpdateTelegramChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
+const { showAlert } = useSweetAlert();
+const {
+  update: updateConfig,
+  loading: updateConfigLoading,
+  error: updateConfigError,
+} = useUpdateConfig();
 const { fetchTelegram, data: telegramData } = useFetchTelegram();
+const { fetch: fetchConfig, data: configData } = useFetchConfig();
+const { deleteTelegram, loading: deleteTelegramLoading } = useDeleteTelegram();
 const {
   createTelegram,
   loading: createTelegramLoading,
   error: createTelegramError,
 } = useCreateTelegram();
-
 const {
   updateTelegram,
   loading: updateTelegramLoading,
   error: updateTelegramError,
 } = useUpdateTelegram();
-const { deleteTelegram, loading: deleteTelegramLoading } = useDeleteTelegram();
 
-const { showAlert } = useSweetAlert();
-
+// --- Computed Properties ---
+const isConfigEmpty = computed(() => !hasConfigValues());
 const currentChannel = computed(() => telegramData.value[0] || null);
+const isUserCreateChannel = computed(() => !channel.value.name && !channel.value.username);
 
+// --- Reactive State ---
+const isEnableTelegram = ref(false);
+const isEnableAutoResponder = ref(false);
+const isAutoresponderFormOpen = ref(false);
 const activeTab = ref<string>('Overview');
 const isBot = ref(false);
 const channel = ref({
@@ -48,10 +61,6 @@ const channel = ref({
   },
 });
 const configs = ref<IAutoResponder>({ ...channel.value.configs });
-const isEnableTelegram = ref(false);
-const isEnableAutoResponder = ref(false);
-
-const isAutoresponderFormOpen = ref(false);
 
 const items = [
   {
@@ -70,13 +79,8 @@ const items = [
 ];
 
 // --- UI State Change Functions ---
-function openAutoResponderForm() {
-  isAutoresponderFormOpen.value = true;
-}
-
-function closeAutoResponderForm() {
-  isAutoresponderFormOpen.value = false;
-}
+const openAutoResponderForm = () => (isAutoresponderFormOpen.value = true);
+const closeAutoResponderForm = () => (isAutoresponderFormOpen.value = false);
 
 // --- Utility Functions ---
 function hasConfigValues(): boolean {
@@ -87,9 +91,6 @@ function hasConfigValues(): boolean {
     configs.value.send_online_if_resolved === true
   );
 }
-
-// --- Computed Properties ---
-const isConfigEmpty = computed(() => !hasConfigValues());
 
 // --- Data Reset Functions ---
 function resetChannelData() {
@@ -132,7 +133,18 @@ function populateChannelData() {
     resetChannelData();
   }
 }
+function populateConfigData() {
+  if (configData.value) {
+    configs.value.offline_message = configData.value.offline_message || '';
+    configs.value.online_message = configData.value.online_message || '';
+    configs.value.send_offline_each_message = configData.value.send_offline_each_message || false;
+    configs.value.send_online_if_resolved = configData.value.send_online_if_resolved || false;
 
+    isEnableAutoResponder.value = configData.value.is_enabled || false;
+  }
+}
+
+// --- API Interaction Functions ---
 async function createTelegramChannel() {
   const payload = {
     bot_token: channel.value.token,
@@ -238,7 +250,40 @@ async function deleteTelegramChannel() {
   }
 }
 
-// --- Handlers API Interaction Functions ---
+async function updateAutoResponder() {
+  try {
+    await updateConfig(currentChannel.value?.id || '', {
+      ...configs.value,
+      enabled: isEnableAutoResponder.value,
+      source: 'telegram',
+    });
+
+    if (updateConfigError.value) {
+      return showAlert.error({
+        title: 'Error',
+        text: 'Failed to update channel auto responder. Please try again.',
+        confirmButtonText: 'Okay',
+        showCancelButton: false,
+      });
+    }
+
+    showAlert.success({
+      title: 'Success',
+      text: 'Successfully changes channel auto responder.',
+      showCancelButton: false,
+    });
+  } catch (error) {
+    console.error('Error update auto responder telegram:', error);
+    showAlert.error({
+      title: 'Error',
+      text: 'Failed to update channel auto responder. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  }
+}
+
+// --- Handlers Function---
 function handleCreateChannel() {
   showAlert
     .warning({
@@ -257,20 +302,7 @@ function handleCreateChannel() {
 }
 
 function handleUpdateChannel() {
-  showAlert
-    .warning({
-      title: 'Add Channel Auto Responder',
-      text: 'Do you want to set up channel auto <br>responder to this channel?',
-      confirmButtonText: 'Add Channel Auto Responder',
-      cancelButtonText: 'Setup Later',
-    })
-    .then((result: any) => {
-      if (result.isConfirmed) {
-        openAutoResponderForm(); // Call UI state change function
-      } else if (result.dismiss === 'cancel') {
-        updateTelegramChannel(); // Call API interaction function
-      }
-    });
+  updateTelegramChannel();
 }
 
 function handleDeleteChannel() {
@@ -281,9 +313,24 @@ function handleDeleteChannel() {
       confirmButtonText: 'Let me think again',
       cancelButtonText: 'Yes, delete it!',
     })
-    .then(async (result: any) => {
+    .then((result: any) => {
       if (result.dismiss === 'cancel') {
         deleteTelegramChannel();
+      }
+    });
+}
+
+function handleUpdateAutoResponder() {
+  showAlert
+    .warning({
+      title: 'Edit channel auto responder',
+      text: 'Content in channel auto responder will be change?',
+      confirmButtonText: 'Save Changes',
+      cancelButtonText: 'Let me think again',
+    })
+    .then((result: any) => {
+      if (result.isConfirmed) {
+        updateAutoResponder();
       }
     });
 }
@@ -293,16 +340,50 @@ function toggleTelegramIntegration(status: boolean) {
   // Here, you would typically make an API call to update the Telegram integration status
 }
 
-function toggleAutoResponder(status: boolean) {
-  console.log('toggle auto responder status', status);
-  // Here, you would typically make an API call to update the auto responder status
+async function toggleAutoResponder(status: boolean) {
+  try {
+    await updateConfig(currentChannel.value?.id || '', {
+      ...configs.value,
+      enabled: status,
+      source: 'telegram',
+    });
+
+    if (updateConfigError.value) {
+      return showAlert.error({
+        title: 'Error',
+        text: 'Failed to update channel auto responder. Please try again.',
+        confirmButtonText: 'Okay',
+        showCancelButton: false,
+      });
+    }
+
+    showAlert.success({
+      title: 'Success',
+      text: 'Successfully changes channel auto responder.',
+      showCancelButton: false,
+    });
+
+    // Only update the state if API call is successful
+    isEnableAutoResponder.value = status;
+  } catch (error) {
+    console.error('Error update auto responder telegram:', error);
+    showAlert.error({
+      title: 'Error',
+      text: 'Failed to update channel auto responder. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  }
 }
 
 onMounted(async () => {
   await fetchTelegram();
+  // get additional data
+  await fetchConfig(currentChannel.value?.id || '', 'telegram');
 
   // Populate the channel data after fetching
   populateChannelData();
+  populateConfigData();
 });
 </script>
 
@@ -369,8 +450,8 @@ onMounted(async () => {
                   <Switch
                     variant="success"
                     size="medium"
-                    v-model="isEnableAutoResponder"
-                    @change="toggleAutoResponder"
+                    :modelValue="isEnableAutoResponder"
+                    @update:modelValue="toggleAutoResponder"
                   />
                 </div>
               </div>
@@ -385,7 +466,7 @@ onMounted(async () => {
           <form v-if="!isAutoresponderFormOpen" @submit.prevent="" class="flex flex-col gap-8">
             <CreateTelegramForm v-model="channel" />
 
-            <div v-if="!channel.name && !channel.username" class="mt-8 flex justify-end gap-4">
+            <div v-if="isUserCreateChannel" class="flex justify-end gap-4">
               <Button
                 type="submit"
                 @click="handleCreateChannel"
@@ -394,7 +475,7 @@ onMounted(async () => {
               >
             </div>
 
-            <div v-else class="mt-8 flex justify-between">
+            <div v-else class="flex justify-between">
               <Button intent="danger" @click="handleDeleteChannel" :disabled="deleteTelegramLoading"
                 >Delete Channel</Button
               >
@@ -406,16 +487,20 @@ onMounted(async () => {
         </template>
       </template>
 
-      <form @submit.prevent="" v-if="isAutoresponderFormOpen">
+      <tempalte v-if="isAutoresponderFormOpen">
         <AutoResponderForm v-model="configs" :is-bot="isBot" />
 
         <div class="mt-8 flex justify-end gap-4">
           <Button intent="secondary" @click="closeAutoResponderForm">Back</Button>
-          <Button type="submit" @click="createTelegramChannel" :disabled="isConfigEmpty">
+          <Button
+            type="submit"
+            @click="isUserCreateChannel ? createTelegramChannel() : handleUpdateAutoResponder()"
+            :disabled="isConfigEmpty || createTelegramLoading || updateConfigLoading"
+          >
             Save Changes
           </Button>
         </div>
-      </form>
+      </tempalte>
     </div>
   </div>
 </template>

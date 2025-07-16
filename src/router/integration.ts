@@ -1,7 +1,5 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-
-
 import ChannelView from '@/views/integration/ChannelView.vue';
 import BotView from '@/views/integration/bot/BotView.vue';
 import TelegramCreateChannelView from '@/views/integration/telegram/TelegramCreateChannelView.vue';
@@ -10,10 +8,6 @@ import WhatsappChannelView from '@/views/integration/whatsapp/WhatsappChannelVie
 import WidgetChannel from '@/views/integration/widget/WidgetChannelView.vue';
 import WidgetCreateChannelView from '@/views/integration/widget/WidgetCreateChannelView.vue';
 import WidgetDetailView from '@/views/integration/widget/WidgetDetailView.vue';
-
-
-
-
 
 // Ensure RouteRecordRaw is imported
 
@@ -112,7 +106,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         component: TelegramView,
       },
       {
-        path: 'create',
+        path: 'create', // Full path: /telegram/create
         name: 'telegram-create',
         component: TelegramCreateChannelView,
       },
