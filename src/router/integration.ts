@@ -4,7 +4,6 @@ import type { RouteRecordRaw } from 'vue-router';
 
 import ChannelView from '@/views/integration/ChannelView.vue';
 import BotView from '@/views/integration/bot/BotView.vue';
-import FbChannelView from '@/views/integration/facebook/FbChannelView.vue';
 import InstagramChannelView from '@/views/integration/instagram/InstagramChannelView.vue';
 import TelegramCreateChannelView from '@/views/integration/telegram/TelegramCreateChannelView.vue';
 import TelegramView from '@/views/integration/telegram/TelegramView.vue';
@@ -101,7 +100,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'facebook-list',
-        component: FbChannelView,
+        component: () => import('@/views/integration/facebook/FbChannelView.vue'),
       },
       {
         path: 'create',
