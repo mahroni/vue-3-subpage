@@ -4,16 +4,13 @@ import type { RouteRecordRaw } from 'vue-router';
 
 import ChannelView from '@/views/integration/ChannelView.vue';
 import BotView from '@/views/integration/bot/BotView.vue';
+import InstagramChannelView from '@/views/integration/instagram/InstagramChannelView.vue';
 import TelegramCreateChannelView from '@/views/integration/telegram/TelegramCreateChannelView.vue';
 import TelegramView from '@/views/integration/telegram/TelegramView.vue';
 import WhatsappChannelView from '@/views/integration/whatsapp/WhatsappChannelView.vue';
 import WidgetChannel from '@/views/integration/widget/WidgetChannelView.vue';
 import WidgetCreateChannelView from '@/views/integration/widget/WidgetCreateChannelView.vue';
 import WidgetDetailView from '@/views/integration/widget/WidgetDetailView.vue';
-
-
-
-
 
 // Ensure RouteRecordRaw is imported
 
@@ -59,11 +56,32 @@ export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/instagram',
     name: 'instagram',
-    component: () => null, // This route is a placeholder for custom channel integration
-    beforeEnter: () => {
-      window.location.href = `/integration?ch=instagram`;
-      return false;
-    },
+    redirect: { name: 'instagram-list' },
+    children: [
+      {
+        path: '',
+        name: 'instagram-list',
+        component: InstagramChannelView,
+      },
+      {
+        path: 'create',
+        name: 'instagram-create',
+        component: () => null,
+        beforeEnter: () => {
+          window.location.href = `/integration?ch=instagram`;
+          return false;
+        },
+      },
+      {
+        path: ':id',
+        name: 'instagram-detail',
+        component: () => null,
+        beforeEnter: (to) => {
+          window.location.href = `/integration?ch=instagram&id=${to.params.id}`;
+          return false;
+        },
+      },
+    ],
   },
   {
     path: '/tiktok',
