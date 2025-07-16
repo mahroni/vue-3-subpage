@@ -149,3 +149,26 @@ export const apiCall = async <T>(
     };
   }
 };
+
+// Helper function to create form-encoded data
+export const createFormData = (data: Record<string, any>): URLSearchParams => {
+  const formData = new URLSearchParams();
+  Object.keys(data).forEach((key) => {
+    formData.append(key, String(data[key]));
+  });
+  return formData;
+};
+
+// Helper function for POST request with form-encoded data
+export const postFormData = <T>(
+  instance: AxiosInstance,
+  url: string,
+  data: Record<string, any>
+): Promise<AxiosResponse<T>> => {
+  const formData = createFormData(data);
+  return instance.post<T>(url, formData, {
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  });
+};

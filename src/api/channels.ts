@@ -1,7 +1,7 @@
 import type { IParams } from '@/types/api';
 import type { ICreateQiscusChannel, IUpdateTelegramChannel } from '@/types/channels';
 
-import apiV1, { apiV2, apiV3 } from './../utils/axios';
+import apiV1, { apiV2, apiV3, postFormData } from './../utils/axios';
 
 // API v1 examples
 export const channelsApi = {
@@ -50,4 +50,8 @@ export const configApi = {
 export const botApi = {
   get: () => apiV1.get<any[]>('/app/bot'),
   changeStatus: (params: any) => apiV1.post<any[]>('/app/bot/activation', { params }),
+  integrate: (data: { bot_webhook_url: string; is_bot_enabled: boolean }) =>
+    postFormData<any[]>(apiV1, '/app/bot/integrate', data),
+  forceSendBot: (data: { is_force_send_bot: boolean }) =>
+    postFormData<any[]>(apiV2, '/app/bot/force_send', data),
 };
