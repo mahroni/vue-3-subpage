@@ -30,7 +30,7 @@ export default defineConfig({
     }
   },
   define: {
-    'process.env': {},
+    'process.env.NODE_ENV': JSON.stringify('production'),
     'process.browser': true,
     'process.node': false
   }
