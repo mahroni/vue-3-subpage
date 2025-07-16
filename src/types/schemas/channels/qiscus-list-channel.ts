@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createApiResponseSchemaPagination } from './common';
+import { createApiResponseSchemaPagination } from '../common';
 
 export const QiscusChannelSchema = z.object({
   app_code: z.string(),

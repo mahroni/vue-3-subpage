@@ -28,6 +28,8 @@ const channelPreviewData = computed(() => {
       :subtitle="channelState.previewSubtitle"
       :introduction="channelState.previewIntroduction"
       :channels="channelPreviewData"
+      :previewLiveChatName="channelState.previewLiveChatName"
+      :enableQiscusLiveChat="channelState.isQiscusLiveChat"
       :imageUrl="''"
     />
     <ChannelListLoading v-else />

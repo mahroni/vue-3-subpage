@@ -62,7 +62,7 @@ onUnmounted(() => {
     >
       <!-- header channel list -->
       <div class="flex w-full items-center justify-between">
-        <h4 class="text-text-title text-base font-semibold">Channel List</h4>
+        <h4 class="text-text-title text-base font-semibold">Another Channel</h4>
         <Button
           intent="flat"
           size="small"
@@ -75,10 +75,13 @@ onUnmounted(() => {
         </Button>
       </div>
 
-      <Divider />
+      <Divider v-if="qiscusLiveChatStore.channelList.length > 0" />
 
       <!-- channel list -->
-      <div class="flex flex-col items-start gap-6">
+      <div
+        v-if="qiscusLiveChatStore.channelList.length > 0"
+        class="flex flex-col items-start gap-6"
+      >
         <div
           v-for="channel in qiscusLiveChatStore.channelList"
           :key="channel.id"
