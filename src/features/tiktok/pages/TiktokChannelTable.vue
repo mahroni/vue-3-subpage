@@ -25,7 +25,7 @@
                 @click.prevent="getDetailChannel(channel)">
                 <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
                   <div class="flex items-center gap-2">
-                    <Image :src="channel.badgeUrl" :fallbackSrc="CHANNEL_BADGE_URL.facebook" alt="channel badge" :width="24"
+                    <Image :src="channel.badgeUrl" :fallbackSrc="CHANNEL_BADGE_URL.tiktok" alt="channel badge" :width="24"
                       :height="24" class="aspect-square rounded-full object-cover max-w-6 max-h-6" />
                     <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
                       channel.name
@@ -78,10 +78,10 @@ import InputCustom from '@/components/form/InputCustom.vue';
 import { CopyIcon, SearchIcon } from '@/components/icons';
 import EmptyState from '@/components/ui/EmptyState.vue';
 import Pagination from '@/components/ui/Pagination.vue';
-import { useFetchFbChannel } from '@/composables/channels/facebook/useFetchFbChannel';
-import { useUpdateFbChannel } from '@/composables/channels/facebook/useUpdateFbChannel';
+import { useFetchTiktokChannel } from '@/composables/channels/tiktok/useFetchTiktokChannel';
+import { useUpdateTiktokChannel } from '@/composables/channels/tiktok/useUpdateTiktokChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import type { FbChannel } from '@/types/schemas/fb-channel';
+import type { TiktokChannel } from '@/types/schemas/tiktok-channel';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { computed, onMounted, ref, toValue, watch, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -119,7 +119,7 @@ const debounce = (func: Function, delay: number) => {
 
 
 // fetch channels
-const { fetchChannels, data: listData, loading: loadingList, meta } = useFetchFbChannel();
+const { fetchChannels, data: listData, loading: loadingList, meta } = useFetchTiktokChannel();
 
 onMounted(async () => {
   await fetchChannels();
@@ -127,11 +127,14 @@ onMounted(async () => {
 
 const channels = computed(() =>
   listData.value.map((channel) => ({
+    accessToken: channel.access_token,
     badgeUrl: channel.badge_url,
     id: channel.id,
     isActive: channel.is_active,
     name: channel.name,
-    pageId: channel.page_id,
+    source: channel.source,
+    uniqueId: channel.unique_id,
+    useChannelResponder: channel.use_channel_responder,
   }))
 );
 
@@ -183,13 +186,13 @@ const paginationInfo = computed(() => {
 // handlers
 const handleNewIntegration = () => {
     router.push({
-      name: 'facebook-new',
+      name: 'tiktok-new',
     })
 };
 
 const getDetailChannel = (channel: {id: number}) => {
   router.push({
-    name: 'facebook-detail',
+    name: 'tiktok-detail',
     params: {
       id: channel.id.toString(),
     },
@@ -199,7 +202,7 @@ const getDetailChannel = (channel: {id: number}) => {
 
 // update channel status handler
 async function updateChannelStatus(id: number, is_active: boolean) {
-  const { update, data, error } = useUpdateFbChannel();
+  const { update, data, error } = useUpdateTiktokChannel();
 
   try {
     await update(id, { is_active });
@@ -220,7 +223,7 @@ async function updateChannelStatus(id: number, is_active: boolean) {
     }
 
     // Update the local listData with the new state from the API response
-    const newData = toValue(data) as unknown as FbChannel;
+    const newData = toValue(data) as unknown as TiktokChannel;
     if (newData) updateExistingListData(newData);
   } catch (err: any) {
     // Handle unexpected errors during the update process (e.g., network issues)
@@ -237,7 +240,7 @@ async function updateChannelStatus(id: number, is_active: boolean) {
   }
 }
 
-function updateExistingListData(newData: FbChannel) {
+function updateExistingListData(newData: TiktokChannel) {
   const fIdx = listData.value.findIndex((ld) => ld.id === newData.id);
 
   if (fIdx === -1) return;

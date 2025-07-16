@@ -1,6 +1,8 @@
 import type { IParams } from '@/types/api';
 import type { ICreateQiscusChannel, IUpdateTelegramChannel } from '@/types/channels';
 
+
+
 import apiV1, { apiV2, apiV3 } from './../utils/axios';
 
 // API v1 examples
@@ -35,6 +37,11 @@ export const instagramApi = {
 export const fbApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/fb', { params }),
   update: (data: any) => apiV2.post<any>(`/fb/connect/${data.id}/update`, data),
+};
+
+export const tiktokApi = {
+  get: (params: IParams) => apiV3.get<any[]>('/admin/channel/tiktok', { params }),
+  update: (data: any) => apiV2.post<any>(`/tiktok/connect/${data.id}/update`, data),
 };
 
 export const telegramApi = {
