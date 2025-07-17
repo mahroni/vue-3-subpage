@@ -161,6 +161,12 @@ export interface IWidgetConfigPayload {
 export interface IUpdateTelegramChannel {
   name: string;
   is_active: boolean;
+  configs: {
+    offline_message: string;
+    online_message: string;
+    send_offline_each_message: boolean;
+    send_online_if_resolved: boolean;
+  } | null;
 }
 export interface ICreateTelegramChannel {
   bot_token: string;

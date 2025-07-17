@@ -56,9 +56,9 @@ import { useUpdateConfig } from '@/composables/channels/useUpdateConfigChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import WidgetLiveChat from '@/features/widget-builder/pages/WidgetLiveChat.vue';
 import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
-import WidgetCode from '@/pages/integration/widget/WidgetCode.vue';
-import WidgetOverview from '@/pages/integration/widget/WidgetOverview.vue';
-import WidgetSettings from '@/pages/integration/widget/WidgetSetting.vue';
+import WidgetCode from '@/features/widget/pages/WidgetCode.vue';
+import WidgetOverview from '@/features/widget/pages/WidgetOverview.vue';
+import WidgetSettings from '@/features/widget/pages/WidgetSetting.vue';
 import type { IWidgetChannel } from '@/types/channels';
 
 type TabName = string;

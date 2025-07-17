@@ -64,7 +64,8 @@ import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qi
 import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import QiscusBannerDoc from '@/pages/integration/qiscus/QiscusBannerDoc.vue';
+
+import QiscusBannerDoc from '../components/ui/QiscusBannerDoc.vue';
 
 const route = useRoute();
 const router = useRouter();

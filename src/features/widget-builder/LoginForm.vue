@@ -19,6 +19,7 @@ import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import WidgetFormLayout from '@/features/widget-builder/components/layout/WidgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { DEFAULT_IMAGE_PREVIEW } from '@/utils/constant/images';
 import DropdownItemInput from './components/form/DropdownItemInput.vue';
 import IconSelectInput from './components/form/IconSelectInput.vue';
 
@@ -29,7 +30,7 @@ interface AdditionalField {
   required: boolean;
   iconField?: string;
   options?: string[];
-}
+};
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
 const { loginFormState } = storeToRefs(useQiscusLiveChatStore());
@@ -273,7 +274,7 @@ watch(
         :fields="
           loginFormState.extraFields.map((field) => ({
             id: field.name,
-            icon: field.iconField || '',
+            icon: field.iconField || DEFAULT_IMAGE_PREVIEW.LOGIN_BRAND_ICON,
             type: field.type === 'dropdown' ? 'select' : field.type,
             label: field.name,
             placeholder: field.placeholder,

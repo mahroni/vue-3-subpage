@@ -31,8 +31,8 @@
 import { computed, onMounted } from 'vue';
 
 import { Icon } from '@/components/icons';
-import TableListChannel from '@/pages/integration/whatsapp/TableListChannel.vue';
-import WhatsappBannerDoc from '@/pages/integration/whatsapp/WhatsappBannerDoc.vue';
+import TableListChannel from '@/features/whatsapp/components/form/TableListChannel.vue';
+import WhatsappBannerDoc from '@/features/whatsapp/components/ui/WhatsappBannerDoc.vue';
 import { useWhatsappStore } from '@/stores/integration-whatsapp';
 import type { IWhatsappChannel } from '@/types/channels';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
