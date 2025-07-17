@@ -4,11 +4,10 @@ import { onMounted, onUnmounted } from 'vue';
 import { useAppConfigStore } from '@/stores/app-config';
 
 const props = defineProps<{ channelId: string | number }>();
-const { appId } = useAppConfigStore();
-const isStaging = import.meta.env.VITE_WIDGET_ENV === 'staging';
-const isLatest = import.meta.env.VITE_WIDGET_ENV === 'latest';
-const baseUrl = import.meta.env.VITE_BASE_URL || '';
-const iframeUrl = import.meta.env.VITE_IFRAME_URL || '';
+const { appId, widget, baseUrl } = useAppConfigStore();
+const isStaging = widget?.env === 'staging';
+const isLatest = widget?.env === 'latest';
+const iframeUrl = widget?.iframeUrl || '';
 
 onMounted(() => {
   let configs: {
@@ -77,3 +76,6 @@ onUnmounted(() => {
   existingStyleLink?.remove();
 });
 </script>
+<template>
+  <div></div>
+</template>
