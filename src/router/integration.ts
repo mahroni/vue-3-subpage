@@ -51,7 +51,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         name: 'whatsapp-new',
         component: () => null,
         beforeEnter: () => {
-          window.location.href = `/integration?ch=whatsapp`;
+          window.location.href = `/integration?ch=whatsapp&act=create`;
           return false;
         },
       },
@@ -72,7 +72,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         name: 'instagram-new',
         component: () => null,
         beforeEnter: () => {
-          window.location.href = `/integration?ch=instagram`;
+          window.location.href = `/integration?ch=instagram&act=create`;
           return false;
         },
       },
@@ -102,7 +102,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         name: 'tiktok-new',
         component: () => null,
         beforeEnter: () => {
-          window.location.href = `/integration?ch=tiktok`;
+          window.location.href = `/integration?ch=tiktok&act=create`;
           return false;
         },
       },
@@ -132,7 +132,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         name: 'facebook-new',
         component: () => null,
         beforeEnter: () => {
-          window.location.href = `/integration?ch=facebook`;
+          window.location.href = `/integration?ch=facebook&act=create`;
           return false;
         },
       },
@@ -162,7 +162,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         name: 'line-new',
         component: () => null,
         beforeEnter: () => {
-          window.location.href = `/integration?ch=line`;
+          window.location.href = `/integration?ch=line&act=create`;
           return false;
         },
       },
@@ -242,7 +242,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         name: 'custom_channel-create',
         component: () => null,
         beforeEnter: () => {
-          window.location.href = `/integration?ch=custom_channel`;
+          window.location.href = `/integration?ch=custom_channel&act=create`;
           return false;
         },
       },
