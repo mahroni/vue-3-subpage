@@ -29,6 +29,10 @@ interface AdditionalField {
   required: boolean;
   iconField?: string;
   options?: string[];
+};
+
+const DEFAULT_IMAGE_PREVIEW = {
+  LOGIN_BRAND_ICON: 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/icon-qiscus-widget-open.svg',
 }
 
 const qiscusLiveChatStore = useQiscusLiveChatStore();
@@ -273,7 +277,7 @@ watch(
         :fields="
           loginFormState.extraFields.map((field) => ({
             id: field.name,
-            icon: field.iconField || '',
+            icon: field.iconField || DEFAULT_IMAGE_PREVIEW.LOGIN_BRAND_ICON,
             type: field.type === 'dropdown' ? 'select' : field.type,
             label: field.name,
             placeholder: field.placeholder,

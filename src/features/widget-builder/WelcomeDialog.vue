@@ -31,6 +31,12 @@ const ACCEPTED_IMAGE_TYPES = {
   PNG_JPG: 'image/png,image/jpg',
 } as const;
 
+const DEFAULT_IMAGE_PREVIEW = {
+  WELCOME_BRAND_ICON: 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/icon_brand_qiscus.svg',
+  WELCOME_ACTION_ICON: 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/icon_chat_black.svg',
+  ATTENTION_GRABBER_IMAGE: 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/bg_default_attention_grabber.png',
+}
+
 const { welcomeDialogState } = storeToRefs(useQiscusLiveChatStore());
 const brandIconUpload = useUploadSdkImage();
 const actionIconUpload = useUploadSdkImage();
@@ -90,7 +96,7 @@ const firstAction = computed(() => {
   const action = [
     {
       label: welcomeDialogState.value.actionDescriptionWelcomeDialog,
-      iconUrl: welcomeDialogState.value.actionIconWelcomeDialog,
+      iconUrl: welcomeDialogState.value.actionIconWelcomeDialog || DEFAULT_IMAGE_PREVIEW.WELCOME_ACTION_ICON,
     },
   ];
   return action;
@@ -266,7 +272,7 @@ watch(
       <WelcomingPage
         :title="welcomeDialogState.firstDescriptionWelcomeDialog"
         :subtitle="welcomeDialogState.secondDescriptionWelcomeDialog"
-        :imageUrl="welcomeDialogState.brandIconWelcomeDialog"
+        :imageUrl="welcomeDialogState.brandIconWelcomeDialog || DEFAULT_IMAGE_PREVIEW.WELCOME_BRAND_ICON"
         :actions="firstAction"
       />
       <div class="bg-surface-disable h-16 w-16 rounded-full" />
@@ -278,7 +284,7 @@ watch(
     >
       <AttentionGrabber
         :imageUrl="
-          welcomeDialogState.isAttentionGrabberImage ? welcomeDialogState.attentionGrabberImage : ''
+          welcomeDialogState.isAttentionGrabberImage ? (welcomeDialogState.attentionGrabberImage || DEFAULT_IMAGE_PREVIEW.ATTENTION_GRABBER_IMAGE) : ''
         "
         :title="
           welcomeDialogState.isAttentionGrabberText ? welcomeDialogState.attentionGrabberText : ''
