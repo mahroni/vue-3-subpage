@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createApiResponseSchemaPagination } from "./common";
+import { createApiResponseSchemaPagination } from "../common";
 
 const TiktokChannelSchema = z.object({
     access_token: z.string(),

@@ -230,11 +230,32 @@ export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/custom_channel',
     name: 'custom_channel',
-    component: () => null, // This route is a placeholder for custom channel integration
-    beforeEnter: () => {
-      window.location.href = `/integration?ch=custom_channel`;
-      return false;
-    },
+    redirect: { name: 'custom_channel-list' },
+    children: [
+      {
+        path: '',
+        name: 'custom_channel-list',
+        component: () => import('@/views/integration/custom-channel/CustomChannelView.vue'),
+      },
+      {
+        path: 'create',
+        name: 'custom_channel-create',
+        component: () => null,
+        beforeEnter: () => {
+          window.location.href = `/integration?ch=custom_channel`;
+          return false;
+        },
+      },
+      {
+        path: ':id',
+        name: 'custom_channel-detail',
+        component: () => null,
+        beforeEnter: (to) => {
+          window.location.href = `/integration?ch=custom_channel&id=${to.params.id}`;
+          return false;
+        },
+      },
+    ],
   },
   {
     path: '/bot-integration',

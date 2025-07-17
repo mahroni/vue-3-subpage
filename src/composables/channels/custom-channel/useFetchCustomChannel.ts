@@ -1,19 +1,9 @@
+import { customChannelApi } from "@/api/channels";
+import { CustomChannelResponseSchema, type CustomChannelList } from "@/types/schemas/channels/custom-channel";
+import type { MetaPagination } from "@/types/schemas/common";
+import { filterFilledObj } from "@/utils/helper/object";
 import { ref } from "vue";
 import z from "zod";
-
-
-
-import { instagramApi } from '@/api/channels';
-import {
-  type InstaChannelList,
-  InstaChannelResponseSchema,
-} from '@/types/schemas/channels/insta-channel';
-import type { MetaPagination } from '@/types/schemas/common';
-import { filterFilledObj } from "@/utils/helper/object";
-
-
-
-
 
 const initMeta: MetaPagination = {
     page: 0,
@@ -26,11 +16,11 @@ const _getParams = (params: MetaPagination) => {
     return filterFilledObj(params);
 };
 
-export const useFetchInstaChannel = () => {
+export const useFetchCustomChannel = () => {
     const loading = ref(false);
     const meta = ref<MetaPagination>({ ...initMeta });
     const error = ref<Error | null>(null);
-    const data = ref<InstaChannelList>([]);
+    const data = ref<CustomChannelList>([]);
 
     const fetchChannels = async (params?: any) => {
         try {
@@ -38,9 +28,9 @@ export const useFetchInstaChannel = () => {
             error.value = null;
 
             const newParams = _getParams(params);
-            const response = await instagramApi.get(newParams);
+            const response = await customChannelApi.get(newParams);
 
-            const validatedResponse = InstaChannelResponseSchema.parse(response.data);
+            const validatedResponse = CustomChannelResponseSchema.parse(response.data);
 
             data.value = validatedResponse.data;
             meta.value = validatedResponse.meta;
@@ -51,21 +41,17 @@ export const useFetchInstaChannel = () => {
                 error.value = new Error(
                     `Validation failed: ${err.issues.map((e) => e.message).join(', ')}`
                 );
-            } else {
-                error.value = err instanceof Error ? err : new Error('An unknown error occurred');
             }
-            data.value = [];
-            meta.value = { ...initMeta };
         } finally {
             loading.value = false;
         }
-    }
+    };
 
     return {
-        loading,
+        fetchChannels,
         data,
         meta,
+        loading,
         error,
-        fetchChannels,
-    }
+    };
 }
