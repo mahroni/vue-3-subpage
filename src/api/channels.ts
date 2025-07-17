@@ -42,6 +42,16 @@ export const tiktokApi = {
   update: (data: any) => apiV2.post<any>(`/tiktok/connect/${data.id}/update`, data),
 };
 
+export const lineApi = {
+  get: (params: IParams) => apiV3.get<any[]>('/admin/channel/line', { params }),
+  update: (data: any) => apiV2.post<any>(`/line/connect/${data.id}/update`, data),
+};
+
+export const customChannelApi = {
+  get: (params: IParams) => apiV3.get<any[]>('/admin/channel/custom', { params }),
+  update: (data: any) => apiV2.post<any>(`/custom_channel/connect/${data.id}/update`, data),
+};
+
 export const telegramApi = {
   get: (params: IParams) => apiV3.get<any[]>('/admin/channel/telegram', { params }),
   update: (channelId: number | undefined, data: IUpdateTelegramChannel) =>

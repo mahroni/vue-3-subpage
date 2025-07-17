@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createApiResponseSchemaPagination } from "./common";
+import { createApiResponseSchemaPagination } from "../common";
 
 const WhatsappChannelSchema = z.object({
     allocate_wa_call_webhook_url: z.string().nullable(),

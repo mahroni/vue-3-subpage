@@ -1,19 +1,9 @@
+import { lineApi } from "@/api/channels";
+import { LineChannelResponseSchema, type LineChannelList } from "@/types/schemas/channels/line-channel";
+import type { MetaPagination } from "@/types/schemas/common";
+import { filterFilledObj } from "@/utils/helper/object";
 import { ref } from "vue";
 import z from "zod";
-
-
-
-import { instagramApi } from '@/api/channels';
-import {
-  type InstaChannelList,
-  InstaChannelResponseSchema,
-} from '@/types/schemas/channels/insta-channel';
-import type { MetaPagination } from '@/types/schemas/common';
-import { filterFilledObj } from "@/utils/helper/object";
-
-
-
-
 
 const initMeta: MetaPagination = {
     page: 0,
@@ -26,11 +16,11 @@ const _getParams = (params: MetaPagination) => {
     return filterFilledObj(params);
 };
 
-export const useFetchInstaChannel = () => {
+export const useFetchLineChannel = () => {
     const loading = ref(false);
     const meta = ref<MetaPagination>({ ...initMeta });
     const error = ref<Error | null>(null);
-    const data = ref<InstaChannelList>([]);
+    const data = ref<LineChannelList>([]);
 
     const fetchChannels = async (params?: any) => {
         try {
@@ -38,9 +28,9 @@ export const useFetchInstaChannel = () => {
             error.value = null;
 
             const newParams = _getParams(params);
-            const response = await instagramApi.get(newParams);
+            const response = await lineApi.get(newParams);
 
-            const validatedResponse = InstaChannelResponseSchema.parse(response.data);
+            const validatedResponse = LineChannelResponseSchema.parse(response.data);
 
             data.value = validatedResponse.data;
             meta.value = validatedResponse.meta;

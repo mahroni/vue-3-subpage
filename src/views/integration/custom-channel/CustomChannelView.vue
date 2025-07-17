@@ -7,23 +7,25 @@
 
         <!-- Header -->
         <div class="flex items-center gap-2">
-            <img :src="CHANNEL_BADGE_URL.tiktok" alt="Qiscus Logo" loading="lazy" width="24" height="24" />
-            <h2 class="text-text-title text-xl font-semibold">Tiktok Direct Message</h2>
+            <img :src="CHANNEL_BADGE_URL.custom" alt="Qiscus Logo" loading="lazy" width="24" height="24" />
+            <h2 class="text-text-title text-xl font-semibold">Custom Channel</h2>
         </div>
 
         <!-- Banner documentation -->
-        <TiktokBannerDoc />
+        <CustomChannelBannerDoc />
 
         <!-- Table section -->
          <div class="shadow-large flex flex-1 items-center justify-between overflow-hidden rounded-2xl">
-            <TiktokChannelTable />
+            <CustomChannelTable />
          </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { BackIcon } from '@/components/icons';
-import TiktokBannerDoc from '@/features/tiktok/components/ui/TiktokBannerDoc.vue';
-import TiktokChannelTable from '@/features/tiktok/pages/TiktokChannelTable.vue';
+import CustomChannelBannerDoc from '@/features/custom-channel/components/ui/CustomChannelBannerDoc.vue';
+import CustomChannelTable from '@/features/custom-channel/pages/CustomChannelTable.vue';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
+
+
 </script>
