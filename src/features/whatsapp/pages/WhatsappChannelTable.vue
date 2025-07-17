@@ -11,49 +11,52 @@
       </Button>
     </div>
 
-    <div class="relative min-h-[776px] flex flex-1 flex-col justify-between overflow-auto px-4 py-2">
-      <table class="w-full table-fixed">
-        <thead class="sticky -top-2 z-10 bg-white">
-          <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
-            <th class="max-w-[362px] px-2 py-4 text-left font-normal">Channel Name</th>
-            <th class="px-6 py-4 text-left font-normal">Tag Channel</th>
-            <th class="px-6 py-4 text-right font-normal">Action</th>
-          </tr>
-        </thead>
-        <tbody v-if="!loadingList" class="divide-y divide-gray-100">
-          <tr v-for="channel in channels" :key="channel.id" class="hover:bg-gray-50"
-            @click.prevent="getDetailChannel(channel)">
-            <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
-              <div class="flex items-center gap-2">
-                <Image :src="channel.badgeUrl" :fallbackSrc="CHANNEL_BADGE_URL.whatsapp" alt="channel badge" :width="24"
-                  :height="24" class="aspect-square rounded-full object-cover max-w-6 max-h-6" />
-                <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
-                  channel.name
+    <div class="relative flex min-h-[776px] flex-1 flex-col overflow-auto px-4 py-2 justify-between">
+      <div class="flex flex-col flex-1">
+
+        <table class="w-full table-fixed">
+          <thead class="sticky -top-2 z-10 bg-white">
+            <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
+              <th class="max-w-[362px] px-2 py-4 text-left font-normal">Channel Name</th>
+              <th class="px-6 py-4 text-left font-normal">Tag Channel</th>
+              <th class="px-6 py-4 text-right font-normal">Action</th>
+            </tr>
+          </thead>
+          <tbody v-if="!loadingList" class="divide-y divide-gray-100">
+            <tr v-for="channel in channels" :key="channel.id" class="hover:bg-gray-50"
+              @click.prevent="getDetailChannel(channel)">
+              <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
+                <div class="flex items-center gap-2">
+                  <Image :src="channel.badgeUrl" :fallbackSrc="CHANNEL_BADGE_URL.whatsapp" alt="channel badge"
+                    :width="24" :height="24" class="aspect-square rounded-full object-cover max-w-6 max-h-6" />
+                  <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
+                    channel.name
                   }}</span>
-              </div>
-            </td>
-            <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
-              <ChannelTags :data="{ isMmlite: channel.isMmlite && cMMLiteFeature() == 1, isCoex: channel.isCoex }" />
-            </td>
-            <td class="border-stroke-regular border-b px-6 py-4 text-right">
-              <Switch v-model="channel.isActive" size="small" variant="success" @click.stop
-                @update:model-value="updateChannelStatus(channel.id, $event)" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+                </div>
+              </td>
+              <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
+                <ChannelTags :data="{ isMmlite: channel.isMmlite && cMMLiteFeature() == 1, isCoex: channel.isCoex }" />
+              </td>
+              <td class="border-stroke-regular border-b px-6 py-4 text-right">
+                <Switch v-model="channel.isActive" size="small" variant="success" @click.stop
+                  @update:model-value="updateChannelStatus(channel.id, $event)" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-      <div v-if="loadingList" class="grid h-full place-items-center">
-        <Animate :source="loadingAnimationData" />
+        <div v-if="loadingList" class="grid h-full place-items-center flex-1 min-h-[650px]">
+          <Animate :source="loadingAnimationData" />
+        </div>
+
+        <div v-if="channels.length === 0 && !loadingList" class="absolute inset-0 flex items-center justify-center">
+          <EmptyState title="No Results"
+            description="You may want to try using different keywords or checking for the typos to find it."
+            image_url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
+        </div>
       </div>
 
-      <div v-if="channels.length === 0 && !loadingList" class="absolute inset-0 flex items-center justify-center">
-        <EmptyState title="No Results"
-          description="You may want to try using different keywords or checking for the typos to find it."
-          image_url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
-      </div>
-
-      <div v-if="isShowPagination" class="flex items-center justify-between px-6 py-4">
+      <div v-if="isShowPagination" class="flex justify-between px-6 py-4 items-end">
         <div class="flex items-center gap-2">
           <span class="text-text-subtitle text-sm">
             {{ paginationInfo }}
@@ -67,6 +70,10 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { type Ref, computed, onMounted, ref, toValue, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
 import loadingAnimationData from '@/assets/lottie/loading.json';
 import { Animate, Button, Image, Switch } from '@/components/common/common';
 import InputCustom from '@/components/form/InputCustom.vue';
@@ -79,30 +86,25 @@ import { useHtmlToString } from '@/composables/helpers/htmlToString';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import { useAppFeaturesStore } from '@/stores/app-features';
 import { usePlanStore } from '@/stores/plan';
-import type { WhatsappChannel } from '@/types/schemas/wa-channel-list';
+import type { WhatsappChannel } from '@/types/schemas/channels/wa-channel-list';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { storeToRefs } from 'pinia';
-import { computed, onMounted, ref, toValue, watch, type Ref } from 'vue';
-import { useRouter } from 'vue-router';
+
 import ChannelTags from '../components/ui/ChannelTags.vue';
 import ConfirmationAlertBody from '../components/ui/ConfirmationAlertBody.vue';
-
 
 interface FetchParams {
   search?: string;
   page?: number;
-};
+}
 
 const searchQuery = ref('') as Ref<string>;
 const params = ref<FetchParams>({});
-
 
 const { fetchChannels, data: listData, loading: loadingList, meta } = useFetchWhatsappChannel();
 const { showAlert } = useSweetAlert();
 const router = useRouter();
 const { featureData } = storeToRefs(useAppFeaturesStore());
 const { planData } = storeToRefs(usePlanStore());
-
 
 // function
 function updateExistingListData(newData: WhatsappChannel) {
@@ -120,7 +122,7 @@ function updateExistingListData(newData: WhatsappChannel) {
     confirmButtonText: 'Okay',
     showCancelButton: false,
   });
-};
+}
 
 const debounce = (func: Function, delay: number) => {
   let timeout: NodeJS.Timeout;
@@ -133,14 +135,14 @@ const debounce = (func: Function, delay: number) => {
 };
 
 const cMMLiteFeature = () => {
-  const integration = featureData.value.find(ft => ft.name.toLowerCase() == 'integration')
-  if (!integration) return false
+  const integration = featureData.value.find((ft) => ft.name.toLowerCase() == 'integration');
+  if (!integration) return false;
 
-  const waMMLite = integration.features?.find(ft => ft.name.toLowerCase() == 'whatsapp_mmlite')
+  const waMMLite = integration.features?.find((ft) => ft.name.toLowerCase() == 'whatsapp_mmlite');
 
-  if (!waMMLite) return false
+  if (!waMMLite) return false;
 
-  return waMMLite.status
+  return waMMLite.status;
 };
 
 const handleSearch = debounce((newVal: string) => {
@@ -161,14 +163,14 @@ const handleNewIntegration = () => {
   if (planData.value && channels.value.length < planData.value.max_wa_channel) {
     router.push({
       name: 'whatsapp-new',
-    })
+    });
   } else {
     showAlert.warning({
       title: 'Important Notice',
       text: useHtmlToString(ConfirmationAlertBody),
       confirmButtonText: 'Cancel',
       showCancelButton: false,
-    })
+    });
   }
 };
 
@@ -198,7 +200,7 @@ async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
   };
 
   await fetchChannels(toValue(params));
-};
+}
 
 async function updateChannelStatus(id: number, is_active: boolean) {
   const { update, data, error } = useUpdateWhatsappChannel();
@@ -238,7 +240,6 @@ async function updateChannelStatus(id: number, is_active: boolean) {
     });
   }
 }
-
 
 // side-effect
 const channels = computed(() =>

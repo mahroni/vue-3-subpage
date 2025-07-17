@@ -33,7 +33,7 @@
                     class="aspect-square rounded-full object-cover" :fallback-src="CHANNEL_BADGE_URL.qiscus" />
                   <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
                     channel.name
-                  }}</span>
+                    }}</span>
                 </div>
               </td>
 

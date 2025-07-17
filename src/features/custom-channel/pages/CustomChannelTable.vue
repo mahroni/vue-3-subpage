@@ -26,11 +26,11 @@
               @click.prevent="getDetailChannel(channel)">
               <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
                 <div class="flex items-center gap-2">
-                  <Image :src="channel.badgeUrl" :fallbackSrc="CHANNEL_BADGE_URL.line" alt="channel badge" :width="24"
+                  <Image :src="channel.logoUrl" :fallbackSrc="CHANNEL_BADGE_URL.custom" alt="channel badge" :width="24"
                     :height="24" class="aspect-square rounded-full object-cover max-w-6 max-h-6" />
                   <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
                     channel.name
-                  }}</span>
+                    }}</span>
                 </div>
               </td>
               <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
@@ -80,10 +80,10 @@ import InputCustom from '@/components/form/InputCustom.vue';
 import { CopyIcon, SearchIcon } from '@/components/icons';
 import EmptyState from '@/components/ui/EmptyState.vue';
 import Pagination from '@/components/ui/Pagination.vue';
-import { useFetchLineChannel } from '@/composables/channels/line/useFetchLineChannel';
-import { useUpdateLineChannel } from '@/composables/channels/line/useUpdateLineChannel';
+import { useFetchCustomChannel } from '@/composables/channels/custom-channel/useFetchCustomChannel';
+import { useUpdateCustomChannel } from '@/composables/channels/custom-channel/useUpdateCustomChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import type { LineChannel } from '@/types/schemas/channels/line-channel';
+import type { CustomChannel } from '@/types/schemas/channels/custom-channel';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 import { computed, onMounted, ref, toValue, watch, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -121,7 +121,7 @@ const debounce = (func: Function, delay: number) => {
 
 
 // fetch channels
-const { fetchChannels, data: listData, loading: loadingList, meta } = useFetchLineChannel();
+const { fetchChannels, data: listData, loading: loadingList, meta } = useFetchCustomChannel();
 
 onMounted(async () => {
   await fetchChannels();
@@ -129,12 +129,18 @@ onMounted(async () => {
 
 const channels = computed(() =>
   listData.value.map((channel) => ({
-    accessToken: channel.access_token,
-    badgeUrl: channel.badge_url,
+    appId: channel.app_id,
+    createdAt: channel.created_at,
     id: channel.id,
+    identifierKey: channel.identifier_key,
     isActive: channel.is_active,
+    isLimitCharacterEnable: channel.is_limit_character_enable,
+    isReplyEnable: channel.is_reply_enable,
+    limitCharacter: channel.limit_character,
+    logoUrl: channel.logo_url,
     name: channel.name,
-    secretKey: channel.secret_key,
+    updatedAt: channel.updated_at,
+    useChannelResponder: channel.use_channel_responder,
     webhookUrl: channel.webhook_url,
   }))
 );
@@ -187,13 +193,13 @@ const paginationInfo = computed(() => {
 // handlers
 const handleNewIntegration = () => {
   router.push({
-    name: 'line-new',
+    name: 'custom_channel-create',
   })
 };
 
 const getDetailChannel = (channel: { id: number }) => {
   router.push({
-    name: 'line-detail',
+    name: 'custom_channel-detail',
     params: {
       id: channel.id.toString(),
     },
@@ -203,7 +209,7 @@ const getDetailChannel = (channel: { id: number }) => {
 
 // update channel status handler
 async function updateChannelStatus(id: number, is_active: boolean) {
-  const { update, data, error } = useUpdateLineChannel();
+  const { update, data, error } = useUpdateCustomChannel();
 
   try {
     await update(id, { is_active });
@@ -224,7 +230,7 @@ async function updateChannelStatus(id: number, is_active: boolean) {
     }
 
     // Update the local listData with the new state from the API response
-    const newData = toValue(data) as unknown as LineChannel;
+    const newData = toValue(data) as unknown as CustomChannel;
     if (newData) updateExistingListData(newData);
   } catch (err: any) {
     // Handle unexpected errors during the update process (e.g., network issues)
@@ -241,7 +247,7 @@ async function updateChannelStatus(id: number, is_active: boolean) {
   }
 }
 
-function updateExistingListData(newData: LineChannel) {
+function updateExistingListData(newData: CustomChannel) {
   const fIdx = listData.value.findIndex((ld) => ld.id === newData.id);
 
   if (fIdx === -1) return;
