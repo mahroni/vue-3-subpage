@@ -6,10 +6,12 @@ import CollapsibleGroup from '@/components/common/CollapsibleGroup.vue';
 import MainTab from '@/components/common/Tabs/MainTab.vue';
 import { Button, Switch } from '@/components/common/common';
 import { BackIcon, HomeIcon } from '@/components/icons';
-import { useCreateTelegram } from '@/composables/channels/telegram/useCreateTelegram';
-import { useDeleteTelegram } from '@/composables/channels/telegram/useDeleteTelegram';
-import { useFetchTelegram } from '@/composables/channels/telegram/useFetchTelegram';
-import { useUpdateTelegram } from '@/composables/channels/telegram/useUpdateTelegram';
+import {
+  useCreateTelegram,
+  useDeleteTelegram,
+  useFetchTelegram,
+  useUpdateTelegram,
+} from '@/composables/channels/telegram';
 import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
 import { useUpdateConfig } from '@/composables/channels/useUpdateConfigChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';

@@ -1,8 +1,8 @@
 import { ref } from 'vue';
-import { z } from 'zod';
 
 import { botApi } from '@/api/channels';
 import { type BotData, BotResponseSchema } from '@/types/schemas/channels/bot/bot';
+import { handleComposableError } from '@/utils/helper/errorHandler';
 
 export const useFetchBot = () => {
   const loading = ref(false);
@@ -20,18 +20,7 @@ export const useFetchBot = () => {
       const validatedResponse = BotResponseSchema.parse(response.data);
       data.value = validatedResponse.data;
     } catch (err) {
-      // Log all errors for debugging
-      console.error('Error fetching:', err);
-
-      // Handle Zod validation errors
-      if (err instanceof z.ZodError) {
-        console.error('Validation error:', err.issues);
-        error.value = new Error(
-          `Validation failed: ${err.issues.map((e) => e.message).join(', ')}`
-        );
-      } else {
-        error.value = err instanceof Error ? err : new Error('An unknown error occurred');
-      }
+      handleComposableError(err, error, 'Error fetching bot');
       data.value = null;
     } finally {
       loading.value = false;

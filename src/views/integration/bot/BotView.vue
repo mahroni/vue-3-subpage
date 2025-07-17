@@ -6,8 +6,12 @@ import MainTab from '@/components/common/Tabs/MainTab.vue';
 import { Banner, Button, CollapsibleGroup, Switch } from '@/components/common/common';
 import InputCustom from '@/components/form/InputCustom.vue';
 import { BackIcon, CopyIcon, HomeIcon } from '@/components/icons';
-import { useFetchBot, useForceSendBot, useIntegrateBot } from '@/composables/channels/bot';
-import { useActivateBot } from '@/composables/channels/bot/useActivateBot';
+import {
+  useActivateBot,
+  useFetchBot,
+  useForceSendBot,
+  useIntegrateBot,
+} from '@/composables/channels/bot';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useAppDetailStore } from '@/stores/app-detail';
