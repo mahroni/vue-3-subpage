@@ -8,22 +8,25 @@
           @input="onInput" @focus="isFocused = true" @blur="isFocused = false" :placeholder="placeholder"
           :disabled="disabled" />
 
-        <button v-if="clearable" class="invisible cursor-pointer transition-colors duration-300 ease-in-out" :class="{
-          visible: modelValue,
-        }" @click="onClear" :disabled="disabled">
+        <button v-if="clearable" type="button" id="clear-btn"
+          class="invisible cursor-pointer transition-colors duration-300 ease-in-out" :class="{
+            visible: modelValue,
+          }" @click="onClear" :disabled="disabled">
           <CloseIcon :size="20" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
 
-        <button v-if="type === 'password'" class="cursor-pointer" @click="togglePasswordVisibility">
+        <button v-if="type === 'password'" type="button" id="show-password-btn" class="cursor-pointer"
+          @click="togglePasswordVisibility">
           <EyeIcon class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
         </button>
       </div>
 
-      <button v-if="$slots['append-button']" :class="appendButtonClasses({ disabled })">
+      <button v-if="$slots['append-button']" type="button" id="append-btn" :class="appendButtonClasses({ disabled })">
         <slot name="append-button" :disabled="disabled"></slot>
       </button>
 
-      <button v-if="$slots['append-button-icon']" :class="appendButtonIconClasses({ disabled })">
+      <button v-if="$slots['append-button-icon']" type="button" id="append-btn-icon"
+        :class="appendButtonIconClasses({ disabled })">
         <slot name="append-button-icon" :disabled="disabled"></slot>
       </button>
     </div>

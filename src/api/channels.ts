@@ -74,4 +74,6 @@ export const botApi = {
     postFormData<any[]>(apiV1, '/app/bot/integrate', data),
   forceSendBot: (data: { is_force_send_bot: boolean }) =>
     postFormData<any[]>(apiV2, '/app/bot/force_send', data),
+  activate: (data: { is_active: boolean }) =>
+    postFormData<any[]>(apiV1, '/app/bot/activation', data),
 };
