@@ -1,74 +1,76 @@
 <template>
-    <div class="flex h-full w-full flex-col">
-        <div class="flex items-center justify-between p-4">
-          <InputCustom v-model="searchQuery" placeholder="Search channel name" class="min-w-[340px]" clearable>
-            <template #suffix-icon>
-              <SearchIcon :size="24" />
-            </template>
-          </InputCustom>
-          <Button @click="handleNewIntegration" variant="primary" class="flex items-center gap-2" size="small" no-animation>
-            New Integration
-          </Button>
+  <div class="flex h-full w-full flex-col">
+    <div class="flex items-center justify-between p-4">
+      <InputCustom v-model="searchQuery" placeholder="Search channel name" class="min-w-[340px]" clearable>
+        <template #suffix-icon>
+          <SearchIcon :size="24" />
+        </template>
+      </InputCustom>
+      <Button @click="handleNewIntegration" variant="primary" class="flex items-center gap-2" size="small" no-animation>
+        New Integration
+      </Button>
+    </div>
+
+    <div class="relative flex flex-1 flex-col min-h-[776px] justify-between overflow-auto px-4 py-2">
+      <div class="flex flex-col flex-1">
+        <table class="w-full table-fixed">
+          <thead class="sticky -top-2 z-10 bg-white">
+            <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
+              <th class="max-w-[362px] px-2 py-4 text-left font-normal">Channel Name</th>
+              <th class="px-6 py-4 text-left font-normal">Channel ID</th>
+              <th class="px-6 py-4 text-right font-normal">Action</th>
+            </tr>
+          </thead>
+          <tbody v-if="!loadingList" class="divide-y divide-gray-100">
+            <tr v-for="channel in channels" :key="channel.id" class="hover:bg-gray-50"
+              @click.prevent="getDetailChannel(channel)">
+              <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
+                <div class="flex items-center gap-2">
+                  <Image :src="channel.badgeUrl" :fallbackSrc="CHANNEL_BADGE_URL.facebook" alt="channel badge"
+                    :width="24" :height="24" class="aspect-square rounded-full object-cover max-w-6 max-h-6" />
+                  <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
+                    channel.name
+                    }}</span>
+                </div>
+              </td>
+              <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
+                <div class="flex items-center gap-2">
+                  <span class="text-text-title font-semibold">{{ channel.id }}</span>
+                  <ButtonIcon title="Copy Channel ID" @click.stop="copyToClipboard(`${channel.id}`)">
+                    <CopyIcon :size="16" />
+                  </ButtonIcon>
+                </div>
+              </td>
+              <td class="border-stroke-regular border-b px-6 py-4 text-right">
+                <Switch v-model="channel.isActive" size="small" variant="success" @click.stop
+                  @update:model-value="updateChannelStatus(channel.id, $event)" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div v-if="loadingList" class="grid h-full place-items-center flex-1 min-h-[650px]">
+          <Animate :source="loadingAnimationData" />
         </div>
-    
-        <div class="relative flex flex-1 flex-col min-h-[776px] justify-between overflow-auto px-4 py-2">
-          <table class="w-full table-fixed">
-            <thead class="sticky -top-2 z-10 bg-white">
-              <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
-                <th class="max-w-[362px] px-2 py-4 text-left font-normal">Channel Name</th>
-                <th class="px-6 py-4 text-left font-normal">Channel ID</th>
-                <th class="px-6 py-4 text-right font-normal">Action</th>
-              </tr>
-            </thead>
-            <tbody v-if="!loadingList" class="divide-y divide-gray-100">
-              <tr v-for="channel in channels" :key="channel.id" class="hover:bg-gray-50"
-                @click.prevent="getDetailChannel(channel)">
-                <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
-                  <div class="flex items-center gap-2">
-                    <Image :src="channel.badgeUrl" :fallbackSrc="CHANNEL_BADGE_URL.facebook" alt="channel badge" :width="24"
-                      :height="24" class="aspect-square rounded-full object-cover max-w-6 max-h-6" />
-                    <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
-                      channel.name
-                      }}</span>
-                  </div>
-                </td>
-                <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
-                  <div class="flex items-center gap-2">
-                    <span class="text-text-title font-semibold">{{ channel.id }}</span>
-                    <ButtonIcon title="Copy Channel ID" @click.stop="copyToClipboard(`${channel.id}`)">
-                      <CopyIcon :size="16" />
-                    </ButtonIcon>
-                  </div>
-                </td>
-                <td class="border-stroke-regular border-b px-6 py-4 text-right">
-                  <Switch v-model="channel.isActive" size="small" variant="success" @click.stop
-                    @update:model-value="updateChannelStatus(channel.id, $event)" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-    
-          <div v-if="loadingList" class="grid h-full place-items-center">
-            <Animate :source="loadingAnimationData" />
-          </div>
-    
-          <div v-if="channels.length === 0 && !loadingList" class="absolute inset-0 flex items-center justify-center">
-            <EmptyState title="No Results"
-              description="You may want to try using different keywords or checking for the typos to find it."
-              image_url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
-          </div>
-    
-          <div v-if="isShowPagination" class="flex items-center justify-between px-6 py-4">
-            <div class="flex items-center gap-2">
-              <span class="text-text-subtitle text-sm">
-                {{ paginationInfo }}
-              </span>
-            </div>
-    
-            <Pagination :meta="meta" @pagination="pagination" />
-          </div>
+
+        <div v-if="channels.length === 0 && !loadingList" class="absolute inset-0 flex items-center justify-center">
+          <EmptyState title="No Results"
+            description="You may want to try using different keywords or checking for the typos to find it."
+            image_url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
         </div>
       </div>
+
+      <div v-if="isShowPagination" class="flex justify-between px-6 py-4 items-end">
+        <div class="flex items-center gap-2">
+          <span class="text-text-subtitle text-sm">
+            {{ paginationInfo }}
+          </span>
+        </div>
+
+        <Pagination :meta="meta" @pagination="pagination" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -182,12 +184,12 @@ const paginationInfo = computed(() => {
 
 // handlers
 const handleNewIntegration = () => {
-    router.push({
-      name: 'facebook-new',
-    })
+  router.push({
+    name: 'facebook-new',
+  })
 };
 
-const getDetailChannel = (channel: {id: number}) => {
+const getDetailChannel = (channel: { id: number }) => {
   router.push({
     name: 'facebook-detail',
     params: {
