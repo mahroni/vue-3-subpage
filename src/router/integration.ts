@@ -1,20 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router';
 
-
-
 import ChannelView from '@/views/integration/ChannelView.vue';
-import BotView from '@/views/integration/bot/BotView.vue';
-import InstagramChannelView from '@/views/integration/instagram/InstagramChannelView.vue';
-import TelegramCreateChannelView from '@/views/integration/telegram/TelegramCreateChannelView.vue';
-import TelegramView from '@/views/integration/telegram/TelegramView.vue';
-import WhatsappChannelView from '@/views/integration/whatsapp/WhatsappChannelView.vue';
-import WidgetChannel from '@/views/integration/widget/WidgetChannelView.vue';
-import WidgetCreateChannelView from '@/views/integration/widget/WidgetCreateChannelView.vue';
-import WidgetDetailView from '@/views/integration/widget/WidgetDetailView.vue';
-
-
-
-
 
 // Ensure RouteRecordRaw is imported
 
@@ -34,7 +20,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
       {
         path: '', // Full path: /qiscus
         name: 'whatsapp-list',
-        component: WhatsappChannelView,
+        component: () => import('@/views/integration/whatsapp/WhatsappChannelView.vue'),
       },
       // wip
       {
@@ -65,7 +51,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'instagram-list',
-        component: InstagramChannelView,
+        component: import('@/views/integration/instagram/InstagramChannelView.vue'),
       },
       {
         path: 'create',
@@ -194,12 +180,12 @@ export const integrationRoutes: RouteRecordRaw[] = [
       {
         path: '',
         name: 'telegram-detail',
-        component: TelegramView,
+        component: () => import('@/views/integration/telegram/TelegramView.vue'),
       },
       {
         path: 'create', // Full path: /telegram/create
         name: 'telegram-create',
-        component: TelegramCreateChannelView,
+        component: () => import('@/views/integration/telegram/TelegramCreateChannelView.vue'),
       },
     ],
   },
@@ -212,18 +198,18 @@ export const integrationRoutes: RouteRecordRaw[] = [
       {
         path: '', // Full path: /qiscus
         name: 'qiscus-list',
-        component: WidgetChannel,
+        component: () => import('@/views/integration/widget/WidgetChannelView.vue'),
       },
       {
         path: ':id', // Full path: /qiscus/:id
         name: 'qiscus-detail',
-        component: WidgetDetailView,
+        component: () => import('@/views/integration/widget/WidgetDetailView.vue'),
         props: true, // Pass route params as props to the component
       },
       {
         path: 'create', // Full path: /qiscus/create
         name: 'qiscus-create',
-        component: WidgetCreateChannelView,
+        component: () => import('@/views/integration/widget/WidgetCreateChannelView.vue'),
       },
     ],
   },
@@ -260,7 +246,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/bot-integration',
     name: 'bot-integration',
-    component: BotView,
+    component: () => import('@/views/integration/bot/BotView.vue'),
   },
 ];
 
