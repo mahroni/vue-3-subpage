@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ButtonIcon from '@/components/common/ButtonIcon.vue';
+import { Image } from '@/components/common/common';
 import { ChatIcon, ChevronLeftIcon, ChevronRightIcon } from '@/components/icons';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
@@ -57,7 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
       <button v-if="props.enableQiscusLiveChat"
         class="hover:bg-surface-primary-blue/5 flex cursor-pointer justify-between rounded-xl p-4 px-4 shadow-card">
         <div class="flex min-w-0 flex-1 items-center gap-2">
-          <img :src="props.imageUrl || CHANNEL_BADGE_URL.qiscus" alt="" class="h-6 w-6" width="24" height="24" />
+          <Image :src="props.imageUrl || CHANNEL_BADGE_URL.qiscus" alt="" :width="24" :height="24" />
           <div class="min-w-0 flex-1 text-start text-sm font-medium break-words">
             {{ props.previewLiveChatName }}
           </div>

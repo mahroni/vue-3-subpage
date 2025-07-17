@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia';
 import { onMounted, reactive, ref, watch } from 'vue';
 
 import MainTab from '@/components/common/Tabs/MainTab.vue';
-import { Banner, Button, CollapsibleGroup, Switch } from '@/components/common/common';
+import { Banner, Button, CollapsibleGroup, Image, Switch } from '@/components/common/common';
 import InputCustom from '@/components/form/InputCustom.vue';
 import { BackIcon, CopyIcon, HomeIcon } from '@/components/icons';
 import {
@@ -177,7 +177,7 @@ onMounted(async () => {
 
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <div class="flex items-center gap-3">
-        <img :src="CHANNEL_BADGE_URL.bot" alt="Telegram Logo" class="h-6 w-6" width="24" height="24" />
+        <Image :src="CHANNEL_BADGE_URL.bot" alt="Bot Logo" class="h-6 w-6" :width="24" :height="24" />
         <h2 class="text-xl font-semibold text-black-700">New Integration - Bot</h2>
       </div>
 

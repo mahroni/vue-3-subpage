@@ -33,7 +33,7 @@
                     class="aspect-square rounded-full object-cover" :fallback-src="CHANNEL_BADGE_URL.qiscus" />
                   <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
                     channel.name
-                    }}</span>
+                  }}</span>
                 </div>
               </td>
 
@@ -61,7 +61,7 @@
         <div v-if="channels.length === 0 && !loadingList" class="absolute inset-0 flex items-center justify-center">
           <EmptyState title="No Results"
             description="You may want to try using different keywords or checking for the typos to find it."
-            image_url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
+            image-url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
         </div>
       </div>
 
