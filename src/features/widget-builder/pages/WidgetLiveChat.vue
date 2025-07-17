@@ -18,6 +18,7 @@ import LoginForm from '@/features/widget-builder/LoginForm.vue';
 import WelcomeDialog from '@/features/widget-builder/WelcomeDialog.vue';
 import Channels from '@/features/widget-builder/channels/Channels.vue';
 import ColorScheme from '@/features/widget-builder/color-scheme/ColorScheme.vue';
+import WidgetPreview from '@/features/widget-builder/pages/WidgetPreview.vue';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
@@ -96,6 +97,10 @@ watch(
   }
 );
 
+const props = defineProps<{
+  channelId: string | number;
+}>();
+
 // Store integration
 const { postWidgetConfig, getWidgetConfig } = useQiscusLiveChatStore();
 const { appId } = useAppConfigStore();
@@ -127,7 +132,7 @@ const saveAndPreview = async () => {
 const params = useRoute().params;
 if (!params.id) {
   throw new Error('Channel ID is required');
-};
+}
 
 onMounted(async () => {
   const { id } = params;
@@ -157,6 +162,6 @@ onMounted(async () => {
 
   <Drawer :isOpen="isDrawerOpen" @close="isDrawerOpen = false">
     <!-- Preview content should come from store/props -->
-    <WidgetPreview />
+    <WidgetPreview v-if="isDrawerOpen" :channel-id="props.channelId" />
   </Drawer>
 </template>
