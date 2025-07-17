@@ -31,7 +31,7 @@
                     :width="24" :height="24" class="aspect-square rounded-full object-cover max-w-6 max-h-6" />
                   <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
                     channel.name
-                    }}</span>
+                  }}</span>
                 </div>
               </td>
               <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
@@ -70,6 +70,10 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
+import { type Ref, computed, onMounted, ref, toValue, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
 import loadingAnimationData from '@/assets/lottie/loading.json';
 import { Animate, Button, Image, Switch } from '@/components/common/common';
 import InputCustom from '@/components/form/InputCustom.vue';
@@ -82,30 +86,25 @@ import { useHtmlToString } from '@/composables/helpers/htmlToString';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import { useAppFeaturesStore } from '@/stores/app-features';
 import { usePlanStore } from '@/stores/plan';
-import type { WhatsappChannel } from '@/types/schemas/wa-channel-list';
+import type { WhatsappChannel } from '@/types/schemas/channels/wa-channel-list';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { storeToRefs } from 'pinia';
-import { computed, onMounted, ref, toValue, watch, type Ref } from 'vue';
-import { useRouter } from 'vue-router';
+
 import ChannelTags from '../components/ui/ChannelTags.vue';
 import ConfirmationAlertBody from '../components/ui/ConfirmationAlertBody.vue';
-
 
 interface FetchParams {
   search?: string;
   page?: number;
-};
+}
 
 const searchQuery = ref('') as Ref<string>;
 const params = ref<FetchParams>({});
-
 
 const { fetchChannels, data: listData, loading: loadingList, meta } = useFetchWhatsappChannel();
 const { showAlert } = useSweetAlert();
 const router = useRouter();
 const { featureData } = storeToRefs(useAppFeaturesStore());
 const { planData } = storeToRefs(usePlanStore());
-
 
 // function
 function updateExistingListData(newData: WhatsappChannel) {
@@ -123,7 +122,7 @@ function updateExistingListData(newData: WhatsappChannel) {
     confirmButtonText: 'Okay',
     showCancelButton: false,
   });
-};
+}
 
 const debounce = (func: Function, delay: number) => {
   let timeout: NodeJS.Timeout;
@@ -136,14 +135,14 @@ const debounce = (func: Function, delay: number) => {
 };
 
 const cMMLiteFeature = () => {
-  const integration = featureData.value.find(ft => ft.name.toLowerCase() == 'integration')
-  if (!integration) return false
+  const integration = featureData.value.find((ft) => ft.name.toLowerCase() == 'integration');
+  if (!integration) return false;
 
-  const waMMLite = integration.features?.find(ft => ft.name.toLowerCase() == 'whatsapp_mmlite')
+  const waMMLite = integration.features?.find((ft) => ft.name.toLowerCase() == 'whatsapp_mmlite');
 
-  if (!waMMLite) return false
+  if (!waMMLite) return false;
 
-  return waMMLite.status
+  return waMMLite.status;
 };
 
 const handleSearch = debounce((newVal: string) => {
@@ -164,14 +163,14 @@ const handleNewIntegration = () => {
   if (planData.value && channels.value.length < planData.value.max_wa_channel) {
     router.push({
       name: 'whatsapp-new',
-    })
+    });
   } else {
     showAlert.warning({
       title: 'Important Notice',
       text: useHtmlToString(ConfirmationAlertBody),
       confirmButtonText: 'Cancel',
       showCancelButton: false,
-    })
+    });
   }
 };
 
@@ -201,7 +200,7 @@ async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
   };
 
   await fetchChannels(toValue(params));
-};
+}
 
 async function updateChannelStatus(id: number, is_active: boolean) {
   const { update, data, error } = useUpdateWhatsappChannel();
@@ -241,7 +240,6 @@ async function updateChannelStatus(id: number, is_active: boolean) {
     });
   }
 }
-
 
 // side-effect
 const channels = computed(() =>

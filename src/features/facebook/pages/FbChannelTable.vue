@@ -30,7 +30,7 @@
                     :width="24" :height="24" class="aspect-square rounded-full object-cover max-w-6 max-h-6" />
                   <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
                     channel.name
-                    }}</span>
+                  }}</span>
                 </div>
               </td>
               <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
@@ -74,6 +74,9 @@
 </template>
 
 <script setup lang="ts">
+import { type Ref, computed, onMounted, ref, toValue, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
 import loadingAnimationData from '@/assets/lottie/loading.json';
 import { Animate, Button, ButtonIcon, Image, Switch } from '@/components/common/common';
 import InputCustom from '@/components/form/InputCustom.vue';
@@ -83,16 +86,13 @@ import Pagination from '@/components/ui/Pagination.vue';
 import { useFetchFbChannel } from '@/composables/channels/facebook/useFetchFbChannel';
 import { useUpdateFbChannel } from '@/composables/channels/facebook/useUpdateFbChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import type { FbChannel } from '@/types/schemas/fb-channel';
+import type { FbChannel } from '@/types/schemas/channels/fb-channel';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { computed, onMounted, ref, toValue, watch, type Ref } from 'vue';
-import { useRouter } from 'vue-router';
-
 
 interface FetchParams {
   search?: string;
   page?: number;
-};
+}
 
 const searchQuery = ref('') as Ref<string>;
 const params = ref<FetchParams>({});
@@ -103,11 +103,10 @@ const { showAlert } = useSweetAlert();
 // router
 const router = useRouter();
 
-
 // helper
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
-};
+}
 
 const debounce = (func: Function, delay: number) => {
   let timeout: NodeJS.Timeout;
@@ -118,7 +117,6 @@ const debounce = (func: Function, delay: number) => {
     timeout = setTimeout(() => func.apply(context, args), delay);
   };
 };
-
 
 // fetch channels
 const { fetchChannels, data: listData, loading: loadingList, meta } = useFetchFbChannel();
@@ -136,7 +134,6 @@ const channels = computed(() =>
     pageId: channel.page_id,
   }))
 );
-
 
 // pagination
 async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
@@ -165,7 +162,7 @@ async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
   };
 
   await fetchChannels(toValue(params));
-};
+}
 
 const isShowPagination = computed(() => {
   // Check if meta.value exists and has relevant properties, and channels array is not empty
@@ -180,7 +177,6 @@ const paginationInfo = computed(() => {
   const end = Math.min(newMeta.page * newMeta.limit, newMeta.total);
   return `${start}-${end} of ${newMeta.total} items`;
 });
-
 
 // handlers
 const handleNewIntegration = () => {
@@ -197,7 +193,6 @@ const getDetailChannel = (channel: { id: number }) => {
     },
   });
 };
-
 
 // update channel status handler
 async function updateChannelStatus(id: number, is_active: boolean) {
@@ -254,8 +249,7 @@ function updateExistingListData(newData: FbChannel) {
     confirmButtonText: 'Okay',
     showCancelButton: false,
   });
-};
-
+}
 
 // search handler
 const handleSearch = debounce((newVal: string) => {
