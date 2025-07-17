@@ -27,36 +27,24 @@ const uploadImage = async (file: File) => {
     <div class="flex w-full flex-1 flex-col gap-8">
       <WIdgetFormLayout label="Chat">
         <template #inputs>
-          <ImageInput
-            v-model="chatFormState.customerServiceAvatar"
-            :isUploading="loading"
-            @upload="uploadImage"
-            label="Customer Service Avatar"
-            id="customer-service-avatar"
-          >
+          <ImageInput v-model="chatFormState.customerServiceAvatar" :isUploading="loading" @upload="uploadImage"
+            label="Customer Service Avatar" id="customer-service-avatar">
             <template #tips>
-              <div class="text-sm font-normal text-[#A0A0A0]">
+              <div class="text-sm font-normal text-gray-800">
                 We recommend an image of at least 360x360 pixels. You can upload images in JPG,
                 JPEG, or PNG format with a maximum size of 2MB.
               </div>
             </template>
           </ImageInput>
-          <Input
-            v-model="chatFormState.customerServiceName"
-            :maxlength="50"
-            label="Customer Service Name"
-            id="customer-service-name"
-          />
+          <Input v-model="chatFormState.customerServiceName" :maxlength="50" label="Customer Service Name"
+            id="customer-service-name" />
         </template>
       </WIdgetFormLayout>
     </div>
 
     <!-- PREVIEW -->
     <div class="sticky top-20 z-10 flex flex-1 flex-col items-end gap-4 p-6">
-      <ChatFormLoading
-        :icon="chatFormState.customerServiceAvatar"
-        :title="chatFormState.customerServiceName"
-      />
+      <ChatFormLoading :icon="chatFormState.customerServiceAvatar" :title="chatFormState.customerServiceName" />
       <div class="bg-surface-disable h-16 w-16 rounded-full" />
     </div>
   </div>

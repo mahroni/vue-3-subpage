@@ -146,7 +146,7 @@ export const WithSuffixIcon: Story = {
     template: `
       <InputCustom v-bind="args">
         <template #suffix-icon>
-          <Icon name="search" class="h-5 w-5 text-[#A0A0A0]" />
+          <Icon name="search" class="h-5 w-5 text-gray-800" />
         </template>
       </InputCustom>
     `,
@@ -192,7 +192,7 @@ export const FullFeatured: Story = {
     template: `
       <InputCustom v-bind="args">
         <template #suffix-icon>
-          <Icon name="user" class="h-5 w-5 text-[#A0A0A0]" />
+          <Icon name="user" class="h-5 w-5 text-gray-800" />
         </template>
         <template #append-button="{ disabled }">
           <button :disabled="disabled">Submit</button>

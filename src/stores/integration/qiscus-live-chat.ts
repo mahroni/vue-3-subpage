@@ -16,11 +16,14 @@ import type {
   IWelcomeDialogState,
   IWidgetVariables,
 } from '@/types/live-chat';
+import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
+import { DEFAULT_IMAGE_PREVIEW } from '@/utils/constant/images';
 
 export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () => {
   const channelList = ref<IWidgetChannel[]>([]);
 
   const colorWidgetState = ref<string>('#01416C');
+  const errorPostWidgetConfig = ref<any>();
 
   // state for Channel Widget
   const channelState = reactive({
@@ -57,7 +60,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     isAttentionGrabberText: true,
     attentionGrabberText: 'Hello, there is Promo!',
     grabberTimeout: null,
-    attentionGrabberImage: '',
+    attentionGrabberImage: DEFAULT_IMAGE_PREVIEW.ATTENTION_GRABBER_IMAGE,
     brandIconWelcomeDialog: '',
   });
   // state for login form
@@ -120,7 +123,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   // state for chat form
   const chatFormState = reactive<IChatFormState>({
     customerServiceName: 'Qiscus Customer Care',
-    customerServiceAvatar: '',
+    customerServiceAvatar: CHANNEL_BADGE_URL.qiscus,
   });
 
   // GETTERS
@@ -262,12 +265,16 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
       if (data) {
         console.log(data, 'data');
       }
+      errorPostWidgetConfig.value = null;
     } catch (error) {
-      console.error(error);
+      errorPostWidgetConfig.value = error;
+      console.error('Error post widget config', error);
     }
   };
 
   return {
+    // state for error post widget config
+    errorPostWidgetConfig,
     // state for color widget
     colorWidgetState,
     // state for list channel widget

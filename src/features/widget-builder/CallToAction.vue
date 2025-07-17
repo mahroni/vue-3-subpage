@@ -121,7 +121,7 @@ watch(
               @upload="uploadImage"
             >
               <template #tips>
-                <div class="text-sm font-normal text-[#A0A0A0]">
+                <div class="text-sm font-normal text-gray-800">
                   We recommend an image of at least 360x360 pixels. You can upload images in JPG,
                   JPEG, or PNG format with a maximum size of 2MB.
                 </div>

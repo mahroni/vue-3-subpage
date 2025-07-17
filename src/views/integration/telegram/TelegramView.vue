@@ -152,11 +152,11 @@ async function createTelegramChannel() {
     bot_token: channel.value.token,
     configs: hasConfigValues()
       ? {
-          offline_message: configs.value.offline_message,
-          online_message: configs.value.online_message,
-          send_online_if_resolved: configs.value.send_online_if_resolved,
-          send_offline_each_message: configs.value.send_offline_each_message,
-        }
+        offline_message: configs.value.offline_message,
+        online_message: configs.value.online_message,
+        send_online_if_resolved: configs.value.send_online_if_resolved,
+        send_offline_each_message: configs.value.send_offline_each_message,
+      }
       : null,
   };
 
@@ -193,11 +193,11 @@ async function updateTelegramChannel() {
     is_active: isEnableTelegram.value,
     configs: hasConfigValues()
       ? {
-          offline_message: configs.value.offline_message,
-          online_message: configs.value.online_message,
-          send_online_if_resolved: configs.value.send_online_if_resolved,
-          send_offline_each_message: configs.value.send_offline_each_message,
-        }
+        offline_message: configs.value.offline_message,
+        online_message: configs.value.online_message,
+        send_online_if_resolved: configs.value.send_online_if_resolved,
+        send_offline_each_message: configs.value.send_offline_each_message,
+      }
       : null,
   };
 
@@ -319,11 +319,11 @@ async function toggleTelegramIntegration(status: boolean) {
     is_active: status,
     configs: hasConfigValues()
       ? {
-          offline_message: configs.value.offline_message,
-          online_message: configs.value.online_message,
-          send_online_if_resolved: configs.value.send_online_if_resolved,
-          send_offline_each_message: configs.value.send_offline_each_message,
-        }
+        offline_message: configs.value.offline_message,
+        online_message: configs.value.online_message,
+        send_online_if_resolved: configs.value.send_online_if_resolved,
+        send_offline_each_message: configs.value.send_offline_each_message,
+      }
       : null,
   };
 
@@ -406,25 +406,16 @@ onMounted(async () => {
 
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <div class="flex items-center gap-3">
-        <img
-          :src="CHANNEL_BADGE_URL.telegram"
-          alt="Telegram Logo"
-          class="h-6 w-6"
-          width="24"
-          height="24"
-        />
-        <h2 class="text-xl font-semibold text-[#0A0A0A]">Telegram</h2>
+        <img :src="CHANNEL_BADGE_URL.telegram" alt="Telegram Logo" class="h-6 w-6" width="24" height="24" />
+        <h2 class="text-xl font-semibold text-black-700">Telegram</h2>
       </div>
 
       <Banner>
-        <p class="text-sm font-medium text-[#0A0A0A]">
+        <p class="text-sm font-medium text-black-700">
           To integrate the Qiscus Omnichannel Chat with Telegram, you can check this
-          <a
-            class="text-notification-link font-semibold underline"
+          <a class="text-notification-link font-semibold underline"
             href="https://documentation.qiscus.com/omnichannel-chat/application#telegram"
-            target="_blank"
-            >Documentation</a
-          >.
+            target="_blank">Documentation</a>.
         </p>
       </Banner>
 
@@ -434,33 +425,23 @@ onMounted(async () => {
         <template v-if="activeTab == 'Settings'">
           <CollapsibleGroup :items="items">
             <template #item-id-1="{ item }">
-              <div class="flex justify-between gap-8 text-sm text-[#565656]">
+              <div class="flex justify-between gap-8 text-sm text-text-subtitle">
                 <div v-html="item.content"></div>
                 <div>
-                  <Switch
-                    variant="success"
-                    :model-value="isEnableTelegram"
-                    @update:model-value="toggleTelegramIntegration"
-                    size="medium"
-                  />
+                  <Switch variant="success" :model-value="isEnableTelegram"
+                    @update:model-value="toggleTelegramIntegration" size="medium" />
                 </div>
               </div>
             </template>
             <template #item-id-2="{ item }">
-              <div class="flex justify-between gap-8 text-sm text-[#565656]">
+              <div class="flex justify-between gap-8 text-sm text-text-subtitle">
                 {{ item.content }}
                 <div>
-                  <Switch
-                    variant="success"
-                    size="medium"
-                    :modelValue="isEnableAutoResponder"
-                    @update:modelValue="toggleAutoResponder"
-                  />
+                  <Switch variant="success" size="medium" :modelValue="isEnableAutoResponder"
+                    @update:modelValue="toggleAutoResponder" />
                 </div>
               </div>
-              <Button intent="secondary" class="mt-4" @click="openAutoResponderForm"
-                >Set Channel Auto Responder</Button
-              >
+              <Button intent="secondary" class="mt-4" @click="openAutoResponderForm">Set Channel Auto Responder</Button>
             </template>
           </CollapsibleGroup>
         </template>
@@ -470,21 +451,14 @@ onMounted(async () => {
             <CreateTelegramForm v-model="channel" />
 
             <div v-if="isUserCreateChannel" class="flex justify-end gap-4">
-              <Button
-                type="submit"
-                @click="handleCreateChannel"
-                :disabled="createTelegramLoading || !channel.token"
-                >Next</Button
-              >
+              <Button type="submit" @click="handleCreateChannel"
+                :disabled="createTelegramLoading || !channel.token">Next</Button>
             </div>
 
             <div v-else class="flex justify-between">
-              <Button intent="danger" @click="handleDeleteChannel" :disabled="deleteTelegramLoading"
-                >Delete Channel</Button
-              >
-              <Button type="submit" @click="handleUpdateChannel" :disabled="updateTelegramLoading"
-                >Save Changes</Button
-              >
+              <Button intent="danger" @click="handleDeleteChannel" :disabled="deleteTelegramLoading">Delete
+                Channel</Button>
+              <Button type="submit" @click="handleUpdateChannel" :disabled="updateTelegramLoading">Save Changes</Button>
             </div>
           </form>
         </template>
@@ -495,11 +469,8 @@ onMounted(async () => {
 
         <div class="mt-8 flex justify-end gap-4">
           <Button intent="secondary" @click="closeAutoResponderForm">Back</Button>
-          <Button
-            type="submit"
-            @click="isUserCreateChannel ? createTelegramChannel() : handleUpdateAutoResponder()"
-            :disabled="isConfigEmpty || createTelegramLoading || updateConfigLoading"
-          >
+          <Button type="submit" @click="isUserCreateChannel ? createTelegramChannel() : handleUpdateAutoResponder()"
+            :disabled="isConfigEmpty || createTelegramLoading || updateConfigLoading">
             Save Changes
           </Button>
         </div>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -17,6 +18,8 @@ const { showAlert } = useSweetAlert();
 const router = useRouter();
 const uQiscus = useCreateQiscus();
 const { postWidgetConfig } = useQiscusLiveChatStore();
+const { errorPostWidgetConfig } = storeToRefs(useQiscusLiveChatStore());
+
 const { appId } = useAppConfigStore();
 
 const isBot = ref(false);
@@ -88,8 +91,21 @@ async function handleSubmit() {
       showCancelButton: false,
     });
   }
+
   await postWidgetConfig(appId, uQiscus.data.value?.id as unknown as string);
 
+  if (errorPostWidgetConfig.value) {
+    console.log(errorPostWidgetConfig.value, 'errorPostWidgetConfig');
+
+    return showAlert.error({
+      title: 'Failed',
+      text: 'Failed to post widget config. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  }
+
+  // if success post widget config, redirect to detail page
   router.replace({ name: 'qiscus-detail', params: { id: uQiscus.data.value?.id } });
 }
 
@@ -115,14 +131,8 @@ function handleCancelAutoResponder() {
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <!-- Header -->
       <div class="flex items-center gap-3">
-        <img
-          :src="CHANNEL_BADGE_URL.qiscus"
-          alt="Qiscus Logo"
-          class="h-6 w-6"
-          width="24"
-          height="24"
-        />
-        <h2 class="text-xl font-semibold text-[#0A0A0A]">New Integration - Qiscus Live Chat</h2>
+        <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
+        <h2 class="text-xl font-semibold text-black-700">New Integration - Qiscus Live Chat</h2>
       </div>
 
       <!-- Form section -->

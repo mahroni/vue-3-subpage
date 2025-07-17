@@ -10,9 +10,7 @@ const props = defineProps<{
 </script>
 
 <template>
-  <div
-    class="text-navy-500 flex w-[360px] flex-col rounded-4xl bg-white shadow-[0px_8px_32px_0px_#0A0A0A1F]"
-  >
+  <div class="text-navy-500 flex w-[360px] flex-col rounded-4xl bg-white shadow-card-float">
     <div class="p-8">
       <!-- Header -->
       <div class="flex items-center gap-3">
@@ -22,10 +20,7 @@ const props = defineProps<{
         <div v-else class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
         <img v-if="props.icon" :src="props.icon" width="32" height="32" />
         <div v-else class="bg-surface-disable h-8 w-8 animate-pulse rounded-full" />
-        <div
-          v-if="props.title"
-          class="min-w-0 flex-1 text-sm font-medium break-words text-[#0A0A0A]"
-        >
+        <div v-if="props.title" class="min-w-0 flex-1 text-sm font-medium break-words text-black-700">
           {{ props.title }}
         </div>
         <div v-else class="bg-surface-disable h-4.5 w-[148px] animate-pulse rounded-full" />
@@ -36,8 +31,7 @@ const props = defineProps<{
 
         <!-- Bubble Skeleton -->
         <div
-          class="bg-surface-disable mt-4 flex animate-pulse flex-col gap-3 rounded-t-[24px] rounded-br-[24px] rounded-bl-[4px] p-4"
-        >
+          class="bg-surface-disable mt-4 flex animate-pulse flex-col gap-3 rounded-t-[24px] rounded-br-[24px] rounded-bl-[4px] p-4">
           <div class="flex gap-3">
             <div class="h-6 w-6 rounded-full bg-white"></div>
             <div class="h-6 w-[92px] rounded-full bg-white"></div>
@@ -54,7 +48,7 @@ const props = defineProps<{
       <div class="bg-surface-disable h-[56px] w-full animate-pulse rounded-full"></div>
     </div>
 
-    <div class="border-t border-gray-300 py-2 text-center text-xs font-medium text-[#0A0A0A]">
+    <div class="border-t border-gray-300 py-2 text-center text-xs font-medium text-black-700">
       Powered by <span class="text-link-400">Qiscus</span>
     </div>
   </div>

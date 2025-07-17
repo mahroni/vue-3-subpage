@@ -5,62 +5,38 @@
     </label>
     <div :class="computedSelectWrapperClasses">
       <!-- Custom Select Button -->
-      <button
-        :id="id"
-        type="button"
-        @click="toggleDropdown"
-        :class="computedSelectClasses"
-        :disabled="disabled"
-        @blur="handleBlur"
-      >
+      <button :id="id" type="button" @click="toggleDropdown" :class="computedSelectClasses" :disabled="disabled"
+        @blur="handleBlur">
         <span class="block truncate text-left">
           {{ selectedOption?.text || placeholder }}
         </span>
         <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-          <ChevronDownIcon
-            :class="
-              [
-                'h-5 w-5 text-gray-400 transition-transform duration-200',
-                isOpen ? 'rotate-180' : '',
-              ].join(' ')
-            "
-          />
+          <ChevronDownIcon :class="[
+              'h-5 w-5 text-gray-400 transition-transform duration-200',
+              isOpen ? 'rotate-180' : '',
+            ].join(' ')
+            " />
         </span>
       </button>
 
       <!-- Custom Dropdown -->
-      <Transition
-        enter-active-class="transition ease-out duration-100"
-        enter-from-class="transform opacity-0 scale-95"
-        enter-to-class="transform opacity-100 scale-100"
-        leave-active-class="transition ease-in duration-75"
-        leave-from-class="transform opacity-100 scale-100"
-        leave-to-class="transform opacity-0 scale-95"
-      >
-        <div
-          v-if="isOpen"
-          class="bg-surface-primary-white shadow-small absolute z-[1999] mt-1 max-h-60 w-full overflow-auto rounded-lg p-3"
-        >
-          <div
-            v-for="option in options"
-            :key="option.value"
-            @click="selectOption(option)"
-            class="relative cursor-pointer py-2 pr-9 pl-3 select-none hover:bg-gray-50"
-          >
-            <span
-              :class="[
-                'block truncate text-sm font-medium',
-                selectedValue === option.value ? 'text-text-primary' : 'text-text-title',
-              ]"
-            >
+      <Transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95"
+        enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
+        leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
+        <div v-if="isOpen"
+          class="bg-surface-primary-white shadow-small absolute z-[1999] mt-1 max-h-60 w-full overflow-auto rounded-lg p-3">
+          <div v-for="option in options" :key="option.value" @click="selectOption(option)"
+            class="relative cursor-pointer py-2 pr-9 pl-3 select-none hover:bg-gray-50">
+            <span :class="[
+              'block truncate text-sm font-medium',
+              selectedValue === option.value ? 'text-text-primary' : 'text-text-title',
+            ]">
               {{ option.text }}
             </span>
 
             <!-- Check icon for selected option -->
-            <span
-              v-if="selectedValue === option.value"
-              class="text-icon-green absolute inset-y-0 right-0 flex items-center pr-4"
-            >
+            <span v-if="selectedValue === option.value"
+              class="text-icon-green absolute inset-y-0 right-0 flex items-center pr-4">
               <CheckIcon class="h-5 w-5" />
             </span>
           </div>
@@ -179,7 +155,7 @@ const selectClasses = cva(
   {
     variants: {
       disabled: {
-        true: 'cursor-not-allowed !text-[#A0A0A0] !bg-surface-disable',
+        true: 'cursor-not-allowed !text-gray-800 !bg-surface-disable',
         false: 'bg-white text-gray-900 cursor-pointer',
       },
       error: {
