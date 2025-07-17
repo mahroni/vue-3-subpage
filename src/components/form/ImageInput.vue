@@ -12,7 +12,7 @@
           props.isUploading ? 'cursor-not-allowed opacity-50' : '',
         ]">
         <!-- Show uploaded image preview if available -->
-        <div v-if="modelValue" class="group relative">
+        <div v-if="modelValue" class="group relative p-1.5">
           <img :src="modelValue" :alt="fileName"
             class="max-h-[68px] min-h-[68px] max-w-[68px] min-w-[68px] rounded-lg object-cover" />
           <button @click.stop="triggerFileInput"
