@@ -1,7 +1,14 @@
-import { instagramApi } from "@/api/channels";
-import type { IResponse } from "@/types/api";
-import type { InstaChannel } from "@/types/schemas/insta-channel";
 import { ref } from "vue";
+
+
+
+import { instagramApi } from "@/api/channels";
+import type { IResponse } from '@/types/api';
+import type { InstaChannel } from '@/types/schemas/channels/insta-channel';
+
+
+
+
 
 export const useUpdateInstaChannel = () => {
     const loading = ref(false);

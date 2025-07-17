@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createApiResponseSchemaPagination } from "./common";
+import { createApiResponseSchemaPagination } from "../common";
 
 const FbChannelSchema = z.object({
    badge_url: z.string(),
