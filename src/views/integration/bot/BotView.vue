@@ -7,14 +7,13 @@ import { Banner, Button, CollapsibleGroup, Switch } from '@/components/common/co
 import InputCustom from '@/components/form/InputCustom.vue';
 import { BackIcon, CopyIcon, HomeIcon } from '@/components/icons';
 import { useFetchBot, useForceSendBot, useIntegrateBot } from '@/composables/channels/bot';
+import { useActivateBot } from '@/composables/channels/bot/useActivateBot';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import { useAppConfigStore } from '@/stores/app-config';
 import { useAppDetailStore } from '@/stores/app-detail';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
 const activeTab = ref<string>('Overview');
-const isEnableBot = ref<boolean>(false);
-const isEnableBotChat = ref<boolean>(false);
 
 const data = reactive({
   agent_id: '',
@@ -51,16 +50,18 @@ const bot = useFetchBot();
 const appConfig = useAppConfigStore();
 const { showAlert } = useSweetAlert();
 const { detail } = storeToRefs(useAppDetailStore());
-const { integrate, loading: integrateLoading, error: integrateError } = useIntegrateBot();
+const { activate, error: activateError } = useActivateBot();
 const { forceSend, error: forceSendError } = useForceSendBot();
+const { integrate, loading: integrateLoading, error: integrateError } = useIntegrateBot();
 
 // --- Handlers Function ---
 const handleSubmit = async () => {
   await integrate({
     bot_webhook_url: data.webhook_url,
-    is_bot_enabled: isEnableBot.value,
+    is_bot_enabled: data.is_enable,
   });
 
+  // --- Handle error ---
   if (integrateError.value) {
     showAlert.error({
       title: 'Error',
@@ -71,6 +72,7 @@ const handleSubmit = async () => {
     return;
   }
 
+  // --- Handle success ---
   showAlert.success({
     title: 'Success',
     text: 'Bot has been connected',
@@ -81,7 +83,7 @@ const handleForceSendBot = async (value: boolean) => {
   await forceSend({
     is_force_send_bot: value,
   });
-
+  // --- Handle error ---
   if (forceSendError.value) {
     showAlert.error({
       title: 'Error',
@@ -91,14 +93,39 @@ const handleForceSendBot = async (value: boolean) => {
     });
     return;
   }
-
+  // --- Handle success ---
   showAlert.success({
     title: 'Success',
     text: `Success ${value ? 'enables' : 'disables'} sending message bot`,
     showCancelButton: false,
   });
   // Only update the state if API call is successful
-  isEnableBotChat.value = value;
+  data.is_enable_chat = value;
+};
+const handleActivateBot = async (value: boolean) => {
+  await activate({
+    is_active: value,
+  });
+
+  // --- Handle error ---
+  if (activateError.value) {
+    showAlert.error({
+      title: 'Error',
+      text: 'Cannot activate bot. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+    return;
+  }
+
+  // ---Handle success
+  showAlert.success({
+    title: 'Success',
+    text: `Success ${value ? 'activating ' : 'deactivating'} channel`,
+    showCancelButton: false,
+  });
+  // Only update the state if API call is successful
+  data.is_enable = value;
 };
 
 watch(
@@ -127,6 +154,8 @@ onMounted(async () => {
   data.is_enable = bot.data.value?.is_bot_enabled ?? false;
   data.is_enable_chat = bot.data.value?.is_force_send_bot ?? false;
   data.bot_url = `${appConfig.baseUrl}/${appConfig.appId}/bot`;
+
+  console.log('bot.data.value', bot.data.value);
 });
 </script>
 
@@ -294,7 +323,12 @@ onMounted(async () => {
             <div class="flex justify-between gap-8 text-sm text-[#565656]">
               <div v-html="item.content"></div>
               <div>
-                <Switch variant="success" v-model="isEnableBot" size="medium" />
+                <Switch
+                  variant="success"
+                  :model-value="data.is_enable"
+                  @update:model-value="handleActivateBot"
+                  size="medium"
+                />
               </div>
             </div>
           </template>
@@ -305,7 +339,7 @@ onMounted(async () => {
                 <Switch
                   variant="success"
                   size="medium"
-                  :model-value="isEnableBotChat"
+                  :model-value="data.is_enable_chat"
                   @update:model-value="handleForceSendBot"
                 />
               </div>
