@@ -17,6 +17,7 @@ import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import WidgetFormLayout from '@/features/widget-builder/components/layout/WidgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { DEFAULT_IMAGE_PREVIEW } from '@/utils/constant/images';
 import OptionalInput from './components/form/OptionalInput.vue';
 
 // File upload constants
@@ -31,11 +32,6 @@ const ACCEPTED_IMAGE_TYPES = {
   PNG_JPG: 'image/png,image/jpg',
 } as const;
 
-const DEFAULT_IMAGE_PREVIEW = {
-  WELCOME_BRAND_ICON: 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/icon_brand_qiscus.svg',
-  WELCOME_ACTION_ICON: 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/icon_chat_black.svg',
-  ATTENTION_GRABBER_IMAGE: 'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/bg_default_attention_grabber.png',
-}
 
 const { welcomeDialogState } = storeToRefs(useQiscusLiveChatStore());
 const brandIconUpload = useUploadSdkImage();
