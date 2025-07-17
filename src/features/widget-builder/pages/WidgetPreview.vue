@@ -4,11 +4,10 @@ import { onMounted, onUnmounted } from 'vue';
 import { useAppConfigStore } from '@/stores/app-config';
 
 const props = defineProps<{ channelId: string | number }>();
-const { appId } = useAppConfigStore();
-const isStaging = import.meta.env.VITE_WIDGET_ENV === 'staging';
-const isLatest = import.meta.env.VITE_WIDGET_ENV === 'latest';
-const baseUrl = import.meta.env.VITE_BASE_URL || '';
-const iframeUrl = import.meta.env.VITE_IFRAME_URL || '';
+const { appId, widget, baseUrl } = useAppConfigStore();
+const isStaging = widget?.env === 'staging';
+const isLatest = widget?.env === 'latest';
+const iframeUrl = widget?.iframeUrl || '';
 
 onMounted(() => {
   let configs: {
@@ -39,7 +38,7 @@ onMounted(() => {
   if (iframeUrl) configs.options.qismoIframeUrl = iframeUrl;
 
   // Check if the script already exists
-  const qismoScriptSrc = 'https://qismo-stag4.qiscus.io/js/qismo-v5.js';
+  const qismoScriptSrc = `${baseUrl}/js/qismo-v5.js`;
 
   // Create a new script element
   const script = document.createElement('script');
@@ -69,13 +68,14 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  const qismoScriptSrc = 'https://qismo-stag4.qiscus.io/js/qismo-v5.js';
-  const qismoStyleLink = 'https://qismo-stag4.qiscus.io/css/qismo-v5.css';
+  const qismoScriptSrc = `${baseUrl}/js/qismo-v5.js`;
+  const qismoStyleLink = `${baseUrl}/css/qismo-v5.css`;
   const existingScript = document.querySelector(`script[src="${qismoScriptSrc}"]`);
   const existingStyleLink = document.querySelector(`link[href="${qismoStyleLink}"]`);
-  if (existingScript) {
-    existingScript.remove();
-    existingStyleLink?.remove();
-  }
+  existingScript?.remove();
+  existingStyleLink?.remove();
 });
 </script>
+<template>
+  <div></div>
+</template>

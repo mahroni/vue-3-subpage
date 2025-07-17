@@ -10,25 +10,9 @@ import './assets/css/tailwind.css';
 import prismPlugin from './plugins/prism';
 import { createRouter } from './router';
 import { useAppConfigStore } from './stores/app-config';
+import type { IQiscusAppConfig } from './types/app';
 
-export interface WidgetConfig {
-  iframeUrl: string;
-  env: 'production' | 'latest' | 'staging';
-}
-export interface QiscusAppConfig {
-  baseUrl: string;
-  userToken: string;
-  appId: string;
-  appVersion: string;
-  sdkUserId: string;
-  userSdkToken: string;
-  widget?: WidgetConfig;
-  user: {
-    id: number;
-  };
-}
-
-export function createOmnichannelApp(container: string | Element, config: QiscusAppConfig) {
+export function createOmnichannelApp(container: string | Element, config: IQiscusAppConfig) {
   const app = createApp(App);
   const pinia = createPinia();
   app.use(prismPlugin);
