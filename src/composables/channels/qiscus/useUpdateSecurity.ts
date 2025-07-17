@@ -14,10 +14,7 @@ export const useUpdateSecurityQiscus = () => {
       loading.value = true;
       error.value = null;
 
-      const response = await qiscusApi.updateSecurity({
-        id: id,
-        ...payload,
-      });
+      const response = await qiscusApi.updateSecurity(id, payload);
 
       const dataResponse = response.data as unknown as IResponse<any>;
       const { qiscus_channel } = dataResponse.data;

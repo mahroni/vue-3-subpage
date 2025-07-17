@@ -51,6 +51,7 @@ import { HomeIcon } from '@/components/icons';
 import BackIcon from '@/components/icons/BackIcon.vue';
 import { useFetchBot } from '@/composables/channels/bot';
 import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qiscus';
+import { useUpdateSecurityQiscus } from '@/composables/channels/qiscus/useUpdateSecurity';
 import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
 import { useUpdateConfig } from '@/composables/channels/useUpdateConfigChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
@@ -121,6 +122,7 @@ const activeTab = ref<TabName>(getInitialTab());
 const isBot = ref(false);
 const isAutoresponderFormOpen = ref(false);
 const channel = reactive<IWidgetChannel>({
+  app_code: '',
   id: '',
   badge_url: '',
   name: '',
@@ -187,6 +189,7 @@ watch(
 );
 
 function setData() {
+  channel.app_code = widget.value?.app_code ?? '';
   channel.name = widget.value?.name ?? '';
   channel.badge_url = widget.value?.badge_url ?? '';
   channel.configs = (uConfig.data.value as any) ?? {};
@@ -224,6 +227,7 @@ function handleOpenAutoResponderForm(isOpen: boolean = true) {
 }
 
 const useConfig = useUpdateConfig();
+const { updateSecurity, error: errorUpdateSecurity } = useUpdateSecurityQiscus();
 async function handleChangeAutoResponder(isEnabled: boolean) {
   if (!channel.id) return;
 
@@ -259,6 +263,42 @@ async function handleChangeAutoResponder(isEnabled: boolean) {
       : 'Success deactivating channel auto responder',
     confirmButtonText: 'Okay',
     showCancelButton: false,
+  });
+}
+
+async function handleChangeSecurity(isSecure: boolean) {
+  if (!channel.id) return;
+
+  const payload = {
+    app_code: channel.app_code,
+    badge_url: channel.badge_url,
+    id: channel.id,
+    is_active: isSecure, //ini sudah diganti (make sure yang ini, atau yang is_secure)
+    is_secure: channel.is_secure, // ini make sure lagi
+    name: channel.name,
+    secret_key: null, // ini secret key nya yang mana? ambil dari mana?
+    is_secure_toc: channel.is_secure_toc,
+    configs: channel.configs,
+  };
+
+  await updateSecurity(channel.id, payload);
+
+  // --- Handle error
+  if (errorUpdateSecurity.value) {
+    return showAlert.error({
+      title: 'Failed',
+      text: 'Failed to update security. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+  }
+
+  // --- Handle success ---
+  showAlert.success({
+    title: 'Success',
+    text: isSecure
+      ? 'Success activating channel security'
+      : 'Success deactivating channel security',
   });
 }
 

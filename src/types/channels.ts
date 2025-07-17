@@ -74,6 +74,7 @@ export interface IAutoResponder {
 }
 
 export interface IWidgetChannel {
+  app_code?: string;
   id?: string;
   badge_url: string;
   name: string;
