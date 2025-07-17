@@ -7,22 +7,22 @@ import {
 } from '@/types/schemas/channels/bot/integrate-bot';
 import { handleComposableError } from '@/utils/helper/errorHandler';
 
-export const useIntegrateBot = () => {
+export const useActivateBot = () => {
   const loading = ref(false);
   const data = ref<IntegrateBot | null>(null);
   const error = ref<Error | null>(null);
 
-  const integrate = async (payload: { bot_webhook_url: string; is_bot_enabled: boolean }) => {
+  const activate = async (payload: { is_active: boolean }) => {
     try {
       loading.value = true;
       error.value = null;
 
-      const response = await botApi.integrate(payload);
+      const response = await botApi.activate(payload);
 
       const validatedResponse = IntegrateBotResponseSchema.parse(response.data);
       data.value = validatedResponse.data.app;
     } catch (err) {
-      handleComposableError(err, error, 'Error integrate bot');
+      handleComposableError(err, error, 'Error activate bot');
       data.value = null;
     } finally {
       loading.value = false;
@@ -33,6 +33,6 @@ export const useIntegrateBot = () => {
     loading,
     data,
     error,
-    integrate,
+    activate,
   };
 };

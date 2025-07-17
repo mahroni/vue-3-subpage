@@ -6,10 +6,12 @@ import CollapsibleGroup from '@/components/common/CollapsibleGroup.vue';
 import MainTab from '@/components/common/Tabs/MainTab.vue';
 import { Button, Switch } from '@/components/common/common';
 import { BackIcon, HomeIcon } from '@/components/icons';
-import { useCreateTelegram } from '@/composables/channels/telegram/useCreateTelegram';
-import { useDeleteTelegram } from '@/composables/channels/telegram/useDeleteTelegram';
-import { useFetchTelegram } from '@/composables/channels/telegram/useFetchTelegram';
-import { useUpdateTelegram } from '@/composables/channels/telegram/useUpdateTelegram';
+import {
+  useCreateTelegram,
+  useDeleteTelegram,
+  useFetchTelegram,
+  useUpdateTelegram,
+} from '@/composables/channels/telegram';
 import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
 import { useUpdateConfig } from '@/composables/channels/useUpdateConfigChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
@@ -158,129 +160,105 @@ async function createTelegramChannel() {
       : null,
   };
 
-  try {
-    await createTelegram(payload);
+  await createTelegram(payload);
 
-    if (createTelegramError.value) {
-      showAlert.error({
-        title: 'Error',
-        text: 'Failed to create Telegram channel. Please try again.',
-        showCancelButton: false,
-        confirmButtonText: 'Okay',
-      });
-      return;
-    }
-
-    showAlert.success({
-      title: 'Success',
-      text: 'Successfully add new channel',
-      showCancelButton: false,
-      confirmButtonText: 'Okay',
-    });
-
-    await fetchTelegram();
-    populateChannelData();
-
-    closeAutoResponderForm();
-  } catch (error) {
+  // --- Handle error ---
+  if (createTelegramError.value) {
     showAlert.error({
       title: 'Error',
       text: 'Failed to create Telegram channel. Please try again.',
       showCancelButton: false,
       confirmButtonText: 'Okay',
     });
+    return;
   }
+
+  // --- Handle success ---
+  showAlert.success({
+    title: 'Success',
+    text: 'Successfully add new channel',
+    showCancelButton: false,
+    confirmButtonText: 'Okay',
+  });
+
+  await fetchTelegram();
+  populateChannelData();
+
+  closeAutoResponderForm();
 }
 
 async function updateTelegramChannel() {
   const payload: IUpdateTelegramChannel = {
     name: channel.value.name,
     is_active: isEnableTelegram.value,
+    configs: hasConfigValues()
+      ? {
+          offline_message: configs.value.offline_message,
+          online_message: configs.value.online_message,
+          send_online_if_resolved: configs.value.send_online_if_resolved,
+          send_offline_each_message: configs.value.send_offline_each_message,
+        }
+      : null,
   };
 
-  try {
-    await updateTelegram(currentChannel.value?.id, payload);
+  await updateTelegram(currentChannel.value?.id, payload);
 
-    if (updateTelegramError.value) {
-      showAlert.error({
-        title: 'Error',
-        text: 'Failed to update Telegram. Please try again.',
-        confirmButtonText: 'Okay',
-        showCancelButton: false,
-      });
-      return;
-    }
-
-    showAlert.success({
-      title: 'Success',
-      text: 'Telegram has been updated.',
-      confirmButtonText: 'Okay',
-      showCancelButton: false,
-    });
-  } catch (error) {
+  // --- Handle error ---
+  if (updateTelegramError.value) {
     showAlert.error({
       title: 'Error',
       text: 'Failed to update Telegram. Please try again.',
       confirmButtonText: 'Okay',
       showCancelButton: false,
     });
+    return;
   }
+
+  // --- Handle success ---
+  showAlert.success({
+    title: 'Success',
+    text: 'Telegram has been updated.',
+    confirmButtonText: 'Okay',
+    showCancelButton: false,
+  });
 }
 
 async function deleteTelegramChannel() {
-  try {
-    await deleteTelegram(currentChannel.value?.id);
-    showAlert.success({
-      title: 'Success',
-      text: 'Delete channel has been succeeded.',
-      confirmButtonText: 'Okay',
-      showCancelButton: false,
-    });
+  await deleteTelegram(currentChannel.value?.id);
+  showAlert.success({
+    title: 'Success',
+    text: 'Delete channel has been succeeded.',
+    confirmButtonText: 'Okay',
+    showCancelButton: false,
+  });
 
-    await fetchTelegram();
-    populateChannelData();
-  } catch (error) {
-    console.error('Error deleting channel:', error);
-    showAlert.error({
-      title: 'Error',
-      text: 'Failed to delete channel. Please try again.',
-      confirmButtonText: 'Okay',
-      showCancelButton: false,
-    });
-  }
+  await fetchTelegram();
+  populateChannelData();
 }
 
 async function updateAutoResponder() {
-  try {
-    await updateConfig(currentChannel.value?.id || '', {
-      ...configs.value,
-      enabled: isEnableAutoResponder.value,
-      source: 'telegram',
-    });
+  await updateConfig(currentChannel.value?.id || '', {
+    ...configs.value,
+    enabled: isEnableAutoResponder.value,
+    source: 'telegram',
+  });
 
-    if (updateConfigError.value) {
-      return showAlert.error({
-        title: 'Error',
-        text: 'Failed to update channel auto responder. Please try again.',
-        confirmButtonText: 'Okay',
-        showCancelButton: false,
-      });
-    }
-
-    showAlert.success({
-      title: 'Success',
-      text: 'Successfully changes channel auto responder.',
-      showCancelButton: false,
-    });
-  } catch (error) {
-    console.error('Error update auto responder telegram:', error);
-    showAlert.error({
+  // --- Handle error ---
+  if (updateConfigError.value) {
+    return showAlert.error({
       title: 'Error',
       text: 'Failed to update channel auto responder. Please try again.',
       confirmButtonText: 'Okay',
       showCancelButton: false,
     });
   }
+
+  // --- Handle success ---
+  showAlert.success({
+    title: 'Success',
+    text: 'Successfully changes channel auto responder.',
+    showCancelButton: false,
+  });
 }
 
 // --- Handlers Function---
@@ -335,45 +313,70 @@ function handleUpdateAutoResponder() {
     });
 }
 
-function toggleTelegramIntegration(status: boolean) {
-  console.log('toggle Telegram integration status', status);
-  // Here, you would typically make an API call to update the Telegram integration status
+async function toggleTelegramIntegration(status: boolean) {
+  const payload: IUpdateTelegramChannel = {
+    name: channel.value.name,
+    is_active: status,
+    configs: hasConfigValues()
+      ? {
+          offline_message: configs.value.offline_message,
+          online_message: configs.value.online_message,
+          send_online_if_resolved: configs.value.send_online_if_resolved,
+          send_offline_each_message: configs.value.send_offline_each_message,
+        }
+      : null,
+  };
+
+  await updateTelegram(currentChannel.value?.id, payload);
+
+  // --- Handle error ---
+  if (updateTelegramError.value) {
+    showAlert.error({
+      title: 'Error',
+      text: 'Failed to update Telegram. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+    return;
+  }
+
+  // --- Handle success ---
+  showAlert.success({
+    title: 'Success',
+    text: `Success ${status ? 'activating' : 'deactivating'} channel`,
+    confirmButtonText: 'Okay',
+    showCancelButton: false,
+  });
+
+  isEnableTelegram.value = status;
 }
 
 async function toggleAutoResponder(status: boolean) {
-  try {
-    await updateConfig(currentChannel.value?.id || '', {
-      ...configs.value,
-      enabled: status,
-      source: 'telegram',
-    });
+  await updateConfig(currentChannel.value?.id || '', {
+    ...configs.value,
+    enabled: status,
+    source: 'telegram',
+  });
 
-    if (updateConfigError.value) {
-      return showAlert.error({
-        title: 'Error',
-        text: 'Failed to update channel auto responder. Please try again.',
-        confirmButtonText: 'Okay',
-        showCancelButton: false,
-      });
-    }
-
-    showAlert.success({
-      title: 'Success',
-      text: 'Successfully changes channel auto responder.',
-      showCancelButton: false,
-    });
-
-    // Only update the state if API call is successful
-    isEnableAutoResponder.value = status;
-  } catch (error) {
-    console.error('Error update auto responder telegram:', error);
-    showAlert.error({
+  // --- Handle error ---
+  if (updateConfigError.value) {
+    return showAlert.error({
       title: 'Error',
       text: 'Failed to update channel auto responder. Please try again.',
       confirmButtonText: 'Okay',
       showCancelButton: false,
     });
   }
+
+  // --- Handle success ---
+  showAlert.success({
+    title: 'Success',
+    text: 'Successfully changes channel auto responder.',
+    showCancelButton: false,
+  });
+
+  // Only update the state if API call is successful
+  isEnableAutoResponder.value = status;
 }
 
 onMounted(async () => {
@@ -436,8 +439,8 @@ onMounted(async () => {
                 <div>
                   <Switch
                     variant="success"
-                    v-model="isEnableTelegram"
-                    @change="toggleTelegramIntegration"
+                    :model-value="isEnableTelegram"
+                    @update:model-value="toggleTelegramIntegration"
                     size="medium"
                   />
                 </div>
