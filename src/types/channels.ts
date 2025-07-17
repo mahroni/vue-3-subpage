@@ -119,7 +119,7 @@ export interface IWidgetConfigPayload {
       // Login form data
       formGreet: string;
       formSubtitle: string;
-      loginSecondDescription: string;
+      formSecondGreet: string;
       buttonText: string;
       customerIdentifierInputType: string;
       extra_fields: IAdditionalField[];

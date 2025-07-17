@@ -16,8 +16,8 @@ import WelcomingPageLoading from '@/components/ui/widget-preview/WelcomingPageLo
 import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import WidgetFormLayout from '@/features/widget-builder/components/layout/WidgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
-
 import { DEFAULT_IMAGE_PREVIEW } from '@/utils/constant/images';
+
 import OptionalInput from './components/form/OptionalInput.vue';
 
 // File upload constants
@@ -31,7 +31,6 @@ const ACCEPTED_IMAGE_TYPES = {
   COMMON: 'image/png,image/jpg,image/jpeg',
   PNG_JPG: 'image/png,image/jpg',
 } as const;
-
 
 const { welcomeDialogState } = storeToRefs(useQiscusLiveChatStore());
 const brandIconUpload = useUploadSdkImage();
@@ -51,7 +50,8 @@ const handleImageUpload = async (file: File, target: keyof typeof uploaderInstan
   if (uploader.data.value) {
     const targetHandlers = {
       brandIcon: () => (welcomeDialogState.value.brandIconWelcomeDialog = uploader.data.value!.url),
-      actionIcon: () => (welcomeDialogState.value.actionIconWelcomeDialog = uploader.data.value!.url),
+      actionIcon: () =>
+        (welcomeDialogState.value.actionIconWelcomeDialog = uploader.data.value!.url),
       attentionGrabberImage: () =>
         (welcomeDialogState.value.attentionGrabberImage = uploader.data.value!.url),
     } as const;
@@ -92,7 +92,9 @@ const firstAction = computed(() => {
   const action = [
     {
       label: welcomeDialogState.value.actionDescriptionWelcomeDialog,
-      iconUrl: welcomeDialogState.value.actionIconWelcomeDialog || DEFAULT_IMAGE_PREVIEW.WELCOME_ACTION_ICON,
+      iconUrl:
+        welcomeDialogState.value.actionIconWelcomeDialog ||
+        DEFAULT_IMAGE_PREVIEW.WELCOME_ACTION_ICON,
     },
   ];
   return action;
@@ -268,7 +270,7 @@ watch(
       <WelcomingPage
         :title="welcomeDialogState.firstDescriptionWelcomeDialog"
         :subtitle="welcomeDialogState.secondDescriptionWelcomeDialog"
-        :imageUrl="welcomeDialogState.brandIconWelcomeDialog || DEFAULT_IMAGE_PREVIEW.WELCOME_BRAND_ICON"
+        :imageUrl="welcomeDialogState.brandIconWelcomeDialog"
         :actions="firstAction"
       />
       <div class="bg-surface-disable h-16 w-16 rounded-full" />
@@ -279,12 +281,8 @@ watch(
       class="sticky top-20 z-10 flex flex-1 flex-col items-end gap-4 p-6"
     >
       <AttentionGrabber
-        :imageUrl="
-          welcomeDialogState.isAttentionGrabberImage ? (welcomeDialogState.attentionGrabberImage || DEFAULT_IMAGE_PREVIEW.ATTENTION_GRABBER_IMAGE) : ''
-        "
-        :title="
-          welcomeDialogState.isAttentionGrabberText ? welcomeDialogState.attentionGrabberText : ''
-        "
+        :imageUrl="welcomeDialogState.attentionGrabberImage"
+        :title="welcomeDialogState.attentionGrabberText"
       />
       <div class="bg-surface-disable h-16 w-41 rounded-full" />
     </div>

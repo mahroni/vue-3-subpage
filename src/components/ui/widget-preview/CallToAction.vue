@@ -3,6 +3,7 @@ interface Props {
   imageUrl?: string;
   title?: string;
   isUsingTitle?: boolean;
+  isUsingIcon?: boolean;
   color?: string;
   rounded?: number;
 }
@@ -11,6 +12,7 @@ const props = withDefaults(defineProps<Props>(), {
   imageUrl: '',
   title: '',
   isUsingTitle: false,
+  isUsingIcon: false,
   color: '#01416C',
   rounded: 32,
 });
@@ -22,12 +24,15 @@ const props = withDefaults(defineProps<Props>(), {
     class="flex h-16 items-center gap-3 px-6 py-2.5"
   >
     <img
-      :src="props.imageUrl"
-      alt=""
+      v-if="props.isUsingIcon"
+      :src="
+        props.imageUrl ||
+        'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/icon-qiscus-widget-open.svg'
+      "
+      alt="icon call to action"
       class="h-6 w-6"
       width="24"
       height="24"
-      v-if="props.imageUrl"
     />
     <div v-else class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
     <span

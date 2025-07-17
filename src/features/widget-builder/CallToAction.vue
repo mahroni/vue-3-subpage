@@ -158,6 +158,7 @@ watch(
         :imageUrl="callToActionState.iconImage"
         :title="callToActionState.liveChatButtonText"
         :isUsingTitle="callToActionState.isWithText"
+        :isUsingIcon="callToActionState.isWithIcon"
         :rounded="Number(callToActionState.borderRadius)"
       />
     </div>

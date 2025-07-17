@@ -19,6 +19,8 @@ export const qiscusApi = {
     apiV2.get<any>(`/app/config/public-widget/${appId}/${channelId}`),
   postWidgetConfig: (channelId: string, data: any) =>
     apiV2.post<any>(`/qiscus/widget_configs/${channelId}`, data),
+  updateSecurity: (channelId: string, data: any) =>
+    apiV2.post<any>(`/qiscus/connect/${channelId}/update`, data),
 };
 
 export const whatsappApi = {
