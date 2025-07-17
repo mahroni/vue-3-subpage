@@ -17,6 +17,7 @@ import { useUploadSdkImage } from '@/composables/images/useUploadSdkImage';
 import WidgetFormLayout from '@/features/widget-builder/components/layout/WidgetFormLayout.vue';
 import { useQiscusLiveChatStore } from '@/stores/integration/qiscus-live-chat';
 
+import { DEFAULT_IMAGE_PREVIEW } from '@/utils/constant/images';
 import OptionalInput from './components/form/OptionalInput.vue';
 
 // File upload constants
@@ -30,6 +31,7 @@ const ACCEPTED_IMAGE_TYPES = {
   COMMON: 'image/png,image/jpg,image/jpeg',
   PNG_JPG: 'image/png,image/jpg',
 } as const;
+
 
 const { welcomeDialogState } = storeToRefs(useQiscusLiveChatStore());
 const brandIconUpload = useUploadSdkImage();
@@ -90,7 +92,7 @@ const firstAction = computed(() => {
   const action = [
     {
       label: welcomeDialogState.value.actionDescriptionWelcomeDialog,
-      iconUrl: welcomeDialogState.value.actionIconWelcomeDialog,
+      iconUrl: welcomeDialogState.value.actionIconWelcomeDialog || DEFAULT_IMAGE_PREVIEW.WELCOME_ACTION_ICON,
     },
   ];
   return action;
@@ -266,7 +268,7 @@ watch(
       <WelcomingPage
         :title="welcomeDialogState.firstDescriptionWelcomeDialog"
         :subtitle="welcomeDialogState.secondDescriptionWelcomeDialog"
-        :imageUrl="welcomeDialogState.brandIconWelcomeDialog"
+        :imageUrl="welcomeDialogState.brandIconWelcomeDialog || DEFAULT_IMAGE_PREVIEW.WELCOME_BRAND_ICON"
         :actions="firstAction"
       />
       <div class="bg-surface-disable h-16 w-16 rounded-full" />
@@ -278,7 +280,7 @@ watch(
     >
       <AttentionGrabber
         :imageUrl="
-          welcomeDialogState.isAttentionGrabberImage ? welcomeDialogState.attentionGrabberImage : ''
+          welcomeDialogState.isAttentionGrabberImage ? (welcomeDialogState.attentionGrabberImage || DEFAULT_IMAGE_PREVIEW.ATTENTION_GRABBER_IMAGE) : ''
         "
         :title="
           welcomeDialogState.isAttentionGrabberText ? welcomeDialogState.attentionGrabberText : ''

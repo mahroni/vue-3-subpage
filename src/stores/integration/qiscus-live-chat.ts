@@ -58,8 +58,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     isAttentionGrabberText: true,
     attentionGrabberText: 'Hello, there is Promo!',
     grabberTimeout: null,
-    attentionGrabberImage:
-      'https://d1edrlpyc25xu0.cloudfront.net/zalda-vvq7pksvblaiy7s/image/upload/U5zXXEv54V/file_example_PNG_500kB.png',
+    attentionGrabberImage: '',
     brandIconWelcomeDialog: '',
   });
   // state for login form
