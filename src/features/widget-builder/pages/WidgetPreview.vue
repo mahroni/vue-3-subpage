@@ -39,7 +39,7 @@ onMounted(() => {
   if (iframeUrl) configs.options.qismoIframeUrl = iframeUrl;
 
   // Check if the script already exists
-  const qismoScriptSrc = 'https://qismo-stag4.qiscus.io/js/qismo-v5.js';
+  const qismoScriptSrc = `${baseUrl}/js/qismo-v5.js`;
 
   // Create a new script element
   const script = document.createElement('script');
@@ -69,13 +69,11 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-  const qismoScriptSrc = 'https://qismo-stag4.qiscus.io/js/qismo-v5.js';
-  const qismoStyleLink = 'https://qismo-stag4.qiscus.io/css/qismo-v5.css';
+  const qismoScriptSrc = `${baseUrl}/js/qismo-v5.js`;
+  const qismoStyleLink = `${baseUrl}/css/qismo-v5.css`;
   const existingScript = document.querySelector(`script[src="${qismoScriptSrc}"]`);
   const existingStyleLink = document.querySelector(`link[href="${qismoStyleLink}"]`);
-  if (existingScript) {
-    existingScript.remove();
-    existingStyleLink?.remove();
-  }
+  existingScript?.remove();
+  existingStyleLink?.remove();
 });
 </script>
