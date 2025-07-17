@@ -40,9 +40,7 @@ const getIconComponent = (iconName: string) => {
 </script>
 
 <template>
-  <div
-    class="text-navy-500 flex w-[360px] flex-col rounded-4xl bg-white shadow-[0px_8px_32px_0px_#0A0A0A1F]"
-  >
+  <div class="text-navy-500 flex w-[360px] flex-col rounded-4xl bg-white shadow-card-float">
     <div class="flex-1 p-8">
       <QiscusIcon :size="32" />
       <div class="mt-6 text-2xl break-words">{{ props.title }}</div>
@@ -50,71 +48,43 @@ const getIconComponent = (iconName: string) => {
       <div class="text-md mt-8 break-words">{{ props.description }}</div>
 
       <div class="mt-8 flex w-full flex-col gap-4">
-        <div
-          class="flex w-full items-center gap-3 rounded-2xl px-3 py-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
-        >
-          <div class="rounded-lg bg-[#F5F5F5] p-[7px]">
+        <div class="flex w-full items-center gap-3 rounded-2xl px-3 py-4 shadow-card">
+          <div class="rounded-lg bg-gray-100 p-[7px]">
             <UserIcon :size="18" />
           </div>
-          <input
-            type="text"
-            class="w-full outline-none placeholder:text-[#A0A0A0]"
-            placeholder="Type your name"
-            disabled
-          />
+          <input type="text" class="w-full outline-none placeholder:text-gray-800" placeholder="Type your name"
+            disabled />
         </div>
 
-        <div
-          class="flex w-full items-center gap-3 rounded-2xl px-3 py-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
-        >
-          <div class="rounded-lg bg-[#F5F5F5] p-[7px]">
+        <div class="flex w-full items-center gap-3 rounded-2xl px-3 py-4 shadow-card">
+          <div class="rounded-lg bg-gray-100 p-[7px]">
             <SignIcon :size="18" />
           </div>
-          <input
-            type="text"
-            class="w-full outline-none placeholder:text-[#A0A0A0]"
-            placeholder="Type your email address"
-            disabled
-          />
+          <input type="text" class="w-full outline-none placeholder:text-gray-800" placeholder="Type your email address"
+            disabled />
         </div>
 
-        <div
-          v-for="field in fields"
-          :key="field.id"
-          class="flex w-full items-center gap-3 rounded-2xl px-3 py-4 shadow-[0px_4px_12px_0px_#0A0A0A1A]"
-        >
-          <div class="rounded-lg bg-[#F5F5F5] p-[7px]">
-            <component
-              v-if="getIconComponent(field.icon)"
-              :is="getIconComponent(field.icon)"
-              :size="18"
-            />
-            <div
-              v-else
-              class="flex h-[18px] w-[18px] items-center justify-center rounded bg-gray-300 text-xs"
-            >
+        <div v-for="field in fields" :key="field.id"
+          class="flex w-full items-center gap-3 rounded-2xl px-3 py-4 shadow-card">
+          <div class="rounded-lg bg-gray-100 p-[7px]">
+            <component v-if="getIconComponent(field.icon)" :is="getIconComponent(field.icon)" :size="18" />
+            <div v-else class="flex h-[18px] w-[18px] items-center justify-center rounded bg-gray-300 text-xs">
               ?
             </div>
           </div>
-          <input
-            :type="field.type"
-            class="w-full outline-none placeholder:text-[#A0A0A0]"
-            :placeholder="field.placeholder"
-            disabled
-          />
+          <input :type="field.type" class="w-full outline-none placeholder:text-gray-800"
+            :placeholder="field.placeholder" disabled />
         </div>
       </div>
     </div>
 
     <div class="px-8 py-3">
-      <button
-        class="bg-navy-500 w-full rounded-2xl px-3 py-4 text-base font-medium break-words text-white"
-      >
+      <button class="bg-navy-500 w-full rounded-2xl px-3 py-4 text-base font-medium break-words text-white">
         {{ props.buttonText || 'Start Chat' }}
       </button>
     </div>
 
-    <div class="border-t border-gray-300 py-2 text-center text-xs font-medium text-[#0A0A0A]">
+    <div class="border-t border-gray-300 py-2 text-center text-xs font-medium text-black-700">
       Powered by <span class="text-link-400">Qiscus</span>
     </div>
   </div>

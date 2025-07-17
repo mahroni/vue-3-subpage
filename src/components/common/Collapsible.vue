@@ -1,29 +1,19 @@
 <template>
   <div class="overflow-hidden bg-white">
     <!-- Collapsible Header -->
-    <div
-      class="flex cursor-pointer items-center justify-between px-6 py-[18px] select-none"
-      @click="toggleCollapse"
-    >
+    <div class="flex cursor-pointer items-center justify-between px-6 py-[18px] select-none" @click="toggleCollapse">
       <!-- Slot for the title/header content -->
       <div class="text-text-title text-sm font-semibold">
         <slot name="title">{{ title }}</slot>
       </div>
       <!-- Arrow icon, rotates based on collapse state -->
-      <Icon
-        name="chevron-down"
-        :class="{ 'rotate-180': !isCollapsed }"
-        class="text-gray-600 transition-transform duration-300 ease-in-out"
-      />
+      <Icon name="chevron-down" :class="{ 'rotate-180': !isCollapsed }"
+        class="text-gray-600 transition-transform duration-300 ease-in-out" />
     </div>
 
-    <div
-      ref="contentWrapper"
-      :style="{ maxHeight: contentMaxHeight }"
-      class="transition-all duration-300 ease-in-out"
-    >
+    <div ref="contentWrapper" :style="{ maxHeight: contentMaxHeight }" class="transition-all duration-300 ease-in-out">
       <!-- Slot for the collapsible content -->
-      <div class="px-6 pb-[18px]">
+      <div class="px-6 p-b-[18px]">
         <slot></slot>
       </div>
     </div>

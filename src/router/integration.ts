@@ -2,10 +2,6 @@ import type { RouteRecordRaw } from 'vue-router';
 
 import ChannelView from '@/views/integration/ChannelView.vue';
 
-// Ensure RouteRecordRaw is imported
-
-// This array explicitly defines your integration routes.
-// It is correctly typed as RouteRecordRaw[].
 export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -18,13 +14,13 @@ export const integrationRoutes: RouteRecordRaw[] = [
     redirect: { name: 'whatsapp-list' },
     children: [
       {
-        path: '', // Full path: /qiscus
+        path: '',
         name: 'whatsapp-list',
         component: () => import('@/views/integration/whatsapp/WhatsappChannelView.vue'),
       },
       // wip
       {
-        path: ':id', // Full path: /qiscus/:id
+        path: ':id',
         name: 'whatsapp-detail',
         component: () => null,
         beforeEnter: (to) => {
@@ -33,7 +29,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'create', // Full path: /qiscus/create
+        path: 'create',
         name: 'whatsapp-new',
         component: () => null,
         beforeEnter: () => {
@@ -163,15 +159,6 @@ export const integrationRoutes: RouteRecordRaw[] = [
       },
     ],
   },
-  // {
-  //   path: '/telegram',
-  //   name: 'telegram',
-  //   component: () => TelegramView, // This route is a placeholder for custom channel integration
-  // beforeEnter: () => {
-  //   window.location.href = `/integration?ch=telegram`;
-  //   return false;
-  // },
-  // },
   {
     path: '/telegram',
     name: 'telegram',
@@ -183,7 +170,7 @@ export const integrationRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/integration/telegram/TelegramView.vue'),
       },
       {
-        path: 'create', // Full path: /telegram/create
+        path: 'create',
         name: 'telegram-create',
         component: () => import('@/views/integration/telegram/TelegramCreateChannelView.vue'),
       },
@@ -192,22 +179,21 @@ export const integrationRoutes: RouteRecordRaw[] = [
   {
     path: '/qiscus',
     name: 'qiscus',
-    // This is an internal Vue Router redirect, staying within the SPA.
     redirect: { name: 'qiscus-list' },
     children: [
       {
-        path: '', // Full path: /qiscus
+        path: '',
         name: 'qiscus-list',
         component: () => import('@/views/integration/widget/WidgetChannelView.vue'),
       },
       {
-        path: ':id', // Full path: /qiscus/:id
+        path: ':id',
         name: 'qiscus-detail',
         component: () => import('@/views/integration/widget/WidgetDetailView.vue'),
-        props: true, // Pass route params as props to the component
+        props: true,
       },
       {
-        path: 'create', // Full path: /qiscus/create
+        path: 'create',
         name: 'qiscus-create',
         component: () => import('@/views/integration/widget/WidgetCreateChannelView.vue'),
       },

@@ -131,14 +131,8 @@ function handleCancelAutoResponder() {
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <!-- Header -->
       <div class="flex items-center gap-3">
-        <img
-          :src="CHANNEL_BADGE_URL.qiscus"
-          alt="Qiscus Logo"
-          class="h-6 w-6"
-          width="24"
-          height="24"
-        />
-        <h2 class="text-xl font-semibold text-[#0A0A0A]">New Integration - Qiscus Live Chat</h2>
+        <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
+        <h2 class="text-xl font-semibold text-black-700">New Integration - Qiscus Live Chat</h2>
       </div>
 
       <!-- Form section -->

@@ -15,12 +15,9 @@ withDefaults(
 </script>
 
 <template>
-  <div
-    class="text-navy-500 flex w-[360px] flex-col overflow-hidden rounded-4xl bg-white shadow-[0px_8px_32px_0px_#0A0A0A1F]"
-  >
+  <div class="text-navy-500 flex w-[360px] flex-col overflow-hidden rounded-4xl bg-white shadow-card-float">
     <div
-      class="bg-surface-disable relative grid h-[208px] max-h-[208px] min-h-[208px] w-full flex-1 place-items-center"
-    >
+      class="bg-surface-disable relative grid h-[208px] max-h-[208px] min-h-[208px] w-full flex-1 place-items-center">
       <PlusIcon :size="24" v-show="!imageUrl" />
       <ButtonIcon v-show="imageUrl" class="absolute top-4 right-4 text-white">
         <CloseIcon />

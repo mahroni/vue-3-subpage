@@ -12,12 +12,12 @@
           class="invisible cursor-pointer transition-colors duration-300 ease-in-out" :class="{
             visible: modelValue,
           }" @click="onClear" :disabled="disabled">
-          <CloseIcon :size="20" class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
+          <CloseIcon :size="20" class="h-5 w-5 text-gray-800 hover:text-black-700" />
         </button>
 
         <button v-if="type === 'password'" type="button" id="show-password-btn" class="cursor-pointer"
           @click="togglePasswordVisibility">
-          <EyeIcon class="h-5 w-5 text-[#A0A0A0] hover:text-[#0A0A0A]" />
+          <EyeIcon class="h-5 w-5 text-gray-800 hover:text-black-700" />
         </button>
       </div>
 
@@ -107,7 +107,7 @@ const wrapperClasses = cva(
         true: 'border-red-500',
       },
       disabled: {
-        true: 'bg-surface-disable text-[#A0A0A0]',
+        true: 'bg-surface-disable text-gray-800',
       },
     },
     compoundVariants: [
@@ -129,7 +129,7 @@ const contentWrapperClasses = cva('flex w-full flex-row items-center gap-3 px-3 
   },
 });
 
-const inputClasses = cva('w-full outline-none text-sm font-medium leading-5 placeholder:text-[#A0A0A0]', {
+const inputClasses = cva('w-full outline-none text-sm font-medium leading-5 placeholder:text-gray-800', {
   variants: {
     disabled: {
       true: 'cursor-not-allowed !bg-surface-disable',
@@ -139,12 +139,12 @@ const inputClasses = cva('w-full outline-none text-sm font-medium leading-5 plac
 });
 
 const appendButtonClasses = cva(
-  'flex min-w-fit cursor-pointer items-center justify-center gap-2 border-l border-gray-300 bg-[#FAFAFA] px-3 py-2 text-sm font-medium',
+  'flex min-w-fit cursor-pointer items-center justify-center gap-2 border-l border-gray-300 bg-gray-200 px-3 py-2 text-sm font-medium',
   {
     variants: {
       disabled: {
-        true: 'bg-surface-disable text-[#A0A0A0]',
-        false: 'bg-[#FAFAFA] text-[#0A0A0A]',
+        true: 'bg-surface-disable text-gray-800',
+        false: 'bg-gray-200 text-black-700',
       },
     },
   }
@@ -155,7 +155,7 @@ const appendButtonIconClasses = cva(
   {
     variants: {
       disabled: {
-        true: 'text-[#A0A0A0]',
+        true: 'text-gray-800',
         false: 'text-primary',
       },
     },

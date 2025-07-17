@@ -111,11 +111,11 @@ onMounted(() => {
       <!-- Header -->
       <div class="flex items-center gap-3">
         <img :src="CHANNEL_BADGE_URL.telegram" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
-        <h2 class="text-xl font-semibold text-[#0A0A0A]">Telegram</h2>
+        <h2 class="text-xl font-semibold text-black-700">Telegram</h2>
       </div>
 
       <Banner>
-        <p class="text-sm font-medium text-[#0A0A0A]">
+        <p class="text-sm font-medium text-black-700">
           To integrate the Qiscus Omnichannel Chat with Telegram, you can check this
           <a class="text-notification-link font-semibold underline"
             href="https://documentation.qiscus.com/omnichannel-chat/application#telegram"
@@ -129,7 +129,7 @@ onMounted(() => {
         <template v-if="activeTab == 'Settings'">
           <CollapsibleGroup :items="items">
             <template #item-id-1="{ item }">
-              <div class="flex justify-between gap-8 text-[#565656] text-sm">
+              <div class="flex justify-between gap-8 text-text-subtitle text-sm">
                 <div v-html="item.content"></div>
                 <div>
                   <Switch variant="success" v-model="isEnableTelegram" size="medium" />
@@ -137,7 +137,7 @@ onMounted(() => {
               </div>
             </template>
             <template #item-id-2="{ item }">
-              <div class="flex justify-between gap-8 text-[#565656] text-sm">
+              <div class="flex justify-between gap-8 text-text-subtitle text-sm">
                 {{ item.content }}
                 <div>
                   <Switch variant="success" size="medium" v-model="isEnableAutoResponder" />

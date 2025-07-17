@@ -1,5 +1,5 @@
 <template>
-  <div class="flex w-90 flex-col items-start gap-0 rounded-4xl shadow-[0px_8px_32px_0px_#0A0A0A1F]">
+  <div class="flex w-90 flex-col items-start gap-0 rounded-4xl shadow-card-float">
     <!-- Top Skeleton -->
     <div class="flex w-full flex-1 flex-col items-start gap-8 p-8">
       <div class="flex w-full flex-col items-start gap-6">
@@ -16,8 +16,7 @@
 
     <!-- Bottom Skeleton -->
     <div
-      class="border-stroke-regular flex w-full flex-col items-center justify-center rounded-b-4xl border-t px-8 py-2"
-    >
+      class="border-stroke-regular flex w-full flex-col items-center justify-center rounded-b-4xl border-t px-8 py-2">
       <!-- Message Bubble -->
       <div class="bg-surface-disable h-4.5 w-37 animate-pulse rounded-full"></div>
     </div>
