@@ -1,77 +1,114 @@
 <template>
-    <div class="flex h-full w-full flex-col">
-        <div class="flex items-center justify-between p-4">
-          <InputCustom v-model="searchQuery" placeholder="Search channel name" class="min-w-[340px]" clearable>
-            <template #suffix-icon>
-              <SearchIcon :size="24" />
-            </template>
-          </InputCustom>
-          <Button @click="handleNewIntegration" variant="primary" class="flex items-center gap-2" size="small" no-animation>
-            New Integration
-          </Button>
-        </div>
-    
-        <div class="relative flex flex-1 flex-col min-h-[776px] justify-between overflow-auto px-4 py-2">
-          <table class="w-full table-fixed">
-            <thead class="sticky -top-2 z-10 bg-white">
-              <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
-                <th class="max-w-[362px] px-2 py-4 text-left font-normal">Channel Name</th>
-                <th class="px-6 py-4 text-left font-normal">Channel ID</th>
-                <th class="px-6 py-4 text-right font-normal">Action</th>
-              </tr>
-            </thead>
-            <tbody v-if="!loadingList" class="divide-y divide-gray-100">
-              <tr v-for="channel in channels" :key="channel.id" class="hover:bg-gray-50"
-                @click.prevent="getDetailChannel(channel)">
-                <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
-                  <div class="flex items-center gap-2">
-                    <Image :src="channel.badgeUrl" :fallbackSrc="CHANNEL_BADGE_URL.instagram" alt="channel badge" :width="24"
-                      :height="24" class="aspect-square rounded-full object-cover max-w-6 max-h-6" />
-                    <span class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap">{{
-                      channel.name
-                      }}</span>
-                  </div>
-                </td>
-                <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
-                  <div class="flex items-center gap-2">
-                    <span class="text-text-title font-semibold">{{ channel.id }}</span>
-                    <ButtonIcon title="Copy Channel ID" @click.stop="copyToClipboard(`${channel.id}`)">
-                      <CopyIcon :size="16" />
-                    </ButtonIcon>
-                  </div>
-                </td>
-                <td class="border-stroke-regular border-b px-6 py-4 text-right">
-                  <Switch v-model="channel.isActive" size="small" variant="success" @click.stop
-                    @update:model-value="updateChannelStatus(channel.id, $event)" />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-    
-          <div v-if="loadingList" class="grid h-full place-items-center">
-            <Animate :source="loadingAnimationData" />
-          </div>
-    
-          <div v-if="channels.length === 0 && !loadingList" class="absolute inset-0 flex items-center justify-center">
-            <EmptyState title="No Results"
-              description="You may want to try using different keywords or checking for the typos to find it."
-              image_url="https://omnichannel.qiscus.com/img/empty-customer.svg" />
-          </div>
-    
-          <div v-if="isShowPagination" class="flex items-center justify-between px-6 py-4">
-            <div class="flex items-center gap-2">
-              <span class="text-text-subtitle text-sm">
-                {{ paginationInfo }}
-              </span>
-            </div>
-    
-            <Pagination :meta="meta" @pagination="pagination" />
-          </div>
-        </div>
+  <div class="flex h-full w-full flex-col">
+    <div class="flex items-center justify-between p-4">
+      <InputCustom
+        v-model="searchQuery"
+        placeholder="Search channel name"
+        class="min-w-[340px]"
+        clearable
+      >
+        <template #suffix-icon>
+          <SearchIcon :size="24" />
+        </template>
+      </InputCustom>
+      <Button
+        @click="handleNewIntegration"
+        variant="primary"
+        class="flex items-center gap-2"
+        size="small"
+        no-animation
+      >
+        New Integration
+      </Button>
+    </div>
+
+    <div
+      class="relative flex min-h-[776px] flex-1 flex-col justify-between overflow-auto px-4 py-2"
+    >
+      <table class="w-full table-fixed">
+        <thead class="sticky -top-2 z-10 bg-white">
+          <tr class="text-text-subtitle border-stroke-bold border-b text-[12px]">
+            <th class="max-w-[362px] px-2 py-4 text-left font-normal">Channel Name</th>
+            <th class="px-6 py-4 text-left font-normal">Channel ID</th>
+            <th class="px-6 py-4 text-right font-normal">Action</th>
+          </tr>
+        </thead>
+        <tbody v-if="!loadingList" class="divide-y divide-gray-100">
+          <tr
+            v-for="channel in channels"
+            :key="channel.id"
+            class="hover:bg-gray-50"
+            @click.prevent="getDetailChannel(channel)"
+          >
+            <td class="border-stroke-regular max-w-[362px] cursor-pointer border-b px-2 py-4">
+              <div class="flex items-center gap-2">
+                <Image
+                  :src="channel.badgeUrl"
+                  :fallbackSrc="CHANNEL_BADGE_URL.instagram"
+                  alt="channel badge"
+                  :width="24"
+                  :height="24"
+                  class="aspect-square max-h-6 max-w-6 rounded-full object-cover"
+                />
+                <span
+                  class="text-text-title overflow-hidden font-medium text-ellipsis whitespace-nowrap"
+                  >{{ channel.name }}</span
+                >
+              </div>
+            </td>
+            <td class="border-stroke-regular cursor-pointer border-b px-6 py-4">
+              <div class="flex items-center gap-2">
+                <span class="text-text-title font-semibold">{{ channel.id }}</span>
+                <ButtonIcon title="Copy Channel ID" @click.stop="copyToClipboard(`${channel.id}`)">
+                  <CopyIcon :size="16" />
+                </ButtonIcon>
+              </div>
+            </td>
+            <td class="border-stroke-regular border-b px-6 py-4 text-right">
+              <Switch
+                v-model="channel.isActive"
+                size="small"
+                variant="success"
+                @click.stop
+                @update:model-value="updateChannelStatus(channel.id, $event)"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div v-if="loadingList" class="grid h-full place-items-center">
+        <Animate :source="loadingAnimationData" />
       </div>
+
+      <div
+        v-if="channels.length === 0 && !loadingList"
+        class="absolute inset-0 flex items-center justify-center"
+      >
+        <EmptyState
+          title="No Results"
+          description="You may want to try using different keywords or checking for the typos to find it."
+          image_url="https://omnichannel.qiscus.com/img/empty-customer.svg"
+        />
+      </div>
+
+      <div v-if="isShowPagination" class="flex items-center justify-between px-6 py-4">
+        <div class="flex items-center gap-2">
+          <span class="text-text-subtitle text-sm">
+            {{ paginationInfo }}
+          </span>
+        </div>
+
+        <Pagination :meta="meta" @pagination="pagination" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { type Ref, computed, onMounted, ref, toValue, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
 import loadingAnimationData from '@/assets/lottie/loading.json';
 import { Animate, Button, ButtonIcon, Image, Switch } from '@/components/common/common';
 import InputCustom from '@/components/form/InputCustom.vue';
@@ -81,16 +118,13 @@ import Pagination from '@/components/ui/Pagination.vue';
 import { useFetchInstaChannel } from '@/composables/channels/instagram/useFetchInstaChannel';
 import { useUpdateInstaChannel } from '@/composables/channels/instagram/useUpdateInstaChannel';
 import { useSweetAlert } from '@/composables/useSweetAlert';
-import type { InstaChannel } from '@/types/schemas/insta-channel';
+import type { InstaChannel } from '@/types/schemas/channels/insta-channel';
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
-import { computed, onMounted, ref, toValue, watch, type Ref } from 'vue';
-import { useRouter } from 'vue-router';
-
 
 interface FetchParams {
   search?: string;
   page?: number;
-};
+}
 
 const searchQuery = ref('') as Ref<string>;
 const params = ref<FetchParams>({});
@@ -101,11 +135,10 @@ const { showAlert } = useSweetAlert();
 // router
 const router = useRouter();
 
-
 // helper
 function copyToClipboard(text: string) {
   navigator.clipboard.writeText(text);
-};
+}
 
 const debounce = (func: Function, delay: number) => {
   let timeout: NodeJS.Timeout;
@@ -116,7 +149,6 @@ const debounce = (func: Function, delay: number) => {
     timeout = setTimeout(() => func.apply(context, args), delay);
   };
 };
-
 
 // fetch channels
 const { fetchChannels, data: listData, loading: loadingList, meta } = useFetchInstaChannel();
@@ -137,7 +169,6 @@ const channels = computed(() =>
     privateRepliesText: channel.private_replies_text,
   }))
 );
-
 
 // pagination
 async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
@@ -166,7 +197,7 @@ async function pagination(type: 'first' | 'prev' | 'next' | 'last') {
   };
 
   await fetchChannels(toValue(params));
-};
+}
 
 const isShowPagination = computed(() => {
   // Check if meta.value exists and has relevant properties, and channels array is not empty
@@ -182,15 +213,14 @@ const paginationInfo = computed(() => {
   return `${start}-${end} of ${newMeta.total} items`;
 });
 
-
 // handlers
 const handleNewIntegration = () => {
-    router.push({
-      name: 'instagram-new',
-    })
+  router.push({
+    name: 'instagram-new',
+  });
 };
 
-const getDetailChannel = (channel: {id: number}) => {
+const getDetailChannel = (channel: { id: number }) => {
   router.push({
     name: 'instagram-detail',
     params: {
@@ -198,7 +228,6 @@ const getDetailChannel = (channel: {id: number}) => {
     },
   });
 };
-
 
 // update channel status handler
 async function updateChannelStatus(id: number, is_active: boolean) {
@@ -255,8 +284,7 @@ function updateExistingListData(newData: InstaChannel) {
     confirmButtonText: 'Okay',
     showCancelButton: false,
   });
-};
-
+}
 
 // search handler
 const handleSearch = debounce((newVal: string) => {
