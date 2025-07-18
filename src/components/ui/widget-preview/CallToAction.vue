@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Image } from '@/components/common/common';
+
 interface Props {
   imageUrl?: string;
   title?: string;
@@ -23,17 +25,8 @@ const props = withDefaults(defineProps<Props>(), {
     :style="{ backgroundColor: props.color, borderRadius: `${props.rounded}px` }"
     class="flex h-16 items-center gap-3 px-6 py-2.5"
   >
-    <img
-      v-if="props.isUsingIcon"
-      :src="
-        props.imageUrl ||
-        'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/icon-qiscus-widget-open.svg'
-      "
-      alt="icon call to action"
-      class="h-6 w-6"
-      width="24"
-      height="24"
-    />
+    <Image v-if="props.imageUrl" :src="props.imageUrl" :width="24" :height="24" alt="image-cta" />
+
     <div v-else class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
     <span
       v-if="props.title && props.isUsingTitle"

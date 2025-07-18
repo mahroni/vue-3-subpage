@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { Button } from '@/components/common/common';
+import { Button, Image } from '@/components/common/common';
 import { BackIcon, HomeIcon } from '@/components/icons';
 import { useCreateQiscus } from '@/composables/channels/qiscus';
 import { useSweetAlert } from '@/composables/useSweetAlert';
@@ -131,7 +131,7 @@ function handleCancelAutoResponder() {
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <!-- Header -->
       <div class="flex items-center gap-3">
-        <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" width="24" height="24" />
+        <Image :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" :width="24" :height="24" />
         <h2 class="text-xl font-semibold text-black-700">New Integration - Qiscus Live Chat</h2>
       </div>
 

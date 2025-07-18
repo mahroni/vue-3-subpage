@@ -7,7 +7,7 @@
 
         <!-- Header -->
         <div class="flex items-center gap-2">
-            <img :src="CHANNEL_BADGE_URL.instagram" alt="Qiscus Logo" loading="lazy" width="24" height="24" />
+            <Image :src="CHANNEL_BADGE_URL.instagram" alt="Instagram Logo" class="h-6 w-6" :width="24" :height="24" />
             <h2 class="text-text-title text-xl font-semibold">Instagram</h2>
         </div>
 
@@ -15,13 +15,14 @@
         <InstagramBannerDoc />
 
         <!-- Table section -->
-         <div class="shadow-large flex flex-1 items-center justify-between overflow-hidden rounded-2xl">
+        <div class="shadow-large flex flex-1 items-center justify-between overflow-hidden rounded-2xl">
             <InstagramChannelTable />
-         </div>
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { Image } from '@/components/common/common';
 import { BackIcon } from '@/components/icons';
 import InstagramBannerDoc from '@/features/instagram/components/ui/InstagramBannerDoc.vue';
 import InstagramChannelTable from '@/features/instagram/pages/InstagramChannelTable.vue';

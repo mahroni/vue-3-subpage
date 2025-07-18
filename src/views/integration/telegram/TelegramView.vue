@@ -4,7 +4,7 @@ import { computed, onMounted, ref } from 'vue';
 import Banner from '@/components/common/Banner.vue';
 import CollapsibleGroup from '@/components/common/CollapsibleGroup.vue';
 import MainTab from '@/components/common/Tabs/MainTab.vue';
-import { Button, Switch } from '@/components/common/common';
+import { Button, Image, Switch } from '@/components/common/common';
 import { BackIcon, HomeIcon } from '@/components/icons';
 import {
   useCreateTelegram,
@@ -406,7 +406,7 @@ onMounted(async () => {
 
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <div class="flex items-center gap-3">
-        <img :src="CHANNEL_BADGE_URL.telegram" alt="Telegram Logo" class="h-6 w-6" width="24" height="24" />
+        <Image :src="CHANNEL_BADGE_URL.telegram" alt="Telegram Logo" class="h-6 w-6" :width="24" :height="24" />
         <h2 class="text-xl font-semibold text-black-700">Telegram</h2>
       </div>
 

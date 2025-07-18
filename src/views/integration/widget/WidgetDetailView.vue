@@ -13,21 +13,17 @@
     </div>
 
     <div class="mx-auto flex w-11/12 flex-col gap-8">
-      <div class="flex gap-3">
-        <img src="https://omnichannel.qiscus.com/img/qiscus_badge.svg" alt="Qiscus Logo" />
+      <div class="flex gap-3 items-center">
+        <Image :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" :width="24" :height="24" />
+
         <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
       </div>
 
       <div v-if="!isAutoresponderFormOpen" class="flex flex-col gap-8">
         <MainTab :tabs="tabLabels" v-model="activeTab" />
         <!-- Dynamic component rendering -->
-        <component
-          :channel-id="props.id"
-          :is="currentTabComponent"
-          v-if="currentTabComponent"
-          v-model="settingData"
-          @open-auto-responder-form="handleOpenAutoResponderForm"
-        />
+        <component :channel-id="props.id" :is="currentTabComponent" v-if="currentTabComponent" v-model="settingData"
+          @open-auto-responder-form="handleOpenAutoResponderForm" />
       </div>
 
       <form @submit.prevent="handleSubmitAutoResponder" v-if="isAutoresponderFormOpen">
@@ -46,6 +42,7 @@ import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import Button from '@/components/common/Button.vue';
+import { Image } from '@/components/common/common';
 import MainTab from '@/components/common/Tabs/MainTab.vue';
 import { HomeIcon } from '@/components/icons';
 import BackIcon from '@/components/icons/BackIcon.vue';
@@ -61,6 +58,7 @@ import WidgetCode from '@/features/widget/pages/WidgetCode.vue';
 import WidgetOverview from '@/features/widget/pages/WidgetOverview.vue';
 import WidgetSettings from '@/features/widget/pages/WidgetSetting.vue';
 import type { IWidgetChannel } from '@/types/channels';
+import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
 type TabName = string;
 
