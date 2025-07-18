@@ -28,7 +28,7 @@ export default defineConfig({
       entry: entryPoint,
       fileName: (format) => {
         // Example: qiscus-vue-app-0.1.0-customer.es.js
-        return `${appName}-${appVersion}-${buildFlavor}.${format}.js`;
+        return `${appName}-${appVersion}-${buildFlavor}[hash].${format}.js`;
       },
       formats: ['es'] // You can specify the formats you want to build
     },
