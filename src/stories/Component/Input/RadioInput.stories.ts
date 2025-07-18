@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
-import RadioInput from '../components/form/RadioInput.vue';
+
+import RadioInput from '@/components/form/RadioInput.vue';
 
 const meta: Meta<typeof RadioInput> = {
-  title: 'Components/Form/RadioInput',
+  title: 'Components/Input/RadioInput',
   component: RadioInput,
   parameters: {
     layout: 'centered',
@@ -12,7 +13,8 @@ const meta: Meta<typeof RadioInput> = {
   argTypes: {
     options: {
       control: { type: 'object' },
-      description: 'Array of options - can be strings, numbers, or objects with label/value properties',
+      description:
+        'Array of options - can be strings, numbers, or objects with label/value properties',
     },
     modelValue: {
       control: { type: 'text' },
@@ -46,9 +48,9 @@ export const Default: Story = {
     components: { RadioInput },
     setup() {
       const selectedValue = ref(args.modelValue);
-      return { 
-        args: { ...args, modelValue: selectedValue }, 
-        selectedValue 
+      return {
+        args: { ...args, modelValue: selectedValue },
+        selectedValue,
       };
     },
     template: `
@@ -79,9 +81,9 @@ export const WithObjectOptions: Story = {
     components: { RadioInput },
     setup() {
       const selectedValue = ref(args.modelValue);
-      return { 
-        args: { ...args, modelValue: selectedValue }, 
-        selectedValue 
+      return {
+        args: { ...args, modelValue: selectedValue },
+        selectedValue,
       };
     },
     template: `
@@ -107,9 +109,9 @@ export const WithNumericOptions: Story = {
     components: { RadioInput },
     setup() {
       const selectedValue = ref(args.modelValue);
-      return { 
-        args: { ...args, modelValue: selectedValue }, 
-        selectedValue 
+      return {
+        args: { ...args, modelValue: selectedValue },
+        selectedValue,
       };
     },
     template: `
@@ -140,9 +142,9 @@ export const WithMixedOptions: Story = {
     components: { RadioInput },
     setup() {
       const selectedValue = ref(args.modelValue);
-      return { 
-        args: { ...args, modelValue: selectedValue }, 
-        selectedValue 
+      return {
+        args: { ...args, modelValue: selectedValue },
+        selectedValue,
       };
     },
     template: `
@@ -167,9 +169,9 @@ export const WithoutLabel: Story = {
     components: { RadioInput },
     setup() {
       const selectedValue = ref(args.modelValue);
-      return { 
-        args: { ...args, modelValue: selectedValue }, 
-        selectedValue 
+      return {
+        args: { ...args, modelValue: selectedValue },
+        selectedValue,
       };
     },
     template: `
@@ -183,4 +185,4 @@ export const WithoutLabel: Story = {
       </div>
     `,
   }),
-}; 
+};

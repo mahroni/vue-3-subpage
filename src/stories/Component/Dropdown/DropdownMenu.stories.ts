@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import DropdownMenu from '../components/common/DropdownMenu.vue';
+import DropdownMenu from '@/components/common/DropdownMenu.vue';
 
 const meta: Meta<typeof DropdownMenu> = {
-  title: 'Components/DropdownMenu',
+  title: 'Components/Dropdown/DropdownMenu',
   component: DropdownMenu,
   parameters: {
     layout: 'centered',

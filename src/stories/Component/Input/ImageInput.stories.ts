@@ -1,16 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
 
-
-
-import ImageInput from '../components/form/ImageInput.vue';
-
-
-
-
+import ImageInput from '@/components/form/ImageInput.vue';
 
 const meta: Meta<typeof ImageInput> = {
-  title: 'Components/Form/ImageInput',
+  title: 'Components/Input/ImageInput',
   component: ImageInput,
   parameters: {
     layout: 'centered',

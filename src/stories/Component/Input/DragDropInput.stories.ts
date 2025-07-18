@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { ref } from 'vue';
 
-import DragDropInput from '../components/form/DragDropInput.vue';
+import DragDropInput from '@/components/form/DragDropInput.vue';
 
 const meta: Meta<typeof DragDropInput> = {
-  title: 'Components/Form/DragDropInput',
+  title: 'Components/Input/DragDropInput',
   component: DragDropInput,
   parameters: {
     layout: 'centered',

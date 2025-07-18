@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import Switch from '../components/common/Switch.vue';
+import Switch from '@/components/common/Switch.vue';
 
 const meta: Meta<typeof Switch> = {
-  title: 'Components/Switch',
+  title: 'Components/Input/Switch',
   component: Switch,
   parameters: {
     layout: 'centered',

@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 
-import Chip from '../components/common/Chip.vue';
+import Chip from '@/components/common/Chip.vue';
 
 const meta: Meta<typeof Chip> = {
-  title: 'Components/Chip',
+  title: 'Components/Tag/Chip',
   component: Chip,
   parameters: {
     layout: 'centered',

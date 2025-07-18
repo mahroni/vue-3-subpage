@@ -6,7 +6,7 @@ import Select from '@/components/form/Select.vue';
 // Adjust the import path as needed
 
 const meta: Meta<typeof Select> = {
-  title: 'Components/Form/Select', // Category and name in Storybook UI
+  title: 'Components/Input/Select', // Category and name in Storybook UI
   component: Select,
   tags: ['autodocs'], // Enable autodocs for this component
   argTypes: {

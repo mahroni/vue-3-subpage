@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3';
 import { computed, ref } from 'vue';
 
-import TextArea from '../components/form/TextArea.vue';
+import TextArea from '@/components/form/TextArea.vue';
 
 const meta: Meta<typeof TextArea> = {
-  title: 'Components/Form/TextArea',
+  title: 'Components/Input/TextArea',
   component: TextArea,
   parameters: {
     layout: 'centered',
