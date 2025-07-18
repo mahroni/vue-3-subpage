@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ChatIcon, ChevronRightIcon } from '@/components/icons';
+import { DEFAULT_IMAGE_PREVIEW } from '@/utils/constant/images';
 
 interface Props {
   imageUrl: string;
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  imageUrl: '',
+  imageUrl: DEFAULT_IMAGE_PREVIEW.WELCOME_BRAND_ICON,
   title: 'Hello there,',
   subtitle: 'Welcome to Qiscus!',
   textColor: '#01416C',

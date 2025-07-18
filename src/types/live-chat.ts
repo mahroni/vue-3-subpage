@@ -37,7 +37,7 @@ export interface IWidgetVariables {
   welcomeGreetingText: string;
   welcomeActionDescription: string;
   welcomeActionIcon: string;
-  loginSecondDescription: string;
+  formSecondGreet: string;
   loginBrandLogo: string;
 }
 

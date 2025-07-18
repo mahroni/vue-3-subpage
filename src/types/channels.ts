@@ -74,6 +74,7 @@ export interface IAutoResponder {
 }
 
 export interface IWidgetChannel {
+  app_code?: string;
   id?: string;
   badge_url: string;
   name: string;
@@ -119,7 +120,7 @@ export interface IWidgetConfigPayload {
       // Login form data
       formGreet: string;
       formSubtitle: string;
-      loginSecondDescription: string;
+      formSecondGreet: string;
       buttonText: string;
       customerIdentifierInputType: string;
       extra_fields: IAdditionalField[];

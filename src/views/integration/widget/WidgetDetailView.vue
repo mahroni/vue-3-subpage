@@ -13,8 +13,14 @@
     </div>
 
     <div class="mx-auto flex w-11/12 flex-col gap-8">
-      <div class="flex gap-3 items-center">
-        <Image :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" :width="24" :height="24" />
+      <div class="flex items-center gap-3">
+        <Image
+          :src="CHANNEL_BADGE_URL.qiscus"
+          alt="Qiscus Logo"
+          class="h-6 w-6"
+          :width="24"
+          :height="24"
+        />
 
         <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
       </div>
@@ -22,8 +28,13 @@
       <div v-if="!isAutoresponderFormOpen" class="flex flex-col gap-8">
         <MainTab :tabs="tabLabels" v-model="activeTab" />
         <!-- Dynamic component rendering -->
-        <component :channel-id="props.id" :is="currentTabComponent" v-if="currentTabComponent" v-model="settingData"
-          @open-auto-responder-form="handleOpenAutoResponderForm" />
+        <component
+          :channel-id="props.id"
+          :is="currentTabComponent"
+          v-if="currentTabComponent"
+          v-model="settingData"
+          @open-auto-responder-form="handleOpenAutoResponderForm"
+        />
       </div>
 
       <form @submit.prevent="handleSubmitAutoResponder" v-if="isAutoresponderFormOpen">
@@ -42,17 +53,20 @@ import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import Button from '@/components/common/Button.vue';
-import { Image } from '@/components/common/common';
 import MainTab from '@/components/common/Tabs/MainTab.vue';
+import { Image } from '@/components/common/common';
 import { HomeIcon } from '@/components/icons';
 import BackIcon from '@/components/icons/BackIcon.vue';
 import { useFetchBot } from '@/composables/channels/bot';
 import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qiscus';
+import { useUpdateSecurityQiscus } from '@/composables/channels/qiscus/useUpdateSecurity';
 import { useFetchConfig } from '@/composables/channels/useFetchConfigChannel';
 import { useUpdateConfig } from '@/composables/channels/useUpdateConfigChannel';
+import { useHtmlToString } from '@/composables/helpers/htmlToString';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import WidgetLiveChat from '@/features/widget-builder/pages/WidgetLiveChat.vue';
 import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
+import QiscusTermConditionDescription from '@/features/widget/components/ui/QiscusTermConditionDescription.vue';
 import WidgetCode from '@/features/widget/pages/WidgetCode.vue';
 import WidgetOverview from '@/features/widget/pages/WidgetOverview.vue';
 import WidgetSettings from '@/features/widget/pages/WidgetSetting.vue';
@@ -119,6 +133,7 @@ const activeTab = ref<TabName>(getInitialTab());
 const isBot = ref(false);
 const isAutoresponderFormOpen = ref(false);
 const channel = reactive<IWidgetChannel>({
+  app_code: '',
   id: '',
   badge_url: '',
   name: '',
@@ -139,11 +154,14 @@ const settingData = ref({
   is_secure: false,
 });
 
-const { fetchChannelById, data: widget } = useFetchQiscusDetail();
-const uConfig = useFetchConfig();
 const uBot = useFetchBot();
+const uConfig = useFetchConfig();
+const uQiscus = useUpdateQiscus();
+const useConfig = useUpdateConfig();
+const { fetchChannelById, data: widget } = useFetchQiscusDetail();
+const { updateSecurity, error: errorUpdateSecurity } = useUpdateSecurityQiscus();
 
-// URL sync watchers
+// --- URL sync watchers ---
 watch(activeTab, (newTab) => {
   const selectedTab = tabs.find((tab) => tab.label === newTab);
   router.push({
@@ -171,20 +189,19 @@ watch(
   () => settingData.value,
   (newVal, oldVal) => {
     if (newVal) {
-      console.log('settingData changed:', newVal.is_enabled, newVal.is_secure);
-
       if (newVal.is_enabled !== oldVal.is_enabled) {
         handleChangeAutoResponder(newVal.is_enabled);
       }
 
-      if (newVal.is_secure !== widget.value?.is_secure) {
-        // handleChangeSecure(newVal.is_secure);
+      if (newVal.is_secure !== oldVal?.is_secure) {
+        handleChangeSecurity(newVal.is_secure, oldVal.is_secure);
       }
     }
   }
 );
 
 function setData() {
+  channel.app_code = widget.value?.app_code ?? '';
   channel.name = widget.value?.name ?? '';
   channel.badge_url = widget.value?.badge_url ?? '';
   channel.configs = (uConfig.data.value as any) ?? {};
@@ -193,7 +210,38 @@ function setData() {
   settingData.value.is_enabled = channel.configs.is_enabled ?? false;
 }
 
-const uQiscus = useUpdateQiscus();
+// --- API Interaction Functions ---
+async function updateConversationSecurity(
+  isSecure: boolean,
+  oldValueIsSecure: boolean,
+  payload: any
+) {
+  if (!channel.id) return;
+
+  await updateSecurity(channel.id as string, payload);
+  // --- Handle error
+  if (errorUpdateSecurity.value) {
+    showAlert.error({
+      title: 'Failed',
+      text: 'Failed to update conversation security. Please try again.',
+      confirmButtonText: 'Okay',
+      showCancelButton: false,
+    });
+    settingData.value.is_secure = oldValueIsSecure;
+    return;
+  }
+
+  // --- Handle success ---
+  showAlert.success({
+    title: 'Success',
+    showCancelButton: false,
+    text: `Security enhancement settings for the Widget channel have been successfully ${
+      isSecure ? 'enabled' : 'disabled'
+    }`,
+  });
+}
+
+// --- Handle Functions ---
 async function handleSubmitAutoResponder() {
   const payload: any = { ...channel.configs };
 
@@ -221,7 +269,6 @@ function handleOpenAutoResponderForm(isOpen: boolean = true) {
   isAutoresponderFormOpen.value = isOpen;
 }
 
-const useConfig = useUpdateConfig();
 async function handleChangeAutoResponder(isEnabled: boolean) {
   if (!channel.id) return;
 
@@ -259,7 +306,41 @@ async function handleChangeAutoResponder(isEnabled: boolean) {
     showCancelButton: false,
   });
 }
+async function handleChangeSecurity(isSecure: boolean, oldValueIsSecure: boolean) {
+  if (!channel.id) return;
 
+  const payload = {
+    app_code: channel.app_code,
+    badge_url: channel.badge_url,
+    id: channel.id,
+    is_active: channel.is_active,
+    is_secure: isSecure,
+    name: channel.name,
+    secret_key: null, //[ASK] its should be null?
+    is_secure_toc: channel.is_secure_toc,
+    configs: channel.configs,
+  };
+
+  if (isSecure) {
+    showAlert
+      .warning({
+        title: 'Term of condition',
+        text: useHtmlToString(QiscusTermConditionDescription),
+        confirmButtonText: 'Agree and Enable',
+        cancelButtonText: 'Cancel',
+        showCancelButton: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          await updateConversationSecurity(isSecure, oldValueIsSecure, payload);
+        } else {
+          settingData.value.is_secure = oldValueIsSecure;
+        }
+      });
+  } else {
+    await updateConversationSecurity(isSecure, oldValueIsSecure, payload);
+  }
+}
 onMounted(async () => {
   channel.id = props.id ? String(props.id) : '';
   await fetchChannelById(channel.id);

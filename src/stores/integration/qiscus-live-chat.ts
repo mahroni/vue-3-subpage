@@ -43,8 +43,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
     isWithText: true,
     isWithIcon: true,
     liveChatButtonText: 'Talk To Us',
-    iconImage:
-      'https://s3-ap-southeast-1.amazonaws.com/qiscus-sdk/public/qismo/img/icon-qiscus-widget-default.svg',
+    iconImage: '',
     borderRadius: '32',
   });
   // state for welcome dialog
@@ -183,7 +182,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
         // set state login form
         loginFormState.brandLogo = widget.loginBrandLogo;
         loginFormState.firstDescription = widget.formGreet;
-        loginFormState.secondDescription = widget.loginSecondDescription;
+        loginFormState.secondDescription = widget.formSecondGreet;
         loginFormState.formSubtitle = widget.formSubtitle;
         loginFormState.buttonText = widget.buttonText;
         loginFormState.customerIdentifier = widget.customerIdentifierInputType;
@@ -224,7 +223,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
 
           // login form data
           formGreet: loginFormState.firstDescription,
-          loginSecondDescription: loginFormState.secondDescription, //=> new data
+          formSecondGreet: loginFormState.secondDescription, //=> new data // formSecondGreet
           formSubtitle: loginFormState.formSubtitle,
           buttonText: loginFormState.buttonText,
           customerIdentifierInputType: loginFormState.customerIdentifier,
@@ -251,9 +250,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
             live_channel: {
               name: channelState.previewLiveChatName,
               is_enable: channelState.isQiscusLiveChat,
-              badge_url:
-                channelState.channelBadgeIcon ||
-                'https://d1edrlpyc25xu0.cloudfront.net/zalda-vvq7pksvblaiy7s/image/upload/U5zXXEv54V/file_example_PNG_500kB.png"',
+              badge_url: channelState.channelBadgeIcon,
             },
             other_channel: channelList.value,
           },
