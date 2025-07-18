@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Banner from '@/components/common/Banner.vue';
 import { useAppConfigStore } from '@/stores/app-config';
-
 import CodeSnippet from '../components/forms/CodeSnippet.vue';
 
 // params.channelId as a props on router
