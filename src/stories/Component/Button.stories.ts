@@ -5,11 +5,6 @@ import Button from '@/components/common/Button.vue';
 import ChevronRightIcon from '@/components/icons/ChevronRightIcon.vue';
 import PlusIcon from '@/components/icons/PlusIcon.vue';
 
-// Simple action function for click events
-const clickAction = () => {
-  console.log('Button clicked!');
-};
-
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
   component: Button,
@@ -114,19 +109,11 @@ const meta: Meta<typeof Button> = {
         type: { summary: 'slot' },
       },
     },
-    // Events
-    onClick: {
-      description: 'Emitted when button is clicked',
-      table: {
-        type: { summary: 'function' },
-      },
-    },
   },
   args: {
     default: 'Button',
     prefixIcon: false,
     suffixIcon: false,
-    onClick: clickAction,
   },
 };
 
