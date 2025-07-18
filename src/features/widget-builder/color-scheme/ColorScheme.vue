@@ -15,7 +15,7 @@ const { colorWidgetState } = storeToRefs(useQiscusLiveChatStore());
   <div class="flex w-full items-start gap-8 self-stretch">
     <!-- Form Section -->
     <div class="flex w-full flex-1 flex-col gap-8">
-      <WidgetFormLayout label="Color Scheme">
+      <WidgetFormLayout label="Base Color Live Chat Customization">
         <template #additional-info> </template>
         <template #inputs>
           <Banner intent="positive" type="outline">

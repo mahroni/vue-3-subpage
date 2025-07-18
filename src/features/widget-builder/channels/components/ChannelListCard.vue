@@ -121,7 +121,7 @@ onUnmounted(() => {
               <!-- Dropdown Menu -->
               <div
                 v-if="activeDropdown === channel.id"
-                class="bg-surface-primary-white shadow-small absolute top-0 right-8 z-10 flex w-[161px] flex-col items-start rounded-lg px-3 py-1"
+                class="bg-surface-primary-white shadow-small absolute -top-10 right-8 z-8 flex w-[161px] flex-col items-start rounded-lg px-3 py-1"
               >
                 <button
                   @click="editChannel(channel.id)"
