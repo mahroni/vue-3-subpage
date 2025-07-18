@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+
 import { Image } from '@/components/common/common';
+import { DEFAULT_IMAGE_PREVIEW } from '@/utils/constant/images';
 
 interface Props {
   imageUrl?: string;
@@ -18,6 +21,13 @@ const props = withDefaults(defineProps<Props>(), {
   color: '#01416C',
   rounded: 32,
 });
+
+const finalImageUrl = computed(() => {
+  if (props.imageUrl) {
+    return props.imageUrl;
+  }
+  return DEFAULT_IMAGE_PREVIEW.LOGIN_BRAND_ICON;
+});
 </script>
 
 <template>
@@ -25,7 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
     :style="{ backgroundColor: props.color, borderRadius: `${props.rounded}px` }"
     class="flex h-16 items-center gap-3 px-6 py-2.5"
   >
-    <Image v-if="props.imageUrl" :src="props.imageUrl" :width="24" :height="24" alt="image-cta" />
+    <Image v-if="props.isUsingIcon" :src="finalImageUrl" :width="24" :height="24" alt="image-cta" />
 
     <div v-else class="bg-surface-disable h-6 w-6 animate-pulse rounded-full" />
     <span
