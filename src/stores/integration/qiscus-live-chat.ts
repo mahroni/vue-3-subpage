@@ -123,7 +123,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
   // state for chat form
   const chatFormState = reactive<IChatFormState>({
     customerServiceName: 'Qiscus Customer Care',
-    customerServiceAvatar: CHANNEL_BADGE_URL.qiscus,
+    customerServiceAvatar: '',
   });
 
   // GETTERS
@@ -158,7 +158,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
       const { data } = await qiscusApi.getWidgetConfig(appId, channelId);
       if (data) {
         const widget: IWidgetVariables = data.data.widget.variables;
-
+        console.log('widget', widget.isChannelWidgetEnabled);
         // set state welcome dialog
         welcomeDialogState.isWelcomeDialog = widget.welcomeMessageStatus;
         welcomeDialogState.brandIconWelcomeDialog = widget.welcomeBrandIcon;
@@ -176,8 +176,25 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
         welcomeDialogState.attentionGrabberImage = widget.attentionGrabberImage;
 
         // set state call to action
+        callToActionState.isWithText = widget.buttonHasText;
+        callToActionState.liveChatButtonText = widget.loginFormButtonLabel;
+        //
+        callToActionState.isWithIcon = widget.buttonHasIcon;
+        callToActionState.iconImage = widget.buttonIcon;
+        //
+        callToActionState.borderRadius = widget.borderRadius;
 
         // set state channel widget
+        channelState.isChannelsEnabled = widget.isChannelWidgetEnabled;
+        channelState.previewTitle = widget.channel_widget.title;
+        channelState.previewSubtitle = widget.channel_widget.subtitle;
+        channelState.previewIntroduction = widget.channel_widget.introduction;
+        //
+        channelState.isQiscusLiveChat = widget.channel_widget.live_channel.is_enable;
+        channelState.previewLiveChatName = widget.channel_widget.live_channel.name;
+        channelState.channelBadgeIcon = widget.channel_widget.live_channel.badge_url || '';
+        //
+        channelList.value = widget.channel_widget.other_channel;
 
         // set state login form
         loginFormState.brandLogo = widget.loginBrandLogo;
@@ -193,6 +210,7 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
         chatFormState.customerServiceAvatar = widget.customerServiceAvatar;
 
         // set state color
+        colorWidgetState.value = widget.colorWidget;
       }
     } catch (error) {
       console.error(error);
@@ -232,12 +250,12 @@ export const useQiscusLiveChatStore = defineStore('create-qiscus-live-chat', () 
 
           // chat form data
           customerServiceName: chatFormState.customerServiceName,
-          customerServiceAvatar: chatFormState.customerServiceAvatar,
+          customerServiceAvatar: chatFormState.customerServiceAvatar || CHANNEL_BADGE_URL.qiscus,
 
           // call to action data
           buttonHasText: callToActionState.isWithText,
           buttonHasIcon: callToActionState.isWithIcon,
-          buttonIcon: callToActionState.iconImage,
+          buttonIcon: callToActionState.iconImage || DEFAULT_IMAGE_PREVIEW.LOGIN_BRAND_ICON,
           loginFormButtonLabel: callToActionState.liveChatButtonText,
           borderRadius: callToActionState.borderRadius, //=> new data
 

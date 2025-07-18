@@ -16,6 +16,7 @@ export interface IWidgetVariables {
     other_channel: any[];
     subtitle: string;
     title: string;
+    introduction: string;
   };
   customerIdentifierInputType: string;
   customerServiceAvatar: string;
@@ -28,6 +29,7 @@ export interface IWidgetVariables {
   grabberTimeout: number;
   isChannelWidgetEnabled: boolean;
   loginFormButtonLabel: string;
+  borderRadius: string;
   openAtStart: boolean;
   selectedWidgetPage: string;
   welcomeMessageStatus: boolean;
@@ -39,6 +41,7 @@ export interface IWidgetVariables {
   welcomeActionIcon: string;
   formSecondGreet: string;
   loginBrandLogo: string;
+  colorWidget: string;
 }
 
 export interface IWidgetConfigResponse {
