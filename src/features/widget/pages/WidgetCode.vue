@@ -37,12 +37,14 @@ const jsCode = `
 </script>
 
 <template>
-  <Banner intent="positive" type="outline">
-    <div>
-      Copy the code below and paste it into the &lt;script&gt; tag of your website to install the
-      Qiscus Live Chat.
-    </div>
-  </Banner>
+  <div class="flex flex-col gap-8">
+    <Banner intent="positive" type="outline">
+      <div>
+        Copy the code below and paste it into the &lt;script&gt; tag of your website to install the
+        Qiscus Live Chat.
+      </div>
+    </Banner>
 
-  <CodeSnippet :code="jsCode" language="javascript" show-line-numbers />
+    <CodeSnippet :code="jsCode" language="javascript" show-line-numbers />
+  </div>
 </template>

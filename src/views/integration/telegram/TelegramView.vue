@@ -464,7 +464,7 @@ onMounted(async () => {
         </template>
       </template>
 
-      <tempalte v-if="isAutoresponderFormOpen">
+      <template v-if="isAutoresponderFormOpen">
         <AutoResponderForm v-model="configs" :is-bot="isBot" />
 
         <div class="mt-8 flex justify-end gap-4">
@@ -474,7 +474,7 @@ onMounted(async () => {
             Save Changes
           </Button>
         </div>
-      </tempalte>
+      </template>
     </div>
   </div>
 </template>
