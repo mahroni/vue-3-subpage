@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   BriefcaseIcon,
+  ChevronDownIcon,
   ChevronLeftIcon,
   DateIcon,
   GlobeIcon,
@@ -18,6 +19,7 @@ const props = defineProps<{
   subtitle: string;
   description: string;
   buttonText?: string;
+  customerIdentifier?: string;
   fields?: {
     id: string;
     icon: string;
@@ -75,12 +77,22 @@ const getIconComponent = (iconName: string) => {
 
         <div class="shadow-card flex w-full items-center gap-3 rounded-2xl px-3 py-4">
           <div class="rounded-lg bg-gray-100 p-[7px]">
-            <SignIcon :size="18" />
+            <SignIcon v-if="props.customerIdentifier === 'email'" :size="18" />
+            <PhoneIcon v-else :size="18" />
+          </div>
+          <div
+            v-if="props.customerIdentifier === 'phone'"
+            class="text-text-title flex gap-2 text-sm font-medium"
+          >
+            <h4>+62</h4>
+            <ChevronDownIcon :size="18" />
           </div>
           <input
             type="text"
             class="w-full outline-none placeholder:text-gray-800"
-            placeholder="Type your email address"
+            :placeholder="
+              props.customerIdentifier === 'email' ? 'Type your email address' : 'Type phone number'
+            "
             disabled
           />
         </div>

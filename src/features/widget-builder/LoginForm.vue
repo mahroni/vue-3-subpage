@@ -279,6 +279,7 @@ watch(
         :subtitle="loginFormState.secondDescription"
         :description="loginFormState.formSubtitle"
         :buttonText="loginFormState.buttonText"
+        :customerIdentifier="loginFormState.customerIdentifier"
         :fields="
           loginFormState.extraFields.map((field) => ({
             id: field.name,
