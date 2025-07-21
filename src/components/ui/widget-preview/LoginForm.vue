@@ -14,11 +14,11 @@ import {
 import { CHANNEL_BADGE_URL } from '@/utils/constant/channels';
 
 const props = defineProps<{
-  isChannelEnabled: boolean;
   title: string;
   subtitle: string;
   description: string;
   buttonText?: string;
+  isChannelEnabled?: boolean;
   customerIdentifier?: string;
   fields?: {
     id: string;
