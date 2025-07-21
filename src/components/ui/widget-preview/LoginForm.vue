@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Image from '@/components/common/Image.vue';
 import {
   BriefcaseIcon,
   ChevronDownIcon,
@@ -54,7 +55,7 @@ const getIconComponent = (iconName: string) => {
       <div v-else>
         <ChevronLeftIcon :size="28" />
         <div class="text-surface-primary-blue mt-8 flex gap-3 text-2xl font-semibold">
-          <img :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Live Chat" />
+          <Image :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Live Chat" />
           <h2>Live Chat</h2>
         </div>
       </div>

@@ -50,7 +50,7 @@ const finalImageUrl = computed(() => {
         </ButtonIcon>
 
         <div class="text-surface-primary-blue flex flex-col">
-          <div class="mt-6 text-2xl break-words">{{ props.title }}</div>
+          <div class="text-2xl break-words">{{ props.title }}</div>
           <div class="text-2xl font-bold break-words">{{ props.subtitle }}</div>
         </div>
       </div>
@@ -84,13 +84,13 @@ const finalImageUrl = computed(() => {
         class="hover:bg-surface-primary-blue/5 shadow-card flex cursor-pointer justify-between rounded-xl p-4 px-4"
       >
         <div class="flex min-w-0 flex-1 items-center gap-2">
-          <img
-            :src="action.iconUrl"
-            alt=""
-            class="h-6 w-6"
-            width="24"
-            height="24"
+          <Image
             v-if="action.iconUrl"
+            :src="action.iconUrl"
+            :width="24"
+            :height="24"
+            alt="icon channel"
+            class="h-6 w-6"
           />
           <ChatIcon :size="24" v-else />
           <div class="min-w-0 flex-1 text-start text-sm font-medium break-words">
