@@ -170,8 +170,8 @@ watch(
       <WidgetFormLayout label="Login Form">
         <template #additional-info>
           <Banner intent="positive" type="outline">
-            This configuration sets the base color theme for your live chat, affecting the header
-            text, action buttons, and chat bubbles.
+            The login form will be displayed first, unless the welcome dialogue or attention grabber
+            is enabled.
           </Banner>
         </template>
         <template #inputs>
