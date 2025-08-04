@@ -7,7 +7,13 @@
 
     <!-- Header -->
     <div class="flex items-center gap-2">
-      <Image :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" :width="24" :height="24" />
+      <Image
+        :src="CHANNEL_BADGE_URL.qiscus"
+        alt="Qiscus Logo"
+        class="h-6 w-6"
+        :width="24"
+        :height="24"
+      />
 
       <h2 class="text-text-title text-xl font-semibold">Qiscus Live Chat</h2>
     </div>

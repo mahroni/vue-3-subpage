@@ -6,10 +6,10 @@
         Qiscus Live Chat List
       </router-link>
 
-      <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
+      <!-- <router-link to="/" class="text-primary flex items-center gap-2 font-semibold">
         <HomeIcon :size="20" />
         Integration
-      </router-link>
+      </router-link> -->
     </div>
 
     <div class="mx-auto flex w-11/12 flex-col gap-8">
@@ -55,7 +55,6 @@ import { useRoute, useRouter } from 'vue-router';
 import Button from '@/components/common/Button.vue';
 import MainTab from '@/components/common/Tabs/MainTab.vue';
 import { Image } from '@/components/common/common';
-import { HomeIcon } from '@/components/icons';
 import BackIcon from '@/components/icons/BackIcon.vue';
 import { useFetchBot } from '@/composables/channels/bot';
 import { useFetchQiscusDetail, useUpdateQiscus } from '@/composables/channels/qiscus';

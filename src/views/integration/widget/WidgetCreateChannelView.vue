@@ -4,7 +4,7 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { Button, Image } from '@/components/common/common';
-import { BackIcon, HomeIcon } from '@/components/icons';
+import { BackIcon } from '@/components/icons';
 import { useCreateQiscus } from '@/composables/channels/qiscus';
 import { useSweetAlert } from '@/composables/useSweetAlert';
 import AutoResponderForm from '@/features/widget/components/forms/AutoResponderForm.vue';
@@ -122,17 +122,23 @@ function handleCancelAutoResponder() {
         Qiscus Live Chat List
       </router-link>
 
-      <router-link to="/" replace class="text-primary flex items-center gap-2 font-semibold">
+      <!-- <router-link to="/" replace class="text-primary flex items-center gap-2 font-semibold">
         <HomeIcon :size="20" />
         Integration
-      </router-link>
+      </router-link> -->
     </div>
 
     <div class="mx-auto flex w-11/12 flex-col gap-8">
       <!-- Header -->
       <div class="flex items-center gap-3">
-        <Image :src="CHANNEL_BADGE_URL.qiscus" alt="Qiscus Logo" class="h-6 w-6" :width="24" :height="24" />
-        <h2 class="text-xl font-semibold text-black-700">New Integration - Qiscus Live Chat</h2>
+        <Image
+          :src="CHANNEL_BADGE_URL.qiscus"
+          alt="Qiscus Logo"
+          class="h-6 w-6"
+          :width="24"
+          :height="24"
+        />
+        <h2 class="text-black-700 text-xl font-semibold">New Integration - Qiscus Live Chat</h2>
       </div>
 
       <!-- Form section -->
